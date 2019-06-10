@@ -1,0 +1,14 @@
+Django
+celery
+django-celery
+django-bootstrap4
+django-redis
+ddt
+requests
+pymysql
+colorlog
+pycryptodome
+Faker
+configparser
+Pillow
+qrcode

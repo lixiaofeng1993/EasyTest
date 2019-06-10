@@ -1,0 +1,96 @@
+{% extends "../../base.html" %}
+
+{% block css %}
+    <style>
+        .btn-primary:hover {
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block crumbs %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/yqjr/index">主页</a>
+                </li>
+                <li class="active">
+                    <a class="this">基础信息</a>
+                </li>
+                <li class="active">
+                    <a class="this-page" href="/base/project/">项目管理</a>
+                </li>
+                <li class="active">
+                    <a class="">编辑项目</a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">编辑项目</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" action="/base/project_update/" method="post">
+                        <input name="prj_id" value={{ prj.prj_id }} hidden>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">项目名称</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="prj_name" lay-verify="title" autocomplete="off"
+                                       class="form-control" value={{ prj.prj_name }}>
+                            </div>
+                            {% if error %}
+                                <span style="color: red; font-size: 10px;">{{ error }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">项目描述</label>
+                            <div class="col-sm-6">
+                                <textarea name="description" class="form-control"
+                                          rows="3">{{ prj.description }}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">加密方式</label>
+                            <div class="col-sm-6">
+                                <select name="sign_id" lay-filter="aihao" class="form-control" required="required">
+                                    <option value={{ prj.sign.sign_id }}> {{ prj.sign }}</option>
+                                    {% for sign in sign_list %}
+                                        <option value={{ sign.sign_id }}>{{ sign.sign_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-6">
+                                <button class="btn btn-primary" lay-submit="" lay-filter="demo1"><i
+                                        class="fa fa-save"></i>&nbsp;保存
+                                </button>
+                                <button id="reset" type="reset" class="btn btn-primary"><i
+                                        class="fa fa-repeat"></i>&nbsp;重置</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript">
+        //重置 刷新页面
+        $('#reset').click(function () {
+            location.reload();
+        });
+    </script>
+{% endblock %}

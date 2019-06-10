@@ -1,0 +1,124 @@
+{% extends "../../base.html" %}
+{% block css %}
+    <style>
+        #cen {
+            text-align: center;
+        }
+
+        a:hover {
+            color: red;
+        }
+
+        .project-name {
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .btn-primary:hover {
+            color: red;
+        }
+    </style>
+{% endblock %}
+{% block crumbs %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/index">主页</a>
+                </li>
+                <li class="active">
+                    <a class="this">基础信息</a>
+                </li>
+                <li class="active">
+                    <a class="this-page">项目管理</a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <a href="/base/project_add/" class="btn btn-primary"><i
+                            class="fa fa-plus-circle"></i>&nbsp;添加项目</a>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th id="cen">ID</th>
+                            <th id="cen">项目名称</th>
+                            <th id="cen">项目描述</th>
+                            <th id="cen">签名方式</th>
+                            <th id="cen">更新时间</th>
+                            <th id="cen">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if prj_list %}
+                            {% for prj in contacts %}
+                                <tr>
+                                    <td id="cen">{{ prj.prj_id }}</td>
+                                    <td id="cen" class="project-name"><a
+                                            href="/base/project_update?prj_id={{ prj.prj_id }}"
+                                            class="layui-btn layui-btn-xs"
+                                            lay-event="edit">{{ prj.prj_name }}</a></td>
+                                    <td id="cen">{{ prj.description }}</td>
+                                    <td id="cen">{{ prj.sign }}</td>
+                                    <td id="cen">{{ prj.update_time }}</td>
+                                    <td id="cen">
+                                        <a href="/base/project_delete?prj_id={{ prj.prj_id }}"
+                                           class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" id="del"
+                                           onclick="return delete_btn()"><img
+                                                src="/static/admin/img/icon-deletelink.svg"/></a></td>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if contacts.has_previous %}
+                            <a href="/base/project/?page={{ contacts.previous_page_number }}">上一页</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+                        </span>
+
+                        {% if contacts.has_next %}
+                            <a href="/base/project/?page={{ contacts.next_page_number }}">下一页</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+
+        //删除
+        function delete_btn() {
+            if (window.confirm("你确定要删除吗？")) {
+                return true;//确定返回真
+            }
+            else {
+                return false;//取消返回假
+            }
+        }
+
+
+    </script>
+{% endblock %}

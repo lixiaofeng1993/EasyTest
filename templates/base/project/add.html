@@ -1,0 +1,105 @@
+{% extends "../../base.html" %}
+{% block css %}
+    <style>
+        .btn-primary:hover {
+            color: red;
+        }
+    </style>
+{% endblock %}
+{% block crumbs %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/yqjr/index">主页</a>
+                </li>
+                <li class="active">
+                    <a class="this">基础信息</a>
+                </li>
+                <li class="active">
+                    <a class="this-page" href="/base/project/">项目管理</a>
+                </li>
+                <li class="active">
+                    <a class="">添加项目</a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">添加项目</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" method="post" action="/base/project_add/" onsubmit="return check()">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">项目名称</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="prj_name" id="prj_name" class="form-control">
+                            </div>
+                            {% if error %}
+                                <span style="color: red; font-size: 10px;">{{ error }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">项目描述</label>
+                            <div class="col-sm-6">
+                                <textarea name="description" placeholder="请输入内容" class="form-control"
+                                          rows="3"></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">签名方式</label>
+                            <div class="col-sm-6">
+                                <select name="sign" class="form-control" required="required">
+                                    {% for sign in sign_list %}
+                                        <option value={{ sign.sign_id }}>{{ sign.sign_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-6">
+                                <button type="submit" class="btn btn-primary"><i
+                                        class="fa fa-save"></i>&nbsp;保存</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    <script type="application/javascript">
+        {#        function check() {#}
+        {#            var strValue = $('#prj_name').val();#}
+        {#            strValue = strValue.replace(/\n/g, '');#}
+        {#            if (javaTrim(strValue) == "") {#}
+        {#                alert('项目名称输入错误！');#}
+        {#                $('#prj_name').focus();#}
+        {#                return false#}
+        {#            }#}
+        {#        }#}
+        {#        function javaTrim(str) {#}
+        {#            for (var i = 0; (str.charAt(i) == ' ') && i < str.length; i++);#}
+        {#            if (i == str.length) return ''; //whole string is space#}
+        {#            var newstr = str.substr(i);#}
+        {#            for (var i = newstr.length - 1; newstr.charAt(i) == ' ' && i >= 0; i--);#}
+        {#            newstr = newstr.substr(0, i + 1);#}
+        {#            return newstr;#}
+        {#        }#}
+    </script>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+{% load static from staticfiles %}
+
+{% block css %}
+    <style>
+        img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .panel-tbody {
+            float: left;
+            margin: 1% 1%;
+        }
+
+        a:hover {
+            color: red;
+        }
+
+        .img_qr {
+            width: 15%;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-body">
+                    <div class="panel-tbody-index">
+                        <h5>快捷入口</h5>
+                        <div class="panel-tbody">
+                            <p><i class="fa fa-product-hunt"></i>&nbsp;项目</p>
+                            <div style="text-align: center"><a href="/base/project/">{{ project_num }}</a></div>
+                        </div>
+                        <div class="panel-tbody">
+                            <p><i class="fa fa-envira"></i>&nbsp;环境</p>
+                            <div style="text-align: center"><a href="/base/env/">{{ env_num }}</a></div>
+                        </div>
+                        <div class="panel-tbody">
+                            <p><i class="fa fa-pinterest-square"></i>&nbsp;接口</p>
+                            <div style="text-align: center"><a href="/base/interface/">{{ interface_num }}</a></div>
+                        </div>
+                        <div class="panel-tbody">
+                            <p><i class="fa fa-suitcase"></i>&nbsp;用例</p>
+                            <div style="text-align: center"><a href="/base/case/">{{ case_num }}</a></div>
+                        </div>
+                        <div class="panel-tbody">
+                            <p><i class="fa fa-paper-plane"></i>&nbsp;计划</p>
+                            <div style="text-align: center"><a href="/base/plan/">{{ plan_num }}</a></div>
+                        </div>
+                        <div class="panel-tbody">
+                            <p><i class="fa fa-user-secret"></i>&nbsp;签名</p>
+                            <div style="text-align: center"><a href="/base/sign/">{{ sign_num }}</a></div>
+                        </div>
+                        <div class="panel-tbody">
+                            <p><i class="fa fa-bar-chart"></i>&nbsp;报告</p>
+                            <div style="text-align: center"><a href="/base/report_page/">{{ report_num }}</a></div>
+                        </div>
+                        <div class="panel-tbody">
+                            <p><i class="fa fa-tasks"></i>&nbsp;任务</p>
+                            <div style="text-align: center"><a href="/base/timing_task/">{{ task_num }}</a></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <h5>生成二维码</h5>
+                    <br>
+                    <div class="input-group input-group-lg" style="width: 35%;float: left;">
+                        <span class="input-group-addon"><i class="fa fa-link"></i>&nbsp;url：</span>
+                        <input type="text" id="qcode" class="form-control" placeholder="">
+
+                    </div>
+                    <button id="submit" class="btn btn-primary" lay-filter="demo1" style="height: 45px;margin-left: 1%">
+                        <i class="fa fa-gavel"></i></button>
+                    <div class="img_qr">
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <h5>格式化JSON</h5>
+                    <iframe src="https://www.json.cn/" height="750" width="1550" frameborder="0"
+                            scrolling="0"></iframe>
+                </div>
+                <div class="panel-body">
+                    <h5>未完待续...</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript">
+        $('#submit').click(function () {
+            var url = $("#qcode").val();
+            console.log(url);
+            $.ajax({
+                url: '/index/?' + Math.random(),
+                cache: false,
+                type: 'post',
+                data: {'url': url},
+                success: function (data) {
+                    console.log(data);
+                    html = '<img src="/media/' + data + '">';
+                    $('.img_qr').empty();
+                    $('.img_qr').append(html);
+                }
+
+            })
+        })
+
+    </script>
+{% endblock %}

@@ -1,0 +1,146 @@
+{% extends "../../base.html" %}
+
+{% block css %}
+    <style>
+        #cen {
+            text-align: center;
+        }
+
+        a:hover {
+            color: red;
+        }
+
+        .env-name {
+            max-width: 200px;
+            word-wrap: break-word;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .env-name:hover {
+            white-space: normal;
+            overflow: auto;
+        }
+    </style>
+{% endblock %}
+
+{% block crumbs %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/yqjr/index">主页</a>
+                </li>
+                <li class="active">
+                    <a class="this">基础信息</a>
+                </li>
+                <li class="active">
+                    <a class="this-page">运行报告</a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th id="cen">ID</th>
+                            <th id="cen">报告名称</th>
+                            <th id="cen">运行时长</th>
+                            <th id="cen">用例数量</th>
+                            <th id="cen">接口通过数量</th>
+                            <th id="cen">接口失败数量</th>
+                            <th id="cen">接口错误数量</th>
+                            <th id="cen">所属计划</th>
+                            <th id="cen">更新时间</th>
+                            <th id="cen">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for env in contacts %}
+                            <tr>
+                                <td id="cen">{{ env.report_id }}</td>
+                                <td class="env-name">{{ env.report_name }}</td>
+                                <td id="cen">{{ env.totalTime }}</td>
+                                <td id="cen">{{ env.case_num }}</td>
+                                <td id="cen">{{ env.pass_num }}</td>
+                                <td id="cen">{{ env.fail_num }}</td>
+                                <td id="cen">{{ env.error_num }}</td>
+                                <td id="cen">{{ env.plan }}</td>
+                                <td id="cen">{{ env.update_time }}</td>
+                                <td id="cen">
+                                    <a href="/base/report?report_id={{ env.report_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs"><i class="fa fa-bar-chart"></i>&nbsp;
+                                    </a>
+                                    <a href="/base/report_logs?report_id={{ env.report_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs"><i
+                                            class="fa fa-file-text-o"></i>&nbsp;</a>
+                                    <a href="/base/file_download?plan_id={{ env.plan_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs"
+                                       onclick="return download_btn()"><i class="fa fa-cloud-download"></i>&nbsp;</a>
+                                    <a href="/base/report_delete?report_id={{ env.report_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs"
+                                       lay-event="del" onclick="return delete_btn()"><img
+                                            src="/static/admin/img/icon-deletelink.svg"/></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <span style="color: red; font-size: 12px">{{ error }}</span>
+                </div>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if contacts.has_previous %}
+                            <a href="/base/report_page/?plan_id={{ plan_id }}&page={{ contacts.previous_page_number }}">上一页</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+                        </span>
+
+                        {% if contacts.has_next %}
+                            <a href="/base/report_page/?plan_id={{ plan_id }}&page={{ contacts.next_page_number }}">下一页</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+
+        //删除
+        function delete_btn() {
+            if (window.confirm("你确定要删除吗？")) {
+                return true;//确定返回真
+            }
+            else {
+                return false;//取消返回假
+            }
+        }
+        //删除
+        function download_btn() {
+            if (window.confirm("要下载unittest报告吗？")) {
+                return true;//确定返回真
+            }
+            else {
+                return false;//取消返回假
+            }
+        }
+
+
+    </script>
+{% endblock %}

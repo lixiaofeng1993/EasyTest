@@ -1,0 +1,138 @@
+{% extends "../../base.html" %}
+
+{% block css %}
+    <style>
+        #cen {
+            text-align: center;
+        }
+
+        a:hover {
+            color: red;
+        }
+
+        .env-name {
+            max-width: 200px;
+            word-wrap: break-word;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        .env-name:hover {
+            white-space: normal;
+            overflow: auto;
+        }
+
+        .btn-primary:hover {
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block crumbs %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/yqjr/index">主页</a>
+                </li>
+                <li class="active">
+                    <a class="this">基础信息</a>
+                </li>
+                <li class="active">
+                    <a class="this-page">测试环境</a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <a href="/base/env_add" class="btn btn-primary"><i
+                            class="fa fa-plus-circle"></i>&nbsp;添加环境</a>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th id="cen">ID</th>
+                            <th id="cen">测试环境</th>
+                            <th id="cen">是否swagger导入</th>
+                            <th id="cen">url</th>
+                            <th id="cen">所属项目</th>
+                            <th id="cen">密钥</th>
+                            <th id="cen">描述</th>
+                            <th id="cen">更新时间</th>
+                            <th id="cen">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for env in contacts %}
+                            {#                            {% for env in env_ %}#}
+                            <tr>
+                                <td id="cen">{{ env.env_id }}</td>
+                                <td class="env-name"><a href="/base/env_update?env_id={{ env.env_id }}"
+                                                        class="layui-btn layui-btn-xs"
+                                                        lay-event="edit">{{ env.env_name }}</a></td>
+                                <td id="cen">{{ env.is_swagger }}</td>
+                                <td>{{ env.url }}</td>
+                                <td id="cen">{{ env.project }}</td>
+                                <td id="cen">{{ env.private_key }}</td>
+                                <td>{{ env.description }}</td>
+                                <td id="cen">{{ env.update_time }}</td>
+                                <td id="cen">
+                                    <a href="/base/set_headers?env_id={{ env.env_id }}" class="btn btn-primary"><i
+                                            class="fa fa-plus-circle"></i>&nbsp;设置headers</a>
+                                    <a href="/base/env_delete?env_id={{ env.env_id }}"
+                                       class="runCaseForm btn btn-danger"
+                                       onclick="return delete_btn()"><i class="fa fa-trash-o">&nbsp;删除</i></a>
+                                </td>
+                            </tr>
+                            {#                            {% endfor %}#}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if contacts.has_previous %}
+                            <a href="/base/env/?page={{ contacts.previous_page_number }}">上一页</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+                        </span>
+
+                        {% if contacts.has_next %}
+                            <a href="/base/env/?page={{ contacts.next_page_number }}">下一页</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+
+        //删除
+        function delete_btn() {
+            if (window.confirm("你确定要删除吗？")) {
+                return true;//确定返回真
+            }
+            else {
+                return false;//取消返回假
+            }
+        }
+
+
+    </script>
+{% endblock %}

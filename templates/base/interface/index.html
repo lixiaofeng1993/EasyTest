@@ -1,0 +1,317 @@
+{% extends "../../base.html" %}
+
+{% block css %}
+    <style>
+        /* 批量导入按钮 */
+        #batch {
+            border-color: #1dc5a3;
+            background-color: #1dc5a3;
+            border-radius: 2px;
+            border: none;
+            color: white;
+            padding: 7px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        #batch:hover {
+            color: red;
+        }
+
+        /* 搜索按钮*/
+        #search {
+            display: inline;
+            margin-left: 10%;
+        }
+
+        #search input {
+            border: 2px solid #20B2AA;
+            border-radius: 20px;
+            background: transparent;
+            top: 0;
+            right: 0;
+        }
+
+        #search-btn {
+            border-color: #1dc5a3;
+            background-color: #1dc5a3;
+            border-radius: 2px;
+            border: none;
+            color: white;
+            padding: 7px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        #search-btn:hover {
+            color: red;
+        }
+
+        a:hover {
+            color: red;
+        }
+
+        #cen {
+            text-align: center;
+        }
+
+        /*返回顶部样式*/
+        #myBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: #999c9e;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        #myBtn:hover {
+            background-color: #555;
+        }
+
+        #if_name {
+            max-width: 200px;
+            word-wrap: break-word;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+        }
+
+        #if_name:hover {
+            white-space: normal;
+            overflow: auto;
+        }
+
+        .btn-primary:hover {
+            color: red;
+        }
+    </style>
+
+
+{% endblock %}
+{% block crumbs %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/yqjr/index">主页</a>
+                </li>
+                <li class="active">
+                    <a class="this">基础信息</a>
+                </li>
+                <li class="active">
+                    <a class="this-page">接口管理</a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <a href="/base/interface_add/" class="btn btn-primary"><i
+                            class="fa fa-plus-circle"></i>&nbsp;添加接口</a>
+                    <button class="btn btn-primary" id="batch" onclick="batch_index()"><i
+                            class="fa fa-plus-circle"></i>&nbsp;swagger导入
+                    </button>
+                    <div id="search">
+                        <input type="search" id="search-input" name="search" placeholder="啥都能搜...">
+                        <button id="search-btn" class="search-btn" onclick="search()"><i class="fa fa-search"></i>&nbsp;查询
+                        </button>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered" id="table-search">
+                        <thead>
+                        <tr>
+                            <th id="cen">ID</th>
+                            <th id="cen">接口名称</th>
+                            <th id="cen">所属项目</th>
+                            <th id="cen">请求方式</th>
+                            <th id="cen">数据传输方式</th>
+                            <th id="cen">是否签名</th>
+                            <th id="cen">描述</th>
+                            <th id="cen">更新时间</th>
+                            <th id="cen">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tbody-data">
+                        {% for if in contacts %}
+                            {#                            {% for if in if_ %}#}
+                            <tr>
+                                <td id="cen">{{ if.if_id }}</td>
+                                <td id="if_name"><a href="/base/interface_update?if_id={{ if.if_id }}"
+                                                    class="layui-btn layui-btn-xs"
+                                                    lay-event="edit">{{ if.if_name }}</a></td>
+                                <td id="cen">{{ if.project }}</td>
+                                <td id="cen">{{ if.method }}</td>
+                                <td id="cen">{{ if.data_type }}</td>
+                                {% ifequal if.is_sign 0 %}
+                                    <td id="cen">不签名</td>
+                                {% else %}
+                                    <td id="cen">签名</td>
+                                {% endifequal %}
+                                <td>{{ if.description }}</td>
+                                <td id="cen">{{ if.update_time }}</td>
+                                <td id="cen">
+                                    <a href="/base/interface_delete?if_id={{ if.if_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"
+                                       onclick="return delete_btn()"><img
+                                            src="/static/admin/img/icon-deletelink.svg"/></a>
+                                </td>
+                            </tr>
+                            {#                            {% endfor %}#}
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if contacts.has_previous %}
+                            <a href="/base/interface/?page={{ contacts.previous_page_number }}">上一页</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+                        </span>
+
+                        {% if contacts.has_next %}
+                            <a href="/base/interface/?page={{ contacts.next_page_number }}">下一页</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+        </div>
+        <button onclick="topFunction()" id="myBtn" title="回顶部">返回顶部</button>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+
+        // 当网页向下滑动 20px 出现"返回顶部" 按钮
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("myBtn").style.display = "block";
+            } else {
+                document.getElementById("myBtn").style.display = "none";
+            }
+        }
+
+        // 点击按钮，返回顶部
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+        //删除
+        function delete_btn() {
+            if (window.confirm("你确定要删除吗？")) {
+                return true;//确定返回真
+            }
+            else {
+                return false;//取消返回假
+            }
+        }
+
+        // 导入接口信息
+        function batch_index() {
+{#            prj_id = prompt('请输入要导入的项目ID：');#}
+            $.ajax({
+                url: "/base/batch_index",
+                type: "get",
+                success: function (data) {
+                    console.log(data);
+                    if (data == '') {
+                        console.log('未输入内容或点击了取消按钮.');
+                    } else {
+                        alert(data);
+                        location.reload();
+                    }
+
+                },
+                error: function () {
+                    alert('error')
+                }
+            })
+        }
+
+        // 搜索功能
+        function search() {
+            var search = $("#search-input").val();
+            $.ajax({
+                url: "/base/interface_search/",
+                type: "post",
+                data: {"search": search},
+                success: function (data) {
+                    {#                    console.log('-------------------->', data);#}
+                    if (data == '1') {
+                        alert('查询结果为空！');
+                        $('#search-input').focus()
+                    }
+                    else if (data == '0') {
+                        location.reload();
+                    }
+                    else {
+                        $('#table-search').empty();
+                        datas = eval(data);
+                        for (i in datas) {
+                            if (datas[i].is_sign == 0) {
+                                is_sign = '不签名'
+                            } else {
+                                is_sign = '签名'
+                            }
+                            if (i == 0) {
+                                html = '<thead><tr><th id="cen">ID</th><th id="cen">接口名称</th><th id="cen">所属项目</th><th id="cen">请求方式</th><th id="cen">数据传输方式</th>' +
+                                    '<th id="cen">是否签名</th><th id="cen">描述</th><th id="cen">操作</th>   <tbody id="tbody-data"><tr><td id="cen">' + datas[i].if_id + '</td><td id="if_name">' +
+                                    '<a href="/base/interface_update?if_id=' + datas[i].if_id + '" class="layui-btn layui-btn-xs" lay-event="edit">' + datas[i].if_name + '</a></td>' +
+                                    '<td id="cen">' + datas[i].project + '</td><td id="cen">' + datas[i].method + '</td><td id="cen">' + datas[i].data_type + '</td><td id="cen">' + is_sign + '</td>' +
+                                    '<td id="cen">' + datas[i].description + '</td><td id="cen"><a href="/base/interface_delete?if_id=' + datas[i].if_id + '" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/></a>' +
+                                    '</td></tr></tbody>';
+                            } else {
+                                html = '<thead style="display: none"><tr><th id="cen">ID</th><th id="cen">接口名称</th><th id="cen">所属项目</th><th id="cen">请求方式</th><th id="cen">数据传输方式</th>' +
+                                    '<th id="cen">是否签名</th><th id="cen">描述</th><th id="cen">操作</th>   <tbody id="tbody-data"><tr><td id="cen">' + datas[i].if_id + '</td><td id="if_name">' +
+                                    '<a href="/base/interface_update?if_id=' + datas[i].if_id + '" class="layui-btn layui-btn-xs" lay-event="edit">' + datas[i].if_name + '</a></td>' +
+                                    '<td id="cen">' + datas[i].project + '</td><td id="cen">' + datas[i].method + '</td><td id="cen">' + datas[i].data_type + '</td><td id="cen">' + is_sign + '</td>' +
+                                    '<td id="cen">' + datas[i].description + '</td><td id="cen"><a href="/base/interface_delete?if_id=' + datas[i].if_id + '" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/></a>' +
+                                    '</td></tr></tbody>';
+                            }
+                            $('.pagination').empty();
+                            $('#table-search').append(html);
+                        }
+                    }
+                },
+                error: function () {
+                    alert('error')
+                }
+            })
+        }
+
+        // 回车提交搜索
+        $(document).keyup(function (event) {
+            if (event.keyCode == 13) {
+                $("#search-btn").trigger("click");
+            }
+        });
+    </script>
+{% endblock %}

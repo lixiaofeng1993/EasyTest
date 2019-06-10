@@ -1,0 +1,243 @@
+{% extends "../../base.html" %}
+
+{% block css %}
+    <style>
+        .btn-primary:hover {
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block crumbs %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/yqjr/index">主页</a>
+                </li>
+                <li class="active">
+                    <a class="this">基础信息</a>
+                </li>
+                <li class="active">
+                    <a class="this-page" href="/base/plan/">测试计划</a>
+                </li>
+                <li class="active">
+                    <a class="">编辑计划</a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">编辑计划</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" method="post" action="/base/plan_update/">
+                        <input name="plan_id" value={{ plan.plan_id }} hidden>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">计划名称</label>
+                            <div class="col-sm-6">
+                                <input type="text" name="plan_name" lay-verify="title" autocomplete="off"
+                                       class="form-control" value={{ plan.plan_name }}>
+                            </div>
+                            {% if name_error %}
+                                <span style="color: red; font-size: 10px;">{{ name_error }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">选择项目</label>
+                            <div class="col-sm-6">
+                                <select class="form-control m-b" id="prj_id" name="prj_id" onchange=get_env()>
+                                    <option value="{{ plan.project_id }}">{{ plan.project }}</option>
+                                    {% for prj in prj_list %}
+                                        <option value="{{ prj.prj_id }}">{{ prj.prj_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">选择环境</label>
+                            <div class="col-sm-6">
+                                <select class="form-control m-b" id="env_id" name="env_id">
+                                    <option value="{{ plan.environment_id }}">{{ plan.environment }}</option>
+                                    {% for env in environments %}
+                                        <option value="{{ env.env_id }}">{{ env.env_name }}</option>
+                                    {% endfor %}
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">是否运行性能测试</label>
+                            {% if plan.is_locust %}
+                                <div class="col-sm-1 control-label">
+                                    <label class="fancy-radio">
+                                        <input name="is_locust" value="1" type="radio"
+                                               checked><span><i></i>运行性能测试</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-2 control-label">
+                                    <label class="fancy-radio">
+                                        <input name="is_locust" value="0" type="radio"><span><i></i>不运行性能测试</span>
+                                    </label>
+                                </div>
+                            {% else %}
+                                <div class="col-sm-1 control-label">
+                                    <label class="fancy-radio">
+                                        <input name="is_locust" value="1" type="radio"><span><i></i>运行性能测试</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-2 control-label">
+                                    <label class="fancy-radio">
+                                        <input name="is_locust" value="0" type="radio"
+                                               checked><span><i></i>不运行性能测试</span>
+                                    </label>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">是否执行定时任务</label>
+                            {% if plan.is_task %}
+                                <div class="col-sm-1 control-label">
+                                    <label class="fancy-radio">
+                                        <input name="is_task" value="1" type="radio" checked><span><i></i>执行定时任务</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-2 control-label">
+                                    <label class="fancy-radio">
+                                        <input name="is_task" value="0" type="radio"><span><i></i>不执行定时任务</span>
+                                    </label>
+                                </div>
+                            {% else %}
+                                <div class="col-sm-1 control-label">
+                                    <label class="fancy-radio">
+                                        <input name="is_task" value="1" type="radio"><span><i></i>执行定时任务</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-2 control-label">
+                                    <label class="fancy-radio">
+                                        <input name="is_task" value="0" type="radio" checked><span><i></i>不执行定时任务</span>
+                                    </label>
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">描述</label>
+                            <div class="col-sm-6">
+                                <textarea name="description" class="form-control"
+                                          rows="3">{{ plan.description }}</textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">用例列表</label>
+                            <a id="getcases" onclick="get_cases()" class="btn btn-primary"><i
+                                    class="fa fa-get-pocket"></i>&nbsp;获取用例</a>
+                            <div id="list" class="col-sm-10 col-sm-offset-2">
+                                {% for case in case_list %}
+                                    <label class='checkbox-inline'><input type='checkbox' name='case_id' id="case_id"
+                                                                          value="{{ case.case_id }}"
+                                                                          checked>{{ case.case_name }}</label>
+                                {% endfor %}
+                            </div>
+                            {% if content_error %}
+                                <span style="color: red; font-size: 10px;">{{ content_error }}</span>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-6">
+                                <button class="btn btn-primary" lay-submit="" lay-filter="demo1"><i
+                                        class="fa fa-save"></i>&nbsp;保存
+                                </button>
+                                <button id="reset" type="reset" class="btn btn-primary"><i
+                                        class="fa fa-repeat"></i>&nbsp;重置
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript">
+        //重置 刷新页面
+        $('#reset').click(function () {
+            location.reload();
+        });
+
+        function get_env() {
+            var prj_id = $('#prj_id').val();
+            if (prj_id == null) {
+                alert("请先选择项目");
+            }
+            else {
+                $.ajax({
+                    type: "get",
+                    url: "/base/findata/",
+                    data: {
+                        "prj_id": prj_id,
+                        "type": "get_env_by_prj_id"
+                    },
+                    success: function (data) {
+                        var listdata = eval(data);
+                        $("#env_id").empty();
+                        $(listdata).each(function (i, item) {
+
+                            $("#env_id").append("<option value=" + item.env_id + ">" + item.env_name + "</option>");
+                        })
+                    },
+                    error: function () {
+                        alert("获取测试环境失败！");
+                    }
+                });
+            }
+
+        }
+
+        function get_cases() {
+            $("#list").empty();
+            var prj_id = $("#prj_id").val();
+            if (prj_id == null) {
+                alert("请先选择项目");
+            }
+            else {
+                $.ajax({
+                    type: "get",
+                    url: "/base/findata",
+                    data: {
+                        "prj_id": prj_id,
+                        "type": "get_all_case_by_prj_id"
+                    },
+                    success: function (data) {
+                        var listdata = eval(data);
+                        $(listdata).each(function (i, item) {
+                            console.log(i, item);
+                            var case_id = $('#case_id').val();
+                            console.log('case_id', case_id);
+                            $("#list").append("<label class='checkbox-inline'><input type='checkbox' name='case_id' value=" + item.case_id + ">" + item.case_name + "</label>");
+                        })
+                    },
+                    error: function () {
+                        alert("获取用例失败");
+                    }
+                });
+            }
+        }
+
+
+    </script>
+{% endblock %}

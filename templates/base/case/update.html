@@ -1,0 +1,664 @@
+{% extends "../../base.html" %}
+
+{% block css %}
+    <style>
+        /* 按钮悬浮*/
+        .float-button {
+            position: fixed;
+            bottom: 100px;
+            right: 160px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: #1dc5a3;
+            cursor: pointer;
+            padding: 7px;
+            border-radius: 10px;
+        }
+
+        .reset {
+            right: 100px;
+        }
+
+        .btn-primary:hover {
+            color: red;
+        }
+
+        .move {
+            display: block;
+            float: left;
+            margin: 1% 20%;
+        }
+
+        .move:hover {
+            color: red;
+        }
+
+        /*返回顶部样式*/
+        #myBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: #999c9e;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        #myBtn:hover {
+            background-color: #555;
+        }
+    </style>
+{% endblock %}
+
+{% block crumbs %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/yqjr/index">主页</a>
+                </li>
+                <li class="active">
+                    <a class="this">基础信息</a>
+                </li>
+                <li class="active">
+                    <a class="this-page" href="/base/case/">用例管理</a>
+                </li>
+                <li class="active">
+                    <a class="">用例编辑</a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+    <div class="col-md-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h3 class="panel-title">编辑用例</h3>
+            </div>
+            <div class="ibox-content">
+                <input name="case_id" id="case_id" value={{ case_id }} hidden>
+                <input name="if_list" id="if_list" value={{ if_list }} hidden>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">用例名称</label>
+                        <div class="col-sm-8">
+                            <input type="text" id="case_name" name="case_name" value="{{ case.case_name }}"
+                                   class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">所属项目</label>
+                        <div class="col-sm-8">
+                            <select id="prj_id" class="form-control" onchange=get_if()>
+                                <option value="{{ case.project_id }}">{{ case.project }}</option>
+                                {#                                <option value=>请选择项目</option>#}
+                                {% for prj in prj_list %}
+                                    <option value={{ prj.prj_id }}>{{ prj.prj_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">用例描述</label>
+                        <div class="col-sm-8">
+                            <textarea id="description" name="description" placeholder="请输入内容" class="form-control"
+                                      rows="3">{{ case.description }}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">步骤查询</label>
+                        <div class="col-sm-4">
+                            <input type="search" id="search" name="search" class="form-control"
+                                   placeholder="搜索接口名称...">
+                        </div>
+
+                        <div class="col-sm-4 ">
+                            <button id="search-btn" class="btn btn-primary" onclick="search()"><i
+                                    class="fa fa-search">&nbsp;查询</i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">添加步骤</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="if_id" name="if_id">
+                                <option value="{{ if_id }}">{{ if_name }}</option>
+                                {% for foo in interface %}
+                                    <option value="{{ foo.if_id }}">{{ foo.if_name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-sm-4 ">
+                            <button id="add_interface" class="btn btn-primary" type="button"><i
+                                    class="fa fa-arrow-circle-down"></i>&nbsp;确定
+                            </button>
+                        </div>
+                    </div>
+                    <div id="case-list">
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-6">
+                            <button type="submit" id="submit" class="btn btn-primary float-button"><i
+                                    class="fa fa-save"></i>&nbsp;保存
+                            </button>
+                            <button id="reset" type="reset" class="btn btn-primary float-button reset"><i
+                                    class="fa fa-repeat"></i>&nbsp;重置
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button onclick="topFunction()" id="myBtn" title="回顶部">返回顶部</button>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        function move(t, oper) {
+            var data_tr = $(t).parent().parent(); //获取到触发的tr
+            if (oper == "MoveUp") {    //向上移动
+                if ($(data_tr).prev().html() == null) { //获取tr的前一个相同等级的元素是否为空
+                    alert("已经是最顶部了!");
+                    return;
+                }
+                {
+                    $(data_tr).insertBefore($(data_tr).prev()); //将本身插入到目标tr的前面
+                }
+            } else {
+                if ($(data_tr).next().html() == null) {
+                    alert("已经是最低部了!");
+                    return;
+                }
+                {
+                    $(data_tr).insertAfter($(data_tr).next()); //将本身插入到目标tr的后面
+                }
+            }
+        }
+
+        // 当网页向下滑动 20px 出现"返回顶部" 按钮
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("myBtn").style.display = "block";
+            } else {
+                document.getElementById("myBtn").style.display = "none";
+            }
+        }
+
+        // 点击按钮，返回顶部
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+        //重置 刷新页面
+        $('#reset').click(function () {
+            location.reload();
+        });
+
+        //删除本接口
+        function del_interface(obj) {
+            var div = $(obj).parent("div").parent().parent();
+            $(div).remove();
+        }
+
+        //删除行
+        function del_step(obj) {
+            var tr = obj.parentNode.parentNode;
+            var tbody = tr.parentNode;
+            tbody.removeChild(tr);
+        }
+
+
+        //添加头参数
+        function add_header_row(obj) {
+            var panel = $(obj).parent().parent();
+            var tbody = $(panel).find("table[name='header']").children('tbody');
+            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td> <td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+            $(tbody).append(newRow);
+        }
+
+        //添加body参数
+        function add_body_row(obj) {
+            var panel = $(obj).parent().parent();
+            var tbody = $(panel).find("table[name='body']").children('tbody');
+            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td> <td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+            $(tbody).append(newRow);
+        }
+
+        //添加提取参数
+        function add_extract_row(obj) {
+            var panel = $(obj).parent().parent();
+            var tbody = $(panel).find("table[name='extract']").children('tbody');
+            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+            $(tbody).append(newRow);
+        }
+
+
+        //添加检查点参数
+        function add_validators_row(obj) {
+            var panel = $(obj).parent().parent();
+            var tbody = $(panel).find("table[name='validators']").children('tbody');
+            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td> <td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+            $(tbody).append(newRow);
+        }
+
+
+        function get_if() {
+            $("#if_id").empty();
+            var prj_id = $("#prj_id").val();
+            if (prj_id == null) {
+                alert("请先选择项目");
+            }
+            else {
+                $.ajax({
+                    type: "get",
+                    url: "/base/findata/",
+                    data: {
+                        "prj_id": prj_id,
+                        "type": "get_all_if_by_prj_id"
+                    },
+                    success: function (data) {
+                        dataJson = eval(data);
+                        $.each(dataJson, function (i, item) {
+                            $("#if_id").append("<option value=" + item.if_id + ">" + item.if_name + "</option>");
+                        })
+                    },
+                    error: function () {
+                        alert("获取接口失败！");
+                    }
+                });
+            }
+        }
+        // 搜索接口
+        function search() {
+            var search_name = $("#search").val();
+            var prj_id = $("#prj_id").val();
+            console.log(prj_id, "《---------------》", search_name);
+            if (prj_id == "" || search_name == "") {
+                alert("请先选择项目并输入接口名称！");
+            }
+            else {
+                $.ajax({
+                    type: "get",
+                    url: "/base/findata/",
+                    data: {
+                        "search_name": search_name,
+                        "prj_id": prj_id,
+                        "type": "get_if_by_search_name"
+                    },
+                    success: function (data) {
+                        console.log("------data---->", data);
+                        if (JSON.stringify(data) == "[]") {
+                            alert("查询结果为空，请重新输入！")
+                        } else {
+                            dataJson = eval(data);
+                            $("#if_id").empty();
+                            $.each(dataJson, function (i, item) {
+                                $("#if_id").append("<option value=" + item.if_id + ">" + item.if_name + "</option>");
+                            })
+                        }
+                    }
+                })
+            }
+        }
+        // 回车提交搜索
+        $(document).keyup(function (event) {
+            if (event.keyCode == 13) {
+                $("#search-btn").trigger("click");
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            //编辑接口--从 case 中获取数据
+            $("#add_interface").click(function () {
+                var if_id = $("#if_id").val();
+                console.log(if_id);
+                if (if_id == "") {
+                    alert("请先选择接口");
+                }
+                else {
+                    var case_id = $("#case_id").val();
+                    var if_list = $("#if_list").val().split(',');
+                    if (if_list.indexOf(if_id) > -1) {
+                        $.ajax({
+                            url: "/base/findata/",
+                            type: "get",
+                            data: {
+                                "case_id": case_id,
+                                "type": "get_case_by_case_id"
+                            },
+                            success: function (data) {
+                                console.log('case  ==>', data);
+                                var listdata = eval(data);
+                                $(listdata).each(function (i, item) {
+                                    console.log('---item.content--->', item.content);
+
+                                    {#                                if (item.content == '[]') {#}
+                                    {#                                    console.log('item.content 为空');#}
+                                    {#                                    alert('请编辑接口参数信息！')#}
+                                    {#                                }#}
+                                    {#                                else {#}
+                                    for (content in eval(item.content)) {
+                                        console.log('---content--->', eval(item.content)[content]);
+                                        console.log('---content--->', content);
+                                        var header_table = "<table name='header' class='table'><thead><tr><th>#</th> <th>参数名</th>" +
+                                            "<th>值</th>" +
+                                            "<th></th> </tr> </thead><tbody>";
+                                        var body_table = "<table name='body' class='table'><thead><tr><th>#</th> <th>参数名</th>" +
+                                            "<th>值</th>" +
+                                            "<th></th> </tr> </thead><tbody>";
+                                        var extract_table = "<table name='extract' class='table'> <thead> <tr> <th>#</th><th>参数名</th></tr></thead><tbody>";
+                                        var validators_table = "<table name='validators' class='table'><thead><tr><th>#</th><th>参数名</th><th>期望值</th></tr></thead><tbody>";
+                                        // header
+                                        var header_json = eval(item.content)[content].header;
+                                        console.log('---header_json--->', header_json);
+
+                                        if (Object.keys(header_json).length === 0) {
+                                            console.log('header 为空');
+                                            var header = header_table + "</tbody></table>";
+                                        } else {
+                                            for (var he in eval(header_json)) {
+                                                var tr_he = "<tr><td>#</td><td name='var_name' contenteditable='true'>" + he + "</td><td contenteditable='true' name='var_value'>" + header_json[he] + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
+                                                header_table = header_table + tr_he;
+                                                var header = header_table + "</tbody></table>";
+                                            }
+                                        }
+
+                                        // body
+                                        var body_json = eval(item.content)[content].body;
+                                        console.log('---body_json--->', body_json);
+
+                                        if (Object.keys(body_json).length === 0) {
+                                            console.log('body 为空');
+                                            var body = body_table + "</tbody></table>";
+                                        } else {
+                                            for (var bo in eval(body_json)) {
+                                                var tr_bo = "<tr><td>#</td><td name='var_name' contenteditable='true'>" + bo + "</td><td contenteditable='true' name='var_value'>" + body_json[bo] + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
+                                                body_table = body_table + tr_bo;
+                                                var body = body_table + "</tbody></table>";
+                                            }
+                                        }
+
+                                        //extract
+                                        var extract_json = eval(item.content)[content].extract;
+                                        console.log('---extract_json--->', extract_json);
+                                        if (Object.keys(extract_json).length === 0) {
+                                            console.log('extract 为空');
+                                            var extract = extract_table + "</tbody></table>";
+                                        } else {
+                                            for (var ex in extract_json) {
+                                                var tr_ex = "<tr><td>#</td><td contenteditable='true' name='var_name'>" + ex + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
+                                                extract_table = extract_table + tr_ex;
+                                                var extract = extract_table + "</tbody></table>";
+                                            }
+                                        }
+
+                                        // validators
+                                        var validators_list = eval(item.content)[content].validators;
+                                        console.log('---validators_list--->', validators_list);
+                                        if (Array.isArray(validators_list) && validators_list.length === 0) {
+                                            console.log('validators 为空');
+                                            var validators = validators_table + "</tbody></table>";
+                                        } else {
+                                            for (va in eval(validators_list)) {
+                                                var check = eval(validators_list)[va].check;
+                                                var expect = eval(validators_list)[va].expect;
+                                                var tr_va = "<tr> <td>#</td><td name='var_name' contenteditable='true'>" + check + "</td><td name='var_value' contenteditable='true'>" + expect + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
+                                                validators_table = validators_table + tr_va;
+                                                var validators = validators_table + "</tbody></table>";
+                                            }
+                                        }
+
+                                        var newtable = "<div class='row'> <div class='panel'><a class='move' href='#' onclick=" + "move(this,'MoveUp')" + ">上移</a>  <a class='move' href='#' onclick=" + "move(this,'MoveDown')" + ">下移</a><div class='col-sm-offset-1 col-sm-9'>" +
+                                            "<div id= '" + eval(item.content)[content].if_id + "' class='panel-heading'>" +
+                                            "<h3 class='panel-title'>" + eval(item.content)[content].if_name + "</h3>" +
+                                            "<div class='right'><button type=\"button\" class='btn-toggle-collapse'><i class='lnr lnr-chevron-up'></i></button></div>" +
+                                            "</div>" +
+                                            "<div class='panel-body'>" +
+                                            "<button onclick='add_header_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加header参数</button>" +
+                                            "<button onclick='add_body_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加body参数</button> " +
+                                            "<button onclick='add_extract_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加提取参数</button> " +
+                                            "<button onclick='add_validators_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加检查点</button> " +
+                                            "<button onclick='del_interface(this)' class='btn btn-primary'><i class='fa fa-close'></i>&nbsp;删除本接口</button></div> " +
+                                            "<p>header参数</p>" +
+                                            header +
+                                            "<p>body参数</p>" +
+                                            body +
+                                            "<p>提取参数</p> " +
+                                            extract +
+                                            "<p>检查点</p> " + validators +
+                                            "</div></div></div>";
+                                        $("#case-list").append(newtable);
+                                        {#<i class="fa fa-arrow-circle-down"></i>&nbsp; <a href='#' onclick=" + "move(this,'MoveUp')" + ">上移</a>  <a href='#' onclick=" + "move(this,'MoveDown')" + ">下移</a>#}
+                                    }
+
+                                });
+                            }
+                            ,
+                            error: function () {
+                                alert("error!");
+                            }
+                        });
+                    }
+                    else {
+                        $.ajax({
+                            url: "/base/findata/",
+                            type: "get",
+                            data: {
+                                "if_id": if_id,
+                                "type": "get_if_by_if_id"
+                            },
+                            success: function (data) {
+                                var listdata = eval(data);
+                                $(listdata).each(function (i, item) {
+
+                                    var header_json = item.request_header_param;
+                                    var header_table = "<table name='header' class='table'><thead><tr><th>#</th> <th>参数名</th>" +
+                                        "<th>值</th>" +
+                                        "<th></th> </tr> </thead><tbody>";
+                                    $.each(JSON.parse(header_json), function (i, item) {
+                                        var tr = "<tr><td>#</td><td name='var_name'>" + item.var_name + "</td><td contenteditable='true' name='var_value'></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
+                                        header_table = header_table + tr;
+                                    });
+                                    var header = header_table + "</tbody></table>";
+
+                                    var body_json = item.request_body_param;
+                                    var body_table = "<table name='body' class='table'><thead><tr><th>#</th> <th>参数名</th>" +
+                                        "<th>值</th>" +
+                                        "<th></th> </tr> </thead><tbody>";
+                                    $.each(JSON.parse(body_json), function (i, item) {
+                                        var tr = "<tr><td>#</td><td name='var_name'>" + item.var_name + "</td><td contenteditable='true' name='var_value'></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
+                                        body_table = body_table + tr
+                                    });
+                                    var body = body_table + "</tbody></table>";
+
+
+                                    var newtable = "<div class='row'> <div class='panel'><a class='move' href='#' onclick=" + "move(this,'MoveUp')" + ">上移</a>  <a class='move' href='#' onclick=" + "move(this,'MoveDown')" + ">下移</a><div class='col-sm-offset-1 col-sm-9'>" +
+                                        "<div id= '" + item.if_id + "' class='panel-heading'>" +
+                                        "<h3 class='panel-title'>" + item.if_name + "</h3>" +
+                                        "<div class='right'><button type=\"button\" class='btn-toggle-collapse'><i class='lnr lnr-chevron-up'></i></button></div>" +
+                                        "</div>" +
+                                        "<div class='panel-body'>" +
+                                        "<button onclick='add_header_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加header参数</button>" +
+                                        "<button onclick='add_body_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加body参数</button> " +
+                                        "<button onclick='add_extract_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加提取参数</button> " +
+                                        "<button onclick='add_validators_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加检查点</button> " +
+                                        "<button onclick='del_interface(this)' class='btn btn-primary'><i class='fa fa-close'></i>&nbsp;删除本接口</button></div> " +
+                                        "<p>header参数</p>" +
+                                        header +
+                                        "<p>body参数</p>" +
+                                        body +
+                                        "<p>提取参数</p> " +
+                                        "<table name='extract' class='table'>" +
+                                        "<thead>" +
+                                        "<tr> <th>#</th>" +
+                                        "<th>参数名</th>" +
+                                        "</tr> " +
+                                        "</thead>" +
+                                        "<tbody> " +
+                                        "</tbody> " +
+                                        "</table> " +
+                                        "<p>检查点</p> " +
+                                        "<table name='validators' class='table'>" +
+                                        "<thead>" +
+                                        "<tr>" +
+                                        "<th>#</th>" +
+                                        "<th>参数名</th>" +
+                                        "<th>期望值</th>" +
+                                        "</tr>" +
+                                        "</thead>" +
+                                        "<tbody>" +
+                                        "</tbody>" +
+                                        "</table>" +
+                                        "</div> </div></div>";
+                                    $("#case-list").append(newtable);
+
+                                });
+
+                            },
+                            error: function () {
+                                alert("error!");
+                            }
+                        });
+                    }
+
+                }
+            })
+            ;
+
+            // 检查输入框
+            function check(att) {
+                strValue = att.replace(/\n/g, '');
+                if (javaTrim(strValue) == "") {
+                    alert('输入有误，请检查！');
+                    return false;
+                }
+            }
+
+            function javaTrim(str) {
+                for (var i = 0; (str.charAt(i) == ' ') && i < str.length; i++);
+                if (i == str.length) return ''; //whole string is space
+                var newstr = str.substr(i);
+                for (var i = newstr.length - 1; newstr.charAt(i) == ' ' && i >= 0; i--);
+                newstr = newstr.substr(0, i + 1);
+                return newstr;
+            }
+
+            $("#submit").click(function () {
+                var case_id = $("#case_id").val();
+                var case_name = $("#case_name").val();
+                if (check(case_name) == false) {
+                    $("#case_name").focus();
+                    return false
+                }
+                var prj_id = $("#prj_id").val();
+                var description = $("#description").val();
+
+                var content = [];
+                $("div[class='panel']").each(function (i) {
+
+                    var step = {};
+
+                    var if_id = $(this).find("div[class='panel-heading']").attr("id");
+                    var if_name = $(this).find("div[class='panel-heading']").text();
+                    var header_table = $(this).find("table[name='header']");
+                    var header = {};
+                    $(header_table).find("tr").each(function (i) {
+                        if (i == 0) return true;
+                        var name = $(this).find("td[name='var_name']").text();
+                        var value = $(this).find("td[name='var_value']").text();
+                        header[name] = value;
+                    });
+
+                    var body_table = $(this).find("table[name='body']");
+                    var body = {};
+                    $(body_table).find("tr").each(function (i) {
+                        if (i == 0) return true;
+                        var name = $(this).find("td[name='var_name']").text();
+                        var value = $(this).find("td[name='var_value']").text();
+                        body[name] = value;
+                    });
+
+                    var extract_table = $(this).find("table[name='extract']");
+                    var extract = {};
+                    $(extract_table).find("tr").each(function (i) {
+                        if (i == 0) return true;
+                        var name = $(this).find("td[name='var_name']").text();
+                        extract[name] = "";
+                    });
+
+                    var validators_table = $(this).find("table[name='validators']");
+                    var validators = [];
+                    $(validators_table).find("tr").each(function (i) {
+                        if (i == 0) return true;
+                        var vl = {};
+                        var name = $(this).find("td[name='var_name']").text();
+                        var value = $(this).find("td[name='var_value']").text();
+                        vl["check"] = name;
+                        vl["comparator"] = "eq";
+                        vl["expect"] = value;
+                        validators.push(vl);
+                    });
+
+                    step["if_id"] = if_id;
+                    step["if_name"] = if_name;
+                    step["header"] = header;
+                    step["body"] = body;
+                    step["extract"] = extract;
+                    step["validators"] = validators;
+
+                    content.push(step);
+                });
+                var content_json = JSON.stringify(content);
+
+                $.ajax({
+                    url: "/base/case_update/",
+                    type: "post",
+                    data: {
+                        "case_id": case_id,
+                        "case_name": case_name,
+                        "prj_id": prj_id,
+                        "description": description,
+                        "content": content_json
+                    },
+                    // dataType: "json",
+                    success: function (data) {
+                        console.log(data);
+                        if (data.indexOf('<') == -1) {
+                            alert(data);
+                        } else {
+                            alert("编辑成功");
+                            window.location.replace("/base/case/");
+                        }
+
+                    },
+                    error: function () {
+                        alert("error!");
+                    }
+                });
+
+
+            });
+
+        })
+        ;
+
+    </script>
+
+
+{% endblock javascript %}

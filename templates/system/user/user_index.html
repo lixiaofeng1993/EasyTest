@@ -1,0 +1,122 @@
+{% extends "../../base.html" %}
+
+{% block css %}
+    <style>
+        #cen {
+            text-align: center;
+        }
+
+        a:hover {
+            color: red;
+        }
+
+        .btn-primary:hover {
+            color: red;
+        }
+
+    </style>
+{% endblock %}
+
+{% block crumbs %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/index">主页</a>
+                </li>
+                <li class="active">
+                    <a class="this">系统设置</a>
+                </li>
+                <li class="active">
+                    <a class="this-page">用户管理</a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <a class="btn btn-primary" id="add_id_PeriodicTask"
+                       href="/admin/auth/user/add/?_to_field=id&amp;_popup=1"><i class="fa fa-plus-circle"></i>&nbsp;添加用户
+                    </a>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th id="cen">ID</th>
+                            <th id="cen">用户名</th>
+                            <th id="cen">电子邮件</th>
+                            <th id="cen">职员状态</th>
+                            <th id="cen">有效</th>
+                            <th id="cen">超级用户状态</th>
+                            <th id="cen">创建时间</th>
+                            <th id="cen">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for sign in contacts %}
+                            <tr>
+                                <td id="cen">{{ sign.id }}</td>
+                                <td><a href="../admin/auth/user/{{ sign.id }}/change/?_to_field=id&_popup=1"
+                                       class="layui-btn layui-btn-xs">{{ sign.username }}</a></td>
+                                <td id="cen">{{ sign.email }}</td>
+                                <td id="cen">{{ sign.is_staff }}</td>
+                                <td id="cen">{{ sign.is_active }}</td>
+                                <td id="cen">{{ sign.is_superuser }}</td>
+                                <td id="cen">{{ sign.date_joined }}</td>
+                                <td id="cen">
+                                    <a href="../admin/auth/user/{{ sign.id }}/delete/?_to_field=id&_popup=1"
+                                       class="layui-btn layui-btn-danger layui-btn-xs"><img
+                                            src="/static/admin/img/icon-deletelink.svg"/></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if contacts.has_previous %}
+                            <a href="/base/user/?page={{ contacts.previous_page_number }}">上一页</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
+                        </span>
+
+                        {% if contacts.has_next %}
+                            <a href="/base/user/?page={{ contacts.next_page_number }}">下一页</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+
+        //删除
+        function delete_btn() {
+            if (window.confirm("你确定要删除吗？")) {
+                return true;//确定返回真
+            }
+            else {
+                return false;//取消返回假
+            }
+        }
+
+
+    </script>
+{% endblock %}

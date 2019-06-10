@@ -1,0 +1,247 @@
+{% extends "../../base.html" %}
+
+{% block css %}
+    <style>
+        #plan_name {
+            color: #000000;
+            font-weight: 900;
+        }
+
+        #if_name {
+            color: #555;
+            font-weight: 700;
+        }
+
+        #case_name {
+            color: #333;
+            font-weight: 800;
+        }
+
+        p {
+            color: #666;
+            font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+        }
+
+        #make {
+            font-weight: 200;
+            font-size: 8px;
+            margin-left: 3%;
+        }
+
+        #make span {
+            color: red;
+        }
+
+        #error_log {
+            color: #FF3333;
+        }
+
+        /*返回顶部样式*/
+        #myBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: #999c9e;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        #myBtn:hover {
+            background-color: #555;
+        }
+
+        a:hover {
+            color: red;
+        }
+
+        .btn-primary:hover {
+            color: red;
+        }
+    </style>
+
+{% endblock %}
+{% block crumbs %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/yqjr/index">主页</a>
+                </li>
+                <li class="active">
+                    <a class="this">基础信息</a>
+                </li>
+                <li class="active">
+                    <a class="this-page" href="/base/report_page/">运行报告</a>
+                </li>
+                <li class="active">
+                    <a class="">运行日志</a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                {% if unicode %}
+                    <div id="log" style="margin: 1% 1%">
+                        <script type="text/javascript">
+                            alert("没有发现该日志文件！！！");
+                        </script>
+                    </div>
+                {% else %}
+                    {% if make %}
+                        <div id="log" style="margin: 1% 1%">
+                            {% for foo in data %}
+                                {{ foo }}<br>
+                            {% endfor %}
+
+                        </div>
+                    {% else %}
+                        {% if plan_id %}
+                            <input id="plan_id" value={{ plan_id }} hidden>
+                        {% endif %}
+
+                        <div id="log" style="margin: 1% 1%">
+                            <p><span
+                                    id="plan_name">{{ report.plan }}</span> 运行日志：</p><br>
+                            {% for case in report_content %}
+                                <p>&nbsp;&nbsp;正在运行用例：<span
+                                        id="case_name">{{ case.case_name }}</span></p>
+                                {% for step in case.step_list %}
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;正在运行接口：<span
+                                            id="if_name">{{ step.if_name }}</span></p>
+                                    <p>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请求方式：{{ step.method }},
+                                        请求url: {{ step.url }}</p>
+                                    <p>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数据类型：{{ step.data_type }}</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;headers：{{ step.header }}</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;请求body：{{ step.body }}</p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;页面返回信息：{{ step.res_content }}</p>
+                                    {#                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;检查点->：#}
+                                    {#                                        字段 {{ step.check_filed }} ---#}
+                                    {#                                        值 {{ step.expect_filed }}</p>#}
+                                    {#                                    <p>#}
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;检查点->：
+                                        {{ step.checkpoint }}</p>
+                                    <p>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;测试结果：{{ step.msg }}</p>
+                                    <br>
+                                {% endfor %}
+                                <br>
+                            {% endfor %}
+                        </div>
+
+                        <button onclick="get_log()" class="btn btn-primary"><i class="fa fa-caret-square-o-down"></i>&nbsp;获取全部日志
+                        </button>
+                        <button onclick="del_log()" class="btn btn-primary"><i class="fa fa-caret-square-o-up"></i>&nbsp;隐藏显示日志
+                        </button>
+                        <span id="make"><span>注：</span>这里只能查看最新的日志信息</span>
+                        <div id="all_log" style="margin: 1% 1%">
+
+                        </div>
+                        </div>
+                    {% endif %}
+                {% endif %}
+        </div>
+        <button onclick="topFunction()" id="myBtn" title="回顶部">返回顶部</button>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        // 当网页向下滑动 20px 出现"返回顶部" 按钮
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("myBtn").style.display = "block";
+            } else {
+                document.getElementById("myBtn").style.display = "none";
+            }
+        }
+
+        // 点击按钮，返回顶部
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+        // 隐藏log
+        function del_log() {
+            $('#all_log').empty();
+        }
+
+        function get_log() {
+            var plan_id = $('#plan_id').val();
+            console.log(plan_id);
+            if (plan_id == undefined) {
+                alert('请先执行测试计划！');
+                return false;
+            }
+            $.ajax({
+                type: "get",
+                url: "/base/findata",
+                data: {
+                    "plan_id": plan_id,
+                    "type": "get_log"
+                },
+                success: function (data) {
+                    {#                    console.log('---------------->', data);#}
+                    if (JSON.stringify(data) != '[]') {
+                        for (item in data) {
+                            var spl = 'interface response data: ';
+                            if (data[item].indexOf(spl) != -1) {
+                                var log = data[item].split('interface response data: ')[1];
+                                var log_ = data[item].split('interface response data: ')[0];
+                                var json = eval("(" + log + ")");
+                                $('#all_log').append("<p>" + "<span>" + log_ + "</span>" + "<span id='case_name'>" + json.case_name + "</span></p>");
+                                for (i in json.step_list) {
+                                    l = json.step_list[i];
+                                    $('#all_log').append("<p>" + "<span>" + log_ + "</span>" + "<span id='if_name'>" + l.if_name + "</span></p>");
+                                    $('#all_log').append("<p>" + log_ + '请求url' + ':' + l.url + '    ' + '请求方式' + ':' + l.method + "</p>");
+                                    $('#all_log').append("<p>" + log_ + '数据类型' + ':' + l.data_type + "</p>");
+                                    $('#all_log').append("<p>" + log_ + 'headers' + ':' + JSON.stringify(l.header) + "</p>");
+                                    $('#all_log').append("<p>" + log_ + '请求body' + ':' + JSON.stringify(l.body) + "</p>");
+                                    $('#all_log').append("<p>" + log_ + '页面返回信息' + ':' + JSON.stringify(l.res_content) + "</p>");
+                                    {#                                    $('#all_log').append("<p>" + log_ + '检查点' + ':' + l.check_filed + '  ' + l.expect_filed + "</p>");#}
+                                    $('#all_log').append("<p>" + log_ + '检查点' + ':' + l.checkpoint + "</p>");
+                                    $('#all_log').append("<p>" + log_ + '测试结果' + ':' + l.result + '    ' + 'msg' + ':' + l.msg + "</p></br>");
+                                }
+                            } else {
+                                // 显示错误日志
+                                if (data[item].indexOf('[20') == -1) {
+                                    $('#all_log').append("<p id='error_log'>" + data[item] + "</p>");
+                                } else {
+                                    $('#all_log').append("<br>");
+                                    $('#all_log').append("<p>" + data[item] + "</p><br>");
+                                }
+                            }
+                        }
+
+                    }
+                    else {
+                        alert('没有发现日志！')
+                    }
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+        }
+
+    </script>
+{% endblock %}

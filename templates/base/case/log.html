@@ -1,0 +1,204 @@
+{% extends "../../base.html" %}
+
+{% block css %}
+    <style>
+        #plan_name {
+            color: #000000;
+            font-weight: 900;
+        }
+
+        #if_name {
+            color: #555;
+            font-weight: 700;
+        }
+
+        #case_name {
+            color: #333;
+            font-weight: 800;
+        }
+
+        p {
+            color: #666;
+            font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+        }
+
+        #make {
+            font-weight: 200;
+            font-size: 8px;
+            margin-left: 3%;
+        }
+
+        #make span {
+            color: red;
+        }
+
+        #error_log {
+            color: #FF3333;
+        }
+
+        /*返回顶部样式*/
+        #myBtn {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            right: 30px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: #999c9e;
+            color: white;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        #myBtn:hover {
+            background-color: #555;
+        }
+
+        a:hover {
+            color: red;
+        }
+
+        .btn-primary:hover {
+            color: red;
+        }
+    </style>
+
+{% endblock %}
+{% block crumbs %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/yqjr/index">主页</a>
+                </li>
+                <li class="active">
+                    <a class="this">基础信息</a>
+                </li>
+                <li class="active">
+                    <a class="this-page" href="/base/case/">用例管理</a>
+                </li>
+                <li class="active">
+                    <a class="">运行日志</a>
+                </li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+    <div class="col-md-12">
+        <div class="panel">
+            {% if unicode %}
+                <div id="log" style="margin: 1% 1%">
+                    <script type="text/javascript">
+                        alert("没有发现该日志文件！！！");
+                    </script>
+                </div>
+            {% else %}
+                <div style="margin: 1% 1%">
+                    <a href="/base/file_download?log_file={{ log_file }}" class="btn btn-primary"><i
+                            class="fa fa-cloud-download"></i>&nbsp;下载all-log文件</a>
+                    <button onclick="get_log()" class="btn btn-primary"><i
+                            class="fa fa-wpforms"></i>&nbsp;格式化日志
+                    </button>
+                </div>
+                {% if make %}
+
+                    <div id="log" style="margin: 1% 1%">
+                        {% for foo in data %}
+                            {{ foo }}<br>
+                        {% endfor %}
+
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+        <button onclick="topFunction()" id="myBtn" title="回顶部">返回顶部</button>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        // 当网页向下滑动 20px 出现"返回顶部" 按钮
+        window.onscroll = function () {
+            scrollFunction()
+        };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                document.getElementById("myBtn").style.display = "block";
+            } else {
+                document.getElementById("myBtn").style.display = "none";
+            }
+        }
+
+        // 点击按钮，返回顶部
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+
+        // 隐藏log
+        function del_log() {
+            $('#all_log').empty();
+        }
+
+        function get_log() {
+            $('#log').empty();
+            $.ajax({
+                type: "get",
+                url: "/base/findata",
+                data: {
+                    "type": "get_log"
+                },
+                success: function (data) {
+                    {#                    console.log('---------------->', data);#}
+                    if (JSON.stringify(data) != '[]') {
+                        for (item in data) {
+                            var spl = 'interface response data: ';
+                            if (data[item].indexOf(spl) != -1) {
+                                var log = data[item].split('interface response data: ')[1];
+                                var log_ = data[item].split('interface response data: ')[0];
+                                var json = eval("(" + log + ")");
+
+                                $('#log').append("<p>" + "<span>" + log_ + "</span>" + "<span id='case_name'>" + json.case_name + "</span></p>");
+                                for (i in json.step_list) {
+                                    l = json.step_list[i];
+                                    $('#log').append("<p>" + "<span>" + log_ + "</span>" + "<span id='if_name'>" + l.if_name + "</span></p>");
+                                    $('#log').append("<p>" + log_ + '请求url' + ':' + l.url + '    ' + '请求方式' + ':' + l.method + "</p>");
+                                    $('#log').append("<p>" + log_ + '数据类型' + ':' + l.data_type + "</p>");
+                                    $('#log').append("<p>" + log_ + 'headers' + ':' + JSON.stringify(l.header) + "</p>");
+                                    $('#log').append("<p>" + log_ + '请求body' + ':' + JSON.stringify(l.body) + "</p>");
+                                    $('#log').append("<p>" + log_ + '页面返回信息' + ':' + JSON.stringify(l.res_content) + "</p>");
+                                    {#                                    $('#all_log').append("<p>" + log_ + '检查点' + ':' + l.check_filed + '  ' + l.expect_filed + "</p>");#}
+                                    $('#log').append("<p>" + log_ + '检查点' + ':' + l.checkpoint + "</p>");
+                                    $('#log').append("<p>" + log_ + '测试结果' + ':' + l.result + '    ' + 'msg' + ':' + l.msg + "</p></br>");
+                                }
+                            } else {
+                                // 显示错误日志
+                                if (data[item].indexOf('[20') == -1) {
+                                    $('#log').append("<p id='error_log'>" + data[item] + "</p>");
+                                } else {
+                                    $('#log').append("<br>");
+                                    $('#log').append("<p>" + data[item] + "</p><br>");
+                                }
+                            }
+                        }
+
+                    }
+                    else {
+                        alert('没有发现日志！')
+                    }
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+        }
+
+    </script>
+{% endblock %}

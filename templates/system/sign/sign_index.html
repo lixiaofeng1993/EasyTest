@@ -1,0 +1,115 @@
+{% extends "../../base.html" %}
+
+{% block css %}
+    <style>
+        #cen {
+            text-align: center;
+        }
+
+        a:hover {
+            color: red;
+        }
+
+        .btn-primary:hover {
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block crumbs %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/index">主页</a>
+                </li>
+                <li class="active">
+                    <a class="this">系统设置</a>
+                </li>
+                <li class="active">
+                    <a class="this-page">签名方式</a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <a class="btn btn-primary" id="add_id_PeriodicTask" href="/base/sign_add"> <i
+                            class="fa fa-plus-circle"></i>&nbsp;添加签名 </a>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th id="cen">ID</th>
+                            <th id="cen">名称</th>
+                            <th id="cen">描述</th>
+                            <th id="cen">更新时间</th>
+                            <th id="cen">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for sign in sign_list %}
+                            <tr>
+                                <td id="cen">{{ sign.sign_id }}</td>
+                                <td><a href="/base/sign_update?sign_id={{ sign.sign_id }}"
+                                       class="layui-btn layui-btn-xs" lay-event="edit">{{ sign.sign_name }}</a></td>
+                                <td>{{ sign.description }}</td>
+                                <td id="cen">{{ sign.update_time }}</td>
+                                <td id="cen">
+                                    <a href="/base/sign_delete?sign_id={{ sign.sign_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"
+                                       onclick="return delete_btn()"><img
+                                            src="/static/admin/img/icon-deletelink.svg"/></a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="pagination">
+                    <span class="step-links">
+                        {% if sign_list.has_previous %}
+                            <a href="/base/sign/?page={{ sign_list.previous_page_number }}">上一页</a>
+                        {% endif %}
+
+                        <span class="current">
+                            Page {{ sign_list.number }} of {{ sign_list.paginator.num_pages }}.
+                        </span>
+
+                        {% if sign_list.has_next %}
+                            <a href="/base/sign/?page={{ sign_list.next_page_number }}">下一页</a>
+                        {% endif %}
+                    </span>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+
+        //删除
+        function delete_btn() {
+            if (window.confirm("你确定要删除吗？")) {
+                return true;//确定返回真
+            }
+            else {
+                return false;//取消返回假
+            }
+        }
+
+
+    </script>
+{% endblock %}

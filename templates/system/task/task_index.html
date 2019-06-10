@@ -1,0 +1,147 @@
+{% extends "../../base.html" %}
+
+{% block css %}
+    <style>
+        #cen {
+            text-align: center;
+        }
+
+        a:hover {
+            color: red;
+        }
+
+        .btn-primary:hover {
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block crumbs %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/index">主页</a>
+                </li>
+                <li class="active">
+                    <a class="this">系统设置</a>
+                </li>
+                <li class="active">
+                    <a class="this-page">定时任务</a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <a class="btn btn-primary" id="add_id_PeriodicTask"
+                       href="/admin/djcelery/periodictask/add/?_to_field=id&amp;_popup=1" title="增加另一个 测试用例">
+                        <i class="fa fa-plus-circle"></i>&nbsp;添加任务
+                    </a>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th id="cen">ID</th>
+                            <th id="cen">任务名称</th>
+                            <th id="cen">任务模块</th>
+                            <th id="cen">时间计划</th>
+                            <th id="cen">更新时间</th>
+                            <th id="cen">状态</th>
+                            <th id="cen">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for task in tasks %}{% for periodic in periodics %}
+                            <tr>
+
+                            {% if task.interval_id != null and task.interval_id == periodic.id %}
+                                <td id="cen">{{ task.id }}</td>
+                                <td><a class="related-widget-wrapper-link add-related"
+                                       id="add_id_Apitest"
+                                       href="../admin/djcelery/periodictask/{{ task.id }}/change/?_to_field=id&_popup=1">{{ task.name }}</a>
+                                </td>
+                                <td>{{ task.task }}</td>
+                                <td><a style='color:green'>{{ periodic.every }} {{ periodic.period }}/次</a></td>
+                                <td id="cen">{{ task.date_changed }}</td>
+                                <td id="cen">{{ task.enabled }}</td>
+                                <td id="cen">
+                                {#                                    <a href="/base/plan/" target="mainFrame"#}
+                                {#                                                class="runCaseForm btn btn-primary"><i#}
+                                {#                                        class="fa fa-recycle"></i>&nbsp;运行</a>#}
+                                {#                                    <a class="runCaseForm btn btn-danger" id="add_id_Apitest"#}
+                                {#                                       href="../admin/djcelery/periodictask/{{ task.id }}/delete/?_to_field=id&_popup=1"><i#}
+                                {#                                            class="fa fa-trash-o">&nbsp;删除</i></a></td>#}
+                                <a href="../admin/djcelery/periodictask/{{ task.id }}/delete/?_to_field=id&_popup=1"
+                                   class="layui-btn layui-btn-danger layui-btn-xs"><img
+                                        src="/static/admin/img/icon-deletelink.svg"/></a>
+
+                            {% else %}
+
+                            {% endif %}
+
+
+                        {% for crontab in crontabs %}
+                            {% if task.crontab_id != null and task.crontab_id == crontab.id %}
+                                <td id="cen">{{ task.id }}</td>
+                                <td><a class="related-widget-wrapper-link add-related"
+                                       id="add_id_Apitest"
+                                       href="../admin/djcelery/periodictask/{{ task.id }}/change/?_to_field=id&_popup=1">{{ task.name }}</a>
+                                </td>
+                                <td>{{ task.task }}</td>
+                                <td>
+                                    <a style='color:green'>{{ crontab.month_of_year }}年{{ crontab.day_of_month }}月{{ crontab.day_of_week }}日{{ crontab.hour }}时{{ crontab.minute }}分</a>
+                                </td>
+                                <td id="cen">{{ task.date_changed }}</td>
+                                <td id="cen">{{ task.enabled }}</td>
+                                <td id="cen">
+                                {#                                    <a href="/base/plan/" target="mainFrame"#}
+                                {#                                                    class="runCaseForm btn btn-primary"><i#}
+                                {#                                            class="fa fa-recycle"></i>&nbsp;运行</a>#}
+                                {#                                        <a class="runCaseForm btn btn-danger"#}
+                                {#                                           id="add_id_Apitest"#}
+                                {#                                           href="../admin/djcelery/periodictask/{{ task.id }}/delete/?_to_field=id&_popup=1"><i#}
+                                {#                                                class="fa fa-trash-o">&nbsp;删除</i></a></td>#}
+                                <a href="../admin/djcelery/periodictask/{{ task.id }}/delete/?_to_field=id&_popup=1"
+                                   class="layui-btn layui-btn-danger layui-btn-xs"><img
+                                        src="/static/admin/img/icon-deletelink.svg"/></a>
+                            {% else %}
+                            {% endif %}
+                        {% endfor %}{% endfor %}{% endfor %}
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+
+        //删除
+        function delete_btn() {
+            if (window.confirm("你确定要删除吗？")) {
+                return true;//确定返回真
+            }
+            else {
+                return false;//取消返回假
+            }
+        }
+
+
+    </script>
+{% endblock %}

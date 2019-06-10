@@ -1,0 +1,169 @@
+{% extends "../../base.html" %}
+
+{% block css %}
+    <style>
+        /* 按钮悬浮*/
+        .float-button {
+            position: fixed;
+            bottom: 100px;
+            right: 100px;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: #1dc5a3;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .btn-primary:hover {
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block crumbs %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/yqjr/index">主页</a>
+                </li>
+                <li class="active">
+                    <a class="this">基础信息</a>
+                </li>
+                <li class="active">
+                    <a class="this-page" href="/base/case/">测试环境</a>
+                </li>
+                <li class="active">
+                    <a class="">设置headers</a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h3 class="panel-title">设置默认headers</h3>
+                </div>
+                <div class="ibox-content">
+
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">已设置headers</label>
+                        <div class="col-sm-2">
+                            <textarea type="text" value="{{ env_id }}" id="env_name"
+                                      class="form-control">{{ env }}</textarea>
+                        </div>
+                    </div>
+                    <div class="form-horizontal" style="margin-top: 5%">
+                        <div class="panel">
+                            <table name='header' class='table'>
+                                <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>参数名</th>
+                                    <th>值</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>#</td>
+                                    <td contenteditable='true' name='var_name'></td>
+                                    <td contenteditable='true' name='var_value'></td>
+                                    <td>
+                                        <button onclick='add_header_row()' class='btn btn-primary'><i
+                                                class='fa fa-plus-square-o'></i></button>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-6">
+                            <button type="submit" id="submit" class="btn btn-primary float-button"><i
+                                    class="fa fa-save"></i>&nbsp;保存
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        //添加头参数
+        function add_header_row() {
+            var newRow = "<tr><td>#</td><td contenteditable='true' name='var_name'></td><td contenteditable='true' name='var_value'></td><td><button onclick='add_header_row()' class='btn btn-primary'><i class='fa fa-plus-square-o'></i></button><button class='btn btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i></button></td></tr>";
+            $('tbody').append(newRow);
+        }
+
+        //删除行
+        function del_step(obj) {
+            var tr = obj.parentNode.parentNode;
+            var tbody = tr.parentNode;
+            tbody.removeChild(tr);
+        }
+
+        $("#submit").click(function () {
+            var step = {};
+            var env_id = $('#env_name').attr('value');
+            console.log(env_id);
+            $("div[class='panel']").each(function (i) {
+
+                var header_table = $(this).find("table[name='header']");
+                var header = {};
+                $(header_table).find("tr").each(function (i) {
+                    if (i == 0) return true;
+                    var name = $(this).find("td[name='var_name']").text();
+                    var value = $(this).find("td[name='var_value']").text();
+                    if (name == '') {
+
+                    } else {
+                        header[name] = value;
+                    }
+                });
+
+                step["header"] = header;
+            });
+            arr = Object.keys(step["header"]);
+            if (JSON.stringify(arr) == '[]') {
+                alert('请设置headers参数和值！');
+            } else {
+                var content_json = JSON.stringify(step);
+
+
+                $.ajax({
+                    url: "/base/set_headers/",
+                    type: "post",
+                    data: {"content": content_json, "env_id": env_id},
+                    success: function (data) {
+                        console.log(data);
+                        alert('保存成功！');
+                        window.location.replace("/base/env/");
+
+                    },
+                    error: function () {
+                        alert("error!");
+                    }
+                });
+
+            }
+        });
+
+    </script>
+
+{% endblock javascript %}
