@@ -5,9 +5,9 @@ from django.contrib import auth  # django认证系统
 from djcelery.models import PeriodicTask, CrontabSchedule
 from django.contrib.auth.models import User
 from django.db.models import Count
+from django.http import StreamingHttpResponse
 from base.models import Project, Sign, Environment, Interface, Case, Plan, Report
-from base.page_cache import page_cache  # redis缓存
-import logging
+import logging, os
 from lib.public import gr_code
 
 log = logging.getLogger('log')  # 初始化log
@@ -83,6 +83,28 @@ def login_action(request):
             # return render(request, 'sign/login.html', {'error': 'username or password error!'})
             log.error('用户名或密码错误... {} {}'.format(username, password))
             return render(request, 'user/login_action.html', {'error': 'username or password error!'})
+
+
+@login_required
+def img_download(request):
+    # do something...
+    if request.method == 'GET':
+        name = request.GET.get('log_file', '')
+        name_path = os.path.join('D:\EasyTest\media', name)
+        def file_iterator(file_name, chunk_size=512):
+            with open(file_name, 'rb') as f:
+                while True:
+                    c = f.read(chunk_size)
+                    if c:
+                        yield c
+                    else:
+                        break
+
+        response = StreamingHttpResponse(file_iterator(name_path))
+        response['Content-Type'] = 'application/octet-stream'
+        response['Content-Disposition'] = 'attachment;filename="{0}"'.format(name_path)
+        log.info('下载的二维码：{}'.format(name_path))
+        return response
 
 
 # 退出

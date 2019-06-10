@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'index/', view=views.index),
     url(r'^login_action/', view=views.login_action, name='login_action'),
     url(r'^logout/', view=views.logout, name='logout'),  # 退出
+    url(r'^img_download/', view=views.img_download, name='img_download'),  # 下载图片
 
     url(r'^base/', include("base.urls")),
 
@@ -41,4 +42,3 @@ handler400 = views.bad_request
 handler403 = views.permission_denied
 handler404 = views.page_not_found
 handler500 = views.server_error
-

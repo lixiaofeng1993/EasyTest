@@ -101,7 +101,7 @@
                 data: {'url': url},
                 success: function (data) {
                     console.log(data);
-                    html = '<img src="/media/' + data + '">';
+                    html = '<img src="/media/' + data + '">' + '<a href="/img_download?log_file=' + data + '" class="btn btn-primary"><i class="fa fa-cloud-download"></i>&nbsp;下载all-log文件</a>';
                     $('.img_qr').empty();
                     $('.img_qr').append(html);
                 }
