@@ -85,18 +85,18 @@ def run_plan():
             plan_id, str(
                 datetime.now())))
     sql.execute_sql('update base_plan set make=0, update_time="{}"'.format(datetime.now()))
-    # if fail_num or error_num:
+    if fail_num or error_num:
         # report_file_html = get_new_report_html(report_path)
         # report_file_list.append(report_file_html)
-        # user = readConfig.user
-        # # qq邮箱授权码
-        # pwd = readConfig.pwd
-        # user_163 = readConfig.user_163
-        # # 163邮箱授权码
-        # pwd_163 = readConfig.pwd_163
-        # # _to = ['1977907603@qq.com', 'liyongfeng@tzx.com.cn']
-        # _to = readConfig.to
-        # smtp_service = readConfig.smtp_service
-        # smtp_service_163 = readConfig.smtp_service_163
-        # send_email(user, pwd, user_163, pwd_163, _to, smtp_service, smtp_service_163)
+        user = readConfig.user
+        # qq邮箱授权码
+        pwd = readConfig.pwd
+        user_163 = readConfig.user_163
+        # 163邮箱授权码
+        pwd_163 = readConfig.pwd_163
+        # _to = ['1977907603@qq.com', 'liyongfeng@tzx.com.cn']
+        _to = readConfig.to
+        smtp_service = readConfig.smtp_service
+        smtp_service_163 = readConfig.smtp_service_163
+        send_email(user, pwd, user_163, pwd_163, _to, smtp_service, smtp_service_163)
     log.info('测试任务执行完成！')

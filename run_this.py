@@ -26,7 +26,7 @@ def run_case(all_case, report_path):
     """执行所有测试用例，并把结果写入报告"""
     result = BeautifulReport(all_case)
     now = time.strftime('%Y-%m-%d %H-%M-%S')
-    result.report(filename=now + 'report.html', description=readConfig.title, log_path=report_path)
+    result.report(filename=now + 'report.html', description=readConfig.title, report_dir=report_path)
     Log().info('执行用例，生成HTML报告: {}\n'.format(now + 'report.html'))
 
 
@@ -117,14 +117,4 @@ def run_email():
 
 
 if __name__ == '__main__':
-    # run_email()
-    import requests, json
-    # files = {'file': open('D:\EasyTest\static\img\login-bg.jpg', 'rb')}
-    # files = {"file": ("login-bg.jpg", open("D:\EasyTest\static\img\login-bg.jpg", "rb"), "image/jpeg", {})}
-    headers = {
-        'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NjAxMzUyMTYzMDUsImV4cGlyZVRpbWUiOjE1NjE0MzEyMTYzMDUsImlkZW50aWZ5IjoyMDkxN30.LMSiuWdFPDbTkkCGo6PvwucYyP_ID2L9Wj5-reT6UJQ'
-    }
-    # r = requests.post('https://course.rest.xxbmm.com/baby_sign/upload', files=files, headers=headers)
-    # print(r.text)
-    r = requests.delete('https://course.rest.xxbmm.com/users/collect', headers=headers, json={ "baby_id": 20479,"course_id": 7})
-    print(r.text)
+    run_email()

@@ -90,15 +90,14 @@ class Test_execute():
         if_dict = {"url": interface.url, "header": step_content["header"], "body": step_content["body"]}
         set_headers = Environment.objects.get(env_id=self.env_id).set_headers
         make = False
-        if set_headers:
-            for k, v in eval(set_headers)['header'].items():
-                if k and v:
-                    if '$' not in v:
-                        make = True
+        for k, v in eval(set_headers)['header'].items():
+            if k and v:
+                if '$' not in v:
+                    make = True
         if make:
             if_dict['header'] = eval(set_headers)['header']
         if interface.data_type == 'sql':
-            for k, v in if_dict['body'].items():
+            for k,v in if_dict['body'].items():
                 if 'select' in v:
                     if_dict['body'][k] = self.sql.execute_sql(v)
         # 签名
@@ -124,7 +123,7 @@ class Test_execute():
         if_dict["url"], if_dict["body"] = format_url(if_dict["url"], if_dict["body"])
         if interface.data_type == 'file':
             if_dict["body"] = {
-                "file": ("login-bg.jpg", open("D:\EasyTest\static\img\login-bg.jpg", "rb"), "image/jpeg", {})}
+                "file": ("login-bg.jpg", open("/var/static/static/img/login-bg.jpg", "rb"), "image/jpeg", {})}
         if_dict["if_id"] = if_id
         if_dict["if_name"] = step_content["if_name"]
         if_dict["method"] = interface.method
@@ -150,8 +149,7 @@ class Test_execute():
                         if k == 'token':
                             headers[k] = if_dict["res_content"]['data']
                             now_time = datetime.now()
-                            Environment.objects.filter(env_id=self.env_id).update(set_headers={'header': headers},
-                                                                                  update_time=now_time)
+                            Environment.objects.filter(env_id=self.env_id).update(set_headers={'header': headers}, update_time=now_time)
         except requests.RequestException as e:
             if_dict["result"] = "Error"
             if_dict["msg"] = str(e)

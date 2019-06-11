@@ -10,8 +10,7 @@ import time, logging, sys, json, requests
 from datetime import datetime
 from lib.signtype import user_sign_api, encryptAES
 from common.connectMySql import SqL
-from lib.public import validators_result, get_extract, get_param, replace_var, extract_variables, call_interface, \
-    format_url
+from lib.public import validators_result, get_extract, get_param, replace_var, extract_variables, call_interface, format_url
 
 s = requests.session()
 extract_dict = {}

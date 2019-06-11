@@ -8,8 +8,7 @@
 '''
 import sys
 
-# sys.path.insert(0, r'/home/ubuntu/EasyTest')
-sys.path.insert(0, r'D:\EasyTes')
+sys.path.insert(0, r'/home/ubuntu/EasyTest')
 
 from locust import HttpLocust, TaskSet, task, Locust, events
 from locust.clients import HttpSession
@@ -36,10 +35,6 @@ class UserBehavior(TaskSet):  # 定义用户行为
         session = HttpSession(self.url)
         for interface_ in self.if_dict_list:
             for interface in interface_:
-                if isinstance(interface['header'], dict):
-                    for k, v in interface['header'].items():
-                        if '$' in v:
-                            interface['header'][k] = self.extract_dict[v[1:]]
                 if isinstance(interface['body'], dict):
                     for k, v in interface['body'].items():
                         if '$' in str(v):
@@ -74,7 +69,7 @@ class WebsiteUser(Locust):  # 设置性能测试;
 
 def run():
     subprocess.check_call(
-        'locust -f D:\EasyTest\\base\performance.py --no-web -c 10 -r 1')
+        'locust -f D:\EasyTest\\base\performance.py --master')
 
 
 if __name__ == '__main__':

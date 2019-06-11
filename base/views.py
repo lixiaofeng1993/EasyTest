@@ -19,10 +19,10 @@ from lib.public import get_new_report_html, DrawPie, is_number, paginator
 import run_this
 
 log = logging.getLogger('log')  # 初始化log
-# report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/templates' + '/report'
-report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\templates' + '\\report'
-# logs_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/' + 'logs'  # 拼接删除目录完整路径
-logs_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\' + 'logs'  # 拼接删除目录完整路径
+report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/templates' + '/report'
+# report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\templates' + '\\report'
+logs_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/' + 'logs'  # 拼接删除目录完整路径
+# logs_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\' + 'logs'  # 拼接删除目录完整路径
 pic_path = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), settings.MEDIA_ROOT)  # 拼接删除目录完整路径
 start_time = ''  # 执行测试计划开始时间
 totalTime = ''  # 执行测试计划运行时间

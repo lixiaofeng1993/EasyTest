@@ -5,9 +5,9 @@ from django.contrib import auth  # django认证系统
 from djcelery.models import PeriodicTask, CrontabSchedule
 from django.contrib.auth.models import User
 from django.db.models import Count
-from django.http import StreamingHttpResponse
 from base.models import Project, Sign, Environment, Interface, Case, Plan, Report
 import logging, os
+from django.http import StreamingHttpResponse
 from lib.public import gr_code
 
 log = logging.getLogger('log')  # 初始化log
@@ -90,7 +90,7 @@ def img_download(request):
     # do something...
     if request.method == 'GET':
         name = request.GET.get('log_file', '')
-        name_path = os.path.join('D:\EasyTest\media', name)
+        name_path = os.path.join('/home/ubuntu/EasyTest/media', name)
         def file_iterator(file_name, chunk_size=512):
             with open(file_name, 'rb') as f:
                 while True:
