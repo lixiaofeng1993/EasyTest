@@ -1,0 +1,589 @@
+[32m[2019-06-06 17:53:42,440] [logger.py:79] [logger:__console] [INFO]- 测试用例：<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<test_api.Test_api testMethod=test_api_01>, <test_api.Test_api testMethod=test_api_02>, <test_api.Test_api testMethod=test_api_03>, <test_api.Test_api testMethod=test_api_04>, <test_api.Test_api testMethod=test_api_05>, <test_api.Test_api testMethod=test_api_06>, <test_api.Test_api testMethod=test_api_07>, <test_api.Test_api testMethod=test_api_08>, <test_api.Test_api testMethod=test_api_09>, <test_api.Test_api testMethod=test_api_10>, <test_api.Test_api testMethod=test_api_11>]>]>]>[0m
+[32m[2019-06-06 17:53:42,441] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  71 模拟授权  ----**********[0m
+[32m[2019-06-06 17:53:42,442] [logger.py:79] [logger:__console] [INFO]- 请求方式： post, 请求url: https://course.rest.xxbmm.com/ops[0m
+[32m[2019-06-06 17:53:42,442] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': ''}[0m
+[32m[2019-06-06 17:53:42,442] [logger.py:79] [logger:__console] [INFO]- post 请求，参数类型为：json ,参数内容为 {'nickname': '道在光明', 'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/05/17/17/ab2ef098-be16-4955-a144-a452815f5418.jpg', 'source': 'APPLET', 'openid': 'ocIIn4141-6H2uTABfyz5XlTDBGU', 'gender': '1', 'unionid': 'oPmunjjIzQtjk2aBI4pfkVLcA9tE'}[0m
+[32m[2019-06-06 17:53:42,730] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":"eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTQ4MjI3MDQsImV4cGlyZVRpbWUiOjE1NjExMTA4MjI3MDQsImlkZW50aWZ5IjoyMDkxN30.LC59mOpiojLlMyF4nofqYxt0CJBbam-XjrcdeJD-p6w","response_code":0}[0m
+[32m[2019-06-06 17:53:42,731] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'comparator': 'eq', 'check': 'msg', 'expect': '成功'}][0m
+[32m[2019-06-06 17:53:42,731] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   模拟授权---->pass	[0m
+[32m[2019-06-06 17:53:42,732] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  41 创建宝宝  ----**********[0m
+[32m[2019-06-06 17:53:42,732] [logger.py:79] [logger:__console] [INFO]- 请求方式： post, 请求url: https://course.rest.xxbmm.com/babys[0m
+[32m[2019-06-06 17:53:42,732] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': ''}[0m
+[32m[2019-06-06 17:53:42,733] [logger.py:79] [logger:__console] [INFO]- post 请求，参数类型为：json ,参数内容为 {'birthday': '2019-01-22', 'gender': 'MAN', 'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg', 'name': '小乖乖在此'}[0m
+[32m[2019-06-06 17:53:42,801] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":false,"msg":"未登录","data":4,"response_code":2}[0m
+[32m[2019-06-06 17:53:42,801] [logger.py:79] [logger:__console] [INFO]- Interface Params Total：1 ,write to json file successfully!
+[0m
+[32m[2019-06-06 17:53:42,802] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'comparator': 'eq', 'check': 'msg', 'expect': '成功'}][0m
+[32m[2019-06-06 17:53:42,802] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   创建宝宝---->fail	[0m
+[32m[2019-06-06 17:53:42,807] [logger.py:79] [logger:__console] [INFO]- headers 替换依赖参数： {'token': '4'}[0m
+[32m[2019-06-06 17:53:42,807] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  40 宝宝列表  ----**********[0m
+[32m[2019-06-06 17:53:42,808] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys[0m
+[32m[2019-06-06 17:53:42,808] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': '4'}[0m
+[32m[2019-06-06 17:53:42,808] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 17:53:42,875] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":false,"msg":"登录token过期","data":1,"response_code":2}[0m
+[32m[2019-06-06 17:53:42,876] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'comparator': 'eq', 'check': 'msg', 'expect': '成功'}][0m
+[32m[2019-06-06 17:53:42,876] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝列表---->fail	[0m
+[32m[2019-06-06 17:53:42,877] [logger.py:79] [logger:__console] [INFO]- headers 替换依赖参数： {'token': ''}[0m
+[32m[2019-06-06 17:53:42,877] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  56 宝宝是否购买了课程核心课  ----**********[0m
+[32m[2019-06-06 17:53:42,877] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/course/buy[0m
+[32m[2019-06-06 17:53:42,878] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': ''}[0m
+[32m[2019-06-06 17:53:42,878] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {'token': ''}[0m
+[32m[2019-06-06 17:53:42,946] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":false,"msg":"未登录","data":4,"response_code":2}[0m
+[32m[2019-06-06 17:53:42,946] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'comparator': 'eq', 'check': 'msg', 'expect': '成功'}][0m
+[32m[2019-06-06 17:53:42,947] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝是否购买了课程核心课---->fail	[0m
+[32m[2019-06-06 17:53:42,947] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  87 获取已领取试听课宝宝ID, 没有宝宝领取过返回0  ----**********[0m
+[32m[2019-06-06 17:53:42,948] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/get_push[0m
+[32m[2019-06-06 17:53:42,948] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': ''}[0m
+[32m[2019-06-06 17:53:42,948] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 17:53:43,016] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":false,"msg":"未登录","data":4,"response_code":2}[0m
+[32m[2019-06-06 17:53:43,016] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'comparator': 'eq', 'check': 'msg', 'expect': '成功'}][0m
+[32m[2019-06-06 17:53:43,016] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取已领取试听课宝宝ID, 没有宝宝领取过返回0---->fail	[0m
+[32m[2019-06-06 17:53:43,017] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  103 获取未购买核心课宝宝ID, 没有宝宝领取过返回0  ----**********[0m
+[32m[2019-06-06 17:53:43,017] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/none_core[0m
+[32m[2019-06-06 17:53:43,018] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': ''}[0m
+[32m[2019-06-06 17:53:43,018] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 17:53:43,086] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":false,"msg":"未登录","data":4,"response_code":2}[0m
+[32m[2019-06-06 17:53:43,086] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'comparator': 'eq', 'check': 'msg', 'expect': '成功'}][0m
+[32m[2019-06-06 17:53:43,087] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取未购买核心课宝宝ID, 没有宝宝领取过返回0---->fail	[0m
+[32m[2019-06-06 17:53:43,087] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  16 获取未领取试听课宝宝ID, 没有宝宝返回0  ----**********[0m
+[32m[2019-06-06 17:53:43,088] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/none_push[0m
+[32m[2019-06-06 17:53:43,088] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': ''}[0m
+[32m[2019-06-06 17:53:43,088] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 17:53:43,156] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":false,"msg":"未登录","data":4,"response_code":2}[0m
+[32m[2019-06-06 17:53:43,156] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'comparator': 'eq', 'check': 'msg', 'expect': '成功'}, {'comparator': 'eq', 'check': 'data', 'expect': '$data'}][0m
+[32m[2019-06-06 17:53:43,157] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取未领取试听课宝宝ID, 没有宝宝返回0---->fail	fail	[0m
+[32m[2019-06-06 17:53:43,157] [logger.py:79] [logger:__console] [INFO]- headers 替换依赖参数： {'token': ''}[0m
+[32m[2019-06-06 17:53:43,158] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  6 修改宝宝信息  ----**********[0m
+[32m[2019-06-06 17:53:43,158] [logger.py:79] [logger:__console] [INFO]- 请求方式： put, 请求url: https://course.rest.xxbmm.com/babys/{id}[0m
+[32m[2019-06-06 17:53:43,158] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': ''}[0m
+[32m[2019-06-06 17:53:43,159] [logger.py:79] [logger:__console] [INFO]- put 请求，参数类型为：json ,参数内容为 {'token': ''}[0m
+[32m[2019-06-06 17:53:43,227] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":false,"msg":"未登录","data":4,"response_code":2}[0m
+[32m[2019-06-06 17:53:43,227] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'comparator': 'eq', 'check': 'msg', 'expect': '成功'}][0m
+[32m[2019-06-06 17:53:43,227] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   修改宝宝信息---->fail	[0m
+[32m[2019-06-06 17:53:43,228] [logger.py:79] [logger:__console] [INFO]- headers 替换依赖参数： {'token': ''}[0m
+[32m[2019-06-06 17:53:43,229] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  58 修改宝宝生日  ----**********[0m
+[32m[2019-06-06 17:53:43,229] [logger.py:79] [logger:__console] [INFO]- 请求方式： put, 请求url: https://course.rest.xxbmm.com/babys/{id}/birthday[0m
+[32m[2019-06-06 17:53:43,229] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': ''}[0m
+[32m[2019-06-06 17:53:43,230] [logger.py:79] [logger:__console] [INFO]- put 请求，参数类型为：json ,参数内容为 {'token': ''}[0m
+[32m[2019-06-06 17:53:43,297] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":false,"msg":"未登录","data":4,"response_code":2}[0m
+[32m[2019-06-06 17:53:43,297] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'comparator': 'eq', 'check': 'msg', 'expect': '成功'}][0m
+[32m[2019-06-06 17:53:43,297] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   修改宝宝生日---->fail	[0m
+[32m[2019-06-06 17:53:43,298] [logger.py:79] [logger:__console] [INFO]- headers 替换依赖参数： {'token': ''}[0m
+[32m[2019-06-06 17:53:43,299] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  13 宝宝是否领取过试听课, 领取过为true  ----**********[0m
+[32m[2019-06-06 17:53:43,299] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/{id}/free[0m
+[32m[2019-06-06 17:53:43,299] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': ''}[0m
+[32m[2019-06-06 17:53:43,300] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {'token': ''}[0m
+[32m[2019-06-06 17:53:43,367] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":false,"msg":"未登录","data":4,"response_code":2}[0m
+[32m[2019-06-06 17:53:43,367] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'comparator': 'eq', 'check': 'msg', 'expect': '成功'}][0m
+[32m[2019-06-06 17:53:43,368] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝是否领取过试听课, 领取过为true---->fail	[0m
+[32m[2019-06-06 17:53:43,369] [logger.py:79] [logger:__console] [INFO]- headers 替换依赖参数： {'token': ''}[0m
+[32m[2019-06-06 17:53:43,369] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  7 删除宝宝信息  ----**********[0m
+[32m[2019-06-06 17:53:43,369] [logger.py:79] [logger:__console] [INFO]- 请求方式： delete, 请求url: https://course.rest.xxbmm.com/babys/{id}[0m
+[32m[2019-06-06 17:53:43,370] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': ''}[0m
+[32m[2019-06-06 17:53:43,370] [logger.py:79] [logger:__console] [INFO]- delete 请求，参数类型为：data ,参数内容为 {'token': ''}[0m
+[32m[2019-06-06 17:53:43,438] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":false,"msg":"未登录","data":4,"response_code":2}[0m
+[32m[2019-06-06 17:53:43,439] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'comparator': 'eq', 'check': 'msg', 'expect': '成功'}][0m
+[32m[2019-06-06 17:53:43,439] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   删除宝宝信息---->fail	[0m
+[32m[2019-06-06 17:53:43,444] [logger.py:79] [logger:__console] [INFO]- 执行用例，生成HTML报告: 2019-06-06 17-53-42report.html
+[0m
+[32m[2019-06-06 17:53:43,445] [logger.py:79] [logger:__console] [INFO]- 最新的测试报告是：2019-06-06 17-53-42report.html[0m
+[32m[2019-06-06 18:46:30,995] [logger.py:79] [logger:__console] [INFO]- 测试用例：<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<test_api.Test_api testMethod=test_api_01>, <test_api.Test_api testMethod=test_api_02>, <test_api.Test_api testMethod=test_api_03>, <test_api.Test_api testMethod=test_api_04>, <test_api.Test_api testMethod=test_api_05>, <test_api.Test_api testMethod=test_api_06>, <test_api.Test_api testMethod=test_api_07>, <test_api.Test_api testMethod=test_api_08>, <test_api.Test_api testMethod=test_api_09>, <test_api.Test_api testMethod=test_api_10>, <test_api.Test_api testMethod=test_api_11>]>]>]>[0m
+[32m[2019-06-06 18:46:30,997] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  71 模拟授权  ----**********[0m
+[32m[2019-06-06 18:46:30,998] [logger.py:79] [logger:__console] [INFO]- 请求方式： post, 请求url: https://course.rest.xxbmm.com/ops[0m
+[32m[2019-06-06 18:46:30,998] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'Accept': 'application/json;charset=UTF-8', 'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA'}[0m
+[32m[2019-06-06 18:46:30,998] [logger.py:79] [logger:__console] [INFO]- post 请求，参数类型为：json ,参数内容为 {'gender': '1', 'nickname': '道在光明', 'source': 'APPLET', 'openid': 'ocIIn4141-6H2uTABfyz5XlTDBGU', 'unionid': 'oPmunjjIzQtjk2aBI4pfkVLcA9tE', 'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/05/17/17/ab2ef098-be16-4955-a144-a452815f5418.jpg'}[0m
+[32m[2019-06-06 18:46:31,312] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":"eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5OTEyODcsImV4cGlyZVRpbWUiOjE1NjExMTM5OTEyODcsImlkZW50aWZ5IjoyMDkxN30.l_UoarL5_Emi7zYimvwHku2bbrxlhekX_2awqygmqMs","response_code":0}[0m
+[32m[2019-06-06 18:46:31,312] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'expect': '成功', 'comparator': 'eq', 'check': 'msg'}][0m
+[32m[2019-06-06 18:46:31,313] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   模拟授权---->pass	[0m
+[32m[2019-06-06 18:46:31,313] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  41 创建宝宝  ----**********[0m
+[32m[2019-06-06 18:46:31,314] [logger.py:79] [logger:__console] [INFO]- 请求方式： post, 请求url: https://course.rest.xxbmm.com/babys[0m
+[32m[2019-06-06 18:46:31,314] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'Accept': 'application/json;charset=UTF-8', 'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA'}[0m
+[32m[2019-06-06 18:46:31,314] [logger.py:79] [logger:__console] [INFO]- post 请求，参数类型为：json ,参数内容为 {'gender': 'MAN', 'name': '小乖乖在此', 'birthday': '2019-01-22', 'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg'}[0m
+[32m[2019-06-06 18:46:31,485] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20498,"response_code":0}[0m
+[32m[2019-06-06 18:46:31,485] [logger.py:79] [logger:__console] [INFO]- Interface Params Total：1 ,write to json file successfully!
+[0m
+[32m[2019-06-06 18:46:31,486] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'expect': '成功', 'comparator': 'eq', 'check': 'msg'}][0m
+[32m[2019-06-06 18:46:31,486] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   创建宝宝---->pass	[0m
+[32m[2019-06-06 18:46:31,486] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  40 宝宝列表  ----**********[0m
+[32m[2019-06-06 18:46:31,487] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys[0m
+[32m[2019-06-06 18:46:31,487] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'Accept': 'application/json;charset=UTF-8', 'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA'}[0m
+[32m[2019-06-06 18:46:31,487] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 18:46:31,556] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":[{"id":20479,"name":"大乖乖在此","user_id":20917,"headimg":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg","gender":"WOMAN","birthday":"2017-01-22 00:00:00","birth":"BIRTH","age":"2岁4月","age_moon_name":null},{"id":20498,"name":"小乖乖在此","user_id":20917,"headimg":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg","gender":"MAN","birthday":"2019-01-22 00:00:00","birth":"BIRTH","age":"4月15天","age_moon_name":null}],"response_code":0}[0m
+[32m[2019-06-06 18:46:31,556] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'expect': '成功', 'comparator': 'eq', 'check': 'msg'}][0m
+[32m[2019-06-06 18:46:31,557] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝列表---->pass	[0m
+[32m[2019-06-06 18:46:31,557] [logger.py:79] [logger:__console] [INFO]- headers 替换依赖参数： {'Accept': 'application/json;charset=UTF-8', 'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA'}[0m
+[32m[2019-06-06 18:46:31,558] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  56 宝宝是否购买了课程核心课  ----**********[0m
+[32m[2019-06-06 18:46:31,558] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/course/buy[0m
+[32m[2019-06-06 18:46:31,558] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'Accept': 'application/json;charset=UTF-8', 'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA'}[0m
+[32m[2019-06-06 18:46:31,559] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {'Accept': 'application/json;charset=UTF-8', 'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA'}[0m
+[32m[2019-06-06 18:46:31,625] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":false,"msg":"系统异常","data":"系统异常","response_code":1}[0m
+[32m[2019-06-06 18:46:31,626] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'expect': '成功', 'comparator': 'eq', 'check': 'msg'}][0m
+[32m[2019-06-06 18:46:31,626] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝是否购买了课程核心课---->fail	[0m
+[32m[2019-06-06 18:46:31,627] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  87 获取已领取试听课宝宝ID, 没有宝宝领取过返回0  ----**********[0m
+[32m[2019-06-06 18:46:31,628] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/get_push[0m
+[32m[2019-06-06 18:46:31,628] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'Accept': 'application/json;charset=UTF-8', 'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA'}[0m
+[32m[2019-06-06 18:46:31,628] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 18:46:31,698] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20479,"response_code":0}[0m
+[32m[2019-06-06 18:46:31,698] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'expect': '成功', 'comparator': 'eq', 'check': 'msg'}][0m
+[32m[2019-06-06 18:46:31,698] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取已领取试听课宝宝ID, 没有宝宝领取过返回0---->pass	[0m
+[32m[2019-06-06 18:46:31,699] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  103 获取未购买核心课宝宝ID, 没有宝宝领取过返回0  ----**********[0m
+[32m[2019-06-06 18:46:31,699] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/none_core[0m
+[32m[2019-06-06 18:46:31,700] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'Accept': 'application/json;charset=UTF-8', 'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA'}[0m
+[32m[2019-06-06 18:46:31,700] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 18:46:31,770] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20498,"response_code":0}[0m
+[32m[2019-06-06 18:46:31,770] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'expect': '成功', 'comparator': 'eq', 'check': 'msg'}][0m
+[32m[2019-06-06 18:46:31,770] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取未购买核心课宝宝ID, 没有宝宝领取过返回0---->pass	[0m
+[32m[2019-06-06 18:46:31,771] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  16 获取未领取试听课宝宝ID, 没有宝宝返回0  ----**********[0m
+[32m[2019-06-06 18:46:31,771] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/none_push[0m
+[32m[2019-06-06 18:46:31,772] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'Accept': 'application/json;charset=UTF-8', 'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA'}[0m
+[32m[2019-06-06 18:46:31,772] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 18:46:31,840] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":false,"msg":"无法多次领取试听课","data":11,"response_code":2}[0m
+[32m[2019-06-06 18:46:31,840] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'expect': '成功', 'comparator': 'eq', 'check': 'msg'}, {'expect': '$data', 'comparator': 'eq', 'check': 'data'}][0m
+[32m[2019-06-06 18:46:31,840] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取未领取试听课宝宝ID, 没有宝宝返回0---->fail	fail	[0m
+[32m[2019-06-06 18:46:31,841] [logger.py:79] [logger:__console] [INFO]- headers 替换依赖参数： {'Accept': 'application/json;charset=UTF-8', 'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA'}[0m
+[32m[2019-06-06 18:46:31,842] [logger.py:79] [logger:__console] [INFO]- headers 替换依赖参数： {'Accept': 'application/json;charset=UTF-8', 'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA'}[0m
+[32m[2019-06-06 18:46:31,843] [logger.py:79] [logger:__console] [INFO]- headers 替换依赖参数： {'Accept': 'application/json;charset=UTF-8', 'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA'}[0m
+[32m[2019-06-06 18:46:31,844] [logger.py:79] [logger:__console] [INFO]- headers 替换依赖参数： {'Accept': 'application/json;charset=UTF-8', 'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA'}[0m
+[32m[2019-06-06 18:46:31,851] [logger.py:79] [logger:__console] [INFO]- 执行用例，生成HTML报告: 2019-06-06 18-46-30report.html
+[0m
+[32m[2019-06-06 18:46:31,852] [logger.py:79] [logger:__console] [INFO]- 最新的测试报告是：2019-06-06 18-46-30report.html[0m
+[32m[2019-06-06 18:48:38,348] [logger.py:79] [logger:__console] [INFO]- 测试用例：<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<test_api.Test_api testMethod=test_api_01>, <test_api.Test_api testMethod=test_api_02>, <test_api.Test_api testMethod=test_api_03>, <test_api.Test_api testMethod=test_api_04>, <test_api.Test_api testMethod=test_api_05>, <test_api.Test_api testMethod=test_api_06>, <test_api.Test_api testMethod=test_api_07>, <test_api.Test_api testMethod=test_api_08>, <test_api.Test_api testMethod=test_api_09>, <test_api.Test_api testMethod=test_api_10>, <test_api.Test_api testMethod=test_api_11>]>]>]>[0m
+[32m[2019-06-06 18:48:38,350] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  71 模拟授权  ----**********[0m
+[32m[2019-06-06 18:48:38,350] [logger.py:79] [logger:__console] [INFO]- 请求方式： post, 请求url: https://course.rest.xxbmm.com/ops[0m
+[32m[2019-06-06 18:48:38,350] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:48:38,351] [logger.py:79] [logger:__console] [INFO]- post 请求，参数类型为：json ,参数内容为 {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/05/17/17/ab2ef098-be16-4955-a144-a452815f5418.jpg', 'openid': 'ocIIn4141-6H2uTABfyz5XlTDBGU', 'gender': '1', 'unionid': 'oPmunjjIzQtjk2aBI4pfkVLcA9tE', 'source': 'APPLET', 'nickname': '道在光明'}[0m
+[32m[2019-06-06 18:48:38,608] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":"eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTgxMTg1ODMsImV4cGlyZVRpbWUiOjE1NjExMTQxMTg1ODMsImlkZW50aWZ5IjoyMDkxN30.0aHCg1uKYhbRVLFftGq67uhLU95QQXYaUadvvxPUjrc","response_code":0}[0m
+[32m[2019-06-06 18:48:38,609] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:48:38,609] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   模拟授权---->pass	[0m
+[32m[2019-06-06 18:48:38,610] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  41 创建宝宝  ----**********[0m
+[32m[2019-06-06 18:48:38,610] [logger.py:79] [logger:__console] [INFO]- 请求方式： post, 请求url: https://course.rest.xxbmm.com/babys[0m
+[32m[2019-06-06 18:48:38,610] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:48:38,611] [logger.py:79] [logger:__console] [INFO]- post 请求，参数类型为：json ,参数内容为 {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg', 'gender': 'MAN', 'name': '小乖乖在此', 'birthday': '2019-01-22'}[0m
+[32m[2019-06-06 18:48:38,776] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20499,"response_code":0}[0m
+[32m[2019-06-06 18:48:38,777] [logger.py:79] [logger:__console] [INFO]- Interface Params Total：1 ,write to json file successfully!
+[0m
+[32m[2019-06-06 18:48:38,777] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:48:38,777] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   创建宝宝---->pass	[0m
+[32m[2019-06-06 18:48:38,778] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  40 宝宝列表  ----**********[0m
+[32m[2019-06-06 18:48:38,778] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys[0m
+[32m[2019-06-06 18:48:38,779] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:48:38,779] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 18:48:38,840] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":[{"id":20479,"name":"大乖乖在此","user_id":20917,"headimg":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg","gender":"WOMAN","birthday":"2017-01-22 00:00:00","birth":"BIRTH","age":"2岁4月","age_moon_name":null},{"id":20499,"name":"小乖乖在此","user_id":20917,"headimg":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg","gender":"MAN","birthday":"2019-01-22 00:00:00","birth":"BIRTH","age":"4月15天","age_moon_name":null}],"response_code":0}[0m
+[32m[2019-06-06 18:48:38,841] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:48:38,841] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝列表---->pass	[0m
+[32m[2019-06-06 18:48:38,842] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'baby_id': '20499'}[0m
+[32m[2019-06-06 18:48:38,842] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  56 宝宝是否购买了课程核心课  ----**********[0m
+[32m[2019-06-06 18:48:38,843] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/course/buy[0m
+[32m[2019-06-06 18:48:38,843] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:48:38,843] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {'baby_id': '20499'}[0m
+[32m[2019-06-06 18:48:38,913] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":false,"response_code":0}[0m
+[32m[2019-06-06 18:48:38,914] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:48:38,914] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝是否购买了课程核心课---->pass	[0m
+[32m[2019-06-06 18:48:38,915] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  87 获取已领取试听课宝宝ID, 没有宝宝领取过返回0  ----**********[0m
+[32m[2019-06-06 18:48:38,915] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/get_push[0m
+[32m[2019-06-06 18:48:38,915] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:48:38,916] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 18:48:38,979] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20479,"response_code":0}[0m
+[32m[2019-06-06 18:48:38,980] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:48:38,980] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取已领取试听课宝宝ID, 没有宝宝领取过返回0---->pass	[0m
+[32m[2019-06-06 18:48:38,981] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  103 获取未购买核心课宝宝ID, 没有宝宝领取过返回0  ----**********[0m
+[32m[2019-06-06 18:48:38,981] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/none_core[0m
+[32m[2019-06-06 18:48:38,981] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:48:38,982] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 18:48:39,044] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20499,"response_code":0}[0m
+[32m[2019-06-06 18:48:39,044] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:48:39,045] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取未购买核心课宝宝ID, 没有宝宝领取过返回0---->pass	[0m
+[32m[2019-06-06 18:48:39,045] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  16 获取未领取试听课宝宝ID, 没有宝宝返回0  ----**********[0m
+[32m[2019-06-06 18:48:39,045] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/none_push[0m
+[32m[2019-06-06 18:48:39,046] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:48:39,046] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 18:48:39,108] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":false,"msg":"无法多次领取试听课","data":11,"response_code":2}[0m
+[32m[2019-06-06 18:48:39,108] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}, {'check': 'data', 'comparator': 'eq', 'expect': '$data'}][0m
+[32m[2019-06-06 18:48:39,108] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取未领取试听课宝宝ID, 没有宝宝返回0---->fail	fail	[0m
+[32m[2019-06-06 18:48:39,110] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg', 'gender': 'WOMAN', 'name': '大乖乖在此', 'id': '20499', 'birthday': '2017-01-22'}[0m
+[32m[2019-06-06 18:48:39,110] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  6 修改宝宝信息  ----**********[0m
+[32m[2019-06-06 18:48:39,111] [logger.py:79] [logger:__console] [INFO]- 请求方式： put, 请求url: https://course.rest.xxbmm.com/babys/20499[0m
+[32m[2019-06-06 18:48:39,111] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:48:39,111] [logger.py:79] [logger:__console] [INFO]- put 请求，参数类型为：json ,参数内容为 {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg', 'gender': 'WOMAN', 'name': '大乖乖在此', 'birthday': '2017-01-22'}[0m
+[32m[2019-06-06 18:48:39,184] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":true,"response_code":0}[0m
+[32m[2019-06-06 18:48:39,185] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:48:39,185] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   修改宝宝信息---->pass	[0m
+[32m[2019-06-06 18:48:39,186] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'id': '20499', 'birthday': '2018-01-22'}[0m
+[32m[2019-06-06 18:48:39,186] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  58 修改宝宝生日  ----**********[0m
+[32m[2019-06-06 18:48:39,187] [logger.py:79] [logger:__console] [INFO]- 请求方式： put, 请求url: https://course.rest.xxbmm.com/babys/20499/birthday[0m
+[32m[2019-06-06 18:48:39,187] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:48:39,187] [logger.py:79] [logger:__console] [INFO]- put 请求，参数类型为：json ,参数内容为 {'birthday': '2018-01-22'}[0m
+[32m[2019-06-06 18:48:39,261] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":true,"response_code":0}[0m
+[32m[2019-06-06 18:48:39,261] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:48:39,262] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   修改宝宝生日---->pass	[0m
+[32m[2019-06-06 18:48:39,262] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'id': '20499'}[0m
+[32m[2019-06-06 18:48:39,263] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  13 宝宝是否领取过试听课, 领取过为true  ----**********[0m
+[32m[2019-06-06 18:48:39,263] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/20499/free[0m
+[32m[2019-06-06 18:48:39,263] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:48:39,264] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 18:48:39,326] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":false,"response_code":0}[0m
+[32m[2019-06-06 18:48:39,326] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:48:39,327] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝是否领取过试听课, 领取过为true---->pass	[0m
+[32m[2019-06-06 18:48:39,327] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'id': '20499'}[0m
+[32m[2019-06-06 18:48:39,328] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  7 删除宝宝信息  ----**********[0m
+[32m[2019-06-06 18:48:39,328] [logger.py:79] [logger:__console] [INFO]- 请求方式： delete, 请求url: https://course.rest.xxbmm.com/babys/20499[0m
+[32m[2019-06-06 18:48:39,328] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:48:39,329] [logger.py:79] [logger:__console] [INFO]- delete 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 18:48:39,424] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":true,"response_code":0}[0m
+[32m[2019-06-06 18:48:39,425] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:48:39,425] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   删除宝宝信息---->pass	[0m
+[32m[2019-06-06 18:48:39,433] [logger.py:79] [logger:__console] [INFO]- 执行用例，生成HTML报告: 2019-06-06 18-48-38report.html
+[0m
+[32m[2019-06-06 18:48:39,434] [logger.py:79] [logger:__console] [INFO]- 最新的测试报告是：2019-06-06 18-48-38report.html[0m
+[32m[2019-06-06 18:51:35,860] [logger.py:79] [logger:__console] [INFO]- 测试用例：<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<test_api.Test_api testMethod=test_api_01>, <test_api.Test_api testMethod=test_api_02>, <test_api.Test_api testMethod=test_api_03>, <test_api.Test_api testMethod=test_api_04>, <test_api.Test_api testMethod=test_api_05>, <test_api.Test_api testMethod=test_api_06>, <test_api.Test_api testMethod=test_api_07>, <test_api.Test_api testMethod=test_api_08>, <test_api.Test_api testMethod=test_api_09>, <test_api.Test_api testMethod=test_api_10>, <test_api.Test_api testMethod=test_api_11>]>]>]>[0m
+[32m[2019-06-06 18:51:35,861] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  71 模拟授权  ----**********[0m
+[32m[2019-06-06 18:51:35,862] [logger.py:79] [logger:__console] [INFO]- 请求方式： post, 请求url: https://course.rest.xxbmm.com/ops[0m
+[32m[2019-06-06 18:51:35,862] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:51:35,862] [logger.py:79] [logger:__console] [INFO]- post 请求，参数类型为：json ,参数内容为 {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/05/17/17/ab2ef098-be16-4955-a144-a452815f5418.jpg', 'openid': 'ocIIn4141-6H2uTABfyz5XlTDBGU', 'gender': '1', 'unionid': 'oPmunjjIzQtjk2aBI4pfkVLcA9tE', 'source': 'APPLET', 'nickname': '道在光明'}[0m
+[32m[2019-06-06 18:51:36,115] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":"eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTgyOTYwODksImV4cGlyZVRpbWUiOjE1NjExMTQyOTYwODksImlkZW50aWZ5IjoyMDkxN30.XnE4eVuENSLUWc58oQfQjPPU9rE7kj9_oyQbk9wBW-o","response_code":0}[0m
+[32m[2019-06-06 18:51:36,116] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:51:36,116] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   模拟授权---->pass	[0m
+[32m[2019-06-06 18:51:36,117] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  41 创建宝宝  ----**********[0m
+[32m[2019-06-06 18:51:36,117] [logger.py:79] [logger:__console] [INFO]- 请求方式： post, 请求url: https://course.rest.xxbmm.com/babys[0m
+[32m[2019-06-06 18:51:36,117] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:51:36,118] [logger.py:79] [logger:__console] [INFO]- post 请求，参数类型为：json ,参数内容为 {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg', 'gender': 'MAN', 'name': '小乖乖在此', 'birthday': '2019-01-22'}[0m
+[32m[2019-06-06 18:51:36,323] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20502,"response_code":0}[0m
+[32m[2019-06-06 18:51:36,324] [logger.py:79] [logger:__console] [INFO]- Interface Params Total：1 ,write to json file successfully!
+[0m
+[32m[2019-06-06 18:51:36,324] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:51:36,325] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   创建宝宝---->pass	[0m
+[32m[2019-06-06 18:51:36,325] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  40 宝宝列表  ----**********[0m
+[32m[2019-06-06 18:51:36,325] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys[0m
+[32m[2019-06-06 18:51:36,326] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:51:36,326] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 18:51:36,396] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":[{"id":20479,"name":"大乖乖在此","user_id":20917,"headimg":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg","gender":"WOMAN","birthday":"2017-01-22 00:00:00","birth":"BIRTH","age":"2岁4月","age_moon_name":null},{"id":20502,"name":"小乖乖在此","user_id":20917,"headimg":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg","gender":"MAN","birthday":"2019-01-22 00:00:00","birth":"BIRTH","age":"4月15天","age_moon_name":null}],"response_code":0}[0m
+[32m[2019-06-06 18:51:36,396] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:51:36,397] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝列表---->pass	[0m
+[32m[2019-06-06 18:51:36,397] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'baby_id': '20502'}[0m
+[32m[2019-06-06 18:51:36,398] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  56 宝宝是否购买了课程核心课  ----**********[0m
+[32m[2019-06-06 18:51:36,398] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/course/buy[0m
+[32m[2019-06-06 18:51:36,399] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:51:36,399] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {'baby_id': '20502'}[0m
+[32m[2019-06-06 18:51:36,474] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":false,"response_code":0}[0m
+[32m[2019-06-06 18:51:36,475] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:51:36,475] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝是否购买了课程核心课---->pass	[0m
+[32m[2019-06-06 18:51:36,476] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  87 获取已领取试听课宝宝ID, 没有宝宝领取过返回0  ----**********[0m
+[32m[2019-06-06 18:51:36,476] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/get_push[0m
+[32m[2019-06-06 18:51:36,476] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:51:36,477] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 18:51:36,546] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20479,"response_code":0}[0m
+[32m[2019-06-06 18:51:36,547] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:51:36,547] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取已领取试听课宝宝ID, 没有宝宝领取过返回0---->pass	[0m
+[32m[2019-06-06 18:51:36,548] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  103 获取未购买核心课宝宝ID, 没有宝宝领取过返回0  ----**********[0m
+[32m[2019-06-06 18:51:36,548] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/none_core[0m
+[32m[2019-06-06 18:51:36,548] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:51:36,549] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 18:51:36,619] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20502,"response_code":0}[0m
+[32m[2019-06-06 18:51:36,620] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:51:36,620] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取未购买核心课宝宝ID, 没有宝宝领取过返回0---->pass	[0m
+[32m[2019-06-06 18:51:36,621] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  16 获取未领取试听课宝宝ID, 没有宝宝返回0  ----**********[0m
+[32m[2019-06-06 18:51:36,621] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/none_push[0m
+[32m[2019-06-06 18:51:36,621] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:51:36,622] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 18:51:36,690] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":false,"msg":"无法多次领取试听课","data":11,"response_code":2}[0m
+[32m[2019-06-06 18:51:36,690] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}, {'check': 'data', 'comparator': 'eq', 'expect': '$data'}][0m
+[32m[2019-06-06 18:51:36,690] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取未领取试听课宝宝ID, 没有宝宝返回0---->fail	fail	[0m
+[32m[2019-06-06 18:51:36,691] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg', 'gender': 'WOMAN', 'name': '大乖乖在此', 'id': '20502', 'birthday': '2017-01-22'}[0m
+[32m[2019-06-06 18:51:36,692] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  6 修改宝宝信息  ----**********[0m
+[32m[2019-06-06 18:51:36,692] [logger.py:79] [logger:__console] [INFO]- 请求方式： put, 请求url: https://course.rest.xxbmm.com/babys/20502[0m
+[32m[2019-06-06 18:51:36,692] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:51:36,693] [logger.py:79] [logger:__console] [INFO]- put 请求，参数类型为：json ,参数内容为 {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg', 'gender': 'WOMAN', 'name': '大乖乖在此', 'birthday': '2017-01-22'}[0m
+[32m[2019-06-06 18:51:36,774] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":true,"response_code":0}[0m
+[32m[2019-06-06 18:51:36,774] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:51:36,774] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   修改宝宝信息---->pass	[0m
+[32m[2019-06-06 18:51:36,775] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'id': '20502', 'birthday': '2018-01-22'}[0m
+[32m[2019-06-06 18:51:36,775] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  58 修改宝宝生日  ----**********[0m
+[32m[2019-06-06 18:51:36,776] [logger.py:79] [logger:__console] [INFO]- 请求方式： put, 请求url: https://course.rest.xxbmm.com/babys/20502/birthday[0m
+[32m[2019-06-06 18:51:36,776] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:51:36,776] [logger.py:79] [logger:__console] [INFO]- put 请求，参数类型为：json ,参数内容为 {'birthday': '2018-01-22'}[0m
+[32m[2019-06-06 18:51:36,857] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":true,"response_code":0}[0m
+[32m[2019-06-06 18:51:36,857] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:51:36,858] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   修改宝宝生日---->pass	[0m
+[32m[2019-06-06 18:51:36,858] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'id': '20502'}[0m
+[32m[2019-06-06 18:51:36,859] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  13 宝宝是否领取过试听课, 领取过为true  ----**********[0m
+[32m[2019-06-06 18:51:36,859] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/20502/free[0m
+[32m[2019-06-06 18:51:36,859] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:51:36,860] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 18:51:36,930] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":false,"response_code":0}[0m
+[32m[2019-06-06 18:51:36,930] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:51:36,931] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝是否领取过试听课, 领取过为true---->pass	[0m
+[32m[2019-06-06 18:51:36,931] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'id': '20502'}[0m
+[32m[2019-06-06 18:51:36,932] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  7 删除宝宝信息  ----**********[0m
+[32m[2019-06-06 18:51:36,932] [logger.py:79] [logger:__console] [INFO]- 请求方式： delete, 请求url: https://course.rest.xxbmm.com/babys/20502[0m
+[32m[2019-06-06 18:51:36,932] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 18:51:36,933] [logger.py:79] [logger:__console] [INFO]- delete 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 18:51:37,036] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":true,"response_code":0}[0m
+[32m[2019-06-06 18:51:37,037] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 18:51:37,037] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   删除宝宝信息---->pass	[0m
+[32m[2019-06-06 18:51:37,042] [logger.py:79] [logger:__console] [INFO]- 执行用例，生成HTML报告: 2019-06-06 18-51-35report.html
+[0m
+[32m[2019-06-06 18:51:37,044] [logger.py:79] [logger:__console] [INFO]- 最新的测试报告是：2019-06-06 18-51-35report.html[0m
+[32m[2019-06-06 19:02:49,889] [logger.py:79] [logger:__console] [INFO]- 测试用例：<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<test_api.Test_api testMethod=test_api_01>, <test_api.Test_api testMethod=test_api_02>, <test_api.Test_api testMethod=test_api_03>, <test_api.Test_api testMethod=test_api_04>, <test_api.Test_api testMethod=test_api_05>, <test_api.Test_api testMethod=test_api_06>, <test_api.Test_api testMethod=test_api_07>, <test_api.Test_api testMethod=test_api_08>, <test_api.Test_api testMethod=test_api_09>, <test_api.Test_api testMethod=test_api_10>, <test_api.Test_api testMethod=test_api_11>]>]>]>[0m
+[32m[2019-06-06 19:02:49,890] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  71 模拟授权  ----**********[0m
+[32m[2019-06-06 19:02:49,891] [logger.py:79] [logger:__console] [INFO]- 请求方式： post, 请求url: https://course.rest.xxbmm.com/ops[0m
+[32m[2019-06-06 19:02:49,891] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:02:49,891] [logger.py:79] [logger:__console] [INFO]- post 请求，参数类型为：json ,参数内容为 {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/05/17/17/ab2ef098-be16-4955-a144-a452815f5418.jpg', 'openid': 'ocIIn4141-6H2uTABfyz5XlTDBGU', 'gender': '1', 'unionid': 'oPmunjjIzQtjk2aBI4pfkVLcA9tE', 'source': 'APPLET', 'nickname': '道在光明'}[0m
+[32m[2019-06-06 19:02:50,115] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":"eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NzAwODksImV4cGlyZVRpbWUiOjE1NjExMTQ5NzAwODksImlkZW50aWZ5IjoyMDkxN30.ScZxse_KGt2L6yENX_lGykw5aKOOhN3wf6M9qWf_4FM","response_code":0}[0m
+[32m[2019-06-06 19:02:50,115] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:02:50,116] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   模拟授权---->pass	[0m
+[32m[2019-06-06 19:02:50,116] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  41 创建宝宝  ----**********[0m
+[32m[2019-06-06 19:02:50,116] [logger.py:79] [logger:__console] [INFO]- 请求方式： post, 请求url: https://course.rest.xxbmm.com/babys[0m
+[32m[2019-06-06 19:02:50,117] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:02:50,117] [logger.py:79] [logger:__console] [INFO]- post 请求，参数类型为：json ,参数内容为 {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg', 'gender': 'MAN', 'name': '小乖乖在此', 'birthday': '2019-01-22'}[0m
+[32m[2019-06-06 19:02:50,265] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20504,"response_code":0}[0m
+[32m[2019-06-06 19:02:50,266] [logger.py:79] [logger:__console] [INFO]- Interface Params Total：1 ,write to json file successfully!
+[0m
+[32m[2019-06-06 19:02:50,266] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:02:50,267] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   创建宝宝---->pass	[0m
+[32m[2019-06-06 19:02:50,267] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  40 宝宝列表  ----**********[0m
+[32m[2019-06-06 19:02:50,268] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys[0m
+[32m[2019-06-06 19:02:50,268] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:02:50,268] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 19:02:50,330] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":[{"id":20479,"name":"大乖乖在此","user_id":20917,"headimg":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg","gender":"WOMAN","birthday":"2017-01-22 00:00:00","birth":"BIRTH","age":"2岁4月","age_moon_name":null},{"id":20504,"name":"小乖乖在此","user_id":20917,"headimg":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg","gender":"MAN","birthday":"2019-01-22 00:00:00","birth":"BIRTH","age":"4月15天","age_moon_name":null}],"response_code":0}[0m
+[32m[2019-06-06 19:02:50,331] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:02:50,331] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝列表---->pass	[0m
+[32m[2019-06-06 19:02:50,332] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'baby_id': '20504'}[0m
+[32m[2019-06-06 19:02:50,332] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  56 宝宝是否购买了课程核心课  ----**********[0m
+[32m[2019-06-06 19:02:50,332] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/course/buy[0m
+[32m[2019-06-06 19:02:50,333] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:02:50,333] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {'baby_id': '20504'}[0m
+[32m[2019-06-06 19:02:50,400] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":false,"response_code":0}[0m
+[32m[2019-06-06 19:02:50,401] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:02:50,401] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝是否购买了课程核心课---->pass	[0m
+[32m[2019-06-06 19:02:50,402] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  87 获取已领取试听课宝宝ID, 没有宝宝领取过返回0  ----**********[0m
+[32m[2019-06-06 19:02:50,402] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/get_push[0m
+[32m[2019-06-06 19:02:50,402] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:02:50,403] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 19:02:50,466] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20479,"response_code":0}[0m
+[32m[2019-06-06 19:02:50,467] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:02:50,467] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取已领取试听课宝宝ID, 没有宝宝领取过返回0---->pass	[0m
+[32m[2019-06-06 19:02:50,468] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  103 获取未购买核心课宝宝ID, 没有宝宝领取过返回0  ----**********[0m
+[32m[2019-06-06 19:02:50,468] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/none_core[0m
+[32m[2019-06-06 19:02:50,468] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:02:50,469] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 19:02:50,532] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20504,"response_code":0}[0m
+[32m[2019-06-06 19:02:50,532] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}, {'check': 'data', 'comparator': 'eq', 'expect': '$data'}][0m
+[32m[2019-06-06 19:02:50,532] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取未购买核心课宝宝ID, 没有宝宝领取过返回0---->pass	fail	[0m
+[32m[2019-06-06 19:02:50,534] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  16 获取未领取试听课宝宝ID, 没有宝宝返回0  ----**********[0m
+[32m[2019-06-06 19:02:50,534] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/none_push[0m
+[32m[2019-06-06 19:02:50,534] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:02:50,535] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 19:02:50,596] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":false,"msg":"无法多次领取试听课","data":11,"response_code":2}[0m
+[32m[2019-06-06 19:02:50,597] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}, {'check': 'data', 'comparator': 'eq', 'expect': '$data'}][0m
+[32m[2019-06-06 19:02:50,597] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取未领取试听课宝宝ID, 没有宝宝返回0---->fail	fail	[0m
+[32m[2019-06-06 19:02:50,598] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg', 'gender': 'WOMAN', 'name': '大乖乖在此', 'id': '20504', 'birthday': '2017-01-22'}[0m
+[32m[2019-06-06 19:02:50,598] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  6 修改宝宝信息  ----**********[0m
+[32m[2019-06-06 19:02:50,599] [logger.py:79] [logger:__console] [INFO]- 请求方式： put, 请求url: https://course.rest.xxbmm.com/babys/20504[0m
+[32m[2019-06-06 19:02:50,599] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:02:50,599] [logger.py:79] [logger:__console] [INFO]- put 请求，参数类型为：json ,参数内容为 {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg', 'gender': 'WOMAN', 'name': '大乖乖在此', 'birthday': '2017-01-22'}[0m
+[32m[2019-06-06 19:02:50,671] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":true,"response_code":0}[0m
+[32m[2019-06-06 19:02:50,671] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:02:50,672] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   修改宝宝信息---->pass	[0m
+[32m[2019-06-06 19:02:50,672] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'id': '20504', 'birthday': '2018-01-22'}[0m
+[32m[2019-06-06 19:02:50,673] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  58 修改宝宝生日  ----**********[0m
+[32m[2019-06-06 19:02:50,673] [logger.py:79] [logger:__console] [INFO]- 请求方式： put, 请求url: https://course.rest.xxbmm.com/babys/20504/birthday[0m
+[32m[2019-06-06 19:02:50,673] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:02:50,674] [logger.py:79] [logger:__console] [INFO]- put 请求，参数类型为：json ,参数内容为 {'birthday': '2018-01-22'}[0m
+[32m[2019-06-06 19:02:50,747] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":true,"response_code":0}[0m
+[32m[2019-06-06 19:02:50,747] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:02:50,748] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   修改宝宝生日---->pass	[0m
+[32m[2019-06-06 19:02:50,748] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'id': '20504'}[0m
+[32m[2019-06-06 19:02:50,749] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  13 宝宝是否领取过试听课, 领取过为true  ----**********[0m
+[32m[2019-06-06 19:02:50,749] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/20504/free[0m
+[32m[2019-06-06 19:02:50,749] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:02:50,750] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 19:02:50,811] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":false,"response_code":0}[0m
+[32m[2019-06-06 19:02:50,812] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:02:50,812] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝是否领取过试听课, 领取过为true---->pass	[0m
+[32m[2019-06-06 19:02:50,813] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'id': '20504'}[0m
+[32m[2019-06-06 19:02:50,813] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  7 删除宝宝信息  ----**********[0m
+[32m[2019-06-06 19:02:50,814] [logger.py:79] [logger:__console] [INFO]- 请求方式： delete, 请求url: https://course.rest.xxbmm.com/babys/20504[0m
+[32m[2019-06-06 19:02:50,814] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:02:50,814] [logger.py:79] [logger:__console] [INFO]- delete 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 19:02:50,904] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":true,"response_code":0}[0m
+[32m[2019-06-06 19:02:50,905] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:02:50,905] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   删除宝宝信息---->pass	[0m
+[32m[2019-06-06 19:02:50,910] [logger.py:79] [logger:__console] [INFO]- 执行用例，生成HTML报告: 2019-06-06 19-02-49report.html
+[0m
+[32m[2019-06-06 19:02:50,912] [logger.py:79] [logger:__console] [INFO]- 最新的测试报告是：2019-06-06 19-02-49report.html[0m
+[32m[2019-06-06 19:04:25,288] [logger.py:79] [logger:__console] [INFO]- 测试用例：<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<test_api.Test_api testMethod=test_api_01>, <test_api.Test_api testMethod=test_api_02>, <test_api.Test_api testMethod=test_api_03>, <test_api.Test_api testMethod=test_api_04>, <test_api.Test_api testMethod=test_api_05>, <test_api.Test_api testMethod=test_api_06>, <test_api.Test_api testMethod=test_api_07>, <test_api.Test_api testMethod=test_api_08>, <test_api.Test_api testMethod=test_api_09>, <test_api.Test_api testMethod=test_api_10>, <test_api.Test_api testMethod=test_api_11>]>]>]>[0m
+[32m[2019-06-06 19:04:25,289] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  71 模拟授权  ----**********[0m
+[32m[2019-06-06 19:04:25,289] [logger.py:79] [logger:__console] [INFO]- 请求方式： post, 请求url: https://course.rest.xxbmm.com/ops[0m
+[32m[2019-06-06 19:04:25,289] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:04:25,290] [logger.py:79] [logger:__console] [INFO]- post 请求，参数类型为：json ,参数内容为 {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/05/17/17/ab2ef098-be16-4955-a144-a452815f5418.jpg', 'openid': 'ocIIn4141-6H2uTABfyz5XlTDBGU', 'gender': '1', 'unionid': 'oPmunjjIzQtjk2aBI4pfkVLcA9tE', 'source': 'APPLET', 'nickname': '道在光明'}[0m
+[32m[2019-06-06 19:04:25,509] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":"eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTkwNjU0ODQsImV4cGlyZVRpbWUiOjE1NjExMTUwNjU0ODQsImlkZW50aWZ5IjoyMDkxN30.IZk5dphqrai70XZK3JZ6a101M0OVUixqkbq82JG65Ew","response_code":0}[0m
+[32m[2019-06-06 19:04:25,509] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:04:25,509] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   模拟授权---->pass	[0m
+[32m[2019-06-06 19:04:25,510] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  41 创建宝宝  ----**********[0m
+[32m[2019-06-06 19:04:25,510] [logger.py:79] [logger:__console] [INFO]- 请求方式： post, 请求url: https://course.rest.xxbmm.com/babys[0m
+[32m[2019-06-06 19:04:25,511] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:04:25,511] [logger.py:79] [logger:__console] [INFO]- post 请求，参数类型为：json ,参数内容为 {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg', 'gender': 'MAN', 'name': '小乖乖在此', 'birthday': '2019-01-22'}[0m
+[32m[2019-06-06 19:04:25,659] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20505,"response_code":0}[0m
+[32m[2019-06-06 19:04:25,660] [logger.py:79] [logger:__console] [INFO]- Interface Params Total：1 ,write to json file successfully!
+[0m
+[32m[2019-06-06 19:04:25,660] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:04:25,661] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   创建宝宝---->pass	[0m
+[32m[2019-06-06 19:04:25,661] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  40 宝宝列表  ----**********[0m
+[32m[2019-06-06 19:04:25,661] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys[0m
+[32m[2019-06-06 19:04:25,662] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:04:25,662] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 19:04:25,725] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":[{"id":20479,"name":"大乖乖在此","user_id":20917,"headimg":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg","gender":"WOMAN","birthday":"2017-01-22 00:00:00","birth":"BIRTH","age":"2岁4月","age_moon_name":null},{"id":20505,"name":"小乖乖在此","user_id":20917,"headimg":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg","gender":"MAN","birthday":"2019-01-22 00:00:00","birth":"BIRTH","age":"4月15天","age_moon_name":null}],"response_code":0}[0m
+[32m[2019-06-06 19:04:25,725] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:04:25,726] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝列表---->pass	[0m
+[32m[2019-06-06 19:04:25,726] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'baby_id': '20505'}[0m
+[32m[2019-06-06 19:04:25,727] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  56 宝宝是否购买了课程核心课  ----**********[0m
+[32m[2019-06-06 19:04:25,727] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/course/buy[0m
+[32m[2019-06-06 19:04:25,727] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:04:25,728] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {'baby_id': '20505'}[0m
+[32m[2019-06-06 19:04:25,795] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":false,"response_code":0}[0m
+[32m[2019-06-06 19:04:25,796] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:04:25,796] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝是否购买了课程核心课---->pass	[0m
+[32m[2019-06-06 19:04:25,796] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  87 获取已领取试听课宝宝ID, 没有宝宝领取过返回0  ----**********[0m
+[32m[2019-06-06 19:04:25,797] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/get_push[0m
+[32m[2019-06-06 19:04:25,797] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:04:25,797] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 19:04:25,859] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20479,"response_code":0}[0m
+[32m[2019-06-06 19:04:25,859] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:04:25,859] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取已领取试听课宝宝ID, 没有宝宝领取过返回0---->pass	[0m
+[32m[2019-06-06 19:04:25,860] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  103 获取未购买核心课宝宝ID, 没有宝宝领取过返回0  ----**********[0m
+[32m[2019-06-06 19:04:25,860] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/none_core[0m
+[32m[2019-06-06 19:04:25,861] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:04:25,861] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 19:04:25,923] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20505,"response_code":0}[0m
+[32m[2019-06-06 19:04:25,923] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}, {'check': 'data', 'comparator': 'eq', 'expect': '$data'}][0m
+[32m[2019-06-06 19:04:25,924] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取未购买核心课宝宝ID, 没有宝宝领取过返回0---->pass	fail	[0m
+[32m[2019-06-06 19:04:25,924] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  16 获取未领取试听课宝宝ID, 没有宝宝返回0  ----**********[0m
+[32m[2019-06-06 19:04:25,925] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/none_push[0m
+[32m[2019-06-06 19:04:25,925] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:04:25,925] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 19:04:25,986] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":false,"msg":"无法多次领取试听课","data":11,"response_code":2}[0m
+[32m[2019-06-06 19:04:25,987] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}, {'check': 'data', 'comparator': 'eq', 'expect': '$data'}][0m
+[32m[2019-06-06 19:04:25,987] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取未领取试听课宝宝ID, 没有宝宝返回0---->fail	fail	[0m
+[32m[2019-06-06 19:04:25,989] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg', 'gender': 'WOMAN', 'name': '大乖乖在此', 'id': '20505', 'birthday': '2017-01-22'}[0m
+[32m[2019-06-06 19:04:25,989] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  6 修改宝宝信息  ----**********[0m
+[32m[2019-06-06 19:04:25,989] [logger.py:79] [logger:__console] [INFO]- 请求方式： put, 请求url: https://course.rest.xxbmm.com/babys/20505[0m
+[32m[2019-06-06 19:04:25,990] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:04:25,990] [logger.py:79] [logger:__console] [INFO]- put 请求，参数类型为：json ,参数内容为 {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg', 'gender': 'WOMAN', 'name': '大乖乖在此', 'birthday': '2017-01-22'}[0m
+[32m[2019-06-06 19:04:26,062] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":true,"response_code":0}[0m
+[32m[2019-06-06 19:04:26,062] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:04:26,063] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   修改宝宝信息---->pass	[0m
+[32m[2019-06-06 19:04:26,063] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'id': '20505', 'birthday': '2018-01-22'}[0m
+[32m[2019-06-06 19:04:26,064] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  58 修改宝宝生日  ----**********[0m
+[32m[2019-06-06 19:04:26,064] [logger.py:79] [logger:__console] [INFO]- 请求方式： put, 请求url: https://course.rest.xxbmm.com/babys/20505/birthday[0m
+[32m[2019-06-06 19:04:26,064] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:04:26,065] [logger.py:79] [logger:__console] [INFO]- put 请求，参数类型为：json ,参数内容为 {'birthday': '2018-01-22'}[0m
+[32m[2019-06-06 19:04:26,135] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":true,"response_code":0}[0m
+[32m[2019-06-06 19:04:26,136] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:04:26,136] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   修改宝宝生日---->pass	[0m
+[32m[2019-06-06 19:04:26,137] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'id': '20505'}[0m
+[32m[2019-06-06 19:04:26,137] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  13 宝宝是否领取过试听课, 领取过为true  ----**********[0m
+[32m[2019-06-06 19:04:26,137] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/20505/free[0m
+[32m[2019-06-06 19:04:26,138] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:04:26,138] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 19:04:26,199] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":false,"response_code":0}[0m
+[32m[2019-06-06 19:04:26,199] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:04:26,199] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝是否领取过试听课, 领取过为true---->pass	[0m
+[32m[2019-06-06 19:04:26,200] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'id': '20505'}[0m
+[32m[2019-06-06 19:04:26,200] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  7 删除宝宝信息  ----**********[0m
+[32m[2019-06-06 19:04:26,201] [logger.py:79] [logger:__console] [INFO]- 请求方式： delete, 请求url: https://course.rest.xxbmm.com/babys/20505[0m
+[32m[2019-06-06 19:04:26,201] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTg5NTMyOTMsImV4cGlyZVRpbWUiOjE1NjExMTQ5NTMyOTMsImlkZW50aWZ5IjoyMDkxN30.DCGISoDdRFUgm8M3OC3JySh4jQ_AIKOTqMr8dXLnKUY', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 19:04:26,201] [logger.py:79] [logger:__console] [INFO]- delete 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 19:04:26,295] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":true,"response_code":0}[0m
+[32m[2019-06-06 19:04:26,295] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 19:04:26,296] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   删除宝宝信息---->pass	[0m
+[32m[2019-06-06 19:04:26,301] [logger.py:79] [logger:__console] [INFO]- 执行用例，生成HTML报告: 2019-06-06 19-04-25report.html
+[0m
+[32m[2019-06-06 19:04:26,302] [logger.py:79] [logger:__console] [INFO]- 最新的测试报告是：2019-06-06 19-04-25report.html[0m
+[32m[2019-06-06 21:24:51,786] [logger.py:79] [logger:__console] [INFO]- 测试用例：<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<test_api.Test_api testMethod=test_api_01>, <test_api.Test_api testMethod=test_api_02>, <test_api.Test_api testMethod=test_api_03>, <test_api.Test_api testMethod=test_api_04>, <test_api.Test_api testMethod=test_api_05>, <test_api.Test_api testMethod=test_api_06>, <test_api.Test_api testMethod=test_api_07>, <test_api.Test_api testMethod=test_api_08>, <test_api.Test_api testMethod=test_api_09>, <test_api.Test_api testMethod=test_api_10>, <test_api.Test_api testMethod=test_api_11>]>]>]>[0m
+[32m[2019-06-06 21:24:51,787] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  71 模拟授权  ----**********[0m
+[32m[2019-06-06 21:24:51,788] [logger.py:79] [logger:__console] [INFO]- 请求方式： post, 请求url: https://course.rest.xxbmm.com/ops[0m
+[32m[2019-06-06 21:24:51,788] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 21:24:51,788] [logger.py:79] [logger:__console] [INFO]- post 请求，参数类型为：json ,参数内容为 {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/05/17/17/ab2ef098-be16-4955-a144-a452815f5418.jpg', 'openid': 'ocIIn4141-6H2uTABfyz5XlTDBGU', 'gender': '1', 'unionid': 'oPmunjjIzQtjk2aBI4pfkVLcA9tE', 'source': 'APPLET', 'nickname': '道在光明'}[0m
+[32m[2019-06-06 21:24:52,294] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":"eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4Mjc0OTIyNjUsImV4cGlyZVRpbWUiOjE1NjExMjM0OTIyNjUsImlkZW50aWZ5IjoyMDkxN30.LzygjiqMceT1IR0WXHz9-OREK0X1HvZbXdp1GACeKQo","response_code":0}[0m
+[32m[2019-06-06 21:24:52,295] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 21:24:52,295] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   模拟授权---->pass	[0m
+[32m[2019-06-06 21:24:52,296] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  41 创建宝宝  ----**********[0m
+[32m[2019-06-06 21:24:52,296] [logger.py:79] [logger:__console] [INFO]- 请求方式： post, 请求url: https://course.rest.xxbmm.com/babys[0m
+[32m[2019-06-06 21:24:52,296] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 21:24:52,296] [logger.py:79] [logger:__console] [INFO]- post 请求，参数类型为：json ,参数内容为 {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg', 'gender': 'MAN', 'name': '小乖乖在此', 'birthday': '2019-01-22'}[0m
+[32m[2019-06-06 21:24:52,448] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20507,"response_code":0}[0m
+[32m[2019-06-06 21:24:52,448] [logger.py:79] [logger:__console] [INFO]- Interface Params Total：1 ,write to json file successfully!
+[0m
+[32m[2019-06-06 21:24:52,449] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 21:24:52,449] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   创建宝宝---->pass	[0m
+[32m[2019-06-06 21:24:52,450] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  40 宝宝列表  ----**********[0m
+[32m[2019-06-06 21:24:52,450] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys[0m
+[32m[2019-06-06 21:24:52,450] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 21:24:52,450] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 21:24:52,512] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":[{"id":20479,"name":"大乖乖在此","user_id":20917,"headimg":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg","gender":"WOMAN","birthday":"2017-01-22 00:00:00","birth":"BIRTH","age":"2岁4月","age_moon_name":null},{"id":20507,"name":"小乖乖在此","user_id":20917,"headimg":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg","gender":"MAN","birthday":"2019-01-22 00:00:00","birth":"BIRTH","age":"4月15天","age_moon_name":null}],"response_code":0}[0m
+[32m[2019-06-06 21:24:52,513] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 21:24:52,513] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝列表---->pass	[0m
+[32m[2019-06-06 21:24:52,514] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'baby_id': '20507'}[0m
+[32m[2019-06-06 21:24:52,514] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  56 宝宝是否购买了课程核心课  ----**********[0m
+[32m[2019-06-06 21:24:52,514] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/course/buy[0m
+[32m[2019-06-06 21:24:52,514] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 21:24:52,515] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {'baby_id': '20507'}[0m
+[32m[2019-06-06 21:24:52,586] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":false,"response_code":0}[0m
+[32m[2019-06-06 21:24:52,586] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 21:24:52,586] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝是否购买了课程核心课---->pass	[0m
+[32m[2019-06-06 21:24:52,587] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  87 获取已领取试听课宝宝ID, 没有宝宝领取过返回0  ----**********[0m
+[32m[2019-06-06 21:24:52,587] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/get_push[0m
+[32m[2019-06-06 21:24:52,587] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 21:24:52,587] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 21:24:52,653] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20479,"response_code":0}[0m
+[32m[2019-06-06 21:24:52,653] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 21:24:52,653] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取已领取试听课宝宝ID, 没有宝宝领取过返回0---->pass	[0m
+[32m[2019-06-06 21:24:52,654] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  103 获取未购买核心课宝宝ID, 没有宝宝领取过返回0  ----**********[0m
+[32m[2019-06-06 21:24:52,654] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/none_core[0m
+[32m[2019-06-06 21:24:52,654] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 21:24:52,655] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 21:24:52,720] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":20507,"response_code":0}[0m
+[32m[2019-06-06 21:24:52,720] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 21:24:52,721] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取未购买核心课宝宝ID, 没有宝宝领取过返回0---->pass	[0m
+[32m[2019-06-06 21:24:52,721] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  16 获取未领取试听课宝宝ID, 没有宝宝返回0  ----**********[0m
+[32m[2019-06-06 21:24:52,722] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/none_push[0m
+[32m[2019-06-06 21:24:52,722] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 21:24:52,722] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 21:24:52,832] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":false,"msg":"无法多次领取试听课","data":11,"response_code":2}[0m
+[32m[2019-06-06 21:24:52,832] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}, {'check': 'data', 'comparator': 'eq', 'expect': '$data'}][0m
+[32m[2019-06-06 21:24:52,833] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   获取未领取试听课宝宝ID, 没有宝宝返回0---->fail	fail	[0m
+[32m[2019-06-06 21:24:52,834] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg', 'gender': 'WOMAN', 'name': '大乖乖在此', 'id': '20507', 'birthday': '2017-01-22'}[0m
+[32m[2019-06-06 21:24:52,834] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  6 修改宝宝信息  ----**********[0m
+[32m[2019-06-06 21:24:52,834] [logger.py:79] [logger:__console] [INFO]- 请求方式： put, 请求url: https://course.rest.xxbmm.com/babys/20507[0m
+[32m[2019-06-06 21:24:52,834] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 21:24:52,835] [logger.py:79] [logger:__console] [INFO]- put 请求，参数类型为：json ,参数内容为 {'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/05/18/65b52d5c-0724-42b2-bb4b-bf4407e84cdf.jpg', 'gender': 'WOMAN', 'name': '大乖乖在此', 'birthday': '2017-01-22'}[0m
+[32m[2019-06-06 21:24:52,908] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":true,"response_code":0}[0m
+[32m[2019-06-06 21:24:52,908] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 21:24:52,908] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   修改宝宝信息---->pass	[0m
+[32m[2019-06-06 21:24:52,909] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'id': '20507', 'birthday': '2018-01-22'}[0m
+[32m[2019-06-06 21:24:52,909] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  58 修改宝宝生日  ----**********[0m
+[32m[2019-06-06 21:24:52,909] [logger.py:79] [logger:__console] [INFO]- 请求方式： put, 请求url: https://course.rest.xxbmm.com/babys/20507/birthday[0m
+[32m[2019-06-06 21:24:52,910] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 21:24:52,910] [logger.py:79] [logger:__console] [INFO]- put 请求，参数类型为：json ,参数内容为 {'birthday': '2018-01-22'}[0m
+[32m[2019-06-06 21:24:52,982] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":true,"response_code":0}[0m
+[32m[2019-06-06 21:24:52,982] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 21:24:52,983] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   修改宝宝生日---->pass	[0m
+[32m[2019-06-06 21:24:52,983] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'id': '20507'}[0m
+[32m[2019-06-06 21:24:52,984] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  13 宝宝是否领取过试听课, 领取过为true  ----**********[0m
+[32m[2019-06-06 21:24:52,984] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/babys/20507/free[0m
+[32m[2019-06-06 21:24:52,984] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 21:24:52,984] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 21:24:53,049] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":false,"response_code":0}[0m
+[32m[2019-06-06 21:24:53,050] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 21:24:53,050] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   宝宝是否领取过试听课, 领取过为true---->pass	[0m
+[32m[2019-06-06 21:24:53,051] [logger.py:79] [logger:__console] [INFO]- body 替换上下文依赖参数： {'id': '20507'}[0m
+[32m[2019-06-06 21:24:53,051] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  7 删除宝宝信息  ----**********[0m
+[32m[2019-06-06 21:24:53,051] [logger.py:79] [logger:__console] [INFO]- 请求方式： delete, 请求url: https://course.rest.xxbmm.com/babys/20507[0m
+[32m[2019-06-06 21:24:53,051] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NTk4MTc5NjIzNzMsImV4cGlyZVRpbWUiOjE1NjExMTM5NjIzNzMsImlkZW50aWZ5IjoyMDkxN30.lz8sieUhRuFOK-AUJ-9TPg2KRwZMQfogr1RvGzCAXgA', 'Accept': 'application/json;charset=UTF-8'}[0m
+[32m[2019-06-06 21:24:53,052] [logger.py:79] [logger:__console] [INFO]- delete 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-06 21:24:53,150] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":true,"response_code":0}[0m
+[32m[2019-06-06 21:24:53,151] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-06 21:24:53,151] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   删除宝宝信息---->pass	[0m
+[32m[2019-06-06 21:24:53,156] [logger.py:79] [logger:__console] [INFO]- 执行用例，生成HTML报告: 2019-06-06 21-24-51report.html
+[0m
+[32m[2019-06-06 21:24:53,157] [logger.py:79] [logger:__console] [INFO]- 最新的测试报告是：2019-06-06 21-24-51report.html[0m

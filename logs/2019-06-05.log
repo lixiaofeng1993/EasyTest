@@ -1,0 +1,44 @@
+[32m[2019-06-05 11:23:55,140] [logger.py:79] [logger:__console] [INFO]- 测试用例：<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<test_api.Test_api testMethod=test_api_1>]>]>]>[0m
+[32m[2019-06-05 11:23:55,143] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  77 游戏排行榜  ----**********[0m
+[32m[2019-06-05 11:23:55,143] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/games/top[0m
+[32m[2019-06-05 11:23:55,143] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': ''}[0m
+[32m[2019-06-05 11:23:55,144] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-05 11:23:55,490] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":[{"id":5,"name":"31-吸管的脚印 B","img":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/03/20/13/323fb520-498b-4d71-8905-af0bcc055182.jpg","description":"","pay_type":"FREE","tags_name":["休闲娱乐"]},{"id":6,"name":"27-立体的圣诞老人-bcopy","img":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/03/20/11/fe7a6312-90db-400f-8ae7-527b5b6311c4.jpg","description":"27-立体的圣诞老人-bcopy 描述","pay_type":null,"tags_name":["益智游戏"]},{"id":23,"name":"30-不一样的画笔 B","img":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/03/20/13/b92e7888-11c2-42c0-8f70-e091e92cf129.jpg","description":"30-不一样的画笔 B ","pay_type":"FREE","tags_name":[]}],"response_code":0}[0m
+[32m[2019-06-05 11:23:55,491] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'expect': '成功', 'comparator': 'eq', 'check': 'msg'}][0m
+[32m[2019-06-05 11:23:55,491] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   游戏排行榜---->pass	[0m
+[32m[2019-06-05 11:23:55,503] [logger.py:79] [logger:__console] [INFO]- 执行用例，生成HTML报告: 2019-06-05 11-23-55report.html
+[0m
+[32m[2019-06-05 11:23:55,504] [logger.py:79] [logger:__console] [INFO]- 最新的测试报告是：2019-06-01 23-35-00report.html[0m
+[32m[2019-06-05 11:27:02,918] [logger.py:79] [logger:__console] [INFO]- 测试用例：<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<test_api.Test_api testMethod=test_api_1>]>]>]>[0m
+[32m[2019-06-05 11:27:02,919] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  77 游戏排行榜  ----**********[0m
+[32m[2019-06-05 11:27:02,919] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/games/top[0m
+[32m[2019-06-05 11:27:02,920] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': ''}[0m
+[32m[2019-06-05 11:27:02,920] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-05 11:27:03,180] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":[{"id":5,"name":"31-吸管的脚印 B","img":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/03/20/13/323fb520-498b-4d71-8905-af0bcc055182.jpg","description":"","pay_type":"FREE","tags_name":["休闲娱乐"]},{"id":6,"name":"27-立体的圣诞老人-bcopy","img":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/03/20/11/fe7a6312-90db-400f-8ae7-527b5b6311c4.jpg","description":"27-立体的圣诞老人-bcopy 描述","pay_type":null,"tags_name":["益智游戏"]},{"id":23,"name":"30-不一样的画笔 B","img":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/03/20/13/b92e7888-11c2-42c0-8f70-e091e92cf129.jpg","description":"30-不一样的画笔 B ","pay_type":"FREE","tags_name":[]}],"response_code":0}[0m
+[32m[2019-06-05 11:27:03,180] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'expect': '成功', 'comparator': 'eq'}][0m
+[32m[2019-06-05 11:27:03,181] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   游戏排行榜---->pass	[0m
+[32m[2019-06-05 11:27:03,188] [logger.py:79] [logger:__console] [INFO]- 执行用例，生成HTML报告: 2019-06-05 11-27-02report.html
+[0m
+[32m[2019-06-05 11:27:03,189] [logger.py:79] [logger:__console] [INFO]- 最新的测试报告是：2019-06-05 11-27-02report.html[0m
+[32m[2019-06-05 11:52:43,918] [logger.py:79] [logger:__console] [INFO]- 测试用例：<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<test_api.Test_api testMethod=test_api_1>]>]>]>[0m
+[32m[2019-06-05 11:52:43,919] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  77 游戏排行榜  ----**********[0m
+[32m[2019-06-05 11:52:43,920] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/games/top[0m
+[32m[2019-06-05 11:52:43,920] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': ''}[0m
+[32m[2019-06-05 11:52:43,921] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-05 11:52:44,468] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":[{"id":5,"name":"31-吸管的脚印 B","img":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/03/20/13/323fb520-498b-4d71-8905-af0bcc055182.jpg","description":"","pay_type":"FREE","tags_name":["休闲娱乐"]},{"id":6,"name":"27-立体的圣诞老人-bcopy","img":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/03/20/11/fe7a6312-90db-400f-8ae7-527b5b6311c4.jpg","description":"27-立体的圣诞老人-bcopy 描述","pay_type":null,"tags_name":["益智游戏"]},{"id":23,"name":"30-不一样的画笔 B","img":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/03/20/13/b92e7888-11c2-42c0-8f70-e091e92cf129.jpg","description":"30-不一样的画笔 B ","pay_type":"FREE","tags_name":[]}],"response_code":0}[0m
+[32m[2019-06-05 11:52:44,468] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-05 11:52:44,469] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   游戏排行榜---->pass	[0m
+[32m[2019-06-05 11:52:44,475] [logger.py:79] [logger:__console] [INFO]- 执行用例，生成HTML报告: 2019-06-05 11-52-43report.html
+[0m
+[32m[2019-06-05 11:52:44,476] [logger.py:79] [logger:__console] [INFO]- 最新的测试报告是：2019-06-05 11-52-43report.html[0m
+[32m[2019-06-05 11:55:49,760] [logger.py:79] [logger:__console] [INFO]- 测试用例：<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<unittest.suite.TestSuite tests=[<test_api.Test_api testMethod=test_api_1>]>]>]>[0m
+[32m[2019-06-05 11:55:49,808] [logger.py:79] [logger:__console] [INFO]- *******正在执行用例：-----  77 游戏排行榜  ----**********[0m
+[32m[2019-06-05 11:55:49,808] [logger.py:79] [logger:__console] [INFO]- 请求方式： get, 请求url: https://course.rest.xxbmm.com/games/top[0m
+[32m[2019-06-05 11:55:49,809] [logger.py:79] [logger:__console] [INFO]- 请求头部：{'token': ''}[0m
+[32m[2019-06-05 11:55:49,809] [logger.py:79] [logger:__console] [INFO]- get 请求，参数类型为：data ,参数内容为 {}[0m
+[32m[2019-06-05 11:55:50,068] [logger.py:79] [logger:__console] [INFO]- 页面返回信息：{"suc":true,"msg":"成功","data":[{"id":5,"name":"31-吸管的脚印 B","img":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/03/20/13/323fb520-498b-4d71-8905-af0bcc055182.jpg","description":"","pay_type":"FREE","tags_name":["休闲娱乐"]},{"id":6,"name":"27-立体的圣诞老人-bcopy","img":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/03/20/11/fe7a6312-90db-400f-8ae7-527b5b6311c4.jpg","description":"27-立体的圣诞老人-bcopy 描述","pay_type":null,"tags_name":["益智游戏"]},{"id":23,"name":"30-不一样的画笔 B","img":"https://coursecdn.xxbmm.com/xxbmm-course-image/2019/03/20/13/b92e7888-11c2-42c0-8f70-e091e92cf129.jpg","description":"30-不一样的画笔 B ","pay_type":"FREE","tags_name":[]}],"response_code":0}[0m
+[32m[2019-06-05 11:55:50,069] [logger.py:79] [logger:__console] [INFO]- 检查点：[{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}][0m
+[32m[2019-06-05 11:55:50,069] [logger.py:79] [logger:__console] [INFO]- 用例测试结果:   游戏排行榜---->pass	[0m
+[32m[2019-06-05 11:55:50,076] [logger.py:79] [logger:__console] [INFO]- 执行用例，生成HTML报告: 2019-06-05 11-55-49report.html
+[0m
+[32m[2019-06-05 11:55:50,077] [logger.py:79] [logger:__console] [INFO]- 最新的测试报告是：2019-06-05 11-55-49report.html[0m
