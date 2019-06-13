@@ -189,8 +189,9 @@ def DrawPie(pass_num=0, fail=0, error=0):
     explode = [0.1, 0, 0]  # 0.1 凸出这部分，
     plt.axes(aspect=1)  # set this , Figure is round, otherwise it is an ellipse
     # autopct ，show percet
-    patches, l_text, p_text = plt.pie(x=my_labels, colors=colors, explode=explode, autopct='%3.1f %%', shadow=True,
-                                      labeldistance=1.1, startangle=90, pctdistance=0.6)
+    patches, l_text, p_text = plt.pie(x=my_labels, colors=colors, labels=labels, explode=explode,
+                                      autopct='%3.1f %%', shadow=True, labeldistance=1.1, startangle=90,
+                                      pctdistance=0.6)
     # 方法是把每一个text遍历。调用set_size方法设置它的属性
     for t in l_text:
         t.set_size = (30)
@@ -201,12 +202,12 @@ def DrawPie(pass_num=0, fail=0, error=0):
     # 显示图例,去掉重复的标签
     colors, labels = plt.gca().get_legend_handles_labels()
     by_labels = OrderedDict(zip(labels, colors))
-    plt.legend(by_labels.values(), by_labels.keys())
+    plt.legend(by_labels.values(), by_labels.keys(), loc='left center', bbox_to_anchor=(-0.1, 1.), fontsize=8)
     # plt.legend()
     # 保存饼图
     pic_path = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'media')
     imgPath = os.path.join(pic_path, str(now_time) + "pie.png")
-    plt.savefig(imgPath)
+    plt.savefig(imgPath, bbox_inches='tight')
     plt.tight_layout()
     plt.cla()  # 不覆盖
     return str(now_time) + "pie.png"
