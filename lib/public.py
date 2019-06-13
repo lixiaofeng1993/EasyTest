@@ -203,12 +203,12 @@ def DrawPie(pass_num=0, fail=0, error=0):
     # 显示图例,去掉重复的标签
     colors, labels = plt.gca().get_legend_handles_labels()
     by_labels = OrderedDict(zip(labels, colors))
-    plt.legend(by_labels.values(), by_labels.keys())
+    plt.legend(by_labels.values(), by_labels.keys(), loc='left center', bbox_to_anchor=(-0.1, 1.), fontsize=8)
     # plt.legend()
     # 保存饼图
     pic_path = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'media')
     imgPath = os.path.join(pic_path, str(now_time) + "pie.png")
-    plt.savefig(imgPath)
+    plt.savefig(imgPath, bbox_inches='tight')
     plt.tight_layout()
     plt.cla()  # 不覆盖
     return str(now_time) + "pie.png"
