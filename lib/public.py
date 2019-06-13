@@ -189,7 +189,7 @@ def DrawPie(pass_num=0, fail=0, error=0):
     explode = [0.1, 0, 0]  # 0.1 凸出这部分，
     plt.axes(aspect=1)  # set this , Figure is round, otherwise it is an ellipse
     # autopct ，show percet
-    patches, l_text, p_text = plt.pie(x=my_labels, colors=colors, labels=labels, explode=explode,
+    patches, l_text, p_text = plt.pie(x=my_labels, colors=colors, explode=explode,
                                       autopct='%3.1f %%', shadow=True, labeldistance=1.1, startangle=90,
                                       pctdistance=0.6)
     # 方法是把每一个text遍历。调用set_size方法设置它的属性
