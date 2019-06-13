@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+driver/
+report/
+logs/
+*.log
+*.pkl
+*.py[cod]
+*.so
+*.egg
+*.egg-info
+dist/
+build/
+static/
+media/
+config/
+*.ini
