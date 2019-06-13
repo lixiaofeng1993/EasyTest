@@ -1,74 +1,39 @@
-# EasyTest
-	下载了大神的EasyTest项目demo修改了下<https://testerhome.com/topics/12648 原地址>。
-	也有看另一位大神的HttpRunnerManager<https://github.com/HttpRunner/HttpRunnerManager 原地址>，
-	由于水平有限，感觉有点复杂~~~
-## 环境：
-                Python 3.6.5
-                Django 1.11.4
-                Pymysql 0.8.0
-                Requests 2.18.4
-## 主要功能
-
-### 首页
-    优化平台统计功能，增加快捷进入模块、生成二维码和解析json的功能；
-
-### 项目签名
-    项目签名方式的增删改查，实现了md5和AES算法加密；
-		 
-### 项目管理
-    项目的增删改查，可以选择对应的签名方式；
-		 
-### 接口管理
-    接口的增删改查；
-    增加了通过swagger自动生成接口测试用例，直接存到数据库中；
-    支持通过接口ID或接口名称的查询功能；
-     
-### 测试环境
-    测试环境的增删改查，方便执行的时候快速切换测试环境；
-		 
-### 用例管理
-    测试用例的增删改查，单个用例调试、查看日志；
-		 
-### 用例增加
-	一个用例中可以有多个接口　
-	用例中用$符号来定义变量，用来多个接口之间参数的传递；
-	如：
-	    登录接口　url: /login  data: {"phonenum": "13599999999", "password":"123456"}  登录成功后,　返回userid 
-			查询客户信息接口　url: /userinfo/$phonenum  data: {"userid": $userid} 
-	这里首先需要定义一个$phonenum变量，执行的时候，会自动在上下文中查找到phonenum的值为13599999999,并将$phonenum的值替换，执行时，
-	查询客户信息      接口的url会变成/userinfo/1359999999  由于userid是登录接口返回的参数，所以在登录接口这一步需要添加一个提取
-	参数userid,然后执行的时候会自动取值并替换 ；
-
-### 测试计划
-	计划的增删改查；
-	计划制定，可以根据项目选择多个用例，主要用来批量执行用例；
-	加入unittest框架，可通过 BeautifulReport 执行测试用例，生成测试报告，并发送email；
-	增加is_locust、is_task参数，判断是否进行性能测试和执行运行定时任务；
-
-### redis缓存
-	增加了页面级的redis缓存；
-
-### 用户管理
-	用户登录功能；
-
-### 报告
-	使用 BeautifulReport 的页面生成的较为美观的接口报告，支持饼图和结果搜索功能；
-
-### 定时任务
-    定时任务配置成功，支持增加编辑；支持定时任务和周期任务；
-
-### 运行报告
-    增加运行报告模块；
-    历史运行结果保存了起来，方便对比查看；
-    测试计划点击【查看报告】会进入对应的页面；
-    unittest报告运行后，只能查看一次；
-
-### 性能测试
-    locust集成到平台中，运行指定的测试计划进行性能测试；
-
-### 问题
-    目前发现应该把加密方式写到接口上，然后在项目上控制是否加密，但是这块现在涉及的比较多，性能测试和定时任务以及正常的计划执行都会用
-    到......so，有时间好好把表结构也要改下.
-
-## 示例
-<a href="https://www.cnblogs.com/changqing8023/p/9873923.html">实现简单的接口自动化测试平台</a>
+<div class="post">
+		<h1 class="postTitle">
+			<a id="cb_post_title_url" class="postTitle2" href="https://www.cnblogs.com/changqing8023/p/9873923.html">实现简单的接口自动化测试平台</a>
+		</h1>
+		<div class="clear"></div>
+		<div class="postBody">
+			<div id="cnblogs_post_body" class="blogpost-body"><p>&nbsp;</p>
+<p>　　下载了大神的EasyTest项目demo修改了下&lt;https://testerhome.com/topics/12648 原地址&gt;。也有看另一位大神的HttpRunnerManager&lt;https://github.com/HttpRunner/HttpRunnerManager 原地址&gt;，由于水平有限，感觉有点复杂~~~</p>
+<p>&nbsp;</p>
+<p>修改内容</p>
+<p>　　1.增加了页面级的redis缓存；</p>
+<p>　　2.完善了项目、环境、接口、用例、计划、签名的编辑和删除功能；</p>
+<p>　　3.签名简单的实现了md5加密和AES算法加密；</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190519170047622-990232023.png" alt=""></p>
+<p>&nbsp;</p>
+<p>　　4.增加接口批量导入功能；</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190519165923178-1862125022.png" alt=""></p>
+<p>&nbsp;</p>
+<p>　　5.测试报告优化及日志查看&lt;报告借鉴 BeautifulReport 页面 https://github.com/TesterlifeRaymond/BeautifulReport&nbsp; 原地址&gt;。注：饼图是用 plt 生成的一张图片；</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190519170324760-626895314.png" alt=""></p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190519170714372-1754902156.png" alt=""></p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190519170809044-214784247.png" alt="">&nbsp;　　</p>
+<p>　　　　及查看全部日志</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190519170843997-404612699.png" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;　　</p>
+<p>　　6.定时任务，celery实现；定时任务运行失败后，会发送邮件提醒；</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190519171026146-304864101.png" alt=""></p>
+<p>　添加定时任务走的是admin站点页面</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190504204750175-1383782729.png" alt=""></p>
+<p>　　7.locust集成到平台中；</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190519171203847-626395283.png" alt=""></p>
+<p>　　定时任务和性能测试根据测试计划中的is_task、is_locust来判断；</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190519171341195-178890610.png" alt=""></p>
+<p>&nbsp;</p>
+<p>　　8.简单的首页展示；</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190519171702381-189076312.png" alt=""></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p></div><div id="MySignature" style="display: block;">愿你走出半生，归来仍是少年！</div>
