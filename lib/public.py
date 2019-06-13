@@ -207,7 +207,7 @@ def DrawPie(pass_num=0, fail=0, error=0):
     # 保存饼图
     pic_path = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'media')
     imgPath = os.path.join(pic_path, str(now_time) + "pie.png")
-    plt.savefig(imgPath)
+    plt.savefig(imgPath, bbox_inches='tight')
     plt.tight_layout()
     plt.cla()  # 不覆盖
     return str(now_time) + "pie.png"
