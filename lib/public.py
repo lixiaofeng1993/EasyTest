@@ -184,7 +184,7 @@ def DrawPie(pass_num=0, fail=0, error=0):
     mpl.rcParams[u'font.sans-serif'] = ['simhei']
     mpl.rcParams['axes.unicode_minus'] = False
     # 调节图形大小，宽，高
-    plt.figure(figsize=(6, 9))
+    # plt.figure(figsize=(6, 9))
     # 定义饼状图的标签，标签是列表
     labels = 'pass', 'fail', 'error'
     # 每个标签占多大，会自动去算百分比
