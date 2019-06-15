@@ -154,7 +154,6 @@ def call_interface(s, method, url, header, data, content_type='json'):
 def get_new_report_html(report_path_html):
     """获取最新的测试报告"""
     lists = os.listdir(report_path_html)
-    lists.sort()
     for file_name in lists:
         if os.path.splitext(file_name)[1] == '.html':
             continue
