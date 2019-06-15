@@ -1086,7 +1086,6 @@ def plan_unittest_run(request):
                    + "if __name__ == '__main__':\n\t" + 'unittest.main()'
             f.write(data)
         run_this.run_email()
-        time.sleep(5)
         report_name = get_new_report_html(report_path)
         Plan.objects.filter(plan_id=plan_id).update(make=1, report_name=report_name, update_time=datetime.now())
         log.info('-------------------------->plan_unittest_run plan_id: {}'.format(plan_id))
