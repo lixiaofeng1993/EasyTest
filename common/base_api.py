@@ -14,8 +14,6 @@ extract_dict = {}
 
 def send_requests(s, data_dict):
     """封装requests请求"""
-
-    log.info('data_dict ==============>{}'.format(data_dict))
     if not isinstance(data_dict, dict):  # 判断传入参数类型
         raise TypeError('{} 参数不是字典类型'.format(send_requests.__name__))
     else:

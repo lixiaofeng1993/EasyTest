@@ -154,13 +154,14 @@ def call_interface(s, method, url, header, data, content_type='json'):
 def get_new_report_html(report_path_html):
     """获取最新的测试报告"""
     lists = os.listdir(report_path_html)
+    lists.sort()
     for file_name in lists:
         if os.path.splitext(file_name)[1] == '.html':
             continue
         else:
             lists.remove(file_name)
     lists.sort(key=lambda a: os.path.getmtime(os.path.join(report_path_html, a)))
-    Log().info('最新的测试报告是：%s' % lists[-1])
+    Log().info('最新的测试报告是：{} {}'.format(lists[1], lists))
     report_file_html = os.path.join(report_path_html, lists[-1])  # 找到最新的测试报告文件
     return report_file_html
 
