@@ -1088,6 +1088,7 @@ def plan_unittest_run(request):
         run_this.run_email()
         report_name = get_new_report_html(report_path)
         Plan.objects.filter(plan_id=plan_id).update(make=1, report_name=report_name, update_time=datetime.now())
+        log.info('-------------------------->plan_unittest_run plan_id: {}'.format(plan_id))
         return HttpResponse(plan.plan_name + " 执行成功！")
 
 
@@ -1153,6 +1154,7 @@ def report_index(request):
         make = Plan.objects.get(plan_id=plan_id).make
         plan_name = Plan.objects.get(plan_id=plan_id).report_name
         if make:  # unittest报告
+            log.info('-------------------------->report_index plan_id: {}'.format(plan_id))
             return render(request, '{}'.format(plan_name))
         case_num = Report.objects.get(report_id=report_id).case_num
         pass_num = Report.objects.get(report_id=report_id).pass_num
