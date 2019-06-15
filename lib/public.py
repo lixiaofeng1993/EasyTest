@@ -161,7 +161,7 @@ def get_new_report_html(report_path_html):
         else:
             lists.remove(file_name)
     lists.sort(key=lambda a: os.path.getmtime(os.path.join(report_path_html, a)))
-    Log().info('最新的测试报告是：{} {}'.format(lists[1], lists))
+    Log().info('最新的测试报告是：{} '.format(lists[-1]))
     report_file_html = os.path.join(report_path_html, lists[-1])  # 找到最新的测试报告文件
     return report_file_html
 
