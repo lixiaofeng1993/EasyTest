@@ -1085,6 +1085,7 @@ def plan_unittest_run(request):
                    'text = json.loads(res_text)\n\t\t' + "for inspect in checkpoint:\n\t\t\t" + 'self.assertTrue(inspect["expect"] in str(text[inspect["check"]]).lower(), "检查点验证失败！")  # 断言\n\n\n' \
                    + "if __name__ == '__main__':\n\t" + 'unittest.main()'
             f.write(data)
+        time.sleep(5)
         run_this.run_email()
         report_name = get_new_report_html(report_path)
         Plan.objects.filter(plan_id=plan_id).update(make=1, report_name=report_name, update_time=datetime.now())
@@ -1154,7 +1155,7 @@ def report_index(request):
         make = Plan.objects.get(plan_id=plan_id).make
         plan_name = Plan.objects.get(plan_id=plan_id).report_name
         if make:  # unittest报告
-            log.info('-------------------------->report_index plan_id: {}'.format(plan_id))
+            log.info('-------------------------->report_index plan_id: {} , plan_name: {}'.format(plan_id, plan_name))
             return render(request, '{}'.format(plan_name))
         case_num = Report.objects.get(report_id=report_id).case_num
         pass_num = Report.objects.get(report_id=report_id).pass_num
