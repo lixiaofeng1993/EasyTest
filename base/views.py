@@ -1085,7 +1085,6 @@ def plan_unittest_run(request):
                    'text = json.loads(res_text)\n\t\t' + "for inspect in checkpoint:\n\t\t\t" + 'self.assertTrue(inspect["expect"] in str(text[inspect["check"]]).lower(), "检查点验证失败！")  # 断言\n\n\n' \
                    + "if __name__ == '__main__':\n\t" + 'unittest.main()'
             f.write(data)
-            f.flush()
         run_this.run_email()
         report_name = get_new_report_html(report_path)
         Plan.objects.filter(plan_id=plan_id).update(make=1, report_name=report_name, update_time=datetime.now())
