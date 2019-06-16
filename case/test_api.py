@@ -5,7 +5,7 @@ from common import base_api
 import unittest
 import requests
 
-test_data = [{'case_name': '性能测试用例', 'if_id': 64, 'if_name': '模拟授权', 'method': 'post', 'url': 'https://course.rest.xxbmm.com/ops', 'data_type': 'json', 'headers': {'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NjA2NDczODQyODgsImV4cGlyZVRpbWUiOjE1NjE5NDMzODQyODgsImlkZW50aWZ5IjoyMTE0OH0.LcOGPyr5UKA0WG7ExZWkdGCrXWa7Pirl3LfR1cf4CvA', 'Accept': 'application/json;charset=UTF-8'}, 'body': {'gender': '1', 'headimg': 'https://coursecdn.xxbmm.com/xxbmm-course-image/2019/05/17/17/ab2ef098-be16-4955-a144-a452815f5418.jpg', 'nickname': '道在光明', 'openid': 'ocIIn4141-6H2uTABfyz5XlTDBGU', 'source': 'APPLET', 'unionid': 'oPmunjjIzQtjk2aBI4pfkVLcA9tE'}, 'checkpoint': [{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}], 'extract': {}}, {'case_name': '性能测试用例', 'if_id': 18, 'if_name': '宝宝列表', 'method': 'get', 'url': 'https://course.rest.xxbmm.com/babys', 'data_type': 'data', 'headers': {'token': 'eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NjA2NDczODQyODgsImV4cGlyZVRpbWUiOjE1NjE5NDMzODQyODgsImlkZW50aWZ5IjoyMTE0OH0.LcOGPyr5UKA0WG7ExZWkdGCrXWa7Pirl3LfR1cf4CvA', 'Accept': 'application/json;charset=UTF-8'}, 'body': {}, 'checkpoint': [{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}], 'extract': {'id': ''}}]
+test_data = []
 log = Log()  # 初始化log
 
 
