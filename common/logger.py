@@ -9,8 +9,8 @@ import os
 cur_path = os.path.dirname(os.path.realpath(__file__))  # log_path是存放日志的路径
 log_path = os.path.join(os.path.dirname(cur_path), 'logs')
 if not os.path.exists(log_path): os.mkdir(log_path)  # 创建logs目录
-report_path = os.path.join(os.path.dirname(cur_path), 'report')  # report excel file path
-if not os.path.exists(report_path): os.mkdir(report_path)  # 创建report目录
+# report_path = os.path.join(os.path.dirname(cur_path), 'report')  # report excel file path
+# if not os.path.exists(report_path): os.mkdir(report_path)  # 创建report目录
 logName = os.path.join(log_path, '%s.log' % time.strftime('%Y-%m-%d'))  # 文件的命名
 
 log_colors_config = {
