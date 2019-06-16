@@ -244,7 +244,6 @@ def set_headers(request):
             return HttpResponseRedirect("/base/env/")
 
 
-
 # 添加环境
 @login_required
 def env_add(request):
@@ -1075,9 +1074,10 @@ def plan_unittest_run(request):
                 test_data.append(
                     {'case_name': case.case_name, 'if_id': interface.if_id, 'if_name': interface.if_name,
                      'method': interface.method, 'url': env.url + interface.url, 'data_type': interface.data_type,
-                     'headers': eval(set_headers)['header'], 'body': i['body'], 'checkpoint': i['validators'], 'extract': i['extract']})
+                     'headers': eval(set_headers)['header'], 'body': i['body'], 'checkpoint': i['validators'],
+                     'extract': i['extract']})
         with open(py_path, 'w', encoding='utf-8') as f:
-            data = 'import json\n' + 'import ddt\n' + 'from common.logger import Log\n' + 'from common import base_api\n' + 'import unittest\n' + 'import requests\n' \
+            data = '# !/user/bin/env python\n' + '# coding=utf-8\n' + 'import json\n' + 'import ddt\n' + 'from common.logger import Log\n' + 'from common import base_api\n' + 'import unittest\n' + 'import requests\n' \
                    + '\ntest_data = {}'.format(
                 test_data) + '\n' + 'log = Log()  # 初始化log\n\n\n' + '@ddt.ddt\n' + 'class Test_api(unittest.TestCase):\n\t' + \
                    '@classmethod\n\t' + 'def setUpClass(cls):\n\t\t' + 'cls.s = requests.session()\n\n\t' + '@ddt.data(*test_data)\n\t' + 'def test_api(self, data):\n\t\t' + '"""{0}"""\n\t\t' \
