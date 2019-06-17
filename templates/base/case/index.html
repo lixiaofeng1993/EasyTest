@@ -179,6 +179,7 @@
 
         function debug_button(obj) {
             var case_name = $('#case_name').val();
+            console.log('=======case_name======>',case_name);
             var case_id = obj.parentNode.parentNode.children[0].innerText;
             var prj_id = obj.parentNode.parentNode.children[2].getAttribute("prj_id");
             $("#debug_case_id").val(case_id);
@@ -196,7 +197,6 @@
                 success: function (data) {
                     var listdata = eval(data);
                     console.log('=======listdata======>',listdata);
-                    console.log('=======case_name======>',case_name);
                     $("#debug_env_id").empty();
                     $(listdata).each(function (i, item) {
                         $("#debug_env_id").append("<option value=" + item.env_id + ">" + item.env_name + "</option>");
