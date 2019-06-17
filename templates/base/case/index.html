@@ -76,7 +76,7 @@
                             <tr>
                                 <td id="cen">{{ case.case_id }}</td>
                                 <td id="case_name"><a href="/base/case_update?case_id={{ case.case_id }}"
-                                                      class="">{{ case.case_name }}</a></td>
+                                                      class="" id="case_name_">{{ case.case_name }}</a></td>
                                 <td id="cen" prj_id="{{ case.project.prj_id }}">{{ case.project }}</td>
                                 <td>{{ case.description }}</td>
                                 <td id="cen">{{ case.update_time }}</td>
@@ -178,7 +178,7 @@
         }
 
         function debug_button(obj) {
-            var case_name = $('#case_name').val();
+            var case_name = $("#case_name_").val();
             console.log('=======case_name======>',case_name);
             var case_id = obj.parentNode.parentNode.children[0].innerText;
             var prj_id = obj.parentNode.parentNode.children[2].getAttribute("prj_id");
