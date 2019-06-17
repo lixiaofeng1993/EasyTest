@@ -195,6 +195,7 @@
                 },
                 success: function (data) {
                     var listdata = eval(data);
+                    console.log('=======listdata======>',listdata);
                     $("#debug_env_id").empty();
                     $(listdata).each(function (i, item) {
                         $("#debug_env_id").append("<option value=" + item.env_id + ">" + item.env_name + "</option>");

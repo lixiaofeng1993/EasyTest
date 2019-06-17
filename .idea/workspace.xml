@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/logger.py" afterPath="$PROJECT_DIR$/common/logger.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/case/index.html" afterPath="$PROJECT_DIR$/templates/base/case/index.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,7 +27,7 @@
       <file leaf-file-name="public.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/public.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="642">
+            <state relative-caret-position="3300">
               <caret line="153" column="4" lean-forward="false" selection-start-line="153" selection-start-column="4" selection-end-line="153" selection-end-column="4" />
               <folding>
                 <element signature="e#37#56#0" expanded="true" />
@@ -48,7 +49,7 @@
       <file leaf-file-name="logger.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/logger.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1983">
+            <state relative-caret-position="176">
               <caret line="13" column="57" lean-forward="false" selection-start-line="13" selection-start-column="49" selection-end-line="13" selection-end-column="57" />
               <folding />
             </state>
@@ -68,7 +69,7 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base/plan/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="603">
+            <state relative-caret-position="4158">
               <caret line="189" column="45" lean-forward="false" selection-start-line="189" selection-start-column="28" selection-end-line="189" selection-end-column="45" />
               <folding />
             </state>
@@ -78,7 +79,7 @@
       <file leaf-file-name="run_this.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/run_this.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
+            <state relative-caret-position="330">
               <caret line="26" column="28" lean-forward="false" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="28" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -90,7 +91,7 @@
       <file leaf-file-name="test_api.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/case/test_api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
+            <state relative-caret-position="44">
               <caret line="7" column="9" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="9" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
@@ -109,22 +110,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="execute.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/execute.py">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="440">
+              <caret line="195" column="22" lean-forward="false" selection-start-line="195" selection-start-column="22" selection-end-line="195" selection-end-column="22" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-207">
-              <caret line="176" column="29" lean-forward="false" selection-start-line="176" selection-start-column="5" selection-end-line="176" selection-end-column="29" />
-              <folding />
+            <state relative-caret-position="553">
+              <caret line="197" column="55" lean-forward="false" selection-start-line="197" selection-start-column="55" selection-end-line="197" selection-end-column="55" />
+              <folding>
+                <element signature="e#2898#2904#0#HTML" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -157,6 +160,7 @@
         <option value="$PROJECT_DIR$/case/test_api.py" />
         <option value="$PROJECT_DIR$/base/views.py" />
         <option value="$PROJECT_DIR$/common/logger.py" />
+        <option value="$PROJECT_DIR$/templates/base/case/index.html" />
       </list>
     </option>
   </component>
@@ -187,7 +191,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -251,6 +254,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="base" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="base" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="case" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -345,6 +370,7 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -659,7 +685,7 @@
     <frame x="2391" y="-9" width="2418" height="1331" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15145051" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15358362" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32933104" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -710,13 +736,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/common/config/res.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" column="1" lean-forward="true" selection-start-line="2" selection-start-column="1" selection-end-line="2" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/public.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -780,7 +799,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -812,7 +830,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="240">
           <caret line="353" column="64" lean-forward="false" selection-start-line="353" selection-start-column="56" selection-end-line="353" selection-end-column="64" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -826,7 +843,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/public.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="642">
+        <state relative-caret-position="3300">
           <caret line="153" column="4" lean-forward="false" selection-start-line="153" selection-start-column="4" selection-end-line="153" selection-end-column="4" />
           <folding>
             <element signature="e#37#56#0" expanded="true" />
@@ -836,7 +853,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/plan/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="603">
+        <state relative-caret-position="4158">
           <caret line="189" column="45" lean-forward="false" selection-start-line="189" selection-start-column="28" selection-end-line="189" selection-end-column="45" />
           <folding />
         </state>
@@ -844,7 +861,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/case/test_api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
+        <state relative-caret-position="44">
           <caret line="7" column="9" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="9" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
@@ -870,7 +887,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/run_this.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
+        <state relative-caret-position="330">
           <caret line="26" column="28" lean-forward="false" selection-start-line="26" selection-start-column="22" selection-end-line="26" selection-end-column="28" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -888,7 +905,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/common/logger.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1983">
+        <state relative-caret-position="176">
           <caret line="13" column="57" lean-forward="false" selection-start-line="13" selection-start-column="49" selection-end-line="13" selection-end-column="57" />
           <folding />
         </state>
@@ -896,9 +913,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-207">
-          <caret line="176" column="29" lean-forward="false" selection-start-line="176" selection-start-column="5" selection-end-line="176" selection-end-column="29" />
+        <state relative-caret-position="440">
+          <caret line="195" column="22" lean-forward="false" selection-start-line="195" selection-start-column="22" selection-end-line="195" selection-end-column="22" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="553">
+          <caret line="197" column="55" lean-forward="false" selection-start-line="197" selection-start-column="55" selection-end-line="197" selection-end-column="55" />
+          <folding>
+            <element signature="e#2898#2904#0#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
