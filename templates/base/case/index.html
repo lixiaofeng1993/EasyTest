@@ -200,10 +200,9 @@
                 },
                 success: function (data) {
                     var listdata = eval(data);
-                    console.log('=======listdata======>', listdata);
                     $("#debug_env_id").empty();
+                    $('#case_name_').empty();
                     $(listdata).each(function (i, item) {
-                        console.log('=======case_name------------->', case_name);
                         $('#case_name_').append(case_name);
                         $("#debug_env_id").append("<option value=" + item.env_id + ">" + item.env_name + "</option>");
                     })
