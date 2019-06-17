@@ -199,7 +199,8 @@
                     console.log('=======listdata======>', listdata);
                     $("#debug_env_id").empty();
                     $(listdata).each(function (i, item) {
-                        console.log('=======case_name[i]-------------->', case_name[i]);
+                        console.log('=======case_name[i]-------------->', case_name[i].innerHTML);
+                        console.log('=======case_name[i]-------------->', i);
                         $("#debug_env_id").append("<option value=" + item.env_id + ">" + item.env_name + "</option>");
                     })
                 },
