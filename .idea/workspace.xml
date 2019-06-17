@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/case/index.html" afterPath="$PROJECT_DIR$/templates/base/case/index.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -123,8 +122,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="553">
-              <caret line="197" column="55" lean-forward="false" selection-start-line="197" selection-start-column="55" selection-end-line="197" selection-end-column="55" />
+            <state relative-caret-position="773">
+              <caret line="198" column="67" lean-forward="false" selection-start-line="198" selection-start-column="67" selection-end-line="198" selection-end-column="67" />
               <folding>
                 <element signature="e#2898#2904#0#HTML" expanded="true" />
               </folding>
@@ -921,8 +920,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="553">
-          <caret line="197" column="55" lean-forward="false" selection-start-line="197" selection-start-column="55" selection-end-line="197" selection-end-column="55" />
+        <state relative-caret-position="773">
+          <caret line="198" column="67" lean-forward="false" selection-start-line="198" selection-start-column="67" selection-end-line="198" selection-end-column="67" />
           <folding>
             <element signature="e#2898#2904#0#HTML" expanded="true" />
           </folding>
