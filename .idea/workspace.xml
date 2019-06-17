@@ -122,8 +122,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
-              <caret line="180" column="42" lean-forward="false" selection-start-line="180" selection-start-column="42" selection-end-line="180" selection-end-column="42" />
+            <state relative-caret-position="399">
+              <caret line="181" column="25" lean-forward="false" selection-start-line="181" selection-start-column="16" selection-end-line="181" selection-end-column="25" />
               <folding />
             </state>
           </provider>
@@ -143,6 +143,8 @@
       <find>report_path</find>
       <find>logs</find>
       <find>debug_case_id</find>
+      <find>debug_env_id</find>
+      <find>case_name_</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -919,8 +921,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="180" column="42" lean-forward="false" selection-start-line="180" selection-start-column="42" selection-end-line="180" selection-end-column="42" />
+        <state relative-caret-position="399">
+          <caret line="181" column="25" lean-forward="false" selection-start-line="181" selection-start-column="16" selection-end-line="181" selection-end-column="25" />
           <folding />
         </state>
       </provider>

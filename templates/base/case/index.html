@@ -178,7 +178,8 @@
         }
 
         function debug_button(obj) {
-            var case_name = $("#case_name_").val();
+{#            var case_name = $("#case_name_").val();#}
+            var case_name = document.getElementById("case_name_");
             console.log('=======case_name======>',case_name);
             var case_id = obj.parentNode.parentNode.children[0].innerText;
             var prj_id = obj.parentNode.parentNode.children[2].getAttribute("prj_id");
