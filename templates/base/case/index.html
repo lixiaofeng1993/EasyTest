@@ -179,7 +179,6 @@
 
         function debug_button(obj) {
             var case_name = document.getElementsByClassName("case_name_");
-            console.log('=======case_name======>', case_name);
             var case_id = obj.parentNode.parentNode.children[0].innerText;
             var prj_id = obj.parentNode.parentNode.children[2].getAttribute("prj_id");
             $("#debug_case_id").val(case_id);
@@ -199,7 +198,7 @@
                     console.log('=======listdata======>', listdata);
                     $("#debug_env_id").empty();
                     $(listdata).each(function (i, item) {
-                        console.log('=======case_name[i]-------------->', case_name[i].innerHTML);
+                        console.log('=======case_name[i]-------------->', case_name[case_id].innerHTML);
                         console.log('=======case_name[i]-------------->', i);
                         $("#debug_env_id").append("<option value=" + item.env_id + ">" + item.env_name + "</option>");
                     })
