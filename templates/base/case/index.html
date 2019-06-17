@@ -178,8 +178,8 @@
         }
 
         function debug_button(obj) {
-            var case_name = document.getElementsByClassName("case_name_");
             var case_id = obj.parentNode.parentNode.children[0].innerText;
+            var case_name = obj.parentNode.parentNode.children[1].innerText;
             var prj_id = obj.parentNode.parentNode.children[2].getAttribute("prj_id");
             $("#debug_case_id").val(case_id);
             $("#cancel_run").html("取消");
@@ -198,8 +198,7 @@
                     console.log('=======listdata======>', listdata);
                     $("#debug_env_id").empty();
                     $(listdata).each(function (i, item) {
-                        console.log('=======case_name[i]-------------->', case_name[case_id].innerHTML);
-                        console.log('=======case_name[i]-------------->', i);
+                        console.log('=======case_name------------->', case_name);
                         $("#debug_env_id").append("<option value=" + item.env_id + ">" + item.env_name + "</option>");
                     })
                 },
