@@ -20,7 +20,7 @@ class SqL:
                 self.conn = pymysql.connect(host=readConfig.MySQL_host_job, database=readConfig.MySQL_database_job,
                                             user=readConfig.MySQL_user_job,
                                             password=readConfig.MySQL_pwd_job, port=int(readConfig.MySQL_port_job),
-                                            charset='utf8')
+                                            use_unicode=True, charset='utf8')
                 # log.info('job 数据库连接成功')
             except Exception as e:
                 log.error('job 数据库链接异常! {}'.format(e))
@@ -29,7 +29,7 @@ class SqL:
                 self.conn = pymysql.connect(host=readConfig.MySQL_host, database=readConfig.MySQL_database,
                                             user=readConfig.MySQL_user,
                                             password=readConfig.MySQL_pwd, port=int(readConfig.MySQL_port),
-                                            charset='utf8')
+                                            use_unicode=True, charset='utf8')
                 # log.info('本地 数据库连接成功')
             except Exception as e:
                 log.error('本地 数据库链接异常! {}'.format(e))
