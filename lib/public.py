@@ -135,7 +135,7 @@ def call_interface(s, method, url, header, data, content_type='json'):
     log.info('========interface params==============> {} {} {} {}'.format(url, header, data, content_type))
     if method in ["post", "put"]:
         if content_type in ["json", 'sql']:
-            res = s.request(method=method, url=url, json=data, headers=header, verify=False)
+            res = s.request(method=method, url=url, json=data.encode('utf-8'), headers=header, verify=False)
             # res = requests.post(url=url, json=data, headers=header, verify=False)
         if content_type == "data":
             res = s.request(method=method, url=url, data=data, headers=header, verify=False)
