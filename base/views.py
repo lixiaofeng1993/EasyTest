@@ -802,6 +802,22 @@ def case_update(request):
 
 
 @login_required
+def case_copy(request):
+    """复制case"""
+    if request.method == 'GET':
+        case_id = request.GET.get('case_id', '')
+        case_name = Case.objects.get(case_id=case_id).case_name
+        content = Case.objects.get(case_id=case_id).content
+        project = Case.objects.get(case_id=case_id).project
+        case = Case(case_name=case_name, project=project, description='', update_time=datetime.now(),
+                    content=content)
+        case.save()
+        log.info(
+            'copy case   {}  success. case info: {} // {} '.format(case_name, project, content))
+        return HttpResponseRedirect("base/case/")
+
+
+@login_required
 def case_logs(request):
     """单个用例运行日志"""
     log_file_list = os.listdir(logs_path)

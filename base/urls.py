@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'case_delete/', view=views.case_delete, name='case_delete'),
     url(r'case_run/', view=views.case_run, name='case_run'),
     url(r'case_logs/', view=views.case_logs, name='case_logs'),
+    url(r'case_copy/', view=views.case_copy, name='case_copy'),
     # 测试计划
     url(r'plan/', view=views.plan_index, name='plan'),
     url(r'plan_add/', view=views.plan_add, name='plan_add'),
