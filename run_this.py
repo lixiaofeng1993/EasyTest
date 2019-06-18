@@ -117,4 +117,16 @@ def run_email():
 
 
 if __name__ == '__main__':
-    run_email()
+    # run_email()
+    import requests
+
+    data = {
+        "gender": 1,
+        "headimg": "https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/03/17/d65c1319-29bc-40f7-b6aa-de400258879f.jpg",
+        "nickname": "除却巫山不是云",
+        "openid": "ocIIn4934mT7ZtqsbK8rKa2QLiaY",
+        "source": "APPLET",
+        "unionid": "oPmunjvnN9uIP-xEdZTUnj-e3KrI"
+    }
+    res = requests.post(url='https://course.rest.xxbmm.com/ops', json=data, verify=False)
+    print(res.text)
