@@ -194,7 +194,7 @@
             $("#cancel_run").html("取消");
             $("#cancel_run").attr("class", "btn btn-default");
             $("#run_return_parameter").val('');
-
+            $('#case_name_').empty();
             $.ajax({
                 type: "get",
                 url: "/base/findata/",
@@ -205,9 +205,8 @@
                 success: function (data) {
                     var listdata = eval(data);
                     $("#debug_env_id").empty();
-                    $('#case_name_').empty();
+                    $('#case_name_').append(case_name);
                     $(listdata).each(function (i, item) {
-                        $('#case_name_').append(case_name);
                         $("#debug_env_id").append("<option value=" + item.env_id + ">" + item.env_name + "</option>");
                     })
                 },
