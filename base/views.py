@@ -38,7 +38,8 @@ def project_index(request):
     # remove_logs(logs_path)
     # remove_logs(pic_path, type='pic')
     user_id = request.session.get('user_id', '')  # 从session中获取user_id
-    log.info('---------------user_id--------------> {}'.format(user_id))
+    username = request.session.get('user', '')
+    log.info('---------------username--------------> {}'.format(username))
     if user_id == '':
         request.session['login_from'] = '/base/project/'
         return render(request, 'user/login_action.html')
