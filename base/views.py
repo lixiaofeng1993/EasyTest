@@ -31,13 +31,14 @@ class_name = ''  # 执行测试类
 
 
 # 项目首页
-@login_required
+# @login_required
 @page_cache(5)
 def project_index(request):
     # remove_logs(report_path, type='report')
     # remove_logs(logs_path)
     # remove_logs(pic_path, type='pic')
     user_id = request.session.get('user_id', '')  # 从session中获取user_id
+    log.info('---------------user_id--------------> {}'.format(user_id))
     if user_id:
         # prj_list = Project.objects.filter(user_id=user_id)  # 按照user_id查询项目
         prj_list = Project.objects.all()  # 按照user_id查询项目
