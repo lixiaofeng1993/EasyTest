@@ -80,12 +80,12 @@
                                 <td>{{ case.description }}</td>
                                 <td id="cen">{{ case.update_time }}</td>
                                 <td id="cen">
-                                    <button class="layui-btn layui-btn-danger layui-btn-xs" onclick="debug_button(this);"
+                                    <a href="#" class="layui-btn layui-btn-danger layui-btn-xs" onclick="debug_button(this);"
                                             data-toggle="modal" data-target="#runCaseForm"><i
                                             class="fa fa-recycle"></i>&nbsp;
-                                    </button>
+                                    </a>
                                     <a href="/base/case_copy?case_id={{ case.case_id }}"
-                                       class="layui-btn layui-btn-danger layui-btn-xs" lay-event="log"><i
+                                       class="layui-btn layui-btn-danger layui-btn-xs" lay-event="log" onclick="return copy_btn()"><i
                                             class="fa fa-files-o"></i>&nbsp;</a>
                                     <a href="/base/case_logs/"
                                        class="layui-btn layui-btn-danger layui-btn-xs" lay-event="log"><i
@@ -176,6 +176,15 @@
         //删除
         function delete_btn() {
             if (window.confirm("你确定要删除吗？")) {
+                return true;//确定返回真
+            }
+            else {
+                return false;//取消返回假
+            }
+        }
+        //删除
+        function copy_btn() {
+            if (window.confirm("你确定要复制这条用例吗？")) {
                 return true;//确定返回真
             }
             else {
