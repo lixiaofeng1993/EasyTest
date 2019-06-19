@@ -31,7 +31,7 @@ class_name = ''  # 执行测试类
 
 
 # 项目首页
-# @login_required
+@login_required
 @page_cache(5)
 def project_index(request):
     # remove_logs(report_path, type='report')
