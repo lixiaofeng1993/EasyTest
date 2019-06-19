@@ -37,7 +37,7 @@ def project_index(request):
     # remove_logs(report_path, type='report')
     # remove_logs(logs_path)
     # remove_logs(pic_path, type='pic')
-    if not request.user.is_authenticated():
+    if not request.user.is_anonymous():
         log.info('22222222222222222222222222222')
         request.session['login_from'] = '/base/project/'
         return render(request, 'user/login_action.html')
