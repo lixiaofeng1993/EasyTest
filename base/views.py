@@ -37,13 +37,8 @@ def project_index(request):
     # remove_logs(report_path, type='report')
     # remove_logs(logs_path)
     # remove_logs(pic_path, type='pic')
-    if not request.user.is_anonymous():
-        log.info('22222222222222222222222222222')
-        request.session['login_from'] = '/base/project/'
-        return render(request, 'user/login_action.html')
     user_id = request.session.get('user_id', '')  # 从session中获取user_id
-    username = request.session.get('user', '')
-    log.info('---------------username--------------> {}'.format(username))
+    log.info('---------------user_id--------------> {}'.format(user_id))
     if user_id:
         # prj_list = Project.objects.filter(user_id=user_id)  # 按照user_id查询项目
         prj_list = Project.objects.all()  # 按照user_id查询项目
@@ -55,7 +50,7 @@ def project_index(request):
         # request.session['project_list'] = project_list  # 保存项目id
         return render(request, "base/project/index.html", {"prj_list": prj_list, 'contacts': contacts})
     else:
-        request.session['login_from'] = '/index/'
+        request.session['login_from'] = '/base/project/'
         return render(request, 'user/login_action.html')
 
 
@@ -812,9 +807,10 @@ def case_copy(request):
     """复制case"""
     if request.method == 'GET':
         case_id = request.GET.get('case_id', '')
-        case_name = Case.objects.get(case_id=case_id).case_name
-        content = Case.objects.get(case_id=case_id).content
-        project = Case.objects.get(case_id=case_id).project
+        case_ = Case.objects.get(case_id=case_id)
+        case_name = case_.case_name
+        content = case_.content
+        project = case_.project
         case = Case(case_name=case_name, project=project, description='', update_time=datetime.now(),
                     content=content)
         case.save()
