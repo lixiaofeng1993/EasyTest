@@ -39,12 +39,9 @@ def project_index(request):
     # remove_logs(pic_path, type='pic')
     user_id = request.session.get('user_id', '')  # 从session中获取user_id
     log.info('---------------user_id--------------> {}'.format(user_id))
-    if user_id == None:
-        log.info('3333333333333333333')
-    
     if user_id == '':
-        log.info('2222222222222222')
-
+        request.session['login_from'] = '/base/project/'
+        return render(request, 'user/login_action.html')
     if user_id:
         # prj_list = Project.objects.filter(user_id=user_id)  # 按照user_id查询项目
         prj_list = Project.objects.all()  # 按照user_id查询项目
