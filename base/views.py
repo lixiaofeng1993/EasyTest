@@ -37,12 +37,13 @@ def project_index(request):
     # remove_logs(report_path, type='report')
     # remove_logs(logs_path)
     # remove_logs(pic_path, type='pic')
+    if not request.user.is_authenticated():
+        log.info('22222222222222222222222222222')
+        request.session['login_from'] = '/base/project/'
+        return render(request, 'user/login_action.html')
     user_id = request.session.get('user_id', '')  # 从session中获取user_id
     username = request.session.get('user', '')
     log.info('---------------username--------------> {}'.format(username))
-    if user_id == '':
-        request.session['login_from'] = '/base/project/'
-        return render(request, 'user/login_action.html')
     if user_id:
         # prj_list = Project.objects.filter(user_id=user_id)  # 按照user_id查询项目
         prj_list = Project.objects.all()  # 按照user_id查询项目
