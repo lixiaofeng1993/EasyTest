@@ -237,15 +237,16 @@
                 success: function (res) {
                     if (res == '0') {
                         $("#run_return_parameter").val("用户未登录！");
+                    } else {
+                        console.log('------>', typeof res);
+                        console.log('------>', res);
+                        $("#run_return_parameter").val(JSON.stringify(res));
+                        //var res_data = eval("(" + res + ")");
+                        //alert(res_data);
+                        //$("#run_return_parameter").val(res_data.url + "\n" + res_data.header + "\n" + res_data.sendata + "\n" + res_data.revcdata);
+                        $("#cancel_run").html("完成");
+                        $("#cancel_run").attr("class", "btn btn-primary");
                     }
-                    console.log('------>', typeof res);
-                    console.log('------>', res);
-                    $("#run_return_parameter").val(JSON.stringify(res));
-                    //var res_data = eval("(" + res + ")");
-                    //alert(res_data);
-                    //$("#run_return_parameter").val(res_data.url + "\n" + res_data.header + "\n" + res_data.sendata + "\n" + res_data.revcdata);
-                    $("#cancel_run").html("完成");
-                    $("#cancel_run").attr("class", "btn btn-primary");
                 },
                 error: function () {
                     $("#run_return_parameter").val("调用接口失败!!!");
