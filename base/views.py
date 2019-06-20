@@ -932,9 +932,11 @@ def case_run(request):
         if request.method == 'POST':
             case_id = request.POST['case_id']
             env_id = request.POST['env_id']
-            log.info('Environmental: {} , Case:  {}'.format(env_id, case_id))
+            username = request.session.get('user', '')
+            log.info('用户 {} 在 {} 环境 运行用例 {} 成功.'.format(username, env_id, case_id))
             execute = Test_execute(case_id, env_id, ['1'])
             case_result = execute.test_case()
+            Case.objects.filter(case_id=case_id).update(update_user=username)
             return JsonResponse(case_result)
 
 

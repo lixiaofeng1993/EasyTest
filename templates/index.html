@@ -115,7 +115,12 @@
                     }
                 }
             })
-        })
-
+        });
+        // 回车提交搜索
+        $(document).keyup(function (event) {
+            if (event.keyCode == 13) {
+                $("#submit").trigger("click");
+            }
+        });
     </script>
 {% endblock %}
