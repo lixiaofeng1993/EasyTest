@@ -30,7 +30,6 @@ now_time = ''  # 饼图命名区分
 class_name = ''  # 执行测试类
 
 
-
 def get_user(user_id):
     user = User.objects.filter(id=user_id)
     log.info('--------------user-----------> {}'.format(user))
@@ -38,6 +37,7 @@ def get_user(user_id):
         return True
     else:
         return False
+
 
 # 项目首页
 # @login_required
@@ -64,156 +64,179 @@ def project_index(request):
 
 
 # 增加项目
-@login_required
+# @login_required
 def project_add(request):
-    sign_list = Sign.objects.all()  # 所有签名
-    if request.method == 'POST':
-        prj_name = request.POST['prj_name'].strip()
-        if prj_name == '':  # 判断输入框
-            return render(request, 'base/project/add.html', {'error': '项目名称不能为空！', "sign_list": sign_list})
-        user_id = request.session.get('user_id', '')
-        if not user_id:
-            request.session['login_from'] = '/base/project/'
-            return render(request, 'user/login_action.html')
-        else:
-            # name_same = Project.objects.filter(user_id=user_id).filter(prj_name=prj_name)
-            name_same = Project.objects.filter(prj_name=prj_name)
-            if name_same:
-                return render(request, 'base/project/add.html',
-                              {'error': '项目: {}，已存在！'.format(prj_name), "sign_list": sign_list})
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/project/'
+        return render(request, 'user/login_action.html')
+    else:
+        sign_list = Sign.objects.all()  # 所有签名
+        if request.method == 'POST':
+            prj_name = request.POST['prj_name'].strip()
+            if prj_name == '':  # 判断输入框
+                return render(request, 'base/project/add.html', {'error': '项目名称不能为空！', "sign_list": sign_list})
+
             else:
-                description = request.POST['description']
-                sign_id = request.POST['sign']
-                sign = Sign.objects.get(sign_id=sign_id)
-                user_id = request.session.get('user_id', '')
-                user = User.objects.get(id=user_id)
-                prj = Project(prj_name=prj_name, description=description, sign=sign, user=user)
-                prj.save()
-                log.info('add project   {}  success. project info: {} // {} '.format(prj_name, description, sign))
-                return HttpResponseRedirect("/base/project/")
-    return render(request, "base/project/add.html", {"sign_list": sign_list})
+                # name_same = Project.objects.filter(user_id=user_id).filter(prj_name=prj_name)
+                name_same = Project.objects.filter(prj_name=prj_name)
+                if name_same:
+                    return render(request, 'base/project/add.html',
+                                  {'error': '项目: {}，已存在！'.format(prj_name), "sign_list": sign_list})
+                else:
+                    description = request.POST['description']
+                    sign_id = request.POST['sign']
+                    sign = Sign.objects.get(sign_id=sign_id)
+                    user = User.objects.get(id=user_id)
+                    prj = Project(prj_name=prj_name, description=description, sign=sign, user=user)
+                    prj.save()
+                    log.info('add project   {}  success. project info: {} // {} '.format(prj_name, description, sign))
+                    return HttpResponseRedirect("/base/project/")
+        return render(request, "base/project/add.html", {"sign_list": sign_list})
 
 
 # 项目编辑
-@login_required
+# @login_required
 def project_update(request):
-    sign_list = Sign.objects.all()
-    if request.method == 'POST':
-        prj_id = request.POST['prj_id']
-        prj_name = request.POST['prj_name'].strip()
-        if prj_name == '':
-            prj = Project.objects.get(prj_id=prj_id)
-            return render(request, 'base/project/update.html',
-                          {'error': '项目名称不能为空！', "prj": prj, "sign_list": sign_list})
-        user_id = request.session.get('user_id', '')
-        if not user_id:
-            request.session['login_from'] = '/base/project/'
-            return render(request, 'user/login_action.html')
-        else:
-            # name_exit = Project.objects.filter(user_id=user_id).filter(prj_name=prj_name).exclude(
-            #     prj_id=prj_id)
-            name_exit = Project.objects.filter(prj_name=prj_name).exclude(prj_id=prj_id)
-            if name_exit:
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/project/'
+        return render(request, 'user/login_action.html')
+    else:
+        sign_list = Sign.objects.all()
+        if request.method == 'POST':
+            prj_id = request.POST['prj_id']
+            prj_name = request.POST['prj_name'].strip()
+            if prj_name == '':
                 prj = Project.objects.get(prj_id=prj_id)
                 return render(request, 'base/project/update.html',
-                              {'error': '项目: {}，已存在！'.format(prj_name), "prj": prj, "sign_list": sign_list})
+                              {'error': '项目名称不能为空！', "prj": prj, "sign_list": sign_list})
             else:
-                description = request.POST['description']
-                sign_id = request.POST['sign_id']
-                sign = Sign.objects.get(sign_id=sign_id)
-                user_id = request.session.get('user_id', '')
-                user = User.objects.get(id=user_id)
-                Project.objects.filter(prj_id=prj_id).update(prj_name=prj_name, description=description, sign=sign,
-                                                             user=user, update_time=datetime.now())
-                log.info('edit project   {}  success. project info: {} // {} '.format(prj_name, description, sign))
-                return HttpResponseRedirect("/base/project/")
-    prj_id = request.GET['prj_id']
-    prj = Project.objects.get(prj_id=prj_id)
-    return render(request, "base/project/update.html", {"prj": prj, "sign_list": sign_list})
+                # name_exit = Project.objects.filter(user_id=user_id).filter(prj_name=prj_name).exclude(
+                #     prj_id=prj_id)
+                name_exit = Project.objects.filter(prj_name=prj_name).exclude(prj_id=prj_id)
+                if name_exit:
+                    prj = Project.objects.get(prj_id=prj_id)
+                    return render(request, 'base/project/update.html',
+                                  {'error': '项目: {}，已存在！'.format(prj_name), "prj": prj, "sign_list": sign_list})
+                else:
+                    description = request.POST['description']
+                    sign_id = request.POST['sign_id']
+                    sign = Sign.objects.get(sign_id=sign_id)
+                    user = User.objects.get(id=user_id)
+                    Project.objects.filter(prj_id=prj_id).update(prj_name=prj_name, description=description, sign=sign,
+                                                                 user=user, update_time=datetime.now())
+                    log.info('edit project   {}  success. project info: {} // {} '.format(prj_name, description, sign))
+                    return HttpResponseRedirect("/base/project/")
+        prj_id = request.GET['prj_id']
+        prj = Project.objects.get(prj_id=prj_id)
+        return render(request, "base/project/update.html", {"prj": prj, "sign_list": sign_list})
 
 
 # 删除项目
-@login_required
+# @login_required
 def project_delete(request):
-    if request.method == 'GET':
-        prj_id = request.GET['prj_id']
-        Project.objects.filter(prj_id=prj_id).delete()
-        log.info('delete project   {}  success.'.format(prj_id))
-        return HttpResponseRedirect("base/project/")
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/project/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            prj_id = request.GET['prj_id']
+            Project.objects.filter(prj_id=prj_id).delete()
+            log.info('delete project   {}  success.'.format(prj_id))
+            return HttpResponseRedirect("base/project/")
 
 
 # 签名首页
-@login_required
+# @login_required
 @page_cache(5)
 def sign_index(request):
-    if request.method == 'GET':
-        if request.session.get('user'):
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/sign/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
             sign_list = Sign.objects.all()
             page = request.GET.get('page')
             contacts = paginator(sign_list, page)
             return render(request, "system/sign/sign_index.html", {"sign_list": contacts})
-        else:
-            request.session['login_from'] = '/base/sign/'
-            return render(request, 'user/login_action.html')
 
 
 # 添加签名
-@login_required
+# @login_required
 def sign_add(request):
-    if request.method == 'POST':
-        sign_name = request.POST['sign_name'].strip()
-        if sign_name == '':
-            return render(request, 'system/sign/sign_add.html', {'error': '签名名称不能为空！'})
-        name_exit = Sign.objects.filter(sign_name=sign_name)
-        if name_exit:
-            return render(request, 'system/sign/sign_add.html', {'error': '签名: {}，已存在！'.format(sign_name)})
-        description = request.POST['description']
-        sign = Sign(sign_name=sign_name, description=description)
-        sign.save()
-        log.info('add sign   {}  success.  sign info： {} '.format(sign_name, description))
-        return HttpResponseRedirect("/base/sign/")
-    return render(request, "system/sign/sign_add.html")
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/sign/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'POST':
+            sign_name = request.POST['sign_name'].strip()
+            if sign_name == '':
+                return render(request, 'system/sign/sign_add.html', {'error': '签名名称不能为空！'})
+            name_exit = Sign.objects.filter(sign_name=sign_name)
+            if name_exit:
+                return render(request, 'system/sign/sign_add.html', {'error': '签名: {}，已存在！'.format(sign_name)})
+            description = request.POST['description']
+            sign = Sign(sign_name=sign_name, description=description)
+            sign.save()
+            log.info('add sign   {}  success.  sign info： {} '.format(sign_name, description))
+            return HttpResponseRedirect("/base/sign/")
+        return render(request, "system/sign/sign_add.html")
 
 
 # 更新签名
-@login_required
+# @login_required
 def sign_update(request):
-    if request.method == 'POST':
-        sign_id = request.POST['sign_id']
-        sign_name = request.POST['sign_name'].strip()
-        if sign_name == '':
-            sign = Sign.objects.get(sign_id=sign_id)
-            return render(request, 'system/sign/sign_update.html', {'error': '签名名称不能为空！', "sign": sign})
-        name_exit = Sign.objects.filter(sign_name=sign_name).exclude(sign_id=sign_id)
-        if name_exit:
-            sign = Sign.objects.get(sign_id=sign_id)
-            return render(request, 'system/sign/sign_update.html',
-                          {'error': '签名: {}，已存在！'.format(sign_name), "sign": sign})
-        description = request.POST['description']
-        Sign.objects.filter(sign_id=sign_id).update(sign_name=sign_name, description=description,
-                                                    update_time=datetime.now())
-        log.info('edit sign   {}  success.  sign info： {} '.format(sign_name, description))
-        return HttpResponseRedirect("/base/sign/")
-    sign_id = request.GET['sign_id']
-    sign = Sign.objects.get(sign_id=sign_id)
-    return render(request, "system/sign/sign_update.html", {"sign": sign})
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/sign/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'POST':
+            sign_id = request.POST['sign_id']
+            sign_name = request.POST['sign_name'].strip()
+            if sign_name == '':
+                sign = Sign.objects.get(sign_id=sign_id)
+                return render(request, 'system/sign/sign_update.html', {'error': '签名名称不能为空！', "sign": sign})
+            name_exit = Sign.objects.filter(sign_name=sign_name).exclude(sign_id=sign_id)
+            if name_exit:
+                sign = Sign.objects.get(sign_id=sign_id)
+                return render(request, 'system/sign/sign_update.html',
+                              {'error': '签名: {}，已存在！'.format(sign_name), "sign": sign})
+            description = request.POST['description']
+            Sign.objects.filter(sign_id=sign_id).update(sign_name=sign_name, description=description,
+                                                        update_time=datetime.now())
+            log.info('edit sign   {}  success.  sign info： {} '.format(sign_name, description))
+            return HttpResponseRedirect("/base/sign/")
+        sign_id = request.GET['sign_id']
+        sign = Sign.objects.get(sign_id=sign_id)
+        return render(request, "system/sign/sign_update.html", {"sign": sign})
 
 
 # 删除签名
-@login_required
+# @login_required
 def sign_delete(request):
-    if request.method == 'GET':
-        sign_id = request.GET['sign_id']
-        Sign.objects.filter(sign_id=sign_id).delete()
-        log.info('delete sign   {}  success.'.format(sign_id))
-        return HttpResponseRedirect("base/sign/")
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/sign/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            sign_id = request.GET['sign_id']
+            Sign.objects.filter(sign_id=sign_id).delete()
+            log.info('delete sign   {}  success.'.format(sign_id))
+            return HttpResponseRedirect("base/sign/")
 
 
 # 测试环境首页
-@login_required
+# @login_required
 @page_cache(5)
 def env_index(request):
-    if request.session.get('user'):
+    user_id = request.session.get('user_id', '')
+    if get_user(user_id):
         # project_list = request.session.get('project_list', [])
         # env_list = []
         # for project_id in project_list:
@@ -230,11 +253,11 @@ def env_index(request):
 
 
 # 设置默认headers
-@login_required
+# @login_required
 def set_headers(request):
     """设置默认headers"""
     user_id = request.session.get('user_id', '')
-    if not user_id:
+    if not get_user(user_id):
         request.session['login_from'] = '/base/env/'
         return render(request, 'user/login_action.html')
     else:
@@ -255,10 +278,10 @@ def set_headers(request):
 
 
 # 添加环境
-@login_required
+# @login_required
 def env_add(request):
     user_id = request.session.get('user_id', '')
-    if not user_id:
+    if not get_user(user_id):
         request.session['login_from'] = '/base/env/'
         return render(request, 'user/login_action.html')
     else:
@@ -295,10 +318,10 @@ def env_add(request):
 
 
 # 测试环境更新
-@login_required
+# @login_required
 def env_update(request):
     user_id = request.session.get('user_id', '')
-    if not user_id:
+    if not get_user(user_id):
         request.session['login_from'] = '/base/env/'
         return render(request, 'user/login_action.html')
     else:
@@ -344,20 +367,26 @@ def env_update(request):
 
 
 # 删除测试环境
-@login_required
+# @login_required
 def env_delete(request):
-    if request.method == 'GET':
-        env_id = request.GET['env_id']
-        Environment.objects.filter(env_id=env_id).delete()
-        log.info('delete env   {}  success.'.format(env_id))
-        return HttpResponseRedirect("base/env/")
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/env/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            env_id = request.GET['env_id']
+            Environment.objects.filter(env_id=env_id).delete()
+            log.info('delete env   {}  success.'.format(env_id))
+            return HttpResponseRedirect("base/env/")
 
 
 # 接口首页
-@login_required
+# @login_required
 @page_cache(5)
 def interface_index(request):
-    if request.session.get('user'):
+    user_id = request.session.get('user_id', '')
+    if get_user(user_id):
         # project_list = request.session.get('project_list', [])
         # if_list = []
         # for project_id in project_list:
@@ -373,11 +402,12 @@ def interface_index(request):
 
 
 # 接口搜索功能
-@login_required
+# @login_required
 def interface_search(request):
     if request.method == 'POST':
-        search = request.POST.get('search', '').strip()
-        if request.session.get('user'):
+        user_id = request.session.get('user_id', '')
+        if get_user(user_id):
+            search = request.POST.get('search', '').strip()
             # project_list = request.session.get('project_list', [])
             if_list = []
             # interface_lists = []
@@ -414,10 +444,10 @@ def interface_search(request):
 
 
 # 添加接口
-@login_required
+# @login_required
 def interface_add(request):
     user_id = request.session.get('user_id', '')
-    if not user_id:
+    if not get_user(user_id):
         request.session['login_from'] = '/base/interface/'
         return render(request, 'user/login_action.html')
     else:
@@ -464,16 +494,113 @@ def interface_add(request):
 
 
 # 接口编辑
-@login_required
+# @login_required
 def interface_update(request):
     user_id = request.session.get('user_id', '')
-    if not user_id:
+    if not get_user(user_id):
         request.session['login_from'] = '/base/interface/'
         return render(request, 'user/login_action.html')
-    # prj_list = Project.objects.filter(user_id=user_id)
-    prj_list = Project.objects.all()
-    if request.method == 'POST':
-        if_id = request.POST['if_id']
+    else:
+        # prj_list = Project.objects.filter(user_id=user_id)
+        prj_list = Project.objects.all()
+        if request.method == 'POST':
+            if_id = request.POST['if_id']
+            interface = Interface.objects.get(if_id=if_id)
+            request_header_param_list = interface_get_params(interface.request_header_param)
+            request_body_param_list = interface_get_params(interface.request_body_param)
+            response_header_param_list = interface_get_params(interface.response_header_param)
+            response_body_param_list = interface_get_params(interface.response_body_param)
+            if interface.method == 'get':
+                method = 0
+            elif interface.method == 'post':
+                method = 1
+            elif interface.method == 'delete':
+                method = 2
+            elif interface.method == 'put':
+                method = 3
+            else:
+                method = ''
+            if interface.is_sign == 0:
+                is_sign = 0
+            elif interface.is_sign == 1:
+                is_sign = 1
+            else:
+                is_sign = ''
+            if_name = request.POST['if_name'].strip()
+            if if_name == '':
+                return render(request, 'base/interface/update.html',
+                              {'name_error': '接口名称不能为空！', "interface": interface,
+                               'request_header_param_list': request_header_param_list,
+                               'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
+                               'response_header_param_list': response_header_param_list,
+                               'response_body_param_list': response_body_param_list,
+                               "prj_list": prj_list})
+            # name_same = Interface.objects.filter(project__user_id=user_id).filter(if_name=if_name).exclude(
+            #     if_id=if_id)
+            name_same = Interface.objects.filter(if_name=if_name).exclude(if_id=if_id)
+            if name_same:
+                return render(request, 'base/interface/update.html',
+                              {'name_error': '接口：{}，已存在！'.format(if_name), "interface": interface,
+                               'request_header_param_list': request_header_param_list,
+                               'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
+                               'response_header_param_list': response_header_param_list,
+                               'response_body_param_list': response_body_param_list,
+                               "prj_list": prj_list})
+            prj_id = request.POST['prj_id']
+            project = Project.objects.get(prj_id=prj_id)
+            url = request.POST['url'].strip()
+            if url == '':
+                return render(request, 'base/interface/update.html',
+                              {'url_error': '接口url不能为空！', "interface": interface,
+                               'request_header_param_list': request_header_param_list,
+                               'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
+                               'response_header_param_list': response_header_param_list,
+                               'response_body_param_list': response_body_param_list,
+                               "prj_list": prj_list})
+            method = request.POST.get('method', '')
+            if method == '':
+                return render(request, 'base/interface/update.html',
+                              {'method_error': '请选择接口请求方式！', "interface": interface,
+                               'request_header_param_list': request_header_param_list,
+                               'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
+                               'response_header_param_list': response_header_param_list,
+                               'response_body_param_list': response_body_param_list,
+                               "prj_list": prj_list})
+            data_type = request.POST['data_type']
+            is_sign = request.POST.get('is_sign', '')
+            is_headers = request.POST.get('is_headers', '')
+            if is_sign == '':
+                return render(request, 'base/interface/update.html',
+                              {'sign_error': '请选择接口是否需要签名！', "interface": interface,
+                               'request_header_param_list': request_header_param_list,
+                               'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
+                               'response_header_param_list': response_header_param_list,
+                               'response_body_param_list': response_body_param_list,
+                               "prj_list": prj_list})
+            description = request.POST['description']
+            request_header_data_list = request.POST.getlist('request_header_data', [])
+            request_header_data = interface_format_params(request_header_data_list)
+            request_body_data_list = request.POST.getlist('request_body_data', [])
+            request_body_data = interface_format_params(request_body_data_list)
+            response_header_data_list = request.POST.getlist('response_header_data', [])
+            response_header_data = interface_format_params(response_header_data_list)
+            response_body_data_list = request.POST.getlist('response_body_data', [])
+            response_body_data = interface_format_params(response_body_data_list)
+            Interface.objects.filter(if_id=if_id).update(if_name=if_name, url=url, project=project, method=method,
+                                                         data_type=data_type, is_header=is_headers,
+                                                         is_sign=is_sign, description=description,
+                                                         request_header_param=request_header_data,
+                                                         request_body_param=request_body_data,
+                                                         response_header_param=response_header_data,
+                                                         response_body_param=response_body_data,
+                                                         update_time=datetime.now())
+            log.info(
+                'edit interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} // {}// {} '.format(
+                    if_name, project, url, method, data_type, is_sign, description, request_header_data,
+                    request_body_data,
+                    response_header_data, response_body_data, is_headers))
+            return HttpResponseRedirect("/base/interface/")
+        if_id = request.GET['if_id']
         interface = Interface.objects.get(if_id=if_id)
         request_header_param_list = interface_get_params(interface.request_header_param)
         request_body_param_list = interface_get_params(interface.request_body_param)
@@ -495,112 +622,18 @@ def interface_update(request):
             is_sign = 1
         else:
             is_sign = ''
-        if_name = request.POST['if_name'].strip()
-        if if_name == '':
-            return render(request, 'base/interface/update.html',
-                          {'name_error': '接口名称不能为空！', "interface": interface,
-                           'request_header_param_list': request_header_param_list,
-                           'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                           'response_header_param_list': response_header_param_list,
-                           'response_body_param_list': response_body_param_list,
-                           "prj_list": prj_list})
-        # name_same = Interface.objects.filter(project__user_id=user_id).filter(if_name=if_name).exclude(
-        #     if_id=if_id)
-        name_same = Interface.objects.filter(if_name=if_name).exclude(if_id=if_id)
-        if name_same:
-            return render(request, 'base/interface/update.html',
-                          {'name_error': '接口：{}，已存在！'.format(if_name), "interface": interface,
-                           'request_header_param_list': request_header_param_list,
-                           'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                           'response_header_param_list': response_header_param_list,
-                           'response_body_param_list': response_body_param_list,
-                           "prj_list": prj_list})
-        prj_id = request.POST['prj_id']
-        project = Project.objects.get(prj_id=prj_id)
-        url = request.POST['url'].strip()
-        if url == '':
-            return render(request, 'base/interface/update.html',
-                          {'url_error': '接口url不能为空！', "interface": interface,
-                           'request_header_param_list': request_header_param_list,
-                           'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                           'response_header_param_list': response_header_param_list,
-                           'response_body_param_list': response_body_param_list,
-                           "prj_list": prj_list})
-        method = request.POST.get('method', '')
-        if method == '':
-            return render(request, 'base/interface/update.html',
-                          {'method_error': '请选择接口请求方式！', "interface": interface,
-                           'request_header_param_list': request_header_param_list,
-                           'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                           'response_header_param_list': response_header_param_list,
-                           'response_body_param_list': response_body_param_list,
-                           "prj_list": prj_list})
-        data_type = request.POST['data_type']
-        is_sign = request.POST.get('is_sign', '')
-        is_headers = request.POST.get('is_headers', '')
-        if is_sign == '':
-            return render(request, 'base/interface/update.html',
-                          {'sign_error': '请选择接口是否需要签名！', "interface": interface,
-                           'request_header_param_list': request_header_param_list,
-                           'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                           'response_header_param_list': response_header_param_list,
-                           'response_body_param_list': response_body_param_list,
-                           "prj_list": prj_list})
-        description = request.POST['description']
-        request_header_data_list = request.POST.getlist('request_header_data', [])
-        request_header_data = interface_format_params(request_header_data_list)
-        request_body_data_list = request.POST.getlist('request_body_data', [])
-        request_body_data = interface_format_params(request_body_data_list)
-        response_header_data_list = request.POST.getlist('response_header_data', [])
-        response_header_data = interface_format_params(response_header_data_list)
-        response_body_data_list = request.POST.getlist('response_body_data', [])
-        response_body_data = interface_format_params(response_body_data_list)
-        Interface.objects.filter(if_id=if_id).update(if_name=if_name, url=url, project=project, method=method,
-                                                     data_type=data_type, is_header=is_headers,
-                                                     is_sign=is_sign, description=description,
-                                                     request_header_param=request_header_data,
-                                                     request_body_param=request_body_data,
-                                                     response_header_param=response_header_data,
-                                                     response_body_param=response_body_data, update_time=datetime.now())
-        log.info(
-            'edit interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} // {}// {} '.format(
-                if_name, project, url, method, data_type, is_sign, description, request_header_data, request_body_data,
-                response_header_data, response_body_data, is_headers))
-        return HttpResponseRedirect("/base/interface/")
-    if_id = request.GET['if_id']
-    interface = Interface.objects.get(if_id=if_id)
-    request_header_param_list = interface_get_params(interface.request_header_param)
-    request_body_param_list = interface_get_params(interface.request_body_param)
-    response_header_param_list = interface_get_params(interface.response_header_param)
-    response_body_param_list = interface_get_params(interface.response_body_param)
-    if interface.method == 'get':
-        method = 0
-    elif interface.method == 'post':
-        method = 1
-    elif interface.method == 'delete':
-        method = 2
-    elif interface.method == 'put':
-        method = 3
-    else:
-        method = ''
-    if interface.is_sign == 0:
-        is_sign = 0
-    elif interface.is_sign == 1:
-        is_sign = 1
-    else:
-        is_sign = ''
-    if interface.is_header == 0:
-        is_headers = 0
-    elif interface.is_header == 1:
-        is_headers = 1
-    else:
-        is_headers = ''
-    return render(request, "base/interface/update.html",
-                  {"interface": interface, 'request_header_param_list': request_header_param_list,
-                   'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                   'response_header_param_list': response_header_param_list,
-                   'response_body_param_list': response_body_param_list, 'is_headers': is_headers,
-                   "prj_list": prj_list})
+        if interface.is_header == 0:
+            is_headers = 0
+        elif interface.is_header == 1:
+            is_headers = 1
+        else:
+            is_headers = ''
+        return render(request, "base/interface/update.html",
+                      {"interface": interface, 'request_header_param_list': request_header_param_list,
+                       'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
+                       'response_header_param_list': response_header_param_list,
+                       'response_body_param_list': response_body_param_list, 'is_headers': is_headers,
+                       "prj_list": prj_list})
 
 
 # 解析数据库中格式化前的参数
@@ -628,13 +661,18 @@ def interface_format_params(params_list):
 
 
 # 接口删除
-@login_required
+# @login_required
 def interface_delete(request):
-    if request.method == 'GET':
-        if_id = request.GET['if_id']
-        Interface.objects.filter(if_id=if_id).delete()
-        log.info('delete interface   {}  success.'.format(if_id))
-        return HttpResponseRedirect("base/interface/")
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/interface/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            if_id = request.GET['if_id']
+            Interface.objects.filter(if_id=if_id).delete()
+            log.info('delete interface   {}  success.'.format(if_id))
+            return HttpResponseRedirect("base/interface/")
 
 
 # 批量导入接口
@@ -683,31 +721,37 @@ def batch_import_interface(interface_params, interface):
 
 
 # 批量导入
-@login_required
+# @login_required
 def batch_index(request):
     """批量导入"""
-    if request.method == 'GET':
-        # Interface.objects.all().delete()  # 清空接口表
-        # Case.objects.all().delete()  # 清空用例表
-        # Plan.objects.all().delete()  # 清空计划表
-        # Report.objects.all().delete()  # 清空报告表
-        try:
-            env = Environment.objects.get(is_swagger=1)
-            env_url = env.url
-            prj_id = env.project_id
-            interface_params, interface = AnalysisJson(prj_id, env_url).retrieve_data()
-            log.info('项目 {} 开始批量导入...'.format(prj_id))
-            batch_import_interface(interface_params, interface)
-            return HttpResponse('批量导入成功！ ==> {}'.format(prj_id))
-        except Environment.DoesNotExist:
-            return HttpResponse('测试环境中未设置从swagger导入！')
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/interface/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            # Interface.objects.all().delete()  # 清空接口表
+            # Case.objects.all().delete()  # 清空用例表
+            # Plan.objects.all().delete()  # 清空计划表
+            # Report.objects.all().delete()  # 清空报告表
+            try:
+                env = Environment.objects.get(is_swagger=1)
+                env_url = env.url
+                prj_id = env.project_id
+                interface_params, interface = AnalysisJson(prj_id, env_url).retrieve_data()
+                log.info('项目 {} 开始批量导入...'.format(prj_id))
+                batch_import_interface(interface_params, interface)
+                return HttpResponse('批量导入成功！ ==> {}'.format(prj_id))
+            except Environment.DoesNotExist:
+                return HttpResponse('测试环境中未设置从swagger导入！')
 
 
 # 用例首页
-@login_required
+# @login_required
 @page_cache(5)
 def case_index(request):
-    if request.session.get('user'):
+    user_id = request.session.get('user_id', '')
+    if get_user(user_id):
         # project_list = request.session.get('project_list', [])
         # case_list = []
         # for project_id in project_list:
@@ -724,10 +768,10 @@ def case_index(request):
 
 
 # 添加用例
-@login_required
+# @login_required
 def case_add(request):
     user_id = request.session.get('user_id', '')
-    if not user_id:
+    if not get_user(user_id):
         request.session['login_from'] = '/base/case/'
         return render(request, 'user/login_action.html')
     else:
@@ -757,10 +801,10 @@ def case_add(request):
 
 
 # 编辑用例
-@login_required
+# @login_required
 def case_update(request):
     user_id = request.session.get('user_id', '')
-    if not user_id:
+    if not get_user(user_id):
         request.session['login_from'] = '/base/case/'
         return render(request, 'user/login_action.html')
     else:
@@ -811,80 +855,101 @@ def case_update(request):
             return render(request, 'user/login_action.html')
 
 
-@login_required
+# @login_required
 def case_copy(request):
     """复制case"""
-    if request.method == 'GET':
-        case_id = request.GET.get('case_id', '')
-        case_ = Case.objects.get(case_id=case_id)
-        case_name = case_.case_name
-        content = case_.content
-        project = case_.project
-        case = Case(case_name=case_name, project=project, description='', update_time=datetime.now(),
-                    content=content)
-        case.save()
-        log.info(
-            'copy case   {}  success. case info: {} // {} '.format(case_name, project, content))
-        return HttpResponseRedirect("base/case/")
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/case/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            case_id = request.GET.get('case_id', '')
+            case_ = Case.objects.get(case_id=case_id)
+            case_name = case_.case_name
+            content = case_.content
+            project = case_.project
+            case = Case(case_name=case_name, project=project, description='', update_time=datetime.now(),
+                        content=content)
+            case.save()
+            log.info(
+                'copy case   {}  success. case info: {} // {} '.format(case_name, project, content))
+            return HttpResponseRedirect("base/case/")
 
 
-@login_required
+# @login_required
 def case_logs(request):
     """单个用例运行日志"""
-    log_file_list = os.listdir(logs_path)
-    data_list = []
-    file_list = []
-    now = time.strftime('%Y-%m-%d')
-    for file in log_file_list:
-        if 'all' in file and now in file:
-            file_list.append(file)
-    if not file_list:
-        yesterday = datetime.today() + timedelta(-1)
-        yesterday_format = yesterday.strftime('%Y_%m_%d')
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/case/'
+        return render(request, 'user/login_action.html')
+    else:
+        log_file_list = os.listdir(logs_path)
+        data_list = []
+        file_list = []
+        now = time.strftime('%Y-%m-%d')
         for file in log_file_list:
-            if 'all' in file and yesterday_format in file:
-                file_list.apppend(file)
-    file_list.sort()
-    log_file = os.path.join(logs_path, file_list[0])
-    with open(log_file, 'rb') as f:
-        off = -1024 * 1024
-        if f.tell() < -off:
-            data = f.readlines()
-        else:
-            f.seek(off, 2)
-            data = f.readlines()
-        for line in data:
-            data_list.append(line.decode())
-        return render(request, 'base/case/log.html', {'data': data_list, 'make': True, 'log_file': log_file})
+            if 'all' in file and now in file:
+                file_list.append(file)
+        if not file_list:
+            yesterday = datetime.today() + timedelta(-1)
+            yesterday_format = yesterday.strftime('%Y_%m_%d')
+            for file in log_file_list:
+                if 'all' in file and yesterday_format in file:
+                    file_list.apppend(file)
+        file_list.sort()
+        log_file = os.path.join(logs_path, file_list[0])
+        with open(log_file, 'rb') as f:
+            off = -1024 * 1024
+            if f.tell() < -off:
+                data = f.readlines()
+            else:
+                f.seek(off, 2)
+                data = f.readlines()
+            for line in data:
+                data_list.append(line.decode())
+            return render(request, 'base/case/log.html', {'data': data_list, 'make': True, 'log_file': log_file})
 
 
 # 删除用例
-@login_required
+# @login_required
 def case_delete(request):
-    if request.method == 'GET':
-        case_id = request.GET['case_id']
-        Case.objects.filter(case_id=case_id).delete()
-        log.info('delete case   {}  success.'.format(case_id))
-        return HttpResponseRedirect("base/case/")
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/case/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            case_id = request.GET['case_id']
+            Case.objects.filter(case_id=case_id).delete()
+            log.info('delete case   {}  success.'.format(case_id))
+            return HttpResponseRedirect("base/case/")
 
 
 # 运行用例
-@login_required
+# @login_required
 def case_run(request):
-    if request.method == 'POST':
-        case_id = request.POST['case_id']
-        env_id = request.POST['env_id']
-        log.info('Environmental: {} , Case:  {}'.format(env_id, case_id))
-        execute = Test_execute(case_id, env_id, ['1'])
-        case_result = execute.test_case()
-        return JsonResponse(case_result)
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/case/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'POST':
+            case_id = request.POST['case_id']
+            env_id = request.POST['env_id']
+            log.info('Environmental: {} , Case:  {}'.format(env_id, case_id))
+            execute = Test_execute(case_id, env_id, ['1'])
+            case_result = execute.test_case()
+            return JsonResponse(case_result)
 
 
 # 测试计划首页
-@login_required
+# @login_required
 @page_cache(5)
 def plan_index(request):
-    if request.session.get('user'):
+    user_id = request.session.get('user_id', '')
+    if get_user(user_id):
         # project_list = request.session.get('project_list', [])
         # plan_list = []
         # for project_id in project_list:
@@ -901,10 +966,10 @@ def plan_index(request):
 
 
 # 测试计划添加
-@login_required
+# @login_required
 def plan_add(request):
     user_id = request.session.get('user_id', '')
-    if not user_id:
+    if not get_user(user_id):
         request.session['login_from'] = '/base/plan/'
         return render(request, 'user/login_action.html')
     else:
@@ -945,10 +1010,10 @@ def plan_add(request):
 
 
 # 测试计划编辑
-@login_required
+# @login_required
 def plan_update(request):
     user_id = request.session.get('user_id', '')
-    if not user_id:
+    if not get_user(user_id):
         request.session['login_from'] = '/base/plan/'
         return render(request, 'user/login_action.html')
     else:
@@ -1017,215 +1082,129 @@ def plan_update(request):
 
 
 # 删除测试计划
-@login_required
+# @login_required
 def plan_delete(request):
-    if request.method == 'GET':
-        plan_id = request.GET['plan_id']
-        Plan.objects.filter(plan_id=plan_id).delete()
-        log.info('delete plan   {}  success.'.format(plan_id))
-        return HttpResponseRedirect("base/plan/")
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/plan/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            plan_id = request.GET['plan_id']
+            Plan.objects.filter(plan_id=plan_id).delete()
+            log.info('delete plan   {}  success.'.format(plan_id))
+            return HttpResponseRedirect("base/plan/")
 
 
 # 运行测试计划
-@login_required
+# @login_required
 def plan_run(request):
-    if request.method == 'POST':
-        global totalTime, start_time, now_time
-        begin_time = time.clock()
-        start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-        now_time = int(time.mktime(time.strptime(start_time, '%Y-%m-%d %H:%M:%S')))
-        plan_id = request.POST['plan_id']
-        plan = Plan.objects.get(plan_id=plan_id)
-        env_id = plan.environment.env_id
-        case_id_list = eval(plan.content)
-        case_num = len(case_id_list)
-        content = []
-        pass_num = 0
-        fail_num = 0
-        error_num = 0
-        i = 0
-        for case_id in case_id_list:
-            execute = Test_execute(case_id, env_id, case_id_list)
-            case_result = execute.test_case()
-            if isinstance(case_result, dict):
-                content.append(case_result)
-            else:
-                return HttpResponse(case_result)
-        end_time = time.clock()
-        totalTime = str(end_time - begin_time) + 's'
-        for step in content:
-            for s in step['step_list']:
-                if s["result"] == "pass":
-                    pass_num += 1
-                    i += 1
-                    s['id'] = i
-                if s["result"] == "fail":
-                    fail_num += 1
-                    i += 1
-                    s['id'] = i
-                if s["result"] == "error":
-                    error_num += 1
-                    i += 1
-                    s['id'] = i
-        pic_name = DrawPie(pass_num, fail_num, error_num)
-        report_name = plan.plan_name + "-" + str(start_time)
-        report = Report(plan=plan, report_name=report_name, content=content, case_num=case_num,
-                        pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
-                        totalTime=totalTime, startTime=start_time)
-        report.save()
-        Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now())
-        return HttpResponse(plan.plan_name + " 执行成功！")
-
-
-@login_required
-def plan_unittest_run(request):
-    if request.method == 'POST':
-        global totalTime, start_time, now_time
-        plan_id = request.POST['plan_id']
-        plan = Plan.objects.get(plan_id=plan_id)
-        env = Environment.objects.get(env_id=plan.environment_id)
-        case_path = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'case')
-        if not os.path.exists(case_path): os.mkdir(case_path)  # 如果不存在这个logs文件夹，就自动创建一个
-        py_path = os.path.join(case_path, 'test_api.py')
-        test_data = []
-        for case_id in eval(plan.content):
-            try:
-                case = Case.objects.get(case_id=int(case_id))
-            except Case.DoesNotExist as e:
-                log.error('计划：{} 中的 用例 {} 已被删除！'.format(plan.plan_name, case_id))
-                return HttpResponse('计划：{} 中的 用例 {} 已被删除！'.format(plan.plan_name, case_id))
-            set_headers = env.set_headers
-            if_list = eval(case.content)
-            for i in if_list:
-                interface = Interface.objects.get(if_id=i['if_id'])
-                test_data.append(
-                    {'case_name': case.case_name, 'if_id': interface.if_id, 'if_name': interface.if_name,
-                     'method': interface.method, 'url': env.url + interface.url, 'data_type': interface.data_type,
-                     'headers': eval(set_headers)['header'], 'body': i['body'], 'checkpoint': i['validators'],
-                     'extract': i['extract']})
-        with open(py_path, 'w', encoding='utf-8') as f:
-            data = '# !/user/bin/env python\n' + '# coding=utf-8\n' + 'import json\n' + 'import ddt\n' + 'from common.logger import Log\n' + 'from common import base_api\n' + 'import unittest\n' + 'import requests\n' \
-                   + '\ntest_data = {}'.format(
-                test_data) + '\n' + 'log = Log()  # 初始化log\n\n\n' + '@ddt.ddt\n' + 'class Test_api(unittest.TestCase):\n\t' + \
-                   '@classmethod\n\t' + 'def setUpClass(cls):\n\t\t' + 'cls.s = requests.session()\n\n\t' + '@ddt.data(*test_data)\n\t' + 'def test_api(self, data):\n\t\t' + '"""{0}"""\n\t\t' \
-                   + 'res = base_api.send_requests(self.s, data)  # 调用send_requests方法,请求接口,返回结果\n\t\t' + 'checkpoint = data["checkpoint"]  # 检查点 checkpoint\n\t\t' + 'res_text = res["text"]  # 返回结果\n\t\t' + \
-                   'text = json.loads(res_text)\n\t\t' + "for inspect in checkpoint:\n\t\t\t" + 'self.assertTrue(inspect["expect"] in str(text[inspect["check"]]).lower(), "检查点验证失败！")  # 断言\n\n\n' \
-                   + "if __name__ == '__main__':\n\t" + 'unittest.main()'
-            f.write(data)
-        run_this.run_email()
-        report_name = get_new_report_html(report_path)
-        Plan.objects.filter(plan_id=plan_id).update(make=1, report_name=report_name, update_time=datetime.now())
-        log.info('-------------------------->plan_unittest_run plan_id: {}'.format(plan_id))
-        return HttpResponse(plan.plan_name + " 执行成功！")
-
-
-# 显示日志信息
-@login_required
-def report_logs(request):
-    report_id = request.GET.get('report_id')
-    plan_id = Report.objects.get(report_id=report_id).plan_id
-    make = Plan.objects.get(plan_id=plan_id).make
-    if make:  # unittest日志
-        file_list = []
-        now = time.strftime('%Y-%m-%d')
-        log_file_list = os.listdir(logs_path)
-        for file in log_file_list:
-            if file[0].isdigit() and now in file:
-                file_list.append(file)
-        if not file_list:
-            return render(request, 'base/report_page/log.html', {'unicode': True})
-        data_list = []
-        file_list.sort()
-        log_file = os.path.join(logs_path, file_list[0])
-        try:
-            with open(log_file, 'rb') as f:
-                off = -1024 * 1024
-                if f.tell() < -off:
-                    data = f.readlines()
-                else:
-                    f.seek(off, 2)
-                    data = f.readlines()
-                for line in data:
-                    data_list.append(line.decode())
-            return render(request, 'base/report_page/log.html', {'data': data_list, 'make': True})
-        except UnicodeDecodeError:
-            return render(request, 'base/report_page/log.html', {'unicode': True})
-
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/plan/'
+        return render(request, 'user/login_action.html')
     else:
-        try:
-            report = Report.objects.get(report_id=report_id)
-        except Report.DoesNotExist:
-            return render(request, "base/report_page/log.html")
-        else:
-            report_content = eval(report.content)
-            for case in report_content:
-                global class_name
-                class_name = case['class_name']
-            return render(request, "base/report_page/log.html",
-                          {"report": report, 'plan_id': plan_id, "report_content": report_content,
-                           'class_name': class_name})
-
-
-# 展示报告
-@login_required
-def report_index(request):
-    if request.method == 'GET':
-        report_id = request.GET.get('report_id', '')
-        if not report_id:
-            return render(request, "report.html")
-        try:
-            report = Report.objects.get(report_id=report_id)
-        except Report.DoesNotExist:
-            return render(request, 'report.html')
-        plan_id = Report.objects.get(report_id=report_id).plan_id
-        make = Plan.objects.get(plan_id=plan_id).make
-        plan_name = Plan.objects.get(plan_id=plan_id).report_name
-        if make:  # unittest报告
-            log.info('-------------------------->report_index plan_id: {} , plan_name: {}'.format(plan_id, plan_name))
-            return render(request, '{}'.format(plan_name))
-        case_num = Report.objects.get(report_id=report_id).case_num
-        pass_num = Report.objects.get(report_id=report_id).pass_num
-        fail_num = Report.objects.get(report_id=report_id).fail_num
-        error_num = Report.objects.get(report_id=report_id).error_num
-        report_content = eval(report.content)
-        for case in report_content:
-            global class_name
-            class_name = case['class_name']
-        return render(request, "report.html",
-                      {"report": report, 'plan_id': plan_id, 'case_num': case_num, "error_num": error_num,
-                       'pass_num': pass_num, 'fail_num': fail_num, "report_content": report_content,
-                       'img_name': str(now_time) + 'pie.png', 'class_name': class_name})
-
-
-def report_search(request):
-    if request.method == 'POST':
-        result = request.POST['result']
-        report_id = request.POST['report_id']
-        try:
-            report = Report.objects.get(report_id=report_id)
-        except Report.DoesNotExist:
-            return render(request, "report.html")
-        report_content = eval(report.content)
-        if result not in ['pass', 'fail']:
-            return HttpResponse(str(report_content))
-        for case in report_content:
-            global class_name
-            class_name = case['class_name']
-            step_list = case['step_list']
-            case['step_list'] = []
-            for step in step_list:
-                if result == step['result']:
-                    case['step_list'].append(step)
+        if request.method == 'POST':
+            global totalTime, start_time, now_time
+            begin_time = time.clock()
+            start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+            now_time = int(time.mktime(time.strptime(start_time, '%Y-%m-%d %H:%M:%S')))
+            plan_id = request.POST['plan_id']
+            plan = Plan.objects.get(plan_id=plan_id)
+            env_id = plan.environment.env_id
+            case_id_list = eval(plan.content)
+            case_num = len(case_id_list)
+            content = []
+            pass_num = 0
+            fail_num = 0
+            error_num = 0
+            i = 0
+            for case_id in case_id_list:
+                execute = Test_execute(case_id, env_id, case_id_list)
+                case_result = execute.test_case()
+                if isinstance(case_result, dict):
+                    content.append(case_result)
                 else:
-                    pass
-        return HttpResponse(str(report_content))
+                    return HttpResponse(case_result)
+            end_time = time.clock()
+            totalTime = str(end_time - begin_time) + 's'
+            for step in content:
+                for s in step['step_list']:
+                    if s["result"] == "pass":
+                        pass_num += 1
+                        i += 1
+                        s['id'] = i
+                    if s["result"] == "fail":
+                        fail_num += 1
+                        i += 1
+                        s['id'] = i
+                    if s["result"] == "error":
+                        error_num += 1
+                        i += 1
+                        s['id'] = i
+            pic_name = DrawPie(pass_num, fail_num, error_num)
+            report_name = plan.plan_name + "-" + str(start_time)
+            report = Report(plan=plan, report_name=report_name, content=content, case_num=case_num,
+                            pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
+                            totalTime=totalTime, startTime=start_time)
+            report.save()
+            Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now())
+            return HttpResponse(plan.plan_name + " 执行成功！")
+
+
+# @login_required
+def plan_unittest_run(request):
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/plan/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'POST':
+            global totalTime, start_time, now_time
+            plan_id = request.POST['plan_id']
+            plan = Plan.objects.get(plan_id=plan_id)
+            env = Environment.objects.get(env_id=plan.environment_id)
+            case_path = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'case')
+            if not os.path.exists(case_path): os.mkdir(case_path)  # 如果不存在这个logs文件夹，就自动创建一个
+            py_path = os.path.join(case_path, 'test_api.py')
+            test_data = []
+            for case_id in eval(plan.content):
+                try:
+                    case = Case.objects.get(case_id=int(case_id))
+                except Case.DoesNotExist as e:
+                    log.error('计划：{} 中的 用例 {} 已被删除！'.format(plan.plan_name, case_id))
+                    return HttpResponse('计划：{} 中的 用例 {} 已被删除！'.format(plan.plan_name, case_id))
+                set_headers = env.set_headers
+                if_list = eval(case.content)
+                for i in if_list:
+                    interface = Interface.objects.get(if_id=i['if_id'])
+                    test_data.append(
+                        {'case_name': case.case_name, 'if_id': interface.if_id, 'if_name': interface.if_name,
+                         'method': interface.method, 'url': env.url + interface.url, 'data_type': interface.data_type,
+                         'headers': eval(set_headers)['header'], 'body': i['body'], 'checkpoint': i['validators'],
+                         'extract': i['extract']})
+            with open(py_path, 'w', encoding='utf-8') as f:
+                data = '# !/user/bin/env python\n' + '# coding=utf-8\n' + 'import json\n' + 'import ddt\n' + 'from common.logger import Log\n' + 'from common import base_api\n' + 'import unittest\n' + 'import requests\n' \
+                       + '\ntest_data = {}'.format(
+                    test_data) + '\n' + 'log = Log()  # 初始化log\n\n\n' + '@ddt.ddt\n' + 'class Test_api(unittest.TestCase):\n\t' + \
+                       '@classmethod\n\t' + 'def setUpClass(cls):\n\t\t' + 'cls.s = requests.session()\n\n\t' + '@ddt.data(*test_data)\n\t' + 'def test_api(self, data):\n\t\t' + '"""{0}"""\n\t\t' \
+                       + 'res = base_api.send_requests(self.s, data)  # 调用send_requests方法,请求接口,返回结果\n\t\t' + 'checkpoint = data["checkpoint"]  # 检查点 checkpoint\n\t\t' + 'res_text = res["text"]  # 返回结果\n\t\t' + \
+                       'text = json.loads(res_text)\n\t\t' + "for inspect in checkpoint:\n\t\t\t" + 'self.assertTrue(inspect["expect"] in str(text[inspect["check"]]).lower(), "检查点验证失败！")  # 断言\n\n\n' \
+                       + "if __name__ == '__main__':\n\t" + 'unittest.main()'
+                f.write(data)
+            run_this.run_email()
+            report_name = get_new_report_html(report_path)
+            Plan.objects.filter(plan_id=plan_id).update(make=1, report_name=report_name, update_time=datetime.now())
+            log.info('-------------------------->plan_unittest_run plan_id: {}'.format(plan_id))
+            return HttpResponse(plan.plan_name + " 执行成功！")
 
 
 # 定时任务
-@login_required
+# @login_required
 @page_cache(5)
 def timing_task(request):
-    if request.session.get('user'):
+    user_id = request.session.get('user_id', '')
+    if get_user(user_id):
         task_list = PeriodicTask.objects.all()
         task_count = PeriodicTask.objects.all().count()  # 统计数
         periodic_list = IntervalSchedule.objects.all()  # 周期任务 （如：每隔1小时执行1次）
@@ -1239,11 +1218,12 @@ def timing_task(request):
 
 
 # 查看报告页面
-@login_required
+# @login_required
 @page_cache(5)
 def report_page(request):
     if request.method == 'GET':
-        if request.session.get('user'):
+        user_id = request.session.get('user_id', '')
+        if get_user(user_id):
             plan_id = request.GET.get('plan_id', '')
             if plan_id:
                 report_list = Report.objects.filter(plan_id=plan_id).order_by('-report_id')
@@ -1258,69 +1238,202 @@ def report_page(request):
             return render(request, 'user/login_action.html')
 
 
+# 显示日志信息
+# @login_required
+def report_logs(request):
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/report_page/'
+        return render(request, 'user/login_action.html')
+    else:
+        report_id = request.GET.get('report_id')
+        plan_id = Report.objects.get(report_id=report_id).plan_id
+        make = Plan.objects.get(plan_id=plan_id).make
+        if make:  # unittest日志
+            file_list = []
+            now = time.strftime('%Y-%m-%d')
+            log_file_list = os.listdir(logs_path)
+            for file in log_file_list:
+                if file[0].isdigit() and now in file:
+                    file_list.append(file)
+            if not file_list:
+                return render(request, 'base/report_page/log.html', {'unicode': True})
+            data_list = []
+            file_list.sort()
+            log_file = os.path.join(logs_path, file_list[0])
+            try:
+                with open(log_file, 'rb') as f:
+                    off = -1024 * 1024
+                    if f.tell() < -off:
+                        data = f.readlines()
+                    else:
+                        f.seek(off, 2)
+                        data = f.readlines()
+                    for line in data:
+                        data_list.append(line.decode())
+                return render(request, 'base/report_page/log.html', {'data': data_list, 'make': True})
+            except UnicodeDecodeError:
+                return render(request, 'base/report_page/log.html', {'unicode': True})
+
+        else:
+            try:
+                report = Report.objects.get(report_id=report_id)
+            except Report.DoesNotExist:
+                return render(request, "base/report_page/log.html")
+            else:
+                report_content = eval(report.content)
+                for case in report_content:
+                    global class_name
+                    class_name = case['class_name']
+                return render(request, "base/report_page/log.html",
+                              {"report": report, 'plan_id': plan_id, "report_content": report_content,
+                               'class_name': class_name})
+
+
+# 展示报告
+# @login_required
+def report_index(request):
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/report_page/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            report_id = request.GET.get('report_id', '')
+            if not report_id:
+                return render(request, "report.html")
+            try:
+                report = Report.objects.get(report_id=report_id)
+            except Report.DoesNotExist:
+                return render(request, 'report.html')
+            plan_id = Report.objects.get(report_id=report_id).plan_id
+            make = Plan.objects.get(plan_id=plan_id).make
+            plan_name = Plan.objects.get(plan_id=plan_id).report_name
+            if make:  # unittest报告
+                log.info(
+                    '-------------------------->report_index plan_id: {} , plan_name: {}'.format(plan_id,
+                                                                                                 plan_name))
+                return render(request, '{}'.format(plan_name))
+            case_num = Report.objects.get(report_id=report_id).case_num
+            pass_num = Report.objects.get(report_id=report_id).pass_num
+            fail_num = Report.objects.get(report_id=report_id).fail_num
+            error_num = Report.objects.get(report_id=report_id).error_num
+            report_content = eval(report.content)
+            for case in report_content:
+                global class_name
+                class_name = case['class_name']
+            return render(request, "report.html",
+                          {"report": report, 'plan_id': plan_id, 'case_num': case_num, "error_num": error_num,
+                           'pass_num': pass_num, 'fail_num': fail_num, "report_content": report_content,
+                           'img_name': str(now_time) + 'pie.png', 'class_name': class_name})
+
+
+# @login_required
+def report_search(request):
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/report_page/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'POST':
+            result = request.POST['result']
+            report_id = request.POST['report_id']
+            try:
+                report = Report.objects.get(report_id=report_id)
+            except Report.DoesNotExist:
+                return render(request, "report.html")
+            report_content = eval(report.content)
+            if result not in ['pass', 'fail']:
+                return HttpResponse(str(report_content))
+            for case in report_content:
+                global class_name
+                class_name = case['class_name']
+                step_list = case['step_list']
+                case['step_list'] = []
+                for step in step_list:
+                    if result == step['result']:
+                        case['step_list'].append(step)
+                    else:
+                        pass
+            return HttpResponse(str(report_content))
+
+
 # 删除报告
-@login_required
+# @login_required
 def report_delete(request):
-    if request.method == 'GET':
-        report_id = request.GET['report_id']
-        Report.objects.filter(report_id=report_id).delete()
-        log.info('delete project   {}  success.'.format(report_id))
-        return HttpResponseRedirect("base/report_page/")
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/report_page/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            report_id = request.GET['report_id']
+            Report.objects.filter(report_id=report_id).delete()
+            log.info('delete project   {}  success.'.format(report_id))
+            return HttpResponseRedirect("base/report_page/")
+
+
+# 下载unittest报告
+# @login_required
+def file_download(request):
+    # do something...
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/report_page/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            plan_id = request.GET.get('plan_id', '')
+            name = request.GET.get('log_file', '')
+            if plan_id:
+                name = Plan.objects.get(plan_id=plan_id).report_name
+                if not name:
+                    if plan_id:
+                        report_list = Report.objects.filter(plan_id=plan_id).order_by('-report_id')
+                    else:
+                        report_list = Report.objects.all().order_by('-report_id')
+                    page = request.GET.get('page')
+                    contacts = paginator(report_list, page)
+                    return render(request, "base/report_page/report_page.html",
+                                  {"contacts": contacts, 'plan_id': plan_id,
+                                   'error': '计划 {} 不存在unittest报告'.format(
+                                       plan_id)})
+
+            def file_iterator(file_name, chunk_size=512):
+                with open(file_name, encoding='utf-8') as f:
+                    while True:
+                        c = f.read(chunk_size)
+                        if c:
+                            yield c
+                        else:
+                            break
+
+            response = StreamingHttpResponse(file_iterator(name))
+            response['Content-Type'] = 'application/octet-stream'
+            response['Content-Disposition'] = 'attachment;filename="{0}"'.format(name)
+            log.info('下载测试报告或日志文件：{}'.format(name))
+            return response
 
 
 # locust页面
-@login_required
+# @login_required
 @page_cache(5)
 def performance_index(request):
     if request.method == 'GET':
-        if request.session.get('user', ''):
+        user_id = request.session.get('user_id', '')
+        if get_user(user_id):
             return render(request, 'base/performance/performance.html')
         else:
             request.session['login_from'] = '/base/performance/'
             return render(request, 'user/login_action.html')
 
 
-# 下载unittest报告
-@login_required
-def file_download(request):
-    # do something...
-    if request.method == 'GET':
-        plan_id = request.GET.get('plan_id', '')
-        name = request.GET.get('log_file', '')
-        if plan_id:
-            name = Plan.objects.get(plan_id=plan_id).report_name
-            if not name:
-                if plan_id:
-                    report_list = Report.objects.filter(plan_id=plan_id).order_by('-report_id')
-                else:
-                    report_list = Report.objects.all().order_by('-report_id')
-                page = request.GET.get('page')
-                contacts = paginator(report_list, page)
-                return render(request, "base/report_page/report_page.html",
-                              {"contacts": contacts, 'plan_id': plan_id, 'error': '计划 {} 不存在unittest报告'.format(
-                                  plan_id)})
-
-        def file_iterator(file_name, chunk_size=512):
-            with open(file_name, encoding='utf-8') as f:
-                while True:
-                    c = f.read(chunk_size)
-                    if c:
-                        yield c
-                    else:
-                        break
-
-        response = StreamingHttpResponse(file_iterator(name))
-        response['Content-Type'] = 'application/octet-stream'
-        response['Content-Disposition'] = 'attachment;filename="{0}"'.format(name)
-        log.info('下载测试报告或日志文件：{}'.format(name))
-        return response
-
-
 # 添加用户
-@login_required
+# @login_required
 @page_cache(5)
 def user_index(request):
-    if request.session.get('user'):
+    user_id = request.session.get('user_id', '')
+    if get_user(user_id):
         user = User.objects.all()
         page = request.GET.get('page')
         contacts = paginator(user, page)
