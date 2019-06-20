@@ -9,6 +9,7 @@ from base.models import Project, Sign, Environment, Interface, Case, Plan, Repor
 import logging, os
 from django.http import StreamingHttpResponse
 from lib.public import gr_code
+from lib.execute import get_user
 
 log = logging.getLogger('log')  # 初始化log
 num_list = []
@@ -18,8 +19,8 @@ num_list = []
 # @login_required
 # @page_cache(5)
 def index(request):
-    username = request.session.get('user', '')  # 从session中获取user_id
-    if username:
+    user_id = request.session.get('user_id', '')  # 从session中获取user_id
+    if get_user(user_id):
         if request.method == 'POST':
             url = request.POST.get('url', '')
             if url:
@@ -36,6 +37,7 @@ def index(request):
             report_num = Report.objects.aggregate(Count('report_id'))['report_id__count']
             periodic_num = PeriodicTask.objects.aggregate(Count('id'))['id__count']
             crontabSchedule_num = CrontabSchedule.objects.aggregate(Count('id'))['id__count']
+            username = request.session.get('user', '')
             num_list = [project_num, env_num, interface_num, case_num, plan_num, sign_num, report_num,
                         periodic_num + crontabSchedule_num]
             return render(request, "index.html",
@@ -45,7 +47,7 @@ def index(request):
                            'sign_num': sign_num, 'report_num': report_num,
                            'task_num': periodic_num + crontabSchedule_num})
     else:
-        request.session['login_from'] = '/base/project/'
+        request.session['login_from'] = '/index/'
         return render(request, 'user/login_action.html')
 
 
@@ -66,10 +68,10 @@ def login_action(request):
             user_ = User.objects.get(username=username)
             request.session['user_id'] = user_.id  # 将session信息记录到浏览器
             try:
-            	if request.session['login_from'] == '//':
-	                request.session['login_from'] = '/index/'
+                if request.session['login_from'] == '//':
+                    request.session['login_from'] = '/index/'
             except KeyError as e:
-            	request.session['login_from'] = '/index/'
+                request.session['login_from'] = '/index/'
             log.info('---------地址来源-------------> {}'.format(request.session['login_from']))
             response = redirect(request.session['login_from'])
             # response = HttpResponseRedirect('/index/')
@@ -79,7 +81,7 @@ def login_action(request):
             # for prj in prj_list:
             #     project_list.append(str(prj.prj_id))
             # request.session['project_list'] = project_list  # 保存项目id
-            request.session.set_expiry(0) # 关闭浏览器后，session失效
+            request.session.set_expiry(60)  # 关闭浏览器后，session失效
             return response
             # return render(request, 'base.html', {"user": username})
         else:
@@ -91,23 +93,29 @@ def login_action(request):
 @login_required
 def img_download(request):
     # do something...
-    if request.method == 'GET':
-        name = request.GET.get('log_file', '')
-        name_path = os.path.join('/home/ubuntu/EasyTest/media', name)
-        def file_iterator(file_name, chunk_size=512):
-            with open(file_name, 'rb') as f:
-                while True:
-                    c = f.read(chunk_size)
-                    if c:
-                        yield c
-                    else:
-                        break
+    user_id = request.session.get('user_id', '')  # 从session中获取user_id
+    if get_user(user_id):
+        if request.method == 'GET':
+            name = request.GET.get('log_file', '')
+            name_path = os.path.join('/home/ubuntu/EasyTest/media', name)
 
-        response = StreamingHttpResponse(file_iterator(name_path))
-        response['Content-Type'] = 'application/octet-stream'
-        response['Content-Disposition'] = 'attachment;filename="{0}"'.format(name_path)
-        log.info('下载的二维码：{}'.format(name_path))
-        return response
+            def file_iterator(file_name, chunk_size=512):
+                with open(file_name, 'rb') as f:
+                    while True:
+                        c = f.read(chunk_size)
+                        if c:
+                            yield c
+                        else:
+                            break
+
+            response = StreamingHttpResponse(file_iterator(name_path))
+            response['Content-Type'] = 'application/octet-stream'
+            response['Content-Disposition'] = 'attachment;filename="{0}"'.format(name_path)
+            log.info('下载的二维码：{}'.format(name_path))
+            return response
+    else:
+        request.session['login_from'] = '/index/'
+        return render(request, 'user/login_action.html')
 
 
 # 退出

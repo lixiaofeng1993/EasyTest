@@ -5,6 +5,7 @@ import sys
 __author__ = 'wsy'
 
 from base.models import Project, Sign, Environment, Interface, Case, Plan, Report
+from django.contrib.auth.models import User  # django自带user
 import requests
 # import hashlib
 from datetime import datetime
@@ -97,7 +98,7 @@ class Test_execute():
         if make:
             if_dict['header'] = eval(set_headers)['header']
         if interface.data_type == 'sql':
-            for k,v in if_dict['body'].items():
+            for k, v in if_dict['body'].items():
                 if 'select' in v:
                     if_dict['body'][k] = self.sql.execute_sql(v)
         # 签名
@@ -149,7 +150,8 @@ class Test_execute():
                         if k == 'token':
                             headers[k] = if_dict["res_content"]['data']
                             now_time = datetime.now()
-                            Environment.objects.filter(env_id=self.env_id).update(set_headers={'header': headers}, update_time=now_time)
+                            Environment.objects.filter(env_id=self.env_id).update(set_headers={'header': headers},
+                                                                                  update_time=now_time)
         except requests.RequestException as e:
             if_dict["result"] = "Error"
             if_dict["msg"] = str(e)
@@ -238,3 +240,12 @@ def remove_logs(path, type='logs'):
                     os.remove(i)
                 except PermissionError as e:
                     Log().warning('删除pic饼图失败：{}'.format(e))
+
+
+def get_user(user_id):
+    '''判断用户是否存在'''
+    user = User.objects.filter(id=user_id)
+    if user:
+        return True
+    else:
+        return False

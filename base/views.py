@@ -1,13 +1,13 @@
 import os
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+# from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.http import StreamingHttpResponse
 from base.models import Project, Sign, Environment, Interface, Case, Plan, Report
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.contrib.auth.models import User  # django自带user
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.db.models import Q  # 与或非 查询
-from lib.execute import Test_execute, remove_logs  # 执行接口
+from lib.execute import Test_execute, remove_logs, get_user  # 执行接口
 from djcelery.models import PeriodicTask, CrontabSchedule, IntervalSchedule
 from datetime import timedelta, datetime
 from lib.swagger import AnalysisJson
@@ -30,15 +30,6 @@ now_time = ''  # 饼图命名区分
 class_name = ''  # 执行测试类
 
 
-def get_user(user_id):
-    user = User.objects.filter(id=user_id)
-    log.info('--------------user-----------> {}'.format(user))
-    if user:
-        return True
-    else:
-        return False
-
-
 # 项目首页
 # @login_required
 @page_cache(5)
@@ -47,7 +38,6 @@ def project_index(request):
     # remove_logs(logs_path)
     # remove_logs(pic_path, type='pic')
     user_id = request.session.get('user_id', '')  # 从session中获取user_id
-    log.info('---------------user_id--------------> {}'.format(user_id))
     if get_user(user_id):
         # prj_list = Project.objects.filter(user_id=user_id)  # 按照user_id查询项目
         prj_list = Project.objects.all()  # 按照user_id查询项目
@@ -727,7 +717,7 @@ def batch_index(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/interface/'
-        return render(request, 'user/login_action.html')
+        return HttpResponse('用户未登录！')
     else:
         if request.method == 'GET':
             # Interface.objects.all().delete()  # 清空接口表
@@ -850,9 +840,6 @@ def case_update(request):
             return render(request, 'base/case/update.html',
                           {"prj_list": prj_list, 'case': case, 'interface': interface, 'case_id': case_id,
                            'if_id': if_id, 'if_list': str(if_list), 'if_name': if_name})
-        else:
-            request.session['login_from'] = '/base/case/'
-            return render(request, 'user/login_action.html')
 
 
 # @login_required
@@ -933,7 +920,7 @@ def case_run(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/case/'
-        return render(request, 'user/login_action.html')
+        return JsonResponse('用户未登录！')
     else:
         if request.method == 'POST':
             case_id = request.POST['case_id']
@@ -1102,7 +1089,7 @@ def plan_run(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/plan/'
-        return render(request, 'user/login_action.html')
+        return HttpResponse('用户未登录')
     else:
         if request.method == 'POST':
             global totalTime, start_time, now_time
@@ -1157,7 +1144,7 @@ def plan_unittest_run(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/plan/'
-        return render(request, 'user/login_action.html')
+        return HttpResponse('用户未登录')
     else:
         if request.method == 'POST':
             global totalTime, start_time, now_time
