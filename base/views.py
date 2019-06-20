@@ -396,7 +396,6 @@ def interface_index(request):
 def interface_search(request):
     if request.method == 'POST':
         user_id = request.session.get('user_id', '')
-        log.info('11111111111user_id============={}'.format(user_id))
         if get_user(user_id):
             search = request.POST.get('search', '').strip()
             # project_list = request.session.get('project_list', [])
@@ -430,7 +429,6 @@ def interface_search(request):
                         if_list.append(interface_dict)
                     return HttpResponse(str(if_list))
         else:
-            log.info('11111111111111111111')
             return HttpResponse('2')
 
 
@@ -1316,8 +1314,7 @@ def report_index(request):
 def report_search(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
-        request.session['login_from'] = '/base/report_page/'
-        return render(request, 'user/login_action.html')
+        return HttpResponse('0')
     else:
         if request.method == 'POST':
             result = request.POST['result']

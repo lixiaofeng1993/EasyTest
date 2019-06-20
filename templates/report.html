@@ -7281,6 +7281,10 @@
             success: function (data) {
                 {#                console.log(data);#}
                 {#                console.log(typeof data);#}
+                if (data == '0'){
+                    alert('用户未登录！');
+                    location.reload()
+                }
                 datas = eval(data.replace(/False/g, false).replace(/None/g, null).replace(/True/g, true));
                 {#                console.log(data);#}
                 $('#detailBody').empty();
