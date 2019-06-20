@@ -428,7 +428,8 @@ def interface_search(request):
                         interface_dict = {'if_id': str(interface.if_id), 'if_name': interface.if_name,
                                           'project': interface.project.prj_name, 'method': interface.method,
                                           'data_type': interface.data_type, 'is_sign': interface.is_sign,
-                                          'description': interface.description}
+                                          'description': interface.description, 'update_time': interface.update_time,
+                                          'update_user': interface.update_user}
                         if_list.append(interface_dict)
                     return HttpResponse(str(if_list))
         else:
