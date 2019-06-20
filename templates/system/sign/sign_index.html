@@ -52,6 +52,7 @@
                             <th id="cen">名称</th>
                             <th id="cen">描述</th>
                             <th id="cen">更新时间</th>
+                            <th id="cen">更新用户</th>
                             <th id="cen">操作</th>
                         </tr>
                         </thead>
@@ -63,6 +64,7 @@
                                        class="layui-btn layui-btn-xs" lay-event="edit">{{ sign.sign_name }}</a></td>
                                 <td>{{ sign.description }}</td>
                                 <td id="cen">{{ sign.update_time }}</td>
+                                <td id="cen">{{ sign.update_user }}</td>
                                 <td id="cen">
                                     <a href="/base/sign_delete?sign_id={{ sign.sign_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"

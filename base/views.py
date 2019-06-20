@@ -166,7 +166,8 @@ def sign_add(request):
             if name_exit:
                 return render(request, 'system/sign/sign_add.html', {'error': '签名: {}，已存在！'.format(sign_name)})
             description = request.POST['description']
-            sign = Sign(sign_name=sign_name, description=description)
+            username = request.session.get('user', '')
+            sign = Sign(sign_name=sign_name, description=description, update_user=username)
             sign.save()
             log.info('add sign   {}  success.  sign info： {} '.format(sign_name, description))
             return HttpResponseRedirect("/base/sign/")
@@ -193,8 +194,9 @@ def sign_update(request):
                 return render(request, 'system/sign/sign_update.html',
                               {'error': '签名: {}，已存在！'.format(sign_name), "sign": sign})
             description = request.POST['description']
+            username = request.session.get('user', '')
             Sign.objects.filter(sign_id=sign_id).update(sign_name=sign_name, description=description,
-                                                        update_time=datetime.now())
+                                                        update_time=datetime.now(), update_user=username)
             log.info('edit sign   {}  success.  sign info： {} '.format(sign_name, description))
             return HttpResponseRedirect("/base/sign/")
         sign_id = request.GET['sign_id']

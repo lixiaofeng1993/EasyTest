@@ -197,8 +197,8 @@ def get_user(user_id):
     if not user_id:
         return False
     else:
-        user = User.objects.filter(id=user_id)
-        if user:
-            return True
-        else:
+        try:
+            user = User.objects.get(id=user_id)
+            return user.username
+        except User.DoesNotExist:
             return False
