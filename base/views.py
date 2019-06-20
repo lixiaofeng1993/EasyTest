@@ -431,7 +431,7 @@ def interface_search(request):
                     return HttpResponse(str(if_list))
         else:
             log.info('11111111111111111111')
-            return HttpResponse('用户未登录！')
+            return HttpResponse('未登录')
 
 
 # 添加接口

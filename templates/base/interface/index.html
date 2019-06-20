@@ -272,6 +272,10 @@
                     else if (data == '0') {
                         location.reload();
                     }
+                    else if (data == '未登录'){
+                        alert('用户未登录！');
+                        location.reload()
+                    }
                     else {
                         $('#table-search').empty();
                         datas = eval(data);
