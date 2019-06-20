@@ -30,6 +30,14 @@ now_time = ''  # 饼图命名区分
 class_name = ''  # 执行测试类
 
 
+
+def get_user(user_id):
+    user = User.objects.filter(id=user_id)
+    if user:
+        return True
+    else:
+        return False
+
 # 项目首页
 @login_required
 @page_cache(5)
@@ -39,7 +47,7 @@ def project_index(request):
     # remove_logs(pic_path, type='pic')
     user_id = request.session.get('user_id', '')  # 从session中获取user_id
     log.info('---------------user_id--------------> {}'.format(user_id))
-    if user_id:
+    if get_user(user_id):
         # prj_list = Project.objects.filter(user_id=user_id)  # 按照user_id查询项目
         prj_list = Project.objects.all()  # 按照user_id查询项目
         # project_list = []
