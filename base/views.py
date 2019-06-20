@@ -396,7 +396,7 @@ def interface_index(request):
 def interface_search(request):
     if request.method == 'POST':
         user_id = request.session.get('user_id', '')
-        log.info('11111111111user_id============={}'.format(get_user(user_id)))
+        log.info('11111111111user_id============={}'.format(user_id))
         if get_user(user_id):
             search = request.POST.get('search', '').strip()
             # project_list = request.session.get('project_list', [])
