@@ -429,7 +429,7 @@ def interface_search(request):
                                           'project': interface.project.prj_name, 'method': interface.method,
                                           'data_type': interface.data_type, 'is_sign': interface.is_sign,
                                           'description': interface.description,
-                                          'update_time': str(interface.update_time),
+                                          'update_time': str(interface.update_time).split('.')[0],
                                           'update_user': interface.update_user}
                         if_list.append(interface_dict)
                     return HttpResponse(str(if_list))
