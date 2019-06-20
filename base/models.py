@@ -35,6 +35,7 @@ class Environment(models.Model):
     set_headers = models.TextField(default='')  # 设置默认headers
     private_key = models.CharField(max_length=100)
     update_time = models.DateTimeField('更新时间', auto_now=True)
+    update_user = models.CharField(max_length=30, default='')
 
     def __str__(self):
         return self.env_name
@@ -55,6 +56,7 @@ class Interface(models.Model):
     response_header_param = models.TextField()
     response_body_param = models.TextField()
     update_time = models.DateTimeField('更新时间', auto_now=True)
+    update_user = models.CharField(max_length=30, default='')
 
     def __str__(self):
         return self.if_name
@@ -67,6 +69,7 @@ class Case(models.Model):
     description = models.CharField(max_length=200)
     content = models.TextField()
     update_time = models.DateTimeField('更新时间', auto_now=True)
+    update_user = models.CharField(max_length=30, default='')
 
     def __str__(self):
         return self.case_name
@@ -84,6 +87,7 @@ class Plan(models.Model):
     is_locust = models.IntegerField(default='')  # 性能测试
     is_task = models.IntegerField(default='')  # 定时任务
     update_time = models.DateTimeField('更新时间', auto_now=True)
+    update_user = models.CharField(max_length=30, default='')
 
     def __str__(self):
         return self.plan_name
@@ -102,6 +106,7 @@ class Report(models.Model):
     fail_num = models.IntegerField(null=True)
     error_num = models.IntegerField(null=True)
     update_time = models.DateTimeField('更新时间', auto_now=True)
+    update_user = models.CharField(max_length=30, default='')
 
     def __str__(self):
         return self.report_name

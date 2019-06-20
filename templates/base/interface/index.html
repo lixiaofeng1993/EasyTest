@@ -146,6 +146,7 @@
                             <th id="cen">是否签名</th>
                             <th id="cen">描述</th>
                             <th id="cen">更新时间</th>
+                            <th id="cen">更新用户</th>
                             <th id="cen">操作</th>
                         </tr>
                         </thead>
@@ -167,6 +168,7 @@
                                 {% endifequal %}
                                 <td>{{ if.description }}</td>
                                 <td id="cen">{{ if.update_time }}</td>
+                                <td id="cen">{{ if.update_user }}</td>
                                 <td id="cen">
                                     <a href="/base/interface_delete?if_id={{ if.if_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"

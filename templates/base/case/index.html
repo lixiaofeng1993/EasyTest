@@ -67,6 +67,7 @@
                             <th id="cen">所属项目</th>
                             <th id="cen">描述</th>
                             <th id="cen">更新时间</th>
+                            <th id="cen">更新用户</th>
                             <th id="cen">操作</th>
                         </tr>
                         </thead>
@@ -79,6 +80,7 @@
                                 <td id="cen" prj_id="{{ case.project.prj_id }}">{{ case.project }}</td>
                                 <td>{{ case.description }}</td>
                                 <td id="cen">{{ case.update_time }}</td>
+                                <td id="cen">{{ case.update_user }}</td>
                                 <td id="cen">
                                     <a href="#" class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="debug_button(this);"

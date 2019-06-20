@@ -130,7 +130,7 @@ def project_delete(request):
         if request.method == 'GET':
             prj_id = request.GET['prj_id']
             Project.objects.filter(prj_id=prj_id).delete()
-            log.info('delete project   {}  success.'.format(prj_id))
+            log.info('用户 {} 删除项目 {} 成功.'.format(user_id, prj_id))
             return HttpResponseRedirect("base/project/")
 
 
@@ -215,7 +215,7 @@ def sign_delete(request):
         if request.method == 'GET':
             sign_id = request.GET['sign_id']
             Sign.objects.filter(sign_id=sign_id).delete()
-            log.info('delete sign   {}  success.'.format(sign_id))
+            log.info('用户 {} 删除签名 {} 成功.'.format(user_id, sign_id))
             return HttpResponseRedirect("base/sign/")
 
 
@@ -259,7 +259,9 @@ def set_headers(request):
             content = request.POST.get('content', '')
             env_id = request.POST.get('env_id', '')
             now_time = datetime.now()
-            Environment.objects.filter(env_id=env_id).update(set_headers=content, update_time=now_time)
+            username = request.session.get('user', '')
+            Environment.objects.filter(env_id=env_id).update(set_headers=content, update_time=now_time,
+                                                             update_user=username)
             log.info(
                 'env {} set headers success. headers info: {} '.format(env_id, content))
             return HttpResponseRedirect("/base/env/")
@@ -292,10 +294,11 @@ def env_add(request):
             private_key = request.POST['private_key']
             description = request.POST['description']
             is_swagger = request.POST['is_swagger']
+            username = request.session.get('user', '')
             if is_swagger == '1':
                 Environment.objects.filter(is_swagger=1).update(is_swagger=0)
-            env = Environment(env_name=env_name, url=url, project=project,
-                              private_key=private_key, description=description, is_swagger=is_swagger)
+            env = Environment(env_name=env_name, url=url, project=project, private_key=private_key,
+                              description=description, is_swagger=is_swagger, update_user=username)
             env.save()
             log.info(
                 'add env   {}  success.  env info： {} // {} // {} // {} // {} '.format(env_name, project, url,
@@ -339,11 +342,13 @@ def env_update(request):
             private_key = request.POST['private_key']
             description = request.POST['description']
             is_swagger = request.POST['is_swagger']
+            username = request.session.get('user', '')
             if is_swagger == '1':
                 Environment.objects.filter(is_swagger=1).update(is_swagger=0)
             Environment.objects.filter(env_id=env_id).update(env_name=env_name, url=url, project=project,
                                                              private_key=private_key, description=description,
-                                                             update_time=datetime.now(), is_swagger=is_swagger)
+                                                             update_time=datetime.now(), is_swagger=is_swagger,
+                                                             update_user=username)
             log.info(
                 'edit env   {}  success.  env info： {} // {} // {} // {} // {}'.format(env_name, project, url,
                                                                                        private_key,
@@ -365,7 +370,7 @@ def env_delete(request):
         if request.method == 'GET':
             env_id = request.GET['env_id']
             Environment.objects.filter(env_id=env_id).delete()
-            log.info('delete env   {}  success.'.format(env_id))
+            log.info('用户 {} 删除环境 {} 成功.'.format(user_id, env_id))
             return HttpResponseRedirect("base/env/")
 
 
@@ -466,16 +471,16 @@ def interface_add(request):
             request_body_data = request.POST['request_body_data']
             response_header_data = request.POST['response_header_data']
             response_body_data = request.POST['response_body_data']
+            username = request.session.get('user', '')
             interface = Interface(if_name=if_name, url=url, project=project, method=method, data_type=data_type,
                                   is_sign=is_sign, description=description, request_header_param=request_header_data,
                                   request_body_param=request_body_data, response_header_param=response_header_data,
-                                  response_body_param=response_body_data, is_header=is_headers)
+                                  response_body_param=response_body_data, is_header=is_headers, update_user=username)
             interface.save()
             log.info(
-                'add interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} // {} // {} '.format(
+                'add interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} // {} '.format(
                     if_name, project, url, method, data_type, is_sign, description, request_header_data,
-                    request_body_data,
-                    response_header_data, response_body_data, is_header=is_headers))
+                    request_body_data, response_header_data, response_body_data, is_header=is_headers))
             return HttpResponseRedirect("/base/interface/")
         return render(request, "base/interface/add.html", {"prj_list": prj_list})
 
@@ -573,6 +578,7 @@ def interface_update(request):
             response_header_data = interface_format_params(response_header_data_list)
             response_body_data_list = request.POST.getlist('response_body_data', [])
             response_body_data = interface_format_params(response_body_data_list)
+            username = request.session.get('user', '')
             Interface.objects.filter(if_id=if_id).update(if_name=if_name, url=url, project=project, method=method,
                                                          data_type=data_type, is_header=is_headers,
                                                          is_sign=is_sign, description=description,
@@ -580,7 +586,7 @@ def interface_update(request):
                                                          request_body_param=request_body_data,
                                                          response_header_param=response_header_data,
                                                          response_body_param=response_body_data,
-                                                         update_time=datetime.now())
+                                                         update_time=datetime.now(), update_user=username)
             log.info(
                 'edit interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} // {}// {} '.format(
                     if_name, project, url, method, data_type, is_sign, description, request_header_data,
@@ -658,12 +664,12 @@ def interface_delete(request):
         if request.method == 'GET':
             if_id = request.GET['if_id']
             Interface.objects.filter(if_id=if_id).delete()
-            log.info('delete interface   {}  success.'.format(if_id))
+            log.info('用户 {} 删除接口 {} 成功.'.format(user_id, if_id))
             return HttpResponseRedirect("base/interface/")
 
 
 # 批量导入接口
-def batch_import_interface(interface_params, interface):
+def batch_import_interface(interface_params, interface, request):
     for interface_ in interface:
         if_name = interface_.get('name', '')
         method = interface_.get('method', '')
@@ -696,6 +702,7 @@ def batch_import_interface(interface_params, interface):
             response_header_data = []
             response_body_data = []
             project = Project.objects.get(prj_id=int(project_id))
+            username = request.session.get('user', '')
             log.info('interface：{} 正在批量导入中...'.format(if_name))
             interface_tbl = Interface(if_name=if_name, url=url, project=project, method=method,
                                       data_type=data_type, is_header=is_headers,
@@ -703,7 +710,7 @@ def batch_import_interface(interface_params, interface):
                                       request_header_param=json.dumps(request_header_data),
                                       request_body_param=json.dumps(request_body_data),
                                       response_header_param=response_header_data,
-                                      response_body_param=response_body_data)
+                                      response_body_param=response_body_data, update_user=username)
             interface_tbl.save()
 
 
@@ -726,7 +733,7 @@ def batch_index(request):
                 prj_id = env.project_id
                 interface_params, interface = AnalysisJson(prj_id, env_url).retrieve_data()
                 log.info('项目 {} 开始批量导入...'.format(prj_id))
-                batch_import_interface(interface_params, interface)
+                batch_import_interface(interface_params, interface, request)
                 return HttpResponse('批量导入成功！ ==> {}'.format(prj_id))
             except Environment.DoesNotExist:
                 return HttpResponse('测试环境中未设置从swagger导入！')
@@ -773,10 +780,11 @@ def case_add(request):
             project = Project.objects.get(prj_id=prj_id)
             description = request.POST['description']
             content = request.POST.get('content')
+            username = request.session.get('user', '')
             if content == '[]':
                 return HttpResponse('请输入接口参数信息11！')
             case = Case(case_name=case_name, project=project, description=description,
-                        content=content)
+                        content=content, update_user=username)
             case.save()
             log.info(
                 'add case   {}  success. case info: {} // {} // {}'.format(case_name, project, description, content))
@@ -808,10 +816,12 @@ def case_update(request):
             project = Project.objects.get(prj_id=prj_id)
             description = request.POST['description']
             content = request.POST.get('content')
+            username = request.session.get('user', '')
             if content == '[]':
                 return HttpResponse('请编辑接口参数信息！')
             Case.objects.filter(case_id=case_id).update(case_name=case_name, project=project, description=description,
-                                                        content=content, update_time=datetime.now())
+                                                        content=content, update_time=datetime.now(),
+                                                        update_user=username)
             log.info(
                 'edit case   {}  success. case info: {} // {} // {}'.format(case_name, project, description, content))
             return HttpResponseRedirect("/base/case/")
@@ -852,8 +862,10 @@ def case_copy(request):
             case_name = case_.case_name
             content = case_.content
             project = case_.project
-            case = Case(case_name=case_name, project=project, description='', update_time=datetime.now(),
-                        content=content)
+            description = case_.description
+            username = request.session.get('user', '')
+            case = Case(case_name=case_name, project=project, description=description, update_time=datetime.now(),
+                        content=content, update_user=username)
             case.save()
             log.info(
                 'copy case   {}  success. case info: {} // {} '.format(case_name, project, content))
@@ -906,7 +918,7 @@ def case_delete(request):
         if request.method == 'GET':
             case_id = request.GET['case_id']
             Case.objects.filter(case_id=case_id).delete()
-            log.info('delete case   {}  success.'.format(case_id))
+            log.info('用户 {} 删除用例 {} 成功.'.format(user_id, case_id))
             return HttpResponseRedirect("base/case/")
 
 
@@ -975,6 +987,7 @@ def plan_add(request):
             environment = Environment.objects.get(env_id=env_id)
             description = request.POST['description']
             content = request.POST.getlist("case_id")
+            username = request.session.get('user', '')
             if content == []:
                 return render(request, 'base/plan/add.html',
                               {'content_error': '请选择用例编号！', 'plan_name': plan_name, "prj_list": prj_list})
@@ -983,7 +996,7 @@ def plan_add(request):
             if is_task == '1':
                 Plan.objects.filter(is_task=1).update(is_task=0)
             plan = Plan(plan_name=plan_name, project=project, environment=environment, description=description,
-                        content=content, is_locust=is_locust, is_task=is_task)
+                        content=content, is_locust=is_locust, is_task=is_task, update_user=username)
             plan.save()
             log.info('add plan   {}  success. plan info: {} // {} // {} // {} //{} //{}'.
                      format(plan_name, project, environment, description, content, is_locust, is_task))
@@ -1029,6 +1042,7 @@ def plan_update(request):
             environment = Environment.objects.get(env_id=env_id)
             description = request.POST['description']
             content = request.POST.getlist("case_id")
+            username = request.session.get('user', '')
             if content == []:
                 return render(request, 'base/plan/update.html',
                               {'content_error': '请选择用例编号！', 'plan': plan, "prj_list": prj_list,
@@ -1039,8 +1053,8 @@ def plan_update(request):
                 Plan.objects.filter(is_task=1).update(is_task=0)
             Plan.objects.filter(plan_id=plan_id).update(plan_name=plan_name, project=project, environment=environment,
                                                         description=description, content=content, is_locust=is_locust,
-                                                        is_task=is_task,
-                                                        update_time=datetime.now())
+                                                        is_task=is_task, update_time=datetime.now(),
+                                                        update_user=username)
             log.info('edit plan   {}  success. plan info: {} // {} // {} // {}'.format(plan_name, project, environment,
                                                                                        description, content))
             return HttpResponseRedirect("/base/plan/")
@@ -1074,7 +1088,7 @@ def plan_delete(request):
         if request.method == 'GET':
             plan_id = request.GET['plan_id']
             Plan.objects.filter(plan_id=plan_id).delete()
-            log.info('delete plan   {}  success.'.format(plan_id))
+            log.info('用户 {} 删除计划 {} 成功.'.format(user_id, plan_id))
             return HttpResponseRedirect("base/plan/")
 
 
@@ -1125,11 +1139,12 @@ def plan_run(request):
                         s['id'] = i
             pic_name = DrawPie(pass_num, fail_num, error_num)
             report_name = plan.plan_name + "-" + str(start_time)
+            username = request.session.get('user', '')
             report = Report(plan=plan, report_name=report_name, content=content, case_num=case_num,
                             pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
-                            totalTime=totalTime, startTime=start_time)
+                            totalTime=totalTime, startTime=start_time, update_user=username)
             report.save()
-            Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now())
+            Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now(), update_user=username)
             return HttpResponse(plan.plan_name + " 执行成功！")
 
 
@@ -1174,7 +1189,9 @@ def plan_unittest_run(request):
                 f.write(data)
             run_this.run_email()
             report_name = get_new_report_html(report_path)
-            Plan.objects.filter(plan_id=plan_id).update(make=1, report_name=report_name, update_time=datetime.now())
+            username = request.session.get('user', '')
+            Plan.objects.filter(plan_id=plan_id).update(make=1, report_name=report_name, update_time=datetime.now(),
+                                                        update_user=username)
             log.info('-------------------------->plan_unittest_run plan_id: {}'.format(plan_id))
             return HttpResponse(plan.plan_name + " 执行成功！")
 
@@ -1294,10 +1311,11 @@ def report_index(request):
                     '-------------------------->report_index plan_id: {} , plan_name: {}'.format(plan_id,
                                                                                                  plan_name))
                 return render(request, '{}'.format(plan_name))
-            case_num = Report.objects.get(report_id=report_id).case_num
-            pass_num = Report.objects.get(report_id=report_id).pass_num
-            fail_num = Report.objects.get(report_id=report_id).fail_num
-            error_num = Report.objects.get(report_id=report_id).error_num
+            report = Report.objects.get(report_id=report_id)
+            case_num = report.case_num
+            pass_num = report.pass_num
+            fail_num = report.fail_num
+            error_num = report.error_num
             report_content = eval(report.content)
             for case in report_content:
                 global class_name
@@ -1348,7 +1366,7 @@ def report_delete(request):
         if request.method == 'GET':
             report_id = request.GET['report_id']
             Report.objects.filter(report_id=report_id).delete()
-            log.info('delete project   {}  success.'.format(report_id))
+            log.info('用户 {} 删除报告 {} 成功.'.format(user_id, report_id))
             return HttpResponseRedirect("base/report_page/")
 
 
@@ -1390,7 +1408,7 @@ def file_download(request):
             response = StreamingHttpResponse(file_iterator(name))
             response['Content-Type'] = 'application/octet-stream'
             response['Content-Disposition'] = 'attachment;filename="{0}"'.format(name)
-            log.info('下载测试报告或日志文件：{}'.format(name))
+            log.info('用户 {} 下载测试报告或日志文件：{} 成功.'.format(user_id, name))
             return response
 
 

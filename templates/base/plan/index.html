@@ -82,6 +82,7 @@
                             <th id="cen">是否执行定时任务</th>
                             <th id="cen">描述</th>
                             <th id="cen">更新时间</th>
+                            <th id="cen">更新用户</th>
                             <th id="cen">操作</th>
                             <th id="cen">报告</th>
                         </tr>
@@ -101,6 +102,7 @@
                                 <td id="cen">{{ plan.is_task }}</td>
                                 <td>{{ plan.description }}</td>
                                 <td id="cen">{{ plan.update_time }}</td>
+                                <td id="cen">{{ plan.update_user }}</td>
                                 <td id="cen">
                                     <button class="btn btn-primary" onclick="run_button(this);"><i
                                             class="fa fa-spinner"></i>&nbsp;执行计划

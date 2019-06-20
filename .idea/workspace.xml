@@ -2,11 +2,511 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558692671pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558697185pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558924413pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558925094pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558925196pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558925297pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558925473pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558925642pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558925850pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558926300pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558926497pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558927932pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558927935pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558928365pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558933216pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558937858pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558939024pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558939060pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558939213pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558942620pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558945473pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558948431pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558949483pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558950419pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558959055pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558959195pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558959225pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1558959255pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559010105pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559010752pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559011211pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559014774pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559142223qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559143400pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559145926pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559146169pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559147393qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559147398qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559147406pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559147865qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559148141qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559148155qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559149142qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559186257pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559193701pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199862pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199863pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199864pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199865pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199866pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199881pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199882pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199883pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199884pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199885pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199886pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199887pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199888pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199889pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199890pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199891pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199892pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199899pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199900pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199901pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199902pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199903pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199904pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199905pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559199906pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559203743pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559203929pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559204371pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559204460pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559205729pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559205887pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559206245pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559206516pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559206604pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559206801pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229008pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229038pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229068pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229098pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229128pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229158pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229188pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229218pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229248pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229278pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229308pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229338pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229368pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229536pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229751pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229781pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229811pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229841pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229871pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229901pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229931pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229961pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559229991pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559230021pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559269532qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559270815pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559273892pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559274326qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559275582pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559284396pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559285273pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559287191pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559287248pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559298847pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559298946pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559298991pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559301056pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559319340pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559319365pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559319395pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559320275pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559320291pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559321266pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559321294pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559321324pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559326010qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559353476pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559353506pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559353670pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559353700pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559357936pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559357966pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559358595pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559358705pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559358844pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559359166pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559359396pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559359766pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559359900pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559359969pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559360240pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559360330pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559360366pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559360966pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559363966pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559364566pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559382566pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559389766pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559393366pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559400566pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559404935pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559405025pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559405055pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559405115pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559405145pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559405235pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559405265pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559405445pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559405535pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559405565pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559405595pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559405685pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559405775pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559405835pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559405985pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559406015pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559406045pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559406075pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559406137pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559406165pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559406195pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559406225pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559406375pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559406435pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559406495pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559406555pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559406675pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559406735pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559406765pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559406825pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559407191pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559407220pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559407250pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559407280pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559407310pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559407344pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559408336pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559408337pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559408338pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559408375pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559408405pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559408435pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559408465pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559408495pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559411125pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559411126pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559412095pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559415695pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559419295pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559422895pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559426495pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559430095pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559433695pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559437295pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559440895pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559444495pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559448095pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559451695pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559455295pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559458895pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559462495pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559466095pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559466893pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559466923pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559466953pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559467358pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559467387pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559467417pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559467447pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559467477pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559467507pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559467537pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559467567pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559467597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559471197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559474797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559478397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559480638pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559480973pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559481997pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559485597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559489197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559492797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559496397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559499997pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559503597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559507197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559510797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559514397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559517997pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559521598pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559525197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559528797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559532397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559535997pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559539597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559543197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559546797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559550397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559553997pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559557597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559561197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559564797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559568397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559571997pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559575597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559579197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559582797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559586397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559589997pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559593597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559597197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559600797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559604397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559607997pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559611597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559615197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559618798pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559622397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559625997pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559629597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559633197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559636797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559640397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559643997pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559647597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559651197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559654797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559658397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559661997pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559665597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559669197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559672797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559676397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559679997pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559683597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559687197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559690797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559694397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559697997pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559701597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559705197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559705823pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559706777pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559706819pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559706913pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559706963pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559708797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559710157pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559710308pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559710555pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559710594pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559710753pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559711002pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559711020pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559711179pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559711237pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559711300pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559711350pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559711457pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559711475pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559711644pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559712397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559715997pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559719597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559723197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559726797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559730397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559733998pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559737598pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559741197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559744797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559748397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559751999pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559755597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559759197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559762797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559766397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559769997pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559773597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559777197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559780797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559784397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559787997pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559791597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559795197pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559798797pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559802397pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559805997pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559809597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559814083pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559814360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559814778pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559814948pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559817963pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559818234pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559818279pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559818954pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559826268pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559895894pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559895931pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559895990pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559896148pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559896206pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559896809pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559899807pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559903407pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559903904pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559903980pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559904055pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559904691pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559904722pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559905654pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559905699pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559905760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559909360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559912960pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559916560pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559920160pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559923760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559924385pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559924424pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559927360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559930960pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559934560pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559938160pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559941760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559945360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559948960pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559952560pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559956160pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559959760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559963360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559966960pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559970560pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559974160pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559974643pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559975749pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559975827pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559976321pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559976536pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559976907pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559976922pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559976940pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559977031pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559977150pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559977270pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559977597pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559977666pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559977760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559981360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559984960pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559988560pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559992160pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559993872pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559993918pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559995760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1559999360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560002016pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560002960pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560006560pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560010160pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560013760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560017360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560020960pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560024560pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560028160pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560031760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560035360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560038960pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560042560pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560046160pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560049760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560053360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560056398pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560056742pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560056862pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560056960pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560060560pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560064160pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560067760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560071360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560074960pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560078560pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560082160pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560085760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560089360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560090209pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560090321pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560092960pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560096560pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560100160pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560103760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560107360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560110960pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560114560pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560118160pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560121760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560125360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560128960pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560132560pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560135100pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560135217pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560135760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560136160pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560138929pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560139760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560142883pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560143109pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560143360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560145001pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560145647pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560145990pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560146439pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560146685pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560146960pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560150560pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560154160pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560157760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560157811qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560157883qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560157886qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560157887qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560161360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560164552qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560164784qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560164866qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560164960pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560164967qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560165069qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560168560pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560172160pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560175760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560179101qrcode.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560179360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560182960pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560183401pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560186560pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560190160pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560193760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560197360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560200960pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560204560pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560208160pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560211760pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560215360pie.png" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/media/1560218960pie.png" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/models.py" afterPath="$PROJECT_DIR$/base/models.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/views.py" afterPath="$PROJECT_DIR$/base/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/execute.py" afterPath="$PROJECT_DIR$/lib/execute.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/system/sign/sign_index.html" afterPath="$PROJECT_DIR$/templates/system/sign/sign_index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/case/index.html" afterPath="$PROJECT_DIR$/templates/base/case/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/env/index.html" afterPath="$PROJECT_DIR$/templates/base/env/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/interface/index.html" afterPath="$PROJECT_DIR$/templates/base/interface/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/plan/index.html" afterPath="$PROJECT_DIR$/templates/base/plan/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/report_page/report_page.html" afterPath="$PROJECT_DIR$/templates/base/report_page/report_page.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -29,57 +529,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/EasyTest/views.py">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base/plan/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="287">
-              <caret line="65" column="46" lean-forward="false" selection-start-line="65" selection-start-column="38" selection-end-line="65" selection-end-column="46" />
-              <folding>
-                <element signature="e#0#45#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="models.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/base/models.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-330">
-              <caret line="15" column="28" lean-forward="true" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
-              <folding>
-                <element signature="e#0#28#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/base/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="541">
-              <caret line="149" column="56" lean-forward="false" selection-start-line="149" selection-start-column="56" selection-end-line="149" selection-end-column="56" />
-              <folding>
-                <element signature="e#0#9#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="sign_index.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/templates/system/sign/sign_index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
-              <caret line="66" column="64" lean-forward="false" selection-start-line="66" selection-start-column="64" selection-end-line="66" selection-end-column="64" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="execute.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/execute.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="705">
-              <caret line="201" column="32" lean-forward="false" selection-start-line="201" selection-start-column="24" selection-end-line="201" selection-end-column="32" />
+            <state relative-caret-position="322">
+              <caret line="104" column="64" lean-forward="false" selection-start-line="104" selection-start-column="64" selection-end-line="104" selection-end-column="64" />
               <folding />
             </state>
           </provider>
@@ -88,8 +542,88 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base/project/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
+            <state relative-caret-position="330">
               <caret line="75" column="60" lean-forward="false" selection-start-line="75" selection-start-column="60" selection-end-line="75" selection-end-column="60" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="report_page.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base/report_page/report_page.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="550">
+              <caret line="80" column="63" lean-forward="false" selection-start-line="80" selection-start-column="63" selection-end-line="80" selection-end-column="63" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="login_action.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/user/login_action.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-990">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="base.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="652">
+              <caret line="110" column="40" lean-forward="false" selection-start-line="110" selection-start-column="36" selection-end-line="110" selection-end-column="40" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="report.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/report.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="412">
+              <caret line="7284" column="32" lean-forward="false" selection-start-line="7284" selection-start-column="27" selection-end-line="7284" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sign_index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/system/sign/sign_index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="396">
+              <caret line="66" column="32" lean-forward="true" selection-start-line="66" selection-start-column="32" selection-end-line="66" selection-end-column="72" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="user_index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/system/user/user_index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1188">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="task_index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/system/task/task_index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1056">
+              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -142,19 +676,22 @@
         <option value="$PROJECT_DIR$/case/test_api.py" />
         <option value="$PROJECT_DIR$/run_this.py" />
         <option value="$PROJECT_DIR$/base/urls.py" />
-        <option value="$PROJECT_DIR$/templates/base/interface/index.html" />
         <option value="$PROJECT_DIR$/templates/report.html" />
-        <option value="$PROJECT_DIR$/templates/base/case/index.html" />
         <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/common/logger.py" />
         <option value="$PROJECT_DIR$/lib/public.py" />
         <option value="$PROJECT_DIR$/base/tasks.py" />
         <option value="$PROJECT_DIR$/EasyTest/views.py" />
         <option value="$PROJECT_DIR$/templates/base/project/index.html" />
-        <option value="$PROJECT_DIR$/lib/execute.py" />
-        <option value="$PROJECT_DIR$/base/models.py" />
-        <option value="$PROJECT_DIR$/base/views.py" />
         <option value="$PROJECT_DIR$/templates/system/sign/sign_index.html" />
+        <option value="$PROJECT_DIR$/base/models.py" />
+        <option value="$PROJECT_DIR$/lib/execute.py" />
+        <option value="$PROJECT_DIR$/base/views.py" />
+        <option value="$PROJECT_DIR$/templates/base/case/index.html" />
+        <option value="$PROJECT_DIR$/templates/base/env/index.html" />
+        <option value="$PROJECT_DIR$/templates/base/interface/index.html" />
+        <option value="$PROJECT_DIR$/templates/base/plan/index.html" />
+        <option value="$PROJECT_DIR$/templates/base/report_page/report_page.html" />
       </list>
     </option>
   </component>
@@ -222,7 +759,11 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="media" />
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="user" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -236,7 +777,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="user" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -250,7 +799,15 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="common" />
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="task" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -261,12 +818,60 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="sign" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="error_page" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="base" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="report_page" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -278,7 +883,125 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="base" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="project" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
               <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="base" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="plan" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="base" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="performance" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="base" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="interface" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="base" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="env" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="base" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="case" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -697,12 +1420,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.gitignore" />
-    <entry file="file://$PROJECT_DIR$/EasyTest/celery.py" />
-    <entry file="file://$PROJECT_DIR$/uwsgi.ini" />
-    <entry file="file://$PROJECT_DIR$/gunicorn-config.py" />
-    <entry file="file://$PROJECT_DIR$/README.md" />
-    <entry file="file://$PROJECT_DIR$/celery_logs/celery_worker.log" />
     <entry file="file://$PROJECT_DIR$/templates/1560481315pie.png" />
     <entry file="file://$PROJECT_DIR$/templates/1560482274pie.png" />
     <entry file="file://$PROJECT_DIR$/templates/1560482360pie.png" />
@@ -756,18 +1473,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/plan/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4158">
-          <caret line="189" column="45" lean-forward="false" selection-start-line="189" selection-start-column="28" selection-end-line="189" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/case/test_api.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="44">
           <caret line="7" column="9" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#11#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -775,6 +1487,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -819,42 +1532,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/interface/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="434">
-          <caret line="277" column="21" lean-forward="true" selection-start-line="277" selection-start-column="21" selection-end-line="277" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/base/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="353">
           <caret line="47" column="39" lean-forward="false" selection-start-line="47" selection-start-column="39" selection-end-line="47" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/report_page/report_page.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-624">
-          <caret line="83" column="89" lean-forward="false" selection-start-line="83" selection-start-column="80" selection-end-line="83" selection-end-column="89" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/report.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="412">
-          <caret line="7284" column="32" lean-forward="false" selection-start-line="7284" selection-start-column="27" selection-end-line="7284" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="652">
-          <caret line="110" column="40" lean-forward="false" selection-start-line="110" selection-start-column="36" selection-end-line="110" selection-end-column="40" />
           <folding />
         </state>
       </provider>
@@ -874,14 +1555,6 @@
           <folding>
             <element signature="e#15#29#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="314">
-          <caret line="231" column="39" lean-forward="false" selection-start-line="231" selection-start-column="39" selection-end-line="231" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -908,32 +1581,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/project/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="660">
-          <caret line="75" column="60" lean-forward="false" selection-start-line="75" selection-start-column="60" selection-end-line="75" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/execute.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="201" column="32" lean-forward="false" selection-start-line="201" selection-start-column="24" selection-end-line="201" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/base/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-330">
-          <caret line="15" column="28" lean-forward="true" selection-start-line="15" selection-start-column="28" selection-end-line="15" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#28#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/EasyTest/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="287">
@@ -944,20 +1591,142 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/base/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="573">
+          <caret line="108" column="61" lean-forward="false" selection-start-line="108" selection-start-column="61" selection-end-line="108" selection-end-column="61" />
+          <folding>
+            <element signature="e#0#28#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/execute.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="178" column="12" lean-forward="true" selection-start-line="178" selection-start-column="12" selection-end-line="178" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/base/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="541">
-          <caret line="149" column="56" lean-forward="false" selection-start-line="149" selection-start-column="56" selection-end-line="149" selection-end-column="56" />
+        <state relative-caret-position="-5689">
+          <caret line="1191" column="54" lean-forward="false" selection-start-line="1191" selection-start-column="54" selection-end-line="1191" selection-end-column="54" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="401">
+          <caret line="82" column="64" lean-forward="false" selection-start-line="82" selection-start-column="53" selection-end-line="82" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/env/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="506">
+          <caret line="89" column="63" lean-forward="false" selection-start-line="89" selection-start-column="63" selection-end-line="89" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/interface/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="258">
+          <caret line="170" column="62" lean-forward="false" selection-start-line="170" selection-start-column="62" selection-end-line="170" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/performance/performance.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-206">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/plan/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="322">
+          <caret line="104" column="64" lean-forward="false" selection-start-line="104" selection-start-column="64" selection-end-line="104" selection-end-column="64" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/project/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="75" column="60" lean-forward="false" selection-start-line="75" selection-start-column="60" selection-end-line="75" selection-end-column="60" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/report_page/report_page.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="80" column="63" lean-forward="false" selection-start-line="80" selection-start-column="63" selection-end-line="80" selection-end-column="63" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/user/login_action.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-990">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="652">
+          <caret line="110" column="40" lean-forward="false" selection-start-line="110" selection-start-column="36" selection-end-line="110" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/report.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="412">
+          <caret line="7284" column="32" lean-forward="false" selection-start-line="7284" selection-start-column="27" selection-end-line="7284" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/system/sign/sign_index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="66" column="64" lean-forward="false" selection-start-line="66" selection-start-column="64" selection-end-line="66" selection-end-column="64" />
+        <state relative-caret-position="396">
+          <caret line="66" column="32" lean-forward="true" selection-start-line="66" selection-start-column="32" selection-end-line="66" selection-end-column="72" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/system/user/user_index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1188">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/system/task/task_index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1056">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>

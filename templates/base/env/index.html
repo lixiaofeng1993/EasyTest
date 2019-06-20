@@ -69,6 +69,7 @@
                             <th id="cen">密钥</th>
                             <th id="cen">描述</th>
                             <th id="cen">更新时间</th>
+                            <th id="cen">更新用户</th>
                             <th id="cen">操作</th>
                         </tr>
                         </thead>
@@ -86,6 +87,7 @@
                                 <td id="cen">{{ env.private_key }}</td>
                                 <td>{{ env.description }}</td>
                                 <td id="cen">{{ env.update_time }}</td>
+                                <td id="cen">{{ env.update_user }}</td>
                                 <td id="cen">
                                     <a href="/base/set_headers?env_id={{ env.env_id }}" class="btn btn-primary"><i
                                             class="fa fa-plus-circle"></i>&nbsp;设置headers</a>
