@@ -66,11 +66,8 @@ def login_action(request):
             request.session['user'] = username  # 将session信息记录到浏览器
             user_ = User.objects.get(username=username)
             request.session['user_id'] = user_.id  # 将session信息记录到浏览器
-            try:
-            	if request.session['login_from'] == '//':
-	                request.session['login_from'] = '/index/'
-            except KeyError as e:
-            	request.session['login_from'] = '/index/'
+            if request.session['login_from'] == '//':
+                request.session['login_from'] = '/index/'
             response = redirect(request.session['login_from'])
             # response = HttpResponseRedirect('/index/')
             log.info('用户： {} 登录成功！'.format(username))
