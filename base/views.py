@@ -431,8 +431,7 @@ def interface_search(request):
                     return HttpResponse(str(if_list))
         else:
             log.info('11111111111111111111')
-            request.session['login_from'] = '/base/interface/'
-            return render(request, 'user/login_action.html')
+            return HttpResponse('用户未登录！')
 
 
 # 添加接口
