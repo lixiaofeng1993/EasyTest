@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, JsonResponse
+# from django.contrib.auth.decorators import login_required
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.contrib import auth  # django认证系统
 from djcelery.models import PeriodicTask, CrontabSchedule
 from django.contrib.auth.models import User
@@ -19,36 +19,35 @@ num_list = []
 # @login_required
 # @page_cache(5)
 def index(request):
-    user_id = request.session.get('user_id', '')  # 从session中获取user_id
-    if get_user(user_id):
-        if request.method == 'POST':
+    if request.method == 'POST':
+        user_id = request.session.get('user_id', '')  # 从session中获取user_id
+        if get_user(user_id):
             url = request.POST.get('url', '')
             if url:
                 qr_code_name = gr_code(url)
                 log.info('生成二维码 {}-->{}'.format(qr_code_name, url))
                 return JsonResponse(str(qr_code_name), safe=False)
         else:
-            project_num = Project.objects.aggregate(Count('prj_id'))['prj_id__count']
-            env_num = Environment.objects.aggregate(Count('env_id'))['env_id__count']
-            interface_num = Interface.objects.aggregate(Count('if_id'))['if_id__count']
-            case_num = Case.objects.aggregate(Count('case_id'))['case_id__count']
-            plan_num = Plan.objects.aggregate(Count('plan_id'))['plan_id__count']
-            sign_num = Sign.objects.aggregate(Count('sign_id'))['sign_id__count']
-            report_num = Report.objects.aggregate(Count('report_id'))['report_id__count']
-            periodic_num = PeriodicTask.objects.aggregate(Count('id'))['id__count']
-            crontabSchedule_num = CrontabSchedule.objects.aggregate(Count('id'))['id__count']
-            username = request.session.get('user', '')
-            num_list = [project_num, env_num, interface_num, case_num, plan_num, sign_num, report_num,
-                        periodic_num + crontabSchedule_num]
-            return render(request, "index.html",
-                          {'username': username, 'num_list': num_list, 'project_num': project_num,
-                           'env_num': env_num, 'interface_num': interface_num, 'case_num': case_num,
-                           'plan_num': plan_num,
-                           'sign_num': sign_num, 'report_num': report_num,
-                           'task_num': periodic_num + crontabSchedule_num})
+            return HttpResponse('0')
     else:
-        request.session['login_from'] = '/index/'
-        return render(request, 'user/login_action.html')
+        project_num = Project.objects.aggregate(Count('prj_id'))['prj_id__count']
+        env_num = Environment.objects.aggregate(Count('env_id'))['env_id__count']
+        interface_num = Interface.objects.aggregate(Count('if_id'))['if_id__count']
+        case_num = Case.objects.aggregate(Count('case_id'))['case_id__count']
+        plan_num = Plan.objects.aggregate(Count('plan_id'))['plan_id__count']
+        sign_num = Sign.objects.aggregate(Count('sign_id'))['sign_id__count']
+        report_num = Report.objects.aggregate(Count('report_id'))['report_id__count']
+        periodic_num = PeriodicTask.objects.aggregate(Count('id'))['id__count']
+        crontabSchedule_num = CrontabSchedule.objects.aggregate(Count('id'))['id__count']
+        username = request.session.get('user', '')
+        num_list = [project_num, env_num, interface_num, case_num, plan_num, sign_num, report_num,
+                    periodic_num + crontabSchedule_num]
+        return render(request, "index.html",
+                      {'username': username, 'num_list': num_list, 'project_num': project_num,
+                       'env_num': env_num, 'interface_num': interface_num, 'case_num': case_num,
+                       'plan_num': plan_num,
+                       'sign_num': sign_num, 'report_num': report_num,
+                       'task_num': periodic_num + crontabSchedule_num})
 
 
 # 登录
@@ -90,7 +89,7 @@ def login_action(request):
             return render(request, 'user/login_action.html', {'error': 'username or password error!'})
 
 
-@login_required
+# @login_required
 def img_download(request):
     # do something...
     user_id = request.session.get('user_id', '')  # 从session中获取user_id

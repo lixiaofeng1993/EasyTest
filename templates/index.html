@@ -20,7 +20,8 @@
         .img_qr {
             width: 15%;
         }
-        .btn-primary{
+
+        .btn-primary {
             margin-left: 15%;
         }
     </style>
@@ -103,12 +104,16 @@
                 type: 'post',
                 data: {'url': url},
                 success: function (data) {
-                    console.log(data);
-                    html = '<img src="/media/' + data + '">' + '<a href="/img_download?log_file=' + data + '" class="btn btn-primary"><i class="fa fa-cloud-download"></i>&nbsp;下载二维码</a>';
-                    $('.img_qr').empty();
-                    $('.img_qr').append(html);
+                    if (data == '0') {
+                        alert('用户未登录！');
+                        location.reload()
+                    } else {
+                        console.log(data);
+                        html = '<img src="/media/' + data + '">' + '<a href="/img_download?log_file=' + data + '" class="btn btn-primary"><i class="fa fa-cloud-download"></i>&nbsp;下载二维码</a>';
+                        $('.img_qr').empty();
+                        $('.img_qr').append(html);
+                    }
                 }
-
             })
         })
 
