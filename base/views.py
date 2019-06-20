@@ -7,7 +7,7 @@ from base.models import Project, Sign, Environment, Interface, Case, Plan, Repor
 from django.contrib.auth.models import User  # django自带user
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.db.models import Q  # 与或非 查询
-from lib.execute import Test_execute, remove_logs, get_user  # 执行接口
+from lib.execute import Test_execute, get_user  # 执行接口
 from djcelery.models import PeriodicTask, CrontabSchedule, IntervalSchedule
 from datetime import timedelta, datetime
 from lib.swagger import AnalysisJson
@@ -23,7 +23,6 @@ report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/te
 # report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\templates' + '\\report'
 logs_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/' + 'logs'  # 拼接删除目录完整路径
 # logs_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\' + 'logs'  # 拼接删除目录完整路径
-pic_path = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), settings.MEDIA_ROOT)  # 拼接删除目录完整路径
 start_time = ''  # 执行测试计划开始时间
 totalTime = ''  # 执行测试计划运行时间
 now_time = ''  # 饼图命名区分
@@ -34,9 +33,6 @@ class_name = ''  # 执行测试类
 # @login_required
 @page_cache(5)
 def project_index(request):
-    # remove_logs(report_path, type='report')
-    # remove_logs(logs_path)
-    # remove_logs(pic_path, type='pic')
     user_id = request.session.get('user_id', '')  # 从session中获取user_id
     if get_user(user_id):
         # prj_list = Project.objects.filter(user_id=user_id)  # 按照user_id查询项目

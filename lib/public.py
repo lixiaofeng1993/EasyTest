@@ -3,11 +3,12 @@
 import json, re, os
 import time
 import logging
+from datetime import datetime
 from common.logger import Log
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger  # 分页
 
-
 log = logging.getLogger('log')  # 初始化log
+
 
 def paginator(data, page):
     paginator = Paginator(data, 10)
@@ -258,5 +259,16 @@ def gr_code(url):
     return str(now_time) + "qrcode.png"
 
 
-if __name__ == '__main__':
-    pass
+def remove_logs(path):
+    """到期删除日志文件"""
+    file_list = os.listdir(path)  # 返回目录下的文件list
+    now_time = datetime.now()
+    for file in file_list:
+        file_path = os.path.join(path, file)
+        file_ctime = datetime(*time.localtime(os.path.getctime(file_path))[:6])
+        if (now_time - file_ctime).days > 5:
+            try:
+                os.remove(file_path)
+                log.info('------删除文件------->>> {}'.format(file_path))
+            except PermissionError as e:
+                log.warning('删除报告失败：{}'.format(e))

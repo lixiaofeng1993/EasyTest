@@ -3,9 +3,9 @@
 from __future__ import absolute_import
 from EasyTest.celery import app
 from celery import shared_task
-import time, logging
+import time, logging, os
 from common.connectMySql import SqL
-from lib.public import DrawPie
+from lib.public import DrawPie, remove_logs
 from datetime import datetime
 from lib.sql_parameter import test_case, get_sign, get_env
 from run_this import send_email
@@ -100,3 +100,17 @@ def run_plan():
         smtp_service_163 = readConfig.smtp_service_163
         send_email(user, pwd, user_163, pwd_163, _to, smtp_service, smtp_service_163)
     log.info('测试任务执行完成！')
+
+
+@shared_task
+def delete_logs():
+    log.info('remove logs------->删除过期日志中<--------------')
+    report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/templates' + '/report'
+    # report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\templates' + '\\report'
+    logs_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/' + 'logs'  # 拼接删除目录完整路径
+    # logs_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\' + 'logs'  # 拼接删除目录完整路径
+    pic_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/media'
+    remove_logs(report_path)
+    remove_logs(logs_path)
+    remove_logs(pic_path)
+    log.info('remove logs------->删除过期日志成功！<--------------')

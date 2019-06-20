@@ -192,56 +192,6 @@ class Test_execute():
         return sign_type
 
 
-# 删除日志文件
-def TimeStampToTime(timestamp):
-    """格式化时间"""
-    timeStruct = time.localtime(timestamp)
-    return str(time.strftime('%Y-%m-%d', timeStruct))
-
-
-def remove_logs(path, type='logs'):
-    """到期删除日志文件"""
-    file_list = os.listdir(path)  # 返回目录下的文件list
-    if type == 'logs':
-        for i in file_list:
-            file_path = os.path.join(path, i)  # 拼接文件的完整路径
-            file_name_time = re.findall('\d{4}.+\d', i)[0]
-            now_time = TimeStampToTime(time.time())
-            if file_name_time != now_time:
-                try:
-                    os.remove(file_path)
-                except PermissionError as e:
-                    Log().warning('删除日志失败：{}'.format(e))
-    if type == 'report':
-        dir_list = []
-        for file in file_list:
-            dir_list.append(os.path.join(path, file))
-        plans = Plan.objects.all()
-        report_list = []
-        for plan in plans:
-            report_list.append(plan.report_name)
-        for i in dir_list:
-            if i not in report_list:
-                try:
-                    os.remove(i)
-                except PermissionError as e:
-                    Log().warning('删除报告失败：{}'.format(e))
-    if type == 'pic':
-        dir_list = []
-        for file in file_list:
-            dir_list.append(os.path.join(path, file))
-        reports = Report.objects.all()
-        pic_list = []
-        for report in reports:
-            pic_list.append(report.pic_name)
-        for i in dir_list:
-            if os.path.basename(i) not in pic_list:
-                try:
-                    os.remove(i)
-                except PermissionError as e:
-                    Log().warning('删除pic饼图失败：{}'.format(e))
-
-
 def get_user(user_id):
     '''判断用户是否存在'''
     if not user_id:
