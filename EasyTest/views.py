@@ -25,7 +25,7 @@ def index(request):
             url = request.POST.get('url', '')
             if url:
                 qr_code_name = gr_code(url)
-                log.info('生成二维码 {}-->{}'.format(qr_code_name, url))
+                log.info('用户 {} 生成二维码 {}-->{}'.format(user_id, qr_code_name, url))
                 return JsonResponse(str(qr_code_name), safe=False)
         else:
             return HttpResponse('0')
@@ -110,7 +110,7 @@ def img_download(request):
             response = StreamingHttpResponse(file_iterator(name_path))
             response['Content-Type'] = 'application/octet-stream'
             response['Content-Disposition'] = 'attachment;filename="{0}"'.format(name_path)
-            log.info('下载的二维码：{}'.format(name_path))
+            log.info('用户 {} 下载的二维码：{}'.format(user_id, name_path))
             return response
     else:
         request.session['login_from'] = '/index/'
