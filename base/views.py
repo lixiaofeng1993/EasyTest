@@ -917,7 +917,7 @@ def case_delete(request):
 def case_run(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
-        return JsonResponse('用户未登录！')
+        return HttpResponse('0')
     else:
         if request.method == 'POST':
             case_id = request.POST['case_id']

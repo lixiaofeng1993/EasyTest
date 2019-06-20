@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/views.py" afterPath="$PROJECT_DIR$/base/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/report.html" afterPath="$PROJECT_DIR$/templates/report.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/case/index.html" afterPath="$PROJECT_DIR$/templates/base/case/index.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -66,6 +66,16 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="238" column="61" lean-forward="false" selection-start-line="238" selection-start-column="61" selection-end-line="238" selection-end-column="61" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="urls.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/urls.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -89,8 +99,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="687">
-              <caret line="1306" column="44" lean-forward="false" selection-start-line="1306" selection-start-column="44" selection-end-line="1306" selection-end-column="44" />
+            <state relative-caret-position="555">
+              <caret line="919" column="27" lean-forward="false" selection-start-line="919" selection-start-column="15" selection-end-line="919" selection-end-column="27" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -98,11 +108,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="report.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="report.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/report.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="7289" column="41" lean-forward="true" selection-start-line="7289" selection-start-column="41" selection-end-line="7289" selection-end-column="41" />
+            <state relative-caret-position="478">
+              <caret line="7296" column="66" lean-forward="true" selection-start-line="7296" selection-start-column="66" selection-end-line="7296" selection-end-column="66" />
               <folding />
             </state>
           </provider>
@@ -135,6 +145,7 @@
       <find>搜索</find>
       <find>report_se</find>
       <find>search</find>
+      <find>JsonResponse('用户未登录！')</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -150,12 +161,12 @@
         <option value="$PROJECT_DIR$/lib/public.py" />
         <option value="$PROJECT_DIR$/run_this.py" />
         <option value="$PROJECT_DIR$/base/urls.py" />
-        <option value="$PROJECT_DIR$/templates/base/case/index.html" />
         <option value="$PROJECT_DIR$/EasyTest/views.py" />
         <option value="$PROJECT_DIR$/lib/execute.py" />
         <option value="$PROJECT_DIR$/templates/base/interface/index.html" />
-        <option value="$PROJECT_DIR$/base/views.py" />
         <option value="$PROJECT_DIR$/templates/report.html" />
+        <option value="$PROJECT_DIR$/base/views.py" />
+        <option value="$PROJECT_DIR$/templates/base/case/index.html" />
       </list>
     </option>
   </component>
@@ -875,14 +886,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1958">
-          <caret line="89" column="78" lean-forward="false" selection-start-line="89" selection-start-column="76" selection-end-line="89" selection-end-column="78" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/EasyTest/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="528">
@@ -933,20 +936,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/report.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="478">
+          <caret line="7296" column="66" lean-forward="true" selection-start-line="7296" selection-start-column="66" selection-end-line="7296" selection-end-column="66" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/base/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="687">
-          <caret line="1306" column="44" lean-forward="false" selection-start-line="1306" selection-start-column="44" selection-end-line="1306" selection-end-column="44" />
+        <state relative-caret-position="555">
+          <caret line="919" column="27" lean-forward="false" selection-start-line="919" selection-start-column="15" selection-end-line="919" selection-end-column="27" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/report.html">
+    <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="7289" column="41" lean-forward="true" selection-start-line="7289" selection-start-column="41" selection-end-line="7289" selection-end-column="41" />
+        <state relative-caret-position="510">
+          <caret line="238" column="61" lean-forward="false" selection-start-line="238" selection-start-column="61" selection-end-line="238" selection-end-column="61" />
           <folding />
         </state>
       </provider>
