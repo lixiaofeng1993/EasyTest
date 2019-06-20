@@ -33,6 +33,7 @@ class_name = ''  # 执行测试类
 
 def get_user(user_id):
     user = User.objects.filter(id=user_id)
+    log.info('--------------user-----------> {}'.format(user))
     if user:
         return True
     else:
