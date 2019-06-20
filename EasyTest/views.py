@@ -71,6 +71,7 @@ def login_action(request):
 	           #      request.session['login_from'] = '/index/'
             # except KeyError as e:
             # 	request.session['login_from'] = '/index/'
+            log.info('---------地址来源-------------> {}'.format(request.session['login_from']))
             response = redirect(request.session['login_from'])
             # response = HttpResponseRedirect('/index/')
             log.info('用户： {} 登录成功！'.format(username))
