@@ -57,6 +57,7 @@
                             <th id="cen">项目描述</th>
                             <th id="cen">签名方式</th>
                             <th id="cen">更新时间</th>
+                            <th id="cen">更新用户</th>
                             <th id="cen">操作</th>
                         </tr>
                         </thead>
@@ -72,6 +73,7 @@
                                     <td id="cen">{{ prj.description }}</td>
                                     <td id="cen">{{ prj.sign }}</td>
                                     <td id="cen">{{ prj.update_time }}</td>
+                                    <td id="cen">{{ prj.user }}</td>
                                     <td id="cen">
                                         <a href="/base/project_delete?prj_id={{ prj.prj_id }}"
                                            class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" id="del"
