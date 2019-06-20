@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/tasks.py" afterPath="$PROJECT_DIR$/base/tasks.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -39,13 +38,13 @@
       <file leaf-file-name="tasks.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/base/tasks.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-57">
-              <caret line="76" column="57" lean-forward="false" selection-start-line="76" selection-start-column="57" selection-end-line="76" selection-end-column="57" />
+            <state relative-caret-position="229">
+              <caret line="74" column="151" lean-forward="false" selection-start-line="74" selection-start-column="151" selection-end-line="74" selection-end-column="151" />
               <folding>
                 <element signature="e#34#72#0" expanded="true" />
-                <marker date="1561035179995" expanded="true" signature="891:993" ph="select bp.en... base_plan" />
-                <marker date="1561035179995" expanded="true" signature="2240:2451" ph="insert into base_report... " />
-                <marker date="1561035179995" expanded="true" signature="2657:2702" ph="update base_... " />
+                <marker date="1561035448270" expanded="true" signature="891:993" ph="select bp.en... base_plan" />
+                <marker date="1561035448270" expanded="true" signature="2240:2452" ph="insert into base_report... " />
+                <marker date="1561035448270" expanded="true" signature="2658:2703" ph="update base_... " />
               </folding>
             </state>
           </provider>
@@ -986,13 +985,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/base/tasks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-57">
-          <caret line="76" column="57" lean-forward="false" selection-start-line="76" selection-start-column="57" selection-end-line="76" selection-end-column="57" />
+        <state relative-caret-position="229">
+          <caret line="74" column="151" lean-forward="false" selection-start-line="74" selection-start-column="151" selection-end-line="74" selection-end-column="151" />
           <folding>
             <element signature="e#34#72#0" expanded="true" />
-            <marker date="1561035179995" expanded="true" signature="891:993" ph="select bp.en... base_plan" />
-            <marker date="1561035179995" expanded="true" signature="2240:2451" ph="insert into base_report... " />
-            <marker date="1561035179995" expanded="true" signature="2657:2702" ph="update base_... " />
+            <marker date="1561035448270" expanded="true" signature="891:993" ph="select bp.en... base_plan" />
+            <marker date="1561035448270" expanded="true" signature="2240:2452" ph="insert into base_report... " />
+            <marker date="1561035448270" expanded="true" signature="2658:2703" ph="update base_... " />
           </folding>
         </state>
       </provider>
