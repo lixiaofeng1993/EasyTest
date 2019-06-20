@@ -238,6 +238,7 @@
                     if (res == '0') {
                         $("#run_return_parameter").val("用户未登录！");
                     }
+                    console.log('------>', typeof res);
                     console.log('------>', res);
                     $("#run_return_parameter").val(JSON.stringify(res));
                     //var res_data = eval("(" + res + ")");
