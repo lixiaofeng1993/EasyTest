@@ -396,6 +396,7 @@ def interface_index(request):
 def interface_search(request):
     if request.method == 'POST':
         user_id = request.session.get('user_id', '')
+        log.info('11111111111user_id============={}'.format(get_user(user_id)))
         if get_user(user_id):
             search = request.POST.get('search', '').strip()
             # project_list = request.session.get('project_list', [])
@@ -429,6 +430,7 @@ def interface_search(request):
                         if_list.append(interface_dict)
                     return HttpResponse(str(if_list))
         else:
+            log.info('11111111111111111111')
             request.session['login_from'] = '/base/interface/'
             return render(request, 'user/login_action.html')
 
@@ -716,7 +718,6 @@ def batch_index(request):
     """批量导入"""
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
-        request.session['login_from'] = '/base/interface/'
         return HttpResponse('用户未登录！')
     else:
         if request.method == 'GET':
@@ -919,7 +920,6 @@ def case_delete(request):
 def case_run(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
-        request.session['login_from'] = '/base/case/'
         return JsonResponse('用户未登录！')
     else:
         if request.method == 'POST':
@@ -1088,7 +1088,6 @@ def plan_delete(request):
 def plan_run(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
-        request.session['login_from'] = '/base/plan/'
         return HttpResponse('用户未登录')
     else:
         if request.method == 'POST':
@@ -1143,7 +1142,6 @@ def plan_run(request):
 def plan_unittest_run(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
-        request.session['login_from'] = '/base/plan/'
         return HttpResponse('用户未登录')
     else:
         if request.method == 'POST':
