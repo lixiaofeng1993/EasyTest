@@ -20,7 +20,6 @@ num_list = []
 def index(request):
     username = request.session.get('user', '')  # 从session中获取user_id
     if username:
-
         if request.method == 'POST':
             url = request.POST.get('url', '')
             if url:
@@ -66,11 +65,11 @@ def login_action(request):
             request.session['user'] = username  # 将session信息记录到浏览器
             user_ = User.objects.get(username=username)
             request.session['user_id'] = user_.id  # 将session信息记录到浏览器
-            # try:
-            # 	if request.session['login_from'] == '//':
-	           #      request.session['login_from'] = '/index/'
-            # except KeyError as e:
-            # 	request.session['login_from'] = '/index/'
+            try:
+            	if request.session['login_from'] == '//':
+	                request.session['login_from'] = '/index/'
+            except KeyError as e:
+            	request.session['login_from'] = '/index/'
             log.info('---------地址来源-------------> {}'.format(request.session['login_from']))
             response = redirect(request.session['login_from'])
             # response = HttpResponseRedirect('/index/')
