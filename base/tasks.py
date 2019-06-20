@@ -72,18 +72,9 @@ def run_plan():
     pic_name = DrawPie(pass_num, fail_num, error_num)
     report_name = plan['plan_name'] + "-" + str(start_time)
     sql.execute_sql(
-        'insert into base_report(report_name,pic_name,totalTime,startTime,content,case_num,pass_num,fail_num,error_num,plan_id,update_time) values("{}","{}","{}","{}","{}","{}","{}","{}","{}","{}","{}")'.format(
-            report_name,
-            pic_name,
-            totalTime,
-            start_time,
-            str(content).replace('"', "'"),
-            case_num,
-            pass_num,
-            fail_num,
-            error_num,
-            plan_id, str(
-                datetime.now())))
+        'insert into base_report(report_name,pic_name,totalTime,startTime,content,case_num,pass_num,fail_num,error_num,plan_id,update_time, udate_user) values("{}","{}","{}","{}","{}","{}","{}","{}","{}","{}","{}", "{}")'.format(
+            report_name,pic_name,totalTime,start_time,str(content).replace('"', "'"), case_num,pass_num,fail_num,
+            error_num,plan_id, str(datetime.now()), 'root'))
     sql.execute_sql('update base_plan set make=0, update_time="{}"'.format(datetime.now()))
     if fail_num or error_num:
         # report_file_html = get_new_report_html(report_path)
