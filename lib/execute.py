@@ -244,8 +244,11 @@ def remove_logs(path, type='logs'):
 
 def get_user(user_id):
     '''判断用户是否存在'''
-    user = User.objects.filter(id=user_id)
-    if user:
-        return True
-    else:
+    if not user_id:
         return False
+    else:
+        user = User.objects.filter(id=user_id)
+        if user:
+            return True
+        else:
+            return False
