@@ -263,12 +263,15 @@ def remove_logs(path):
     """到期删除日志文件"""
     file_list = os.listdir(path)  # 返回目录下的文件list
     now_time = datetime.now()
+    num = 0
     for file in file_list:
         file_path = os.path.join(path, file)
         file_ctime = datetime(*time.localtime(os.path.getctime(file_path))[:6])
         if (now_time - file_ctime).days > 5:
             try:
                 os.remove(file_path)
+                num += 1
                 log.info('------删除文件------->>> {}'.format(file_path))
             except PermissionError as e:
                 log.warning('删除报告失败：{}'.format(e))
+    return num

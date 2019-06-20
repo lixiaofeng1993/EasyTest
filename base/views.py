@@ -1,7 +1,7 @@
 import os
 from django.shortcuts import render, redirect
 # from django.contrib.auth.decorators import login_required
-from django.conf import settings
+# from django.conf import settings
 from django.http import StreamingHttpResponse
 from base.models import Project, Sign, Environment, Interface, Case, Plan, Report
 from django.contrib.auth.models import User  # django自带user
@@ -14,7 +14,7 @@ from lib.swagger import AnalysisJson
 import time
 import json
 import logging
-from base.page_cache import page_cache  # redis缓存
+# from base.page_cache import page_cache  # redis缓存
 from lib.public import get_new_report_html, DrawPie, is_number, paginator
 import run_this
 
@@ -31,7 +31,7 @@ class_name = ''  # 执行测试类
 
 # 项目首页
 # @login_required
-@page_cache(5)
+# @page_cache(5)
 def project_index(request):
     user_id = request.session.get('user_id', '')  # 从session中获取user_id
     if get_user(user_id):
@@ -136,7 +136,7 @@ def project_delete(request):
 
 # 签名首页
 # @login_required
-@page_cache(5)
+# @page_cache(5)
 def sign_index(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -219,7 +219,7 @@ def sign_delete(request):
 
 # 测试环境首页
 # @login_required
-@page_cache(5)
+# @page_cache(5)
 def env_index(request):
     user_id = request.session.get('user_id', '')
     if get_user(user_id):
@@ -369,7 +369,7 @@ def env_delete(request):
 
 # 接口首页
 # @login_required
-@page_cache(5)
+# @page_cache(5)
 def interface_index(request):
     user_id = request.session.get('user_id', '')
     if get_user(user_id):
@@ -732,7 +732,7 @@ def batch_index(request):
 
 # 用例首页
 # @login_required
-@page_cache(5)
+# @page_cache(5)
 def case_index(request):
     user_id = request.session.get('user_id', '')
     if get_user(user_id):
@@ -926,7 +926,7 @@ def case_run(request):
 
 # 测试计划首页
 # @login_required
-@page_cache(5)
+# @page_cache(5)
 def plan_index(request):
     user_id = request.session.get('user_id', '')
     if get_user(user_id):
@@ -1179,7 +1179,7 @@ def plan_unittest_run(request):
 
 # 定时任务
 # @login_required
-@page_cache(5)
+# @page_cache(5)
 def timing_task(request):
     user_id = request.session.get('user_id', '')
     if get_user(user_id):
@@ -1197,7 +1197,7 @@ def timing_task(request):
 
 # 查看报告页面
 # @login_required
-@page_cache(5)
+# @page_cache(5)
 def report_page(request):
     if request.method == 'GET':
         user_id = request.session.get('user_id', '')
@@ -1394,7 +1394,7 @@ def file_download(request):
 
 # locust页面
 # @login_required
-@page_cache(5)
+# @page_cache(5)
 def performance_index(request):
     if request.method == 'GET':
         user_id = request.session.get('user_id', '')
@@ -1407,7 +1407,7 @@ def performance_index(request):
 
 # 添加用户
 # @login_required
-@page_cache(5)
+# @page_cache(5)
 def user_index(request):
     user_id = request.session.get('user_id', '')
     if get_user(user_id):
