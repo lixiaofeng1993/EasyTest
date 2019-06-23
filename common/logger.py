@@ -34,7 +34,7 @@ class Log:
 
     def handle_logs(self):
         """处理日志过期天数和日志size备份"""
-        dir_list = ['logs', 'report']  # 要删除文件的目录名
+        dir_list = ['logs']  # 要删除文件的目录名
         for dir in dir_list:
             # dirPath = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\' + dir  # 拼接删除目录完整路径
             dirPath = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/' + dir  # 拼接删除目录完整路径
