@@ -18,5 +18,5 @@ worker_connections = 65535
 # log
 capture_output = True
 loglevel = 'info'
-accesslog = "/tmp/EasyTest_access.log"    #访问日志文件的路径
-errorlog = "/tmp/EasyTest_error.log"
+accesslog = "/var/logs/EasyTest_access.log"    #访问日志文件的路径
+errorlog = "/var/logs/EasyTest_error.log"
