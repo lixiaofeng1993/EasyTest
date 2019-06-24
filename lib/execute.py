@@ -90,13 +90,15 @@ class Test_execute():
                 step_content = json.loads(replace_var(step_content, var_name, var_value))
         if_dict = {"url": interface.url, "header": step_content["header"], "body": step_content["body"]}
         set_headers = Environment.objects.get(env_id=self.env_id).set_headers
-        make = False
-        for k, v in eval(set_headers)['header'].items():
-            if k and v:
-                if '$' not in v:
-                    make = True
-        if make:
-            if_dict['header'] = eval(set_headers)['header']
+        log.info('set_headers===========》 {}'.format(set_headers))
+        if set_headers:
+            make = False
+            for k, v in eval(set_headers)['header'].items():
+                if k and v:
+                    if '$' not in v:
+                        make = True
+            if make:
+                if_dict['header'] = eval(set_headers)['header']
         if interface.data_type == 'sql':
             for k, v in if_dict['body'].items():
                 if 'select' in v:
