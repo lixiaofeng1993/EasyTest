@@ -129,6 +129,8 @@ class Test_execute():
         if_dict["if_name"] = step_content["if_name"]
         if_dict["method"] = interface.method
         if_dict["data_type"] = interface.data_type
+        log.info('if_dict["method"], if_dict["url"], if_dict["header"],if_dict["body"], if_dict["data_type"]=========================> {} {} {} {} {} '.format(if_dict["method"], if_dict["url"], if_dict["header"],
+                                     if_dict["body"], if_dict["data_type"]))
         try:
             # if self.sign_type == 4:
             if interface.is_sign:
