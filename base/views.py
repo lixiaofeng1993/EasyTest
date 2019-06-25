@@ -1311,9 +1311,7 @@ def report_index(request):
             make = Plan.objects.get(plan_id=plan_id).make
             plan_name = Plan.objects.get(plan_id=plan_id).report_name
             if make:  # unittest报告
-                log.info(
-                    '-------------------------->report_index plan_id: {} , plan_name: {}'.format(plan_id,
-                                                                                                 plan_name))
+                log.info('---->report_index plan_id: {} , plan_name: {}'.format(plan_id, plan_name))
                 return render(request, '{}'.format(plan_name))
             report = Report.objects.get(report_id=report_id)
             case_num = report.case_num

@@ -16,8 +16,7 @@ import logging
 import time
 from lib.public import validators_result, get_extract, get_param, replace_var, \
     extract_variables, call_interface, format_url
-from common.logger import Log
-from common.connectMySql import SqL
+# from common.connectMySql import SqL
 
 log = logging.getLogger('log')
 i = 0
@@ -90,7 +89,6 @@ class Test_execute():
                 step_content = json.loads(replace_var(step_content, var_name, var_value))
         if_dict = {"url": interface.url, "header": step_content["header"], "body": step_content["body"]}
         set_headers = Environment.objects.get(env_id=self.env_id).set_headers
-        log.info('set_headers===========》 {}'.format(set_headers))
         if set_headers:
             make = False
             for k, v in eval(set_headers)['header'].items():

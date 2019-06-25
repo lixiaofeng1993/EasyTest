@@ -96,7 +96,7 @@ def img_download(request):
     if get_user(user_id):
         if request.method == 'GET':
             name = request.GET.get('log_file', '')
-            name_path = os.path.join('/home/ubuntu/EasyTest/media', name)
+            name_path = os.path.join('/home/lixiaofeng/EasyTest/media', name)
 
             def file_iterator(file_name, chunk_size=512):
                 with open(file_name, 'rb') as f:
