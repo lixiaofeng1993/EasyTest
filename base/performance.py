@@ -8,7 +8,7 @@
 '''
 import sys
 
-sys.path.insert(0, r'/home/ubuntu/EasyTest')
+sys.path.insert(0, r'/var/lib/jenkins/workspace/EasyTest')
 
 from locust import HttpLocust, TaskSet, task, Locust, events
 from locust.clients import HttpSession
