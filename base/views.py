@@ -251,12 +251,20 @@ def set_headers(request):
     else:
         if request.method == 'GET':
             env_id = request.GET.get('env_id', '')
+            make = request.GET.get('make', '')
             env = Environment.objects.get(env_id=env_id)
             env_name = env.env_name
             set_header = env.set_headers
-            set_header = eval(set_header)['header']
-            return render(request, "base/env/set_headers.html",
-                          {'env_id': env_id, 'env_name': env_name, 'env': set_header})
+            if make:
+                if set_header:
+                    set_header = eval(set_header)['header']
+                    return JsonResponse(set_header)
+                else:
+                    return JsonResponse('0', safe=False)
+            else:
+                return render(request, "base/env/set_headers.html",
+                              {'env_id': env_id, 'env_name': env_name, 'env': set_header})
+
         elif request.method == 'POST':
             content = request.POST.get('content', '')
             env_id = request.POST.get('env_id', '')

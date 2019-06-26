@@ -54,15 +54,11 @@
                 <div class="ibox-content">
 
                     <div class="form-group">
-                        <label class="col-sm-2 control-label">已设置headers</label>
-                        <div class="col-sm-2">
-                            <textarea type="text" class="form-control">{{ env }}</textarea>
-                        </div>
+                        <button onclick="get_header()" class="btn btn-primary" style="margin-top: 1%"><i
+                                class="fa fa-wpforms"></i>&nbsp;获取header
+                        </button>
                     </div>
-                    {#                    <button onclick="get_header()" class="btn btn-primary"><i#}
-                    {#                            class="fa fa-wpforms"></i>&nbsp;获取header#}
-                    </button>
-                    <div class="form-horizontal" style="margin-top: 5%">
+                    <div class="form-horizontal" style="margin-top: 1%">
                         <div class="panel">
                             <table name='header' class='table'>
                                 <thead>
@@ -109,7 +105,7 @@
     <script>
         //添加头参数
         function add_header_row() {
-            var newRow = "<tr><td>#</td><td contenteditable='true' name='var_name'></td><td contenteditable='true' name='var_value'></td><td><button onclick='add_header_row()' class='btn btn-primary'><i class='fa fa-plus-square-o'></i></button><button class='btn btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i></button></td></tr>";
+            var newRow = "<tr><td>#</td><td contenteditable='true' name='var_name'></td><td contenteditable='true' name='var_value'></td><td><button onclick='add_header_row()' class='btn btn-primary'><i class='fa fa-plus-square-o'></i></button> <button class='btn btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i></button></td></tr>";
             $('tbody').append(newRow);
         }
 
@@ -120,6 +116,27 @@
             tbody.removeChild(tr);
         }
 
+        function get_header() {
+            var env_id = $('#env_name').attr('value');
+            $.ajax({
+                url: "/base/set_headers/",
+                type: "get",
+                data: {"env_id": env_id, 'make': 1},
+                success: function (data) {
+                    if (data == '0') {
+                        alert('未设置header！')
+                    } else {
+                        console.log(data);
+                        $('#header').empty();
+                        for (i in data) {
+                            params = "<tr><td>#</td><td contenteditable='true' name='var_name'>" + i + "</td><td contenteditable='true' name='var_value'>i" + data[i] + "</td><td><button onclick='add_header_row()' class='btn btn-primary'><i class='fa fa-plus-square-o'></i></button> <button class='btn btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i></button></td></tr>";
+                            $('#header').append(params);
+                        }
+
+                    }
+                }
+            })
+        }
 
         $("#submit").click(function () {
             var step = {};
@@ -144,25 +161,23 @@
             });
             arr = Object.keys(step["header"]);
             if (JSON.stringify(arr) == '[]') {
-                alert('请设置headers参数和值！');
+                content_json = ''
             } else {
-                var content_json = JSON.stringify(step);
-                $.ajax({
-                    url: "/base/set_headers/",
-                    type: "post",
-                    data: {"content": content_json, "env_id": env_id},
-                    success: function (data) {
-                        console.log(data);
-                        alert('保存成功！');
-                        window.location.replace("/base/env/");
-
-                    },
-                    error: function () {
-                        alert("error!");
-                    }
-                });
-
+                content_json = JSON.stringify(step);
             }
+            $.ajax({
+                url: "/base/set_headers/",
+                type: "post",
+                data: {"content": content_json, "env_id": env_id},
+                success: function (data) {
+                    alert('保存成功！');
+                    window.location.replace("/base/env/");
+
+                },
+                error: function () {
+                    alert("error!");
+                }
+            });
         });
 
     </script>
