@@ -1218,6 +1218,28 @@ def timing_task(request):
         return render(request, 'user/login_action.html')
 
 
+# @login_required
+def task_logs(request):
+    """定时任务运行日志"""
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/case/'
+        return render(request, 'user/login_action.html')
+    else:
+        task_log_path = '/var/celery_logs/celery_worker.log'
+        data_list= []
+        with open(task_log_path, 'rb') as f:
+            off = -1024 * 1024
+            if f.tell() < -off:
+                data = f.readlines()
+            else:
+                f.seek(off, 2)
+                data = f.readlines()
+            for line in data:
+                data_list.append(line.decode())
+            return render(request, 'base/case/log.html', {'data': data_list, 'make': True, 'log_file': log_file})
+
+
 # 查看报告页面
 # @login_required
 # @page_cache(5)
