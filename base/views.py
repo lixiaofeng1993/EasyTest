@@ -256,7 +256,7 @@ def set_headers(request):
             set_header = env.set_headers
             set_header = eval(set_header)['header']
             return render(request, "base/env/set_headers.html",
-                          {'env_id': env_id, 'env_name': env_name, 'set_header': set_header})
+                          {'env_id': env_id, 'env_name': env_name, 'env': set_header})
         elif request.method == 'POST':
             content = request.POST.get('content', '')
             env_id = request.POST.get('env_id', '')
