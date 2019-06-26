@@ -1237,7 +1237,7 @@ def task_logs(request):
                 data = f.readlines()
             for line in data:
                 data_list.append(line.decode())
-            return render(request, 'base/case/log.html', {'data': data_list, 'make': True, 'log_file': log_file})
+            return render(request, 'system/task/log.html', {'data': data_list, 'make': True, 'log_file': task_log_path})
 
 
 # 查看报告页面
