@@ -94,7 +94,7 @@ def get_param(param, content):
         except:
             content = ""
     if isinstance(content, dict):
-        param_val = get_param_reponse(param, content)
+        param_val = get_param_response(param, content)
     if isinstance(content, list):
         dict_data = {}
         for i in range(len(content)):
@@ -102,7 +102,7 @@ def get_param(param, content):
                 dict_data[str(i)] = eval(content[i])
             except:
                 dict_data[str(i)] = content[i]
-        param_val = get_param_reponse(param, dict_data)
+        param_val = get_param_response(param, dict_data)
     if param_val is None:
         return param_val
     else:
@@ -111,19 +111,19 @@ def get_param(param, content):
         return param_val
 
 
-def get_param_reponse(param_name, dict_data, default=None):
+def get_param_response(param_name, dict_data, default=None):
     for k, v in dict_data.items():
         if k == param_name:
             return v
         else:
             if isinstance(v, dict):
-                ret = get_param_reponse(param_name, v)
+                ret = get_param_response(param_name, v)
                 if ret is not default:
                     return ret
             if isinstance(v, list):
                 for i in v:
                     if isinstance(i, dict):
-                        ret = get_param_reponse(param_name, i)
+                        ret = get_param_response(param_name, i)
                         if ret is not default:
                             return ret
                     else:

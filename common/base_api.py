@@ -3,7 +3,7 @@ import os
 import json
 from common.processingJson import write_data, get_json
 from common.logger import Log
-from lib.public import get_extract, get_param, replace_var, extract_variables, get_param_reponse, \
+from lib.public import get_extract, get_param, replace_var, extract_variables, \
     call_interface, format_url
 
 log = Log()  # 初始化log
