@@ -1530,3 +1530,17 @@ def findata(request):
             for i in data:
                 data_list.append(i.replace('True', 'true').replace('False', 'false').replace('None', 'null'))
             return JsonResponse(data_list, safe=False)
+        if get_type == 'get_task_log':
+            task_log_path = '/var/celery_logs/celery_worker_err.log'
+            data_list= []
+            with open(task_log_path, 'r', encoding='utf-8') as f:
+                off = -1024 * 1024
+                if f.tell() < -off:
+                    data = f.readlines()
+                else:
+                    f.seek(off, 2)
+                    data = f.readlines()
+                    # data = f.readlines()
+            for i in data:
+                data_list.append(i.replace('True', 'true').replace('False', 'false').replace('None', 'null'))
+            return JsonResponse(data_list, safe=False)

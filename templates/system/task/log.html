@@ -101,7 +101,7 @@
                 <div style="margin: 1% 1%">
                     <a href="/base/file_download?log_file={{ log_file }}" class="btn btn-primary"><i
                             class="fa fa-cloud-download"></i>&nbsp;下载运行任务日志</a>
-                    <button onclick="get_log()" class="btn btn-primary"><i
+                    <button onclick="get_task_log()" class="btn btn-primary"><i
                             class="fa fa-wpforms"></i>&nbsp;格式化日志
                     </button>
                 </div>
@@ -146,13 +146,13 @@
             $('#all_log').empty();
         }
 
-        function get_log() {
+        function get_task_log() {
             $('#log').empty();
             $.ajax({
                 type: "get",
                 url: "/base/findata",
                 data: {
-                    "type": "get_log"
+                    "type": "get_task_log"
                 },
                 success: function (data) {
                     {#                    console.log('---------------->', data);#}
