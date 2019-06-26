@@ -1548,6 +1548,7 @@ def findata(request):
             set_header = env.set_headers
             if set_header:
                 set_header = eval(set_header)['header']
-                return JsonResponse(str(set_header))
+                log.info('set_header------------------> {} '.format(set_header))
+                return JsonResponse(str(set_header), safe=False)
             else:
                 return JsonResponse('0')
