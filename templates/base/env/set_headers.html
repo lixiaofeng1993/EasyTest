@@ -56,7 +56,7 @@
                     <div class="form-group">
                         <label class="col-sm-2 control-label">已设置headers</label>
                         <div class="col-sm-2">
-                            <textarea type="text" class="form-control">{{ env }}</textarea>
+                            <span class="form-control">{{ env }}</span>
                         </div>
                     </div>
                     {#                    <button onclick="get_header()" class="btn btn-primary"><i#}
@@ -142,27 +142,27 @@
 
                 step["header"] = header;
             });
-            {#            arr = Object.keys(step["header"]);#}
-            {#            if (JSON.stringify(arr) == '[]') {#}
-            {#                alert('请设置headers参数和值！');#}
-            {#            } else {#}
-            var content_json = JSON.stringify(step);
-            $.ajax({
-                url: "/base/set_headers/",
-                type: "post",
-                data: {"content": content_json, "env_id": env_id},
-                success: function (data) {
-                    console.log(data);
-                    alert('保存成功！');
-                    window.location.replace("/base/env/");
+            arr = Object.keys(step["header"]);
+            if (JSON.stringify(arr) == '[]') {
+                alert('请设置headers参数和值！');
+            } else {
+                var content_json = JSON.stringify(step);
+                $.ajax({
+                    url: "/base/set_headers/",
+                    type: "post",
+                    data: {"content": content_json, "env_id": env_id},
+                    success: function (data) {
+                        console.log(data);
+                        alert('保存成功！');
+                        window.location.replace("/base/env/");
 
-                },
-                error: function () {
-                    alert("error!");
-                }
-            });
+                    },
+                    error: function () {
+                        alert("error!");
+                    }
+                });
 
-            {#            }#}
+            }
         });
 
     </script>

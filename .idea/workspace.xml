@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/env/set_headers.html" afterPath="$PROJECT_DIR$/templates/base/env/set_headers.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -70,10 +71,10 @@
       <file leaf-file-name="set_headers.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/base/env/set_headers.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="280">
-              <caret line="148" column="50" lean-forward="false" selection-start-line="148" selection-start-column="46" selection-end-line="148" selection-end-column="50" />
+            <state relative-caret-position="528">
+              <caret line="63" column="29" lean-forward="true" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
               <folding>
-                <marker date="1561543269039" expanded="false" signature="1930:1936" ph=" " />
+                <marker date="1561543486744" expanded="false" signature="1910:1916" ph=" " />
               </folding>
             </state>
           </provider>
@@ -1200,10 +1201,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/env/set_headers.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="148" column="50" lean-forward="false" selection-start-line="148" selection-start-column="46" selection-end-line="148" selection-end-column="50" />
+        <state relative-caret-position="528">
+          <caret line="63" column="29" lean-forward="true" selection-start-line="63" selection-start-column="29" selection-end-line="63" selection-end-column="29" />
           <folding>
-            <marker date="1561543269039" expanded="false" signature="1930:1936" ph=" " />
+            <marker date="1561543486744" expanded="false" signature="1910:1916" ph=" " />
           </folding>
         </state>
       </provider>
