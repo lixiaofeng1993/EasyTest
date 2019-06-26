@@ -49,17 +49,20 @@
         <div class="col-md-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h3 class="panel-title">设置默认headers</h3>
+                    <h3 class="panel-title" value="{{ env_id }}" id="env_name">设置默认headers - {{ env_name }}</h3>
                 </div>
                 <div class="ibox-content">
 
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">已设置headers</label>
-                        <div class="col-sm-2">
-                            <textarea type="text" value="{{ env_id }}" id="env_name"
-                                      class="form-control">{{ env }}</textarea>
-                        </div>
-                    </div>
+                    {#                    <div class="form-group">#}
+                    {#                        <label class="col-sm-2 control-label">已设置headers</label>#}
+                    {#                        <div class="col-sm-2">#}
+                    {#                            <textarea type="text" value="{{ env_id }}" id="env_name"#}
+                    {#                                      class="form-control">{{ env }}</textarea>#}
+                    {#                        </div>#}
+                    {#                    </div>#}
+                    <button onclick="get_header()" class="btn btn-primary"><i
+                            class="fa fa-wpforms"></i>&nbsp;获取header
+                    </button>
                     <div class="form-horizontal" style="margin-top: 5%">
                         <div class="panel">
                             <table name='header' class='table'>
@@ -71,7 +74,7 @@
                                     <th></th>
                                 </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="header">
                                 <tr>
                                     <td>#</td>
                                     <td contenteditable='true' name='var_name'></td>
@@ -118,6 +121,26 @@
             tbody.removeChild(tr);
         }
 
+        function get_header() {
+            var env_id = $('#env_name').attr('value');
+            $.ajax({
+                usl: '/base/set_headers/',
+                type: 'get',
+                data: {'env_id': env_id, 'make': 1},
+                success: function (data) {
+                    if(data == '0'){
+                        alert('未设置headers！')
+                    }else {
+                        data_header = eval(data);
+                        console.log('------------------------> ',data_header);
+                        $.each(data_header, function (i, item) {
+                            console.log('i , item =============>', i, item)
+                        })
+                    }
+                }
+            })
+        }
+
         $("#submit").click(function () {
             var step = {};
             var env_id = $('#env_name').attr('value');
@@ -144,8 +167,6 @@
                 alert('请设置headers参数和值！');
             } else {
                 var content_json = JSON.stringify(step);
-
-
                 $.ajax({
                     url: "/base/set_headers/",
                     type: "post",

@@ -251,10 +251,18 @@ def set_headers(request):
     else:
         if request.method == 'GET':
             env_id = request.GET.get('env_id', '')
-            set_headers = Environment.objects.get(env_id=env_id).set_headers
-            if set_headers:
-                set_headers = eval(set_headers)['header']
-            return render(request, "base/env/set_headers.html", {'env_id': env_id, 'env': set_headers})
+            env = Environment.objects.get(env_id=env_id)
+            env_name = env.env_name
+            make = request.GET.get('make', '')
+            if make:
+                set_header = env.set_headers
+                if set_header:
+                    set_header = eval(set_header)['header']
+                    return JsonResponse(str(set_header))
+                else:
+                    return JsonResponse('0')
+            else:
+                return render(request, "base/env/set_headers.html", {'env_id': env_id, 'env_name': env_name})
         elif request.method == 'POST':
             content = request.POST.get('content', '')
             env_id = request.POST.get('env_id', '')
@@ -1227,7 +1235,7 @@ def task_logs(request):
         return render(request, 'user/login_action.html')
     else:
         task_log_path = '/var/celery_logs/celery_worker_err.log'
-        data_list= []
+        data_list = []
         with open(task_log_path, 'rb') as f:
             off = -1024 * 1024
             if f.tell() < -off:
@@ -1532,7 +1540,7 @@ def findata(request):
             return JsonResponse(data_list, safe=False)
         if get_type == 'get_task_log':
             task_log_path = '/var/celery_logs/celery_worker_err.log'
-            data_list= []
+            data_list = []
             with open(task_log_path, 'r', encoding='utf-8') as f:
                 off = -1024 * 1024
                 if f.tell() < -off:
