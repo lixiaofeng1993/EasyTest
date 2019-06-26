@@ -29,9 +29,11 @@
       <file leaf-file-name="set_headers.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/base/env/set_headers.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="478">
-              <caret line="134" column="67" lean-forward="false" selection-start-line="134" selection-start-column="67" selection-end-line="134" selection-end-column="67" />
-              <folding />
+            <state relative-caret-position="390">
+              <caret line="58" column="50" lean-forward="false" selection-start-line="58" selection-start-column="50" selection-end-line="58" selection-end-column="50" />
+              <folding>
+                <marker date="1561539909082" expanded="false" signature="1930:1936" ph=" " />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -39,8 +41,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="675">
-              <caret line="1549" column="44" lean-forward="false" selection-start-line="1549" selection-start-column="34" selection-end-line="1549" selection-end-column="44" />
+            <state relative-caret-position="220">
+              <caret line="251" column="35" lean-forward="true" selection-start-line="251" selection-start-column="35" selection-end-line="251" selection-end-column="35" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -62,7 +64,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>logs_path</find>
       <find>pic_path</find>
       <find>datetime</find>
       <find>_index</find>
@@ -90,8 +91,9 @@
       <find>env_id</find>
       <find>rep</find>
       <find>env_name</find>
-      <find>header</find>
       <find>set_</find>
+      <find>header</find>
+      <find>get_headers</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -771,7 +773,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <option name="time" value="6" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1168,8 +1170,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/base/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="675">
-          <caret line="1549" column="44" lean-forward="false" selection-start-line="1549" selection-start-column="34" selection-end-line="1549" selection-end-column="44" />
+        <state relative-caret-position="220">
+          <caret line="251" column="35" lean-forward="true" selection-start-line="251" selection-start-column="35" selection-end-line="251" selection-end-column="35" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -1178,9 +1180,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/env/set_headers.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="478">
-          <caret line="134" column="67" lean-forward="false" selection-start-line="134" selection-start-column="67" selection-end-line="134" selection-end-column="67" />
-          <folding />
+        <state relative-caret-position="390">
+          <caret line="58" column="50" lean-forward="false" selection-start-line="58" selection-start-column="50" selection-end-line="58" selection-end-column="50" />
+          <folding>
+            <marker date="1561539909082" expanded="false" signature="1930:1936" ph=" " />
+          </folding>
         </state>
       </provider>
     </entry>

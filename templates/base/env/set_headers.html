@@ -53,15 +53,14 @@
                 </div>
                 <div class="ibox-content">
 
-                    {#                    <div class="form-group">#}
-                    {#                        <label class="col-sm-2 control-label">已设置headers</label>#}
-                    {#                        <div class="col-sm-2">#}
-                    {#                            <textarea type="text" value="{{ env_id }}" id="env_name"#}
-                    {#                                      class="form-control">{{ env }}</textarea>#}
-                    {#                        </div>#}
-                    {#                    </div>#}
-                    <button onclick="get_header()" class="btn btn-primary"><i
-                            class="fa fa-wpforms"></i>&nbsp;获取header
+                    <div class="form-group">
+                        <label class="col-sm-2 control-label">已设置headers</label>
+                        <div class="col-sm-2">
+                            <textarea type="text" class="form-control">{{ env }}</textarea>
+                        </div>
+                    </div>
+                    {#                    <button onclick="get_header()" class="btn btn-primary"><i#}
+                    {#                            class="fa fa-wpforms"></i>&nbsp;获取header#}
                     </button>
                     <div class="form-horizontal" style="margin-top: 5%">
                         <div class="panel">
@@ -121,27 +120,6 @@
             tbody.removeChild(tr);
         }
 
-        function get_header() {
-            var env_id = $('#env_name').attr('value');
-            $.ajax({
-                usl: '/base/findata/',
-                type: 'get',
-                data: {'env_id': env_id, 'type': 'get_headers'},
-                success: function (data) {
-                    if(data == '0'){
-                        alert('未设置headers！')
-                    }else {
-                        console.log(typeof data);
-                        console.log(data, 2222222222222222222222222);
-                        data_header = eval(data);
-                        console.log('------------------------> ',data_header);
-                        $.each(data_header, function (i, item) {
-                            console.log('i , item =============>', i, item)
-                        })
-                    }
-                }
-            })
-        }
 
         $("#submit").click(function () {
             var step = {};
