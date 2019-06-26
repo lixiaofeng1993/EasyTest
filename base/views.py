@@ -1226,7 +1226,7 @@ def task_logs(request):
         request.session['login_from'] = '/base/case/'
         return render(request, 'user/login_action.html')
     else:
-        task_log_path = '/var/celery_logs/celery_worker.log'
+        task_log_path = '/var/celery_logs/celery_worker_err.log'
         data_list= []
         with open(task_log_path, 'rb') as f:
             off = -1024 * 1024
