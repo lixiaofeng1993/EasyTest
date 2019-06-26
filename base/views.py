@@ -251,18 +251,8 @@ def set_headers(request):
     else:
         if request.method == 'GET':
             env_id = request.GET.get('env_id', '')
-            env = Environment.objects.get(env_id=env_id)
-            env_name = env.env_name
-            make = request.GET.get('make', '')
-            if make:
-                set_header = env.set_headers
-                if set_header:
-                    set_header = eval(set_header)['header']
-                    return JsonResponse(str(set_header))
-                else:
-                    return JsonResponse('0')
-            else:
-                return render(request, "base/env/set_headers.html", {'env_id': env_id, 'env_name': env_name})
+            env_name = Environment.objects.get(env_id=env_id).env_name
+            return render(request, "base/env/set_headers.html", {'env_id': env_id, 'env_name': env_name})
         elif request.method == 'POST':
             content = request.POST.get('content', '')
             env_id = request.POST.get('env_id', '')
@@ -1552,3 +1542,12 @@ def findata(request):
             for i in data:
                 data_list.append(i.replace('True', 'true').replace('False', 'false').replace('None', 'null'))
             return JsonResponse(data_list, safe=False)
+        if get_type == 'get_headers':
+            env_id = request.GET.get('env_id', '')
+            env = Environment.objects.get(env_id=env_id)
+            set_header = env.set_headers
+            if set_header:
+                set_header = eval(set_header)['header']
+                return JsonResponse(str(set_header))
+            else:
+                return JsonResponse('0')

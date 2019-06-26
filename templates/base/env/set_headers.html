@@ -124,9 +124,9 @@
         function get_header() {
             var env_id = $('#env_name').attr('value');
             $.ajax({
-                usl: '/base/set_headers/',
+                usl: '/base/findata/',
                 type: 'get',
-                data: {'env_id': env_id, 'make': 1},
+                data: {'env_id': env_id, 'type': 'get_headers'},
                 success: function (data) {
                     if(data == '0'){
                         alert('未设置headers！')
