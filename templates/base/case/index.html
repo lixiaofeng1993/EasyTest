@@ -55,8 +55,8 @@
         <div class="col-md-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <a href="/base/case_add/" class="btn btn-primary"><i
-                            class="fa fa-plus-circle"></i>&nbsp;添加用例</a>
+                    <a href="/base/case_add/" class="btn btn-primary"><i class="fa fa-plus-circle"></i>&nbsp;添加用例</a>
+                    <a href="/base/case_logs/" class="btn btn-primary"><i class="fa fa-file-text-o"></i>>&nbsp;&nbsp;&nbsp;&nbsp;查看日志</a>
                 </div>
                 <div class="panel-body">
                     <table class="table table-bordered">
@@ -91,9 +91,9 @@
                                        class="layui-btn layui-btn-danger layui-btn-xs" lay-event="log"
                                        onclick="return copy_btn()"><i
                                             class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;</a>
-                                    <a href="/base/case_logs/"
+                                    <!-- <a href="/base/case_logs/"
                                        class="layui-btn layui-btn-danger layui-btn-xs" lay-event="log"><i
-                                            class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;</a>
+                                            class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;</a> -->
                                     <a href="/base/case_delete?case_id={{ case.case_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="return delete_btn()"><img
