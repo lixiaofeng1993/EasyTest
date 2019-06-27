@@ -3,8 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/env/index.html" afterPath="$PROJECT_DIR$/templates/base/env/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/report_page/log.html" afterPath="$PROJECT_DIR$/templates/base/report_page/log.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/tasks.py" afterPath="$PROJECT_DIR$/base/tasks.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -102,31 +101,43 @@
         </entry>
       </file>
       <file leaf-file-name="log.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/system/task/log.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3564">
-              <caret line="162" column="49" lean-forward="false" selection-start-line="162" selection-start-column="49" selection-end-line="162" selection-end-column="49" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="log.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/base/report_page/log.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="378">
-              <caret line="112" column="51" lean-forward="false" selection-start-line="112" selection-start-column="51" selection-end-line="112" selection-end-column="51" />
+            <state relative-caret-position="624">
+              <caret line="143" column="24" lean-forward="true" selection-start-line="143" selection-start-column="24" selection-end-line="143" selection-end-column="51" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="log.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/base/case/log.html">
+      <file leaf-file-name="tasks.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/base/tasks.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2354">
-              <caret line="107" column="16" lean-forward="false" selection-start-line="107" selection-start-column="16" selection-end-line="107" selection-end-column="43" />
-              <folding />
+            <state relative-caret-position="378">
+              <caret line="53" column="62" lean-forward="false" selection-start-line="53" selection-start-column="62" selection-end-line="53" selection-end-column="62" />
+              <folding>
+                <marker date="1561648165164" expanded="true" signature="891:993" ph="select bp.en... base_plan" />
+                <marker date="1561648165164" expanded="true" signature="2305:2517" ph="insert into base_report... " />
+                <marker date="1561648165164" expanded="true" signature="2723:2768" ph="update base_... " />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sql_parameter.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/sql_parameter.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="378">
+              <caret line="39" column="11" lean-forward="false" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="11" />
+              <folding>
+                <marker date="1561218720368" expanded="true" signature="605:669" ph="select bp.si... base_project" />
+                <marker date="1561218720368" expanded="true" signature="816:909" ph="select be.pr... base_environment" />
+                <marker date="1561218720368" expanded="true" signature="1183:1259" ph="select bs.ca... base_case" />
+                <marker date="1561218720368" expanded="true" signature="2819:2927" ph="select bi.ur... base_interface" />
+                <marker date="1561218720368" expanded="true" signature="3626:3696" ph="select be.se... base_environment" />
+                <marker date="1561218720368" expanded="true" signature="6569:6633" ph="update base_... " />
+                <marker date="1561218720368" expanded="true" signature="7688:7792" ph="select bp.en... base_plan" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -194,7 +205,6 @@
         <option value="$PROJECT_DIR$/templates/index.html" />
         <option value="$PROJECT_DIR$/base/performance.py" />
         <option value="$PROJECT_DIR$/lib/execute.py" />
-        <option value="$PROJECT_DIR$/base/tasks.py" />
         <option value="$PROJECT_DIR$/uwsgi.ini" />
         <option value="$PROJECT_DIR$/gunicorn-config.py" />
         <option value="$PROJECT_DIR$/common/base_api.py" />
@@ -212,6 +222,7 @@
         <option value="$PROJECT_DIR$/run_this.py" />
         <option value="$PROJECT_DIR$/templates/base/env/index.html" />
         <option value="$PROJECT_DIR$/templates/base/report_page/log.html" />
+        <option value="$PROJECT_DIR$/base/tasks.py" />
       </list>
     </option>
   </component>
@@ -922,7 +933,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="2391" y="-9" width="2418" height="1331" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.17192833" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -931,7 +942,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.33447686" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33447686" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -972,7 +983,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="10" />
+      <option name="time" value="13" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1067,6 +1078,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="877">
           <caret line="82" column="9" lean-forward="false" selection-start-line="82" selection-start-column="7" selection-end-line="82" selection-end-column="9" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1112,13 +1124,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/sql_parameter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1100">
-          <caret line="54" column="25" lean-forward="false" selection-start-line="54" selection-start-column="24" selection-end-line="54" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/base/tests.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1131,13 +1136,6 @@
         <state relative-caret-position="968">
           <caret line="47" column="39" lean-forward="false" selection-start-line="47" selection-start-column="39" selection-end-line="47" selection-end-column="39" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/base/tasks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="968">
-          <caret line="53" column="28" lean-forward="false" selection-start-line="53" selection-start-column="28" selection-end-line="53" selection-end-column="28" />
         </state>
       </provider>
     </entry>
@@ -1347,9 +1345,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/report_page/log.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="378">
-          <caret line="112" column="51" lean-forward="false" selection-start-line="112" selection-start-column="51" selection-end-line="112" selection-end-column="51" />
+        <state relative-caret-position="624">
+          <caret line="143" column="24" lean-forward="true" selection-start-line="143" selection-start-column="24" selection-end-line="143" selection-end-column="51" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/sql_parameter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="39" column="11" lean-forward="false" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="11" />
+          <folding>
+            <marker date="1561218720368" expanded="true" signature="605:669" ph="select bp.si... base_project" />
+            <marker date="1561218720368" expanded="true" signature="816:909" ph="select be.pr... base_environment" />
+            <marker date="1561218720368" expanded="true" signature="1183:1259" ph="select bs.ca... base_case" />
+            <marker date="1561218720368" expanded="true" signature="2819:2927" ph="select bi.ur... base_interface" />
+            <marker date="1561218720368" expanded="true" signature="3626:3696" ph="select be.se... base_environment" />
+            <marker date="1561218720368" expanded="true" signature="6569:6633" ph="update base_... " />
+            <marker date="1561218720368" expanded="true" signature="7688:7792" ph="select bp.en... base_plan" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/tasks.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="53" column="62" lean-forward="false" selection-start-line="53" selection-start-column="62" selection-end-line="53" selection-end-column="62" />
+          <folding>
+            <marker date="1561648165164" expanded="true" signature="891:993" ph="select bp.en... base_plan" />
+            <marker date="1561648165164" expanded="true" signature="2305:2517" ph="insert into base_report... " />
+            <marker date="1561648165164" expanded="true" signature="2723:2768" ph="update base_... " />
+          </folding>
         </state>
       </provider>
     </entry>

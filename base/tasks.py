@@ -51,6 +51,7 @@ def run_plan():
     error_num = 0
     i = 0
     for case_id in case_id_list:
+        log.info('------------------------> {}'.format(case_id))
         case_result = test_case(case_id, env_id, case_id_list, sign_type, private_key, env_url, begin_time)
         content.append(case_result)
     end_time = time.clock()
