@@ -141,7 +141,7 @@
                                 <br>
                             {% endfor %}
                         </div>
-
+                        <div class="spinner"></div>
                         <button onclick="get_log()" class="btn btn-primary"><i class="fa fa-caret-square-o-down"></i>&nbsp;获取全部日志
                         </button>
                         <button onclick="del_log()" class="btn btn-primary"><i class="fa fa-caret-square-o-up"></i>&nbsp;隐藏显示日志
@@ -185,6 +185,7 @@
         }
 
         function get_log() {
+            $('.spinner').show();
             var plan_id = $('#plan_id').val();
             console.log(plan_id);
             if (plan_id == undefined) {
@@ -202,6 +203,7 @@
                     {#                    console.log('---------------->', data);#}
                     if (JSON.stringify(data) != '[]') {
                         for (item in data) {
+                            $('.spinner').hide();
                             var spl = 'interface response data: ';
                             if (data[item].indexOf(spl) != -1) {
                                 var log = data[item].split('interface response data: ')[1];

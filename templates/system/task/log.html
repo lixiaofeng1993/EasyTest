@@ -102,9 +102,10 @@
                     <a href="/base/file_download?log_file={{ log_file }}" class="btn btn-primary"><i
                             class="fa fa-cloud-download"></i>&nbsp;下载运行任务日志</a>
                     <button onclick="get_task_log()" class="btn btn-primary"><i
-                            class="fa fa-wpforms"></i>&nbsp;格式化日志
+                            class="fa fa-code-fork"></i>&nbsp;格式化日志
                     </button>
                 </div>
+                <div class="spinner"></div>
                 {% if make %}
 
                     <div id="log" style="margin: 1% 1%">
@@ -147,6 +148,7 @@
         }
 
         function get_task_log() {
+            $('.spinner').show();
             $('#log').empty();
             $.ajax({
                 type: "get",
@@ -158,6 +160,7 @@
                     {#                    console.log('---------------->', data);#}
                     if (JSON.stringify(data) != '[]') {
                         for (item in data) {
+                            $('.spinner').hide();
                             var spl = 'interface response data: ';
                             if (data[item].indexOf(spl) != -1) {
                                 var log = data[item].split('interface response data: ')[1];
