@@ -91,9 +91,6 @@
                                        class="layui-btn layui-btn-danger layui-btn-xs" lay-event="log"
                                        onclick="return copy_btn()"><i
                                             class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;</a>
-                                    <!-- <a href="/base/case_logs/"
-                                       class="layui-btn layui-btn-danger layui-btn-xs" lay-event="log"><i
-                                            class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;</a> -->
                                     <a href="/base/case_delete?case_id={{ case.case_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="return delete_btn()"><img
@@ -132,10 +129,11 @@
 
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label"> 实际返回结果</label>
-                                            <div class="col-sm-8"><textarea class="form-control"
-                                                                            id="run_return_parameter"
-                                                                            name="run_return_parameter"
-                                                                            rows="5"></textarea>
+                                            <div class="col-sm-8" id="result">
+{#                                                <textarea class="form-control"#}
+{#                                                                            id="run_return_parameter"#}
+{#                                                                            name="run_return_parameter"#}
+{#                                                                            rows="5"></textarea>#}
                                             </div>
                                         </div>
 
@@ -198,6 +196,7 @@
         }
 
         function debug_button(obj) {
+            $('#result').empty();
             var case_id = obj.parentNode.parentNode.children[0].innerText;
             var case_name = obj.parentNode.parentNode.children[1].innerText;
             var prj_id = obj.parentNode.parentNode.children[2].getAttribute("prj_id");
@@ -229,6 +228,7 @@
         }
         // 运行plan
         function run_button() {
+            $('#result').empty();
             $.ajax({
                 type: 'post',
                 url: "/base/case_run/",
@@ -240,14 +240,25 @@
                     if (res == '0') {
                         $("#run_return_parameter").val("用户未登录！");
                     } else {
-                        console.log('------>', res);
-                        $("#run_return_parameter").val(JSON.stringify(res));
+                        console.log('------>', res['step_list']);
+                        var data = res['step_list'];
+                        for (i in data){
+                            console.log(typeof i, data[i].url, JSON.stringify(data[i].body));
+                            html = '<h5>'+ (parseInt(i) + 1) + '. ' + data[i].if_name + '</h5><p style="font-family: Consolas;font-size:12px">' + '请求方式：' + data[i].method + '，请求url：' + data[i].url + '</p><p style="font-family: Consolas;font-size:12px">' + '请求参数：' + JSON.stringify(data[i].body) + '<p style="font-family: Consolas;font-size:12px">' + '检查点：' + data[i].checkpoint + '</p>';
+                            if(data[i].msg.indexOf('success')){
+                                _html = '<p style="font-family: Consolas;font-size:12px;color:red">' + '测试结果：' + data[i].msg + '</p>'
+                            }else {
+                                _html = '<p style="font-family: Consolas;font-size:12px;color:green">' + '测试结果：' + data[i].msg + '</p>'
+                            }
+                            $('#result').append(html + _html)
+                        }
+{#                        $("#run_return_parameter").val(JSON.stringify(res));#}
                         $("#cancel_run").html("完成");
                         $("#cancel_run").attr("class", "btn btn-primary");
                     }
                 },
                 error: function () {
-                    $("#run_return_parameter").val("调用接口失败!!!");
+                    $("#result").append("调用接口失败!!!");
                     $("#cancel_run").html("完成");
                     $("#cancel_run").attr("class", "btn btn-danger");
                 }
