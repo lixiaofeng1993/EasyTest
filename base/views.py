@@ -906,7 +906,7 @@ def case_logs(request):
                 if 'all' in file and yesterday_format in file:
                     file_list.apppend(file)
         file_list.sort()
-        log_file = os.path.join(logs_path, file_list[0], log_file_list)
+        log_file = os.path.join(logs_path, file_list[0])
         with open(log_file, 'rb') as f:
             off = -1024 * 1024
             if f.tell() < -off:
