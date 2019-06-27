@@ -120,13 +120,20 @@ if __name__ == '__main__':
     # run_email()
     import requests
 
-    data = {
-        "gender": 1,
-        "headimg": "https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/03/17/d65c1319-29bc-40f7-b6aa-de400258879f.jpg",
-        "nickname": "除却巫山不是云",
-        "openid": "ocIIn4934mT7ZtqsbK8rKa2QLiaY",
-        "source": "APPLET",
-        "unionid": "oPmunjvnN9uIP-xEdZTUnj-e3KrI"
+    he = {
+        "Accept": "application/json;charset=UTF-8",
+        "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NjE2MzM2MTk1OTAsImV4cGlyZVRpbWUiOjE1NjI5Mjk2MTk1OTAsImlkZW50aWZ5IjoyMTg0NH0.knX1auEN4crYkmzAXYjUHaalYQzlRzV6dqo3SsMxw3A"
     }
-    res = requests.post(url='https://course.rest.xxbmm.com/ops', json=data, verify=False)
+    data = {
+        "headimg": "https://coursecdn.xxbmm.com/xxbmm-course-image/2019/06/27/18/827f6d30-5af2-4f5b-9483-f752dea00541.jpg",
+        "birthday": "2019-01-22",
+        "gender": "MAN",
+        "name": "张三"}
+    # ss = {
+    #     "birthday": "2019-01-22",
+    #     "gender": "MAN",
+    #     "headimg": "head.jpg",
+    #     "name": "张三"
+    # }
+    res = requests.post(url='https://course.rest.xxbmm.com/babys', json=data, headers=he, verify=False)
     print(res.text)

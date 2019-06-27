@@ -27,7 +27,7 @@
             color: red;
         }
 
-        .spinner {
+        .spinner1 {
             width: 40px;
             height: 40px;
             margin: 100px auto;
@@ -161,7 +161,7 @@
 
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label"> 实际返回结果</label>
-                                            <div class="spinner"></div>
+                                            <div class="spinner1"></div>
                                             <div class="col-sm-8" id="result">
 
                                             </div>
@@ -261,7 +261,7 @@
         // 运行plan
         function run_button() {
             $('#result').empty();
-            $('.spinner').show();
+            $('.spinner1').show();
             $.ajax({
                 type: 'post',
                 url: "/base/case_run/",
@@ -274,7 +274,7 @@
                         $("#run_return_parameter").val("用户未登录！");
                     } else {
                         console.log('------>', res['step_list']);
-                        $('.spinner').hide();
+                        $('.spinner1').hide();
                         var data = res['step_list'];
                         for (i in data) {
                             console.log(typeof i, data[i].url, JSON.stringify(data[i].body));
