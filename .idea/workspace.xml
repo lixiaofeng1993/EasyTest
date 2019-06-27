@@ -4,8 +4,8 @@
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/case/index.html" afterPath="$PROJECT_DIR$/templates/base/case/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/case/update.html" afterPath="$PROJECT_DIR$/templates/base/case/update.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/env/set_headers.html" afterPath="$PROJECT_DIR$/templates/base/env/set_headers.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/interface/index.html" afterPath="$PROJECT_DIR$/templates/base/interface/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/plan/index.html" afterPath="$PROJECT_DIR$/templates/base/plan/index.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,11 +40,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="253" column="25" lean-forward="true" selection-start-line="253" selection-start-column="25" selection-end-line="253" selection-end-column="25" />
+            <state relative-caret-position="572">
+              <caret line="263" column="12" lean-forward="false" selection-start-line="263" selection-start-column="12" selection-end-line="263" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -63,7 +63,7 @@
       <file leaf-file-name="base_api.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/base_api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="440">
+            <state relative-caret-position="330">
               <caret line="20" column="40" lean-forward="false" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
               <folding>
                 <element signature="e#15#24#0" expanded="true" />
@@ -72,11 +72,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/base/interface/index.html">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/base/plan/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="6468">
-              <caret line="294" column="74" lean-forward="false" selection-start-line="294" selection-start-column="63" selection-end-line="294" selection-end-column="74" />
+            <state relative-caret-position="564">
+              <caret line="240" column="41" lean-forward="false" selection-start-line="240" selection-start-column="41" selection-end-line="240" selection-end-column="41" />
               <folding />
             </state>
           </provider>
@@ -87,16 +87,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="516">
               <caret line="530" column="34" lean-forward="false" selection-start-line="530" selection-start-column="34" selection-end-line="530" selection-end-column="34" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/EasyTest/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="242">
-              <caret line="22" column="33" lean-forward="false" selection-start-line="22" selection-start-column="26" selection-end-line="22" selection-end-column="33" />
               <folding />
             </state>
           </provider>
@@ -132,11 +122,20 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base/interface/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="418">
+              <caret line="286" column="24" lean-forward="false" selection-start-line="286" selection-start-column="24" selection-end-line="286" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
     </leaf>
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>submit</find>
       <find>调试</find>
       <find>search-btn</find>
       <find>interface</find>
@@ -165,6 +164,7 @@
       <find>case_run</find>
       <find>result</find>
       <find>run_return_parameter</find>
+      <find>batch</find>
       <find>debug</find>
     </findStrings>
   </component>
@@ -182,9 +182,7 @@
         <option value="$PROJECT_DIR$/templates/system/sign/sign_index.html" />
         <option value="$PROJECT_DIR$/base/models.py" />
         <option value="$PROJECT_DIR$/templates/base/env/index.html" />
-        <option value="$PROJECT_DIR$/templates/base/plan/index.html" />
         <option value="$PROJECT_DIR$/templates/base/report_page/report_page.html" />
-        <option value="$PROJECT_DIR$/templates/base/interface/index.html" />
         <option value="$PROJECT_DIR$/EasyTest/views.py" />
         <option value="$PROJECT_DIR$/EasyTest/settings.py" />
         <option value="$PROJECT_DIR$/common/logger.py" />
@@ -201,6 +199,8 @@
         <option value="$PROJECT_DIR$/templates/base/env/set_headers.html" />
         <option value="$PROJECT_DIR$/templates/base/case/update.html" />
         <option value="$PROJECT_DIR$/templates/base/case/index.html" />
+        <option value="$PROJECT_DIR$/templates/base/interface/index.html" />
+        <option value="$PROJECT_DIR$/templates/base/plan/index.html" />
       </list>
     </option>
   </component>
@@ -296,6 +296,28 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="base" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EasyTest" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="templates" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="base" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="plan" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1148,14 +1170,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/plan/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="280">
-          <caret line="118" column="54" lean-forward="false" selection-start-line="118" selection-start-column="51" selection-end-line="118" selection-end-column="54" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/project/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="498">
@@ -1185,24 +1199,6 @@
         <state relative-caret-position="-932">
           <caret line="71" column="55" lean-forward="false" selection-start-line="71" selection-start-column="52" selection-end-line="71" selection-end-column="55" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/interface/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="6468">
-          <caret line="294" column="74" lean-forward="false" selection-start-line="294" selection-start-column="63" selection-end-line="294" selection-end-column="74" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/common/base_api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="440">
-          <caret line="20" column="40" lean-forward="false" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
-          <folding>
-            <element signature="e#15#24#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1264,10 +1260,36 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/common/base_api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="20" column="40" lean-forward="false" selection-start-line="20" selection-start-column="40" selection-end-line="20" selection-end-column="40" />
+          <folding>
+            <element signature="e#15#24#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="253" column="25" lean-forward="true" selection-start-line="253" selection-start-column="25" selection-end-line="253" selection-end-column="25" />
+        <state relative-caret-position="572">
+          <caret line="263" column="12" lean-forward="false" selection-start-line="263" selection-start-column="12" selection-end-line="263" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/interface/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="418">
+          <caret line="286" column="24" lean-forward="false" selection-start-line="286" selection-start-column="24" selection-end-line="286" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/plan/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="564">
+          <caret line="240" column="41" lean-forward="false" selection-start-line="240" selection-start-column="41" selection-end-line="240" selection-end-column="41" />
           <folding />
         </state>
       </provider>

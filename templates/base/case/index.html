@@ -27,6 +27,38 @@
             color: red;
         }
 
+        .spinner {
+            width: 40px;
+            height: 40px;
+            margin: 100px auto;
+            background-color: lightgreen;
+            display: none;
+            border-radius: 100%;
+            -webkit-animation: scaleout 1.0s infinite ease-in-out;
+            animation: scaleout 1.0s infinite ease-in-out;
+        }
+
+        @-webkit-keyframes scaleout {
+            0% {
+                -webkit-transform: scale(0.0)
+            }
+            100% {
+                -webkit-transform: scale(1.0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes scaleout {
+            0% {
+                transform: scale(0.0);
+                -webkit-transform: scale(0.0);
+            }
+            100% {
+                transform: scale(1.0);
+                -webkit-transform: scale(1.0);
+                opacity: 0;
+            }
+        }
     </style>
 {% endblock %}
 
@@ -129,11 +161,9 @@
 
                                         <div class="form-group">
                                             <label class="col-sm-3 control-label"> 实际返回结果</label>
+                                            <div class="spinner"></div>
                                             <div class="col-sm-8" id="result">
-{#                                                <textarea class="form-control"#}
-{#                                                                            id="run_return_parameter"#}
-{#                                                                            name="run_return_parameter"#}
-{#                                                                            rows="5"></textarea>#}
+
                                             </div>
                                         </div>
 
@@ -142,7 +172,8 @@
                                                     data-dismiss="modal"><i
                                                     class="fa fa-mail-reply-all"></i>&nbsp;取消
                                             </button>
-                                            <button type="button" onclick="run_button()" class="btn btn-primary" id="debug"><i
+                                            <button type="button" onclick="run_button()" class="btn btn-primary"
+                                                    id="debug"><i
                                                     class="fa fa-circle-o-notch"></i>&nbsp;调试
                                             </button>
                                         </div>
@@ -226,9 +257,11 @@
                 }
             });
         }
+
         // 运行plan
         function run_button() {
             $('#result').empty();
+            $('.spinner').show();
             $.ajax({
                 type: 'post',
                 url: "/base/case_run/",
@@ -241,18 +274,19 @@
                         $("#run_return_parameter").val("用户未登录！");
                     } else {
                         console.log('------>', res['step_list']);
+                        $('.spinner').hide();
                         var data = res['step_list'];
-                        for (i in data){
+                        for (i in data) {
                             console.log(typeof i, data[i].url, JSON.stringify(data[i].body));
-                            html = '<h5>'+ (parseInt(i) + 1) + '. ' + data[i].if_name + '</h5><p style="font-family: Consolas;font-size:12px">' + '请求方式：' + data[i].method + '，请求url：' + data[i].url + '</p><p style="font-family: Consolas;font-size:12px">' + '请求参数：' + JSON.stringify(data[i].body) + '<p style="font-family: Consolas;font-size:12px">' + '检查点：' + data[i].checkpoint + '</p>';
-                            if(data[i].msg.indexOf('success')){
+                            html = '<h5>' + (parseInt(i) + 1) + '. ' + data[i].if_name + '</h5><p style="font-family: Consolas;font-size:12px">' + '请求方式：' + data[i].method + '，请求url：' + data[i].url + '</p><p style="font-family: Consolas;font-size:12px">' + '请求参数：' + JSON.stringify(data[i].body) + '<p style="font-family: Consolas;font-size:12px">' + '检查点：' + data[i].checkpoint + '</p>';
+                            if (data[i].msg.indexOf('success')) {
                                 _html = '<p style="font-family: Consolas;font-size:12px;color:red">' + '测试结果：' + data[i].msg + '</p>'
-                            }else {
+                            } else {
                                 _html = '<p style="font-family: Consolas;font-size:12px;color:green">' + '测试结果：' + data[i].msg + '</p>'
                             }
                             $('#result').append(html + _html)
                         }
-{#                        $("#run_return_parameter").val(JSON.stringify(res));#}
+                        {#                        $("#run_return_parameter").val(JSON.stringify(res));#}
                         $("#cancel_run").html("完成");
                         $("#cancel_run").attr("class", "btn btn-primary");
                     }

@@ -39,6 +39,41 @@
             white-space: nowrap;
             overflow: hidden;
         }
+
+        .spinner {
+            width: 100px;
+            height: 100px;
+            margin: 10% 0 0 50%;
+            background-color: lightgreen;
+            display: none;
+            border-radius: 100%;
+            -webkit-animation: scaleout 1.0s infinite ease-in-out;
+            animation: scaleout 1.0s infinite ease-in-out;
+            position: absolute;
+            z-index: 100;
+        }
+
+        @-webkit-keyframes scaleout {
+            0% {
+                -webkit-transform: scale(0.0)
+            }
+            100% {
+                -webkit-transform: scale(1.0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes scaleout {
+            0% {
+                transform: scale(0.0);
+                -webkit-transform: scale(0.0);
+            }
+            100% {
+                transform: scale(1.0);
+                -webkit-transform: scale(1.0);
+                opacity: 0;
+            }
+        }
     </style>
 {% endblock %}
 
@@ -69,6 +104,7 @@
                     <a href="/base/plan_add/" class="btn btn-primary"><i
                             class="fa fa-plus-circle"></i>&nbsp;添加计划</a>
                 </div>
+                <div class="spinner"></div>
                 <div class="panel-body">
                     <table class="table table-bordered">
                         <thead>
@@ -168,6 +204,7 @@
         //运行
         function run_button(obj) {
             alert("开始执行...");
+            $('.spinner').show();
             var plan_id = obj.parentNode.parentNode.children[0].innerText;
             $.ajax({
                 type: "post",
@@ -176,9 +213,11 @@
                 success: function (data) {
                     console.log(data);
                     alert(data);
+                    $('.spinner').hide();
                 },
                 error: function () {
                     alert("执行失败");
+                    $('.spinner').hide();
                 }
             });
 
@@ -186,6 +225,7 @@
         //运行unittest
         function run_unittest(obj) {
             alert("开始执行...");
+            $('.spinner').show();
             var plan_id = obj.parentNode.parentNode.children[0].innerText;
             $.ajax({
                 type: "post",
@@ -194,9 +234,11 @@
                 success: function (data) {
                     console.log(data);
                     alert(data);
+                    $('.spinner').hide();
                 },
                 error: function () {
                     alert("执行失败");
+                    $('.spinner').hide();
                 }
             });
 

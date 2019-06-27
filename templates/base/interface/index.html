@@ -95,6 +95,41 @@
         .btn-primary:hover {
             color: red;
         }
+
+        .spinner {
+            width: 100px;
+            height: 100px;
+            margin: 10% 0 0 50%;
+            background-color: lightgreen;
+            display: none;
+            border-radius: 100%;
+            -webkit-animation: scaleout 1.0s infinite ease-in-out;
+            animation: scaleout 1.0s infinite ease-in-out;
+            position: absolute;
+            z-index: 100;
+        }
+
+        @-webkit-keyframes scaleout {
+            0% {
+                -webkit-transform: scale(0.0)
+            }
+            100% {
+                -webkit-transform: scale(1.0);
+                opacity: 0;
+            }
+        }
+
+        @keyframes scaleout {
+            0% {
+                transform: scale(0.0);
+                -webkit-transform: scale(0.0);
+            }
+            100% {
+                transform: scale(1.0);
+                -webkit-transform: scale(1.0);
+                opacity: 0;
+            }
+        }
     </style>
 
 
@@ -134,6 +169,7 @@
                         </button>
                     </div>
                 </div>
+                <div class="spinner"></div>
                 <div class="panel-body">
                     <table class="table table-bordered" id="table-search">
                         <thead>
@@ -238,7 +274,8 @@
 
         // 导入接口信息
         function batch_index() {
-{#            prj_id = prompt('请输入要导入的项目ID：');#}
+            {#            prj_id = prompt('请输入要导入的项目ID：');#}
+            $('.spinner').show();
             $.ajax({
                 url: "/base/batch_index",
                 type: "get",
@@ -247,6 +284,7 @@
                     if (data == '') {
                         console.log('未输入内容或点击了取消按钮.');
                     } else {
+                        $('.spinner').hide();
                         alert(data);
                         location.reload();
                     }
@@ -274,7 +312,7 @@
                     else if (data == '0') {
                         location.reload();
                     }
-                    else if (data == '2'){
+                    else if (data == '2') {
                         alert('用户未登录！');
                         location.reload()
                     }
