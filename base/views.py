@@ -761,7 +761,7 @@ def case_index(request):
         # case_list = []
         # for project_id in project_list:
         # case = Case.objects.filter(project_id=int(project_id))
-        cases = Case.objects.all()
+        cases = Case.objects.all().order_by('-case_id')
         # if case:
         #     case_list.append(case)
         page = request.GET.get('page')
@@ -962,7 +962,7 @@ def plan_index(request):
         # plan_list = []
         # for project_id in project_list:
         # plan = Plan.objects.filter(project_id=int(project_id))
-        plans = Plan.objects.all()
+        plans = Plan.objects.all().order_by('-plan_id')
         # if plan:
         #     plan_list.append(plan)
         page = request.GET.get('page')
