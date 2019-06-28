@@ -912,7 +912,8 @@ def case_logs(request):
             for file in log_file_list:
                 if 'all' in file:
                     file_list.append(file)
-            log_file = os.path.join(logs_path, file_list[0])
+            file_list.sort()
+            log.info('-----------file_list-----------  {}'.format(file_list))
         with open(log_file, 'rb') as f:
             off = -1024 * 1024
             if f.tell() < -off:
