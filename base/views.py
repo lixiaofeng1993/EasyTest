@@ -897,7 +897,7 @@ def case_logs(request):
         file_list = []
         now = time.strftime('%Y-%m-%d')
         for file in log_file_list:
-            if 'all' in file and str(now) in file:
+            if 'all' in file and now in file:
                 file_list.append(file)
                 log.info('------------------0-----------------file_list {}  now {}'.format(file_list, now))
         log.info('------------------1-----------------file_list {}  now {} type {}'.format(file_list, now, type(now)))
@@ -905,14 +905,16 @@ def case_logs(request):
             yesterday = datetime.today() + timedelta(-1)
             yesterday_format = yesterday.strftime('%Y_%m_%d')
             for file in log_file_list:
-                if 'all' in file and str(yesterday_format) in file:
+                log.info(
+                    '------------------3-----------------file_list {}  now {}   yesterday_format {} log_file_list {}'.format(
+                        file_list, now, yesterday_format, log_file_list))
+                if 'all' in file and yesterday_format in file:
                     file_list.apppend(file)
-                    log.info(
-                        '------------------3-----------------file_list {}  now {}   yesterday_format {}'.format(
-                            file_list, now, yesterday_format))
+
             log.info(
-                '------------------4-----------------file_list {}  now {}   yesterday_format {} type {}'.format(file_list, now,
-                                                                                                        yesterday_format, type(yesterday_format)))
+                '------------------4-----------------file_list {}  now {}   yesterday_format {} type {}'.format(
+                    file_list, now,
+                    yesterday_format, type(yesterday_format)))
         log.info('------------------5-----------------file_list {}  now {}'.format(file_list, now))
         file_list.sort()
         log_file = os.path.join(logs_path, file_list[0])
