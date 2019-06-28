@@ -5,11 +5,12 @@ from django.contrib import auth  # django认证系统
 from djcelery.models import PeriodicTask, CrontabSchedule
 from django.contrib.auth.models import User
 from django.db.models import Count
+from django.shortcuts import render_to_response
 from base.models import Project, Sign, Environment, Interface, Case, Plan, Report
 import logging, os
 from django.http import StreamingHttpResponse
 from lib.public import gr_code
-from lib.execute import get_user
+from lib.execute import get_user, get_total_values
 
 log = logging.getLogger('log')  # 初始化log
 num_list = []
@@ -40,14 +41,16 @@ def index(request):
         periodic_num = PeriodicTask.objects.aggregate(Count('id'))['id__count']
         crontabSchedule_num = CrontabSchedule.objects.aggregate(Count('id'))['id__count']
         username = request.session.get('user', '')
-        num_list = [project_num, env_num, interface_num, case_num, plan_num, sign_num, report_num,
-                    periodic_num + crontabSchedule_num]
-        return render(request, "index.html",
-                      {'username': username, 'num_list': num_list, 'project_num': project_num,
-                       'env_num': env_num, 'interface_num': interface_num, 'case_num': case_num,
-                       'plan_num': plan_num,
-                       'sign_num': sign_num, 'report_num': report_num,
-                       'task_num': periodic_num + crontabSchedule_num})
+
+        total = get_total_values()
+
+        info = {'username': username, 'project_num': project_num,
+                'env_num': env_num, 'interface_num': interface_num, 'case_num': case_num,
+                'plan_num': plan_num, 'total': total,
+                'sign_num': sign_num, 'report_num': report_num,
+                'task_num': periodic_num + crontabSchedule_num}
+
+        return render_to_response("index.html", info)
 
 
 # 登录

@@ -24,12 +24,18 @@
         .btn-primary {
             margin-left: 15%;
         }
+
+        #main {
+            height: 30em;
+            width: 80%;
+            left: 0;
+        }
     </style>
 {% endblock %}
 {% block body %}
     <div class="row">
         <div class="col-md-12">
-            <div class="panel">
+            <div class="panel" style="height: 100%">
                 <div class="panel-body">
                     <div class="panel-tbody-index">
                         <h5>快捷入口</h5>
@@ -68,7 +74,11 @@
                     </div>
                 </div>
                 <div class="panel-body">
-                    <h5>生成二维码</h5>
+                    <h5>用例执行统计</h5><br>
+                    <div id="main"></div>
+                </div>
+                <div class="panel-body">
+                    <h5>下载二维码</h5>
                     <br>
                     <div class="input-group input-group-lg" style="width: 35%;float: left;">
                         <span class="input-group-addon"><i class="fa fa-link"></i>&nbsp;url：</span>
@@ -82,6 +92,7 @@
                 </div>
                 <div class="panel-body">
                     <h5>格式化JSON</h5>
+                    <br>
                     <iframe src="https://www.json.cn/" height="750" width="1550" frameborder="0"
                             scrolling="0"></iframe>
                 </div>
@@ -94,6 +105,140 @@
 {% endblock %}
 
 {% block javascript %}
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+    <script type="text/javascript"
+            src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ZUONbpqGBsYGXNIYHicvbAbM"></script>
+    <script type="text/javascript"
+            src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+    <script>
+        var dom = document.getElementById("main");
+        var myChart = echarts.init(dom);
+        var app = {};
+        option = null;
+        app.title = '折柱混合';
+
+        option = {
+            tooltip: {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    crossStyle: {
+                        color: '#999'
+                    }
+                }
+            },
+            toolbox: {
+                feature: {
+                    dataView: {show: false, readOnly: false},
+                    magicType: {show: true, type: ['line', 'bar']},
+                    restore: {show: true},
+                    saveAsImage: {show: true}
+                }
+            },
+            legend: {
+                data: ['失败用例', '成功用例', '通过率']
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: [],
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                }
+            ],
+            yAxis: [
+                {
+                    type: 'value',
+                    name: '个数',
+                    min: 0,
+                    max: 100,
+                    interval: 10,
+                    axisLabel: {
+                        formatter: '{value} '
+                    }
+                },
+                {
+                    type: 'value',
+                    name: '成功率',
+                    min: 0,
+                    max: 100,
+                    interval: 10,
+                    axisLabel: {
+                        formatter: '% {value}'
+                    }
+                }
+            ],
+            series: [
+                {
+                    name: '失败用例',
+                    type: 'bar',
+                    data: []
+                },
+                {
+                    name: '通过率',
+                    type: 'line',
+                    yAxisIndex: 1,
+                    data: []
+                },
+                {
+                    name: '成功用例',
+                    type: 'bar',
+                    data: []
+                }
+            ]
+        };
+        if (option && typeof option === "object") {
+            var xAxis_data = get_date_xAxis();
+            option.xAxis[0].data = xAxis_data;
+            option.series[0].data = {{ total.fail }};
+            option.series[1].data = {{ total.percent }};
+            option.series[2].data = {{ total.pass }};
+
+            var max_fail = Math.max.apply(null, option.series[0].data);
+            var max_pass = Math.max.apply(null, option.series[2].data);
+
+            if (Math.max(max_fail, max_pass) > 100) {
+                option.yAxis[0].max = Math.max(max_fail, max_pass) + 10;
+                option.yAxis[0].interval = parseInt(Math.max(max_fail, max_pass) / 10);
+            }
+            myChart.setOption(option, true);
+        }
+
+        function get_date_xAxis() {
+            var data = [];
+            for (var i = 0; i < 12; i++) {
+                data[i] = getDay(i)
+            }
+            return data.reverse();
+        }
+
+        function getDay(day) {
+            var today = new Date();
+            var targetday_milliseconds = today.getTime() + 1000 * 60 * 60 * 24 * day * -1;
+            today.setTime(targetday_milliseconds); //注意，这行是关键代码
+            var tYear = today.getFullYear();
+            var tMonth = today.getMonth();
+            var tDate = today.getDate();
+            tMonth = doHandleMonth(tMonth + 1);
+            tDate = doHandleMonth(tDate);
+            return tYear + "-" + tMonth + "-" + tDate;
+        }
+
+        function doHandleMonth(month) {
+            var m = month;
+            if (month.toString().length === 1) {
+                m = "0" + month;
+            }
+            return m;
+        }
+    </script>
     <script type="text/javascript">
         $('#submit').click(function () {
             var url = $("#qcode").val();

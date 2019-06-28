@@ -8,14 +8,15 @@ from base.models import Project, Sign, Environment, Interface, Case, Plan, Repor
 from django.contrib.auth.models import User  # django自带user
 import requests
 # import hashlib
-from datetime import datetime
-import re, os
+import re, os, datetime
+from django.db.models import Sum
 import json
 from lib.signtype import user_sign_api, encryptAES
 import logging
 import time
 from lib.public import validators_result, get_extract, get_param, replace_var, \
     extract_variables, call_interface, format_url
+
 # from common.connectMySql import SqL
 
 log = logging.getLogger('log')
@@ -149,7 +150,7 @@ class Test_execute():
                     for k, v in headers.items():
                         if k == 'token':
                             headers[k] = if_dict["res_content"]['data']
-                            now_time = datetime.now()
+                            now_time = datetime.datetime.now()
                             Environment.objects.filter(env_id=self.env_id).update(set_headers={'header': headers},
                                                                                   update_time=now_time)
         except requests.RequestException as e:
@@ -202,3 +203,31 @@ def get_user(user_id):
             return user.username
         except User.DoesNotExist:
             return False
+
+
+def get_total_values():
+    total = {
+        'pass': [],
+        'fail': [],
+        'percent': []
+    }
+    today = datetime.date.today()
+    for i in range(-11, 1):
+        begin = today + datetime.timedelta(days=i)
+        end = begin + datetime.timedelta(days=1)
+
+        total_pass = Report.objects.filter(update_time__range=(begin, end)).aggregate(pass_num=Sum('pass_num'))[
+            'pass_num']
+        total_fail = Report.objects.filter(update_time__range=(begin, end)).aggregate(fail_num=Sum('fail_num'))[
+            'fail_num']
+        if not total_pass:
+            total_pass = 0
+        if not total_fail:
+            total_fail = 0
+
+        total_percent = round(total_pass / (total_pass + total_fail) * 100, 2) if (total_pass + total_fail) != 0 else 0.00
+        total['pass'].append(total_pass)
+        total['fail'].append(total_fail)
+        total['percent'].append(total_percent)
+
+    return total
