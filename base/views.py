@@ -908,8 +908,15 @@ def case_logs(request):
                 log.info(
                     '------------------3-----------------file_list {}  now {}   yesterday_format {} log_file_list {}'.format(
                         file_list, now, yesterday_format, log_file_list))
-                if 'all' in file and yesterday_format in file:
-                    file_list.apppend(file)
+                if 'all' in file:
+                    log.info(
+                        '------------------6-----------------file_list {}  now {}   yesterday_format {} log_file_list {}'.format(
+                            file_list, now, yesterday_format, log_file_list))
+                    if yesterday_format in file:
+                        log.info(
+                            '------------------7-----------------file_list {}  now {}   yesterday_format {} log_file_list {}'.format(
+                                file_list, now, yesterday_format, log_file_list))
+                        file_list.apppend(file)
 
             log.info(
                 '------------------4-----------------file_list {}  now {}   yesterday_format {} type {}'.format(
