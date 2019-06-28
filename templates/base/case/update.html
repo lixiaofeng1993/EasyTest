@@ -53,6 +53,10 @@
         #myBtn:hover {
             background-color: #555;
         }
+
+        .panel-body {
+            display: block;
+        }
     </style>
 {% endblock %}
 
@@ -287,7 +291,7 @@
         function search() {
             var search_name = $("#search").val();
             var prj_id = $("#prj_id").val();
-            console.log(prj_id, "《---------------》", search_name);
+            console.log(prj_id, "--------------->", search_name);
             if (prj_id == "" || search_name == "") {
                 alert("请先选择项目并输入接口名称！");
             }
@@ -301,7 +305,6 @@
                         "type": "get_if_by_search_name"
                     },
                     success: function (data) {
-                        console.log("------data---->", data);
                         if (JSON.stringify(data) == "[]") {
                             alert("查询结果为空，请重新输入！")
                         } else {
@@ -321,6 +324,7 @@
                 $("#search-btn").trigger("click");
             }
         });
+
     </script>
     <script>
         $(document).ready(function () {
@@ -343,10 +347,8 @@
                                 "type": "get_case_by_case_id"
                             },
                             success: function (data) {
-                                console.log('case  ==>', data);
                                 var listdata = eval(data);
                                 $(listdata).each(function (i, item) {
-                                    console.log('---item.content--->', item.content);
 
                                     {#                                if (item.content == '[]') {#}
                                     {#                                    console.log('item.content 为空');#}
@@ -354,8 +356,6 @@
                                     {#                                }#}
                                     {#                                else {#}
                                     for (content in eval(item.content)) {
-                                        console.log('---content--->', eval(item.content)[content]);
-                                        console.log('---content--->', content);
                                         var header_table = "<table name='header' class='table'><thead><tr><th>#</th> <th>参数名</th>" +
                                             "<th>值</th>" +
                                             "<th></th> </tr> </thead><tbody>";
@@ -427,14 +427,14 @@
                                         var newtable = "<div class='row'> <div class='panel'><a class='move' href='#' onclick=" + "move(this,'MoveUp')" + ">上移</a>  <a class='move' href='#' onclick=" + "move(this,'MoveDown')" + ">下移</a><div class='col-sm-offset-1 col-sm-9'>" +
                                             "<div id= '" + eval(item.content)[content].if_id + "' class='panel-heading'>" +
                                             "<h3 class='panel-title'>" + eval(item.content)[content].if_name + "</h3>" +
-                                            "<div class='right'><button type=\"button\" class='btn-toggle-collapse'><i class='fa fa-chevron-up'></i></button></div>" +
+                                            "<div class='right'><button type=\"button\" class='btn-toggle-collapse' onclick='hide_fun()'><i class='fa fa-chevron-up' id='icon-submenu'></i></button></div>" +
                                             "</div>" +
                                             "<div class='panel-body'>" +
                                             "<button onclick='add_header_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加header参数</button>" +
                                             "<button onclick='add_body_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加body参数</button> " +
                                             "<button onclick='add_extract_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加提取参数</button> " +
                                             "<button onclick='add_validators_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加检查点</button> " +
-                                            "<button onclick='del_interface(this)' class='btn btn-primary'><i class='fa fa-close'></i>&nbsp;删除本接口</button></div> " +
+                                            "<button onclick='del_interface(this)' class='btn btn-primary'><i class='fa fa-close'></i>&nbsp;删除本接口</button> " +
                                             "<p>header参数</p>" +
                                             header +
                                             "<p>body参数</p>" +
@@ -442,7 +442,7 @@
                                             "<p>提取参数</p> " +
                                             extract +
                                             "<p>检查点</p> " + validators +
-                                            "</div></div></div>";
+                                            "</div></div></div></div>";
                                         $("#case-list").append(newtable);
                                         {#<i class="fa fa-arrow-circle-down"></i>&nbsp; <a href='#' onclick=" + "move(this,'MoveUp')" + ">上移</a>  <a href='#' onclick=" + "move(this,'MoveDown')" + ">下移</a>#}
                                     }
@@ -491,14 +491,14 @@
                                     var newtable = "<div class='row'> <div class='panel'><a class='move' href='#' onclick=" + "move(this,'MoveUp')" + ">上移</a>  <a class='move' href='#' onclick=" + "move(this,'MoveDown')" + ">下移</a><div class='col-sm-offset-1 col-sm-9'>" +
                                         "<div id= '" + item.if_id + "' class='panel-heading'>" +
                                         "<h3 class='panel-title'>" + item.if_name + "</h3>" +
-                                        "<div class='right'><button type=\"button\" class='btn-toggle-collapse'><i class='fa fa-chevron-up'></i></button></div>" +
+                                        "<div class='right'><button type=\"button\" class='btn-toggle-collapse' onclick='hide_fun()'><i class='icon-submenu fa fa-chevron-up' id='icon-submenu'></i></button></div>" +
                                         "</div>" +
                                         "<div class='panel-body'>" +
                                         "<button onclick='add_header_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加header参数</button>" +
                                         "<button onclick='add_body_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加body参数</button> " +
                                         "<button onclick='add_extract_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加提取参数</button> " +
                                         "<button onclick='add_validators_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加检查点</button> " +
-                                        "<button onclick='del_interface(this)' class='btn btn-primary'><i class='fa fa-close'></i>&nbsp;删除本接口</button></div> " +
+                                        "<button onclick='del_interface(this)' class='btn btn-primary'><i class='fa fa-close'></i>&nbsp;删除本接口</button>" +
                                         "<p>header参数</p>" +
                                         header +
                                         "<p>body参数</p>" +
@@ -525,7 +525,7 @@
                                         "<tbody>" +
                                         "</tbody>" +
                                         "</table>" +
-                                        "</div> </div></div>";
+                                        "</div> </div></div></div>";
                                     $("#case-list").append(newtable);
 
                                 });
@@ -638,7 +638,6 @@
                     },
                     // dataType: "json",
                     success: function (data) {
-                        console.log(data);
                         if (data.indexOf('<') == -1) {
                             alert(data);
                         } else {
@@ -654,9 +653,21 @@
 
 
             })
-        })
-        ;
-
+        });
+        function hide_fun() {
+            var elems = document.getElementsByClassName('panel-body');
+            for (var i = 0; i < elems.length; i += 1) {
+                if (elems[i].style.display == 'block'){
+                    elems[i].style.display = 'none';
+                    $('#icon-submenu').attr('class', 'fa fa-chevron-down');
+                    console.log('down')
+                }else {
+                    elems[i].style.display = 'block';
+                    $('#icon-submenu').attr('class', 'fa fa-chevron-up');
+                    console.log('up')
+                }
+            }
+        }
     </script>
 
 
