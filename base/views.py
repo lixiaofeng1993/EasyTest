@@ -899,32 +899,20 @@ def case_logs(request):
         for file in log_file_list:
             if 'all' in file and now in file:
                 file_list.append(file)
-                log.info('------------------0-----------------file_list {}  now {}'.format(file_list, now))
-        log.info('------------------1-----------------file_list {}  now {} type {}'.format(file_list, now, type(now)))
         if not file_list:
             yesterday = datetime.today() + timedelta(-1)
-            yesterday_format = yesterday.strftime('%Y_%m_%d')
+            yesterday_format = yesterday.strftime('%Y-%m-%d')
             for file in log_file_list:
-                log.info(
-                    '------------------3-----------------file_list {}  now {}   yesterday_format {} log_file_list {}'.format(
-                        file_list, now, yesterday_format, log_file_list))
-                if 'all' in file:
-                    log.info(
-                        '------------------6-----------------file_list {}  now {}   yesterday_format {} log_file_list {}'.format(
-                            file_list, now, yesterday_format, log_file_list))
-                    if yesterday_format in file:
-                        log.info(
-                            '------------------7-----------------file_list {}  now {}   yesterday_format {} log_file_list {}'.format(
-                                file_list, now, yesterday_format, log_file_list))
-                        file_list.apppend(file)
-
-            log.info(
-                '------------------4-----------------file_list {}  now {}   yesterday_format {} type {}'.format(
-                    file_list, now,
-                    yesterday_format, type(yesterday_format)))
-        log.info('------------------5-----------------file_list {}  now {}'.format(file_list, now))
+                if 'all' in file and yesterday_format in file:
+                    file_list.apppend(file)
         file_list.sort()
-        log_file = os.path.join(logs_path, file_list[0])
+        try:
+            log_file = os.path.join(logs_path, file_list[0])
+        except IndexError:
+            for file in log_file_list:
+                if 'all' in file:
+                    file_list.append(file)
+            log_file = os.path.join(logs_path, file_list[0])
         with open(log_file, 'rb') as f:
             off = -1024 * 1024
             if f.tell() < -off:
@@ -1309,6 +1297,7 @@ def report_logs(request):
                     file_list.append(file)
             if not file_list:
                 return render(request, 'base/report_page/log.html', {'unicode': True})
+            log.info('file_list========> {}'.format(file_list))
             data_list = []
             file_list.sort()
             log_file = os.path.join(logs_path, file_list[0])
