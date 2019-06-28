@@ -899,12 +899,12 @@ def case_logs(request):
         for file in log_file_list:
             if 'all' in file and now in file:
                 file_list.append(file)
-        if not file_list:
-            yesterday = datetime.today() + timedelta(-1)
-            yesterday_format = yesterday.strftime('%Y-%m-%d')
-            for file in log_file_list:
-                if 'all' in file and yesterday_format in file:
-                    file_list.append(file)
+        # if not file_list:
+        #     yesterday = datetime.today() + timedelta(-1)
+        #     yesterday_format = yesterday.strftime('%Y-%m-%d')
+        #     for file in log_file_list:
+        #         if 'all' in file and yesterday_format in file:
+        #             file_list.append(file)
         file_list.sort()
         try:
             log_file = os.path.join(logs_path, file_list[0])
