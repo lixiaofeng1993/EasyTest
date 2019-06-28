@@ -904,7 +904,7 @@ def case_logs(request):
             yesterday_format = yesterday.strftime('%Y-%m-%d')
             for file in log_file_list:
                 if 'all' in file and yesterday_format in file:
-                    file_list.apppend(file)
+                    file_list.append(file)
         file_list.sort()
         try:
             log_file = os.path.join(logs_path, file_list[0])
@@ -1297,7 +1297,6 @@ def report_logs(request):
                     file_list.append(file)
             if not file_list:
                 return render(request, 'base/report_page/log.html', {'unicode': True})
-            log.info('file_list========> {}'.format(file_list))
             data_list = []
             file_list.sort()
             log_file = os.path.join(logs_path, file_list[0])
@@ -1529,10 +1528,10 @@ def findata(request):
                     file_list.append(file)
             if not file_list:
                 yesterday = datetime.today() + timedelta(-1)
-                yesterday_format = yesterday.strftime('%Y_%m_%d')
+                yesterday_format = yesterday.strftime('%Y-%m-%d')
                 for file in log_file_list:
                     if 'all' in file and yesterday_format in file:
-                        file_list.apppend(file)
+                        file_list.append(file)
             file_list.sort()
             log_file = os.path.join(log_path, file_list[0])
             data_list = []
