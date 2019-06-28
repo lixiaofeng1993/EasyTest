@@ -899,15 +899,20 @@ def case_logs(request):
         for file in log_file_list:
             if 'all' in file and now in file:
                 file_list.append(file)
+                log.info('------------------0-----------------file_list {}  now {}'.format(file_list, now))
         log.info('------------------1-----------------file_list {}  now {}'.format(file_list, now))
         if not file_list:
             yesterday = datetime.today() + timedelta(-1)
             yesterday_format = yesterday.strftime('%Y_%m_%d')
             for file in log_file_list:
-                if 'all' in file and yesterday_format in file:
-                    file_list.apppend(file)
-            log.info('------------------1-----------------file_list {}  now {}   yesterday_format {}'.format(file_list, now, yesterday_format))
-        log.info('------------------1-----------------file_list {}  now {}'.format(file_list, now))
+                if 'all' in file:
+                    if yesterday_format in file:
+                        file_list.apppend(file)
+                        log.info(
+                            '------------------3-----------------file_list {}  now {}   yesterday_format {}'.format(
+                                file_list, now, yesterday_format))
+            log.info('------------------4-----------------file_list {}  now {}   yesterday_format {}'.format(file_list, now, yesterday_format))
+        log.info('------------------5-----------------file_list {}  now {}'.format(file_list, now))
         file_list.sort()
         log_file = os.path.join(logs_path, file_list[0])
         with open(log_file, 'rb') as f:
