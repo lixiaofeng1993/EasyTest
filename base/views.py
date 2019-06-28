@@ -899,21 +899,21 @@ def case_logs(request):
         for file in log_file_list:
             if 'all' in file and now in file:
                 file_list.append(file)
-        # if not file_list:
-        #     yesterday = datetime.today() + timedelta(-1)
-        #     yesterday_format = yesterday.strftime('%Y-%m-%d')
-        #     for file in log_file_list:
-        #         if 'all' in file and yesterday_format in file:
-        #             file_list.append(file)
-        file_list.sort()
+        if not file_list:
+            yesterday = datetime.today() + timedelta(-1)
+            yesterday_format = yesterday.strftime('%Y-%m-%d')
+            for file in log_file_list:
+                if 'all' in file and yesterday_format in file:
+                    file_list.append(file)
         try:
+            file_list.sort()
             log_file = os.path.join(logs_path, file_list[0])
         except IndexError:
             for file in log_file_list:
                 if 'all' in file:
                     file_list.append(file)
             file_list.sort()
-            log.info('-----------file_list-----------  {}'.format(file_list))
+            log_file = os.path.join(logs_path, file_list[-1])
         with open(log_file, 'rb') as f:
             off = -1024 * 1024
             if f.tell() < -off:
@@ -1523,6 +1523,7 @@ def findata(request):
             log_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/logs'
             log_file_list = os.listdir(log_path)
             file_list = []
+            data_list = []
             now = time.strftime('%Y-%m-%d')
             for file in log_file_list:
                 if 'all' in file and now in file:
@@ -1533,9 +1534,15 @@ def findata(request):
                 for file in log_file_list:
                     if 'all' in file and yesterday_format in file:
                         file_list.append(file)
-            file_list.sort()
-            log_file = os.path.join(log_path, file_list[0])
-            data_list = []
+            try:
+                file_list.sort()
+                log_file = os.path.join(log_path, file_list[0])
+            except IndexError:
+                for file in log_file_list:
+                    if 'all' in file:
+                        file_list.append(file)
+                file_list.sort()
+                log_file = os.path.join(log_path, file_list[-1])
             with open(log_file, 'r', encoding='utf-8') as f:
                 off = -1024 * 1024
                 if f.tell() < -off:
