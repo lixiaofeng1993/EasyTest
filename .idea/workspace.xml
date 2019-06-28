@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/views.py" afterPath="$PROJECT_DIR$/base/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/report_page/log.html" afterPath="$PROJECT_DIR$/templates/base/report_page/log.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -26,11 +26,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="1535" column="28" lean-forward="false" selection-start-line="1535" selection-start-column="28" selection-end-line="1535" selection-end-column="28" />
+            <state relative-caret-position="-574">
+              <caret line="1525" column="26" lean-forward="false" selection-start-line="1525" selection-start-column="26" selection-end-line="1525" selection-end-column="26" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -38,11 +38,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="log.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="log.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/base/report_page/log.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="177">
-              <caret line="94" column="29" lean-forward="false" selection-start-line="94" selection-start-column="22" selection-end-line="94" selection-end-column="29" />
+            <state relative-caret-position="67">
+              <caret line="188" column="12" lean-forward="false" selection-start-line="188" selection-start-column="12" selection-end-line="188" selection-end-column="12" />
               <folding />
             </state>
           </provider>
@@ -59,9 +59,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>set_headers</find>
-      <find>$</find>
-      <find>call_interface</find>
       <find>me</find>
       <find>imgPath</find>
       <find>media</find>
@@ -89,6 +86,9 @@
       <find>unicode</find>
       <find>case_lo</find>
       <find>log_path</find>
+      <find>case_l</find>
+      <find>report_log</find>
+      <find>get_log</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -126,9 +126,9 @@
         <option value="$PROJECT_DIR$/templates/base/interface/index.html" />
         <option value="$PROJECT_DIR$/run_this.py" />
         <option value="$PROJECT_DIR$/templates/base/env/index.html" />
-        <option value="$PROJECT_DIR$/templates/base/report_page/log.html" />
         <option value="$PROJECT_DIR$/base/tasks.py" />
         <option value="$PROJECT_DIR$/base/views.py" />
+        <option value="$PROJECT_DIR$/templates/base/report_page/log.html" />
       </list>
     </option>
   </component>
@@ -1264,21 +1264,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/report_page/log.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="177">
-          <caret line="94" column="29" lean-forward="false" selection-start-line="94" selection-start-column="22" selection-end-line="94" selection-end-column="29" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/base/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="1535" column="28" lean-forward="false" selection-start-line="1535" selection-start-column="28" selection-end-line="1535" selection-end-column="28" />
+        <state relative-caret-position="-574">
+          <caret line="1525" column="26" lean-forward="false" selection-start-line="1525" selection-start-column="26" selection-end-line="1525" selection-end-column="26" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/report_page/log.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="67">
+          <caret line="188" column="12" lean-forward="false" selection-start-line="188" selection-start-column="12" selection-end-line="188" selection-end-column="12" />
+          <folding />
         </state>
       </provider>
     </entry>

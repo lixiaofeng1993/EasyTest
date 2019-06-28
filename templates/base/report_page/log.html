@@ -186,6 +186,7 @@
 
         function get_log() {
             $('.spinner').show();
+            var t=setTimeout("alert('5 seconds!')",5000);
             var plan_id = $('#plan_id').val();
             console.log(plan_id);
             if (plan_id == undefined) {
