@@ -11,6 +11,7 @@ from lib.execute import Test_execute, get_user  # 执行接口
 from djcelery.models import PeriodicTask, CrontabSchedule, IntervalSchedule
 from datetime import timedelta, datetime
 from lib.swagger import AnalysisJson
+from django.shortcuts import render_to_response
 import time
 import json
 import logging
@@ -43,7 +44,8 @@ def project_index(request):
         page = request.GET.get('page')
         contacts = paginator(prj_list, page)
         # request.session['project_list'] = project_list  # 保存项目id
-        return render(request, "base/project/index.html", {"prj_list": prj_list, 'contacts': contacts})
+        info = {"prj_list": prj_list, 'contacts': contacts}
+        return render_to_response("base/project/index.html", info)
     else:
         request.session['login_from'] = '/base/project/'
         return render(request, 'user/login_action.html')
@@ -532,13 +534,13 @@ def interface_update(request):
                 is_sign = ''
             if_name = request.POST['if_name'].strip()
             if if_name == '':
-                return render(request, 'base/interface/update.html',
-                              {'name_error': '接口名称不能为空！', "interface": interface,
-                               'request_header_param_list': request_header_param_list,
-                               'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                               'response_header_param_list': response_header_param_list,
-                               'response_body_param_list': response_body_param_list,
-                               "prj_list": prj_list})
+                info = {'name_error': '接口名称不能为空！', "interface": interface,
+                        'request_header_param_list': request_header_param_list,
+                        'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
+                        'response_header_param_list': response_header_param_list,
+                        'response_body_param_list': response_body_param_list,
+                        "prj_list": prj_list}
+                return render_to_response('base/interface/update.html', info)
             # name_same = Interface.objects.filter(project__user_id=user_id).filter(if_name=if_name).exclude(
             #     if_id=if_id)
             name_same = Interface.objects.filter(if_name=if_name).exclude(if_id=if_id)
@@ -855,9 +857,9 @@ def case_update(request):
             interface_list = []  # 返回所有接口
             for i in interface:
                 interface_list.append(i)
-            return render(request, 'base/case/update.html',
-                          {"prj_list": prj_list, 'case': case, 'interface': interface, 'case_id': case_id,
-                           'if_id': if_id, 'if_list': str(if_list), 'if_name': if_name})
+            info = {"prj_list": prj_list, 'case': case, 'interface': interface, 'case_id': case_id,
+                           'if_id': if_id, 'if_list': str(if_list), 'if_name': if_name}
+            return render_to_response('base/case/update.html',info)
 
 
 # @login_required
