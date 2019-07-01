@@ -248,7 +248,7 @@ import djcelery
 djcelery.setup_loader()
 BROKER_URL = 'redis://127.0.0.1:6379/'
 # broker_pool_limit=None
-BROKER_POOL_LIMIT=None
+# BROKER_POOL_LIMIT=None
 CELERY_IMPORTS = ('base.tasks')
 CELERY_TIMEZONE = 'Asia/Shanghai'
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
