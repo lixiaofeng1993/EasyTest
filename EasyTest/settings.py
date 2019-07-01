@@ -247,7 +247,7 @@ import djcelery
 
 djcelery.setup_loader()
 # BROKER_URL = 'redis://127.0.0.1:6379/'
-BROKER_URL = 'amqp://lixiaofeng:123456@39.105.136.231:5672//'
+BROKER_URL = 'amqp://guest:guest@39.105.136.231:5672//'
 RESULT_BACKEND = 'redis://39.105.136.231:6379/3'
 CELERY_IMPORTS = ('base.tasks')
 CELERY_TIMEZONE = 'Asia/Shanghai'
