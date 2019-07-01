@@ -27,8 +27,8 @@ sql = SqL()
 #         f.write("hello world --->{}".format(time.strftime('%Y-%m-%d %H-%M-%S')))
 #         f.write("\n")
 
-
-@shared_task
+@app.task
+# @shared_task
 def run_plan():
     log.info('run plan------->执行测试计划中<--------------')
     start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
@@ -51,7 +51,6 @@ def run_plan():
     error_num = 0
     i = 0
     for case_id in case_id_list:
-        log.info('------------------------> {}'.format(case_id))
         case_result = test_case(case_id, env_id, case_id_list, sign_type, private_key, env_url, begin_time)
         content.append(case_result)
     end_time = time.clock()
@@ -93,8 +92,8 @@ def run_plan():
         send_email(user, pwd, user_163, pwd_163, _to, smtp_service, smtp_service_163)
     log.info('测试任务执行完成！')
 
-
-@shared_task
+@app.task
+# @shared_task
 def delete_logs():
     log.info('remove logs------->删除过期日志中<--------------')
     report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/templates' + '/report'
