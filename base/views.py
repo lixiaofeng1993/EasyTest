@@ -45,7 +45,7 @@ def project_index(request):
         contacts = paginator(prj_list, page)
         # request.session['project_list'] = project_list  # 保存项目id
         info = {"prj_list": prj_list, 'contacts': contacts}
-        return render_to_response("base/project/index.html", info)
+        return render(request, "base/project/index.html", info)
     else:
         request.session['login_from'] = '/base/project/'
         return render(request, 'user/login_action.html')

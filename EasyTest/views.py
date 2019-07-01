@@ -40,17 +40,17 @@ def index(request):
         report_num = Report.objects.aggregate(Count('report_id'))['report_id__count']
         periodic_num = PeriodicTask.objects.aggregate(Count('id'))['id__count']
         crontabSchedule_num = CrontabSchedule.objects.aggregate(Count('id'))['id__count']
-        username = request.session.get('user', '')
+        # username = request.session.get('user', '')
 
         total = get_total_values()
 
-        info = {'username': username, 'project_num': project_num,
+        info = {'project_num': project_num,
                 'env_num': env_num, 'interface_num': interface_num, 'case_num': case_num,
                 'plan_num': plan_num, 'total': total,
                 'sign_num': sign_num, 'report_num': report_num,
                 'task_num': periodic_num + crontabSchedule_num}
 
-        return render_to_response("index.html", info)
+        return render(request, "index.html", info)
 
 
 # 登录
