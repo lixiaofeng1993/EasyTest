@@ -1,37 +1,41 @@
 <div id="cnblogs_post_body" class="blogpost-body"><p>&nbsp;</p>
 <p>　　下载了大神的EasyTest项目demo修改了下&lt;https://testerhome.com/topics/12648 原地址&gt;。也有看另一位大神的HttpRunnerManager&lt;https://github.com/HttpRunner/HttpRunnerManager 原地址&gt;，由于水平有限，感觉有点复杂~~~</p>
+<p>&nbsp;登录页面</p>
 <p>&nbsp;</p>
-<p>修改内容</p>
-<p>　　1.增加了页面级的redis缓存；</p>
-<p>　　2.完善了项目、环境、接口、用例、计划、签名的编辑和删除功能；</p>
-<p>　　3.签名简单的实现了md5加密和AES算法加密；</p>
-<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190519170047622-990232023.png" alt=""></p>
+<p>1.首页展示</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701175904415-1010943411.png" alt=""></p>
+<p>2.项目管理</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701175929213-1941435452.png" alt=""></p>
+<p>3.测试环境</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701180010749-151133898.png" alt=""></p>
+<p>　　1&gt;设置headers；每个url设置共同的header，可以存在变量；执行时，指定接口补全header；</p>
+<p>　　<img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701180204197-1071198251.png" alt=""></p>
 <p>&nbsp;</p>
-<p>　　4.增加接口批量导入功能；</p>
-<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190519165923178-1862125022.png" alt=""></p>
+<p>&nbsp;4.接口管理</p>
+<p>　　swagger导入，根据指定的测试环境url，导入swagger接口到平台中；</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701180437484-830858754.png" alt=""></p>
+<p>5.用例管理</p>
+<p>　　选择测试环境，进行单个接口调试，多个接口模拟业务场景执行；</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701180639716-1669330511.png" alt=""></p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701181016768-2035628145.png" alt=""></p>
+<p>6.测试计划</p>
+<p>　　选择用例，组合执行；生成测试报告；</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701181142980-14180729.png" alt=""></p>
+<p>7.定时任务</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701181334868-494224769.png" alt=""></p>
+<p>　　flower 实现任务监控；增加 BackTask 按钮，返回测试平台；</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701181426348-1861485776.png" alt=""></p>
+<p>8.运行报告</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701181529760-1754468369.png" alt=""></p>
+<p>　　接口测试报告</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701181613297-499086621.png" alt=""></p>
+<p>9.性能测试</p>
+<p>　　集成locsut，指定测试计划进行性能测试；</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701181805896-1825365031.png" alt=""></p>
+<p>10.签名方式</p>
+<p>　　支持接口md5、AES算法加密和用户认证；</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701181830773-492636246.png" alt=""></p>
+<p>11.用户管理</p>
+<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701181938319-425781127.png" alt=""></p>
 <p>&nbsp;</p>
-<p>　　5.测试报告优化及日志查看&lt;报告借鉴 BeautifulReport 页面 https://github.com/TesterlifeRaymond/BeautifulReport&nbsp; 原地址&gt;。注：饼图是用 plt 生成的一张图片；</p>
-<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190519170324760-626895314.png" alt=""></p>
-<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701172010127-1278836658.png" alt=""></p>
-<p>&nbsp;</p>
-<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190519170809044-214784247.png" alt="">&nbsp;　　</p>
-<p>　　　　及查看全部日志</p>
-<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190519170843997-404612699.png" alt=""></p>
-<p>&nbsp;</p>
-<p>&nbsp;　　</p>
-<p>　　6.定时任务，celery实现；定时任务运行失败后，会发送邮件提醒；</p>
-<p>&nbsp;</p>
-<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701172110015-506484207.png" alt=""></p>
-<p>　　添加定时任务走的是admin站点页面</p>
-<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190504204750175-1383782729.png" alt=""></p>
-<p>　　flower实现任务监控</p>
-<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701172232140-934604829.png" alt=""></p>
-<p>&nbsp;</p>
-<p>　　7.locust集成到平台中；</p>
-<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190519171203847-626395283.png" alt=""></p>
-<p>　　定时任务和性能测试根据测试计划中的is_task、is_locust来判断；</p>
-<p><img src="https://img2018.cnblogs.com/blog/1160412/201905/1160412-20190519171341195-178890610.png" alt=""></p>
-<p>&nbsp;</p>
-<p>　　8.简单的首页展示；</p>
-<p><img src="https://img2018.cnblogs.com/blog/1160412/201907/1160412-20190701172327160-801185610.png" alt=""></p>
 </div>
