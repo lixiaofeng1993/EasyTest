@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '0y=3effs=f2e3wqz^sbqt(@d@&+*6*r^86(!p1f8n$ygumkk!i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*', '39.105.136.231', '127.0.0.1']
 
@@ -133,6 +133,9 @@ USE_L10N = True
 SESSION_COOKIE_AGE = 60 * 30  # 30分钟
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # 关闭浏览器，则COOKIE失效
+
+# simpleui 设置
+SIMPLEUI_STATIC_OFFLINE = True
 
 # 上传
 MEDIA_ROOT = 'media'  # 对应文件夹
