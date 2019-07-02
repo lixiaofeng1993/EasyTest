@@ -23,6 +23,9 @@ from django.conf.urls import url
 from django.conf.urls.static import static
 from django.views.generic.base import RedirectView
 
+admin.site.site_header = 'EasyTest-后台管理'
+admin.site.site_title = 'EasyTest-Manage'
+
 urlpatterns = [
 
     url(r'admin/', admin.site.urls),
