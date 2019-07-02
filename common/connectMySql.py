@@ -15,6 +15,10 @@ class SqL:
     def __init__(self, job=False):
         # self.log = Log()
         """判断是否连接成功"""
+        self.job = job
+        self.to_connect(self.job)
+
+    def to_connect(self, job):
         if job:
             try:
                 self.conn = pymysql.connect(host=readConfig.MySQL_host_job, database=readConfig.MySQL_database_job,
@@ -40,6 +44,12 @@ class SqL:
             dict_type: 是否返回的数据是字典类型；
             num： 返回的数据是一个还是多个
         """
+        try:
+            self.conn.ping(reconnect=True)  # pymysql.err.InterfaceError: (0, '')
+            log.info('数据库已经连接成功！')
+        except:
+            log.warning('数据库以断开，重连中...')
+            self.to_connect(self.job)
         if dict_type:  # 返回数据字典类型
             cur = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
         else:
