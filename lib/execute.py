@@ -93,10 +93,12 @@ class Test_execute():
         if set_headers:
             make = False
             for k, v in eval(set_headers)['header'].items():
+                log.info(v)
                 if k and v:
                     if '$' not in v:
                         make = True
                     if v == '系统异常':
+                        log.info('1111111111111111111111111111111111111')
                         eval(set_headers)['header'][k] = ''
             if make:
                 if_dict['header'] = eval(set_headers)['header']
