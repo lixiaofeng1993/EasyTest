@@ -100,7 +100,7 @@ class Test_execute():
                     if v == '系统异常':
                         headers[k] = ''
             if make:
-                if_dict['header'] = eval(set_headers)['header']
+                if_dict['header'] = headers
         if interface.data_type == 'sql':
             for k, v in if_dict['body'].items():
                 if 'select' in v:
