@@ -92,14 +92,13 @@ class Test_execute():
         set_headers = Environment.objects.get(env_id=self.env_id).set_headers
         if set_headers:
             make = False
-            for k, v in eval(set_headers)['header'].items():
-                log.info(v)
+            headers = eval(set_headers)['header']
+            for k, v in headers.items():
                 if k and v:
                     if '$' not in v:
                         make = True
                     if v == '系统异常':
-                        log.info('1111111111111111111111111111111111111')
-                        eval(set_headers)['header'][k] = ''
+                        headers[k] = ''
             if make:
                 if_dict['header'] = eval(set_headers)['header']
         if interface.data_type == 'sql':
