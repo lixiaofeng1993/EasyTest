@@ -96,6 +96,8 @@ class Test_execute():
                 if k and v:
                     if '$' not in v:
                         make = True
+                    if v == '系统异常':
+                        eval(set_headers)['header'][k] = ''
             if make:
                 if_dict['header'] = eval(set_headers)['header']
         if interface.data_type == 'sql':
@@ -225,7 +227,8 @@ def get_total_values():
         if not total_fail:
             total_fail = 0
 
-        total_percent = round(total_pass / (total_pass + total_fail) * 100, 2) if (total_pass + total_fail) != 0 else 0.00
+        total_percent = round(total_pass / (total_pass + total_fail) * 100, 2) if (
+                                                                                  total_pass + total_fail) != 0 else 0.00
         total['pass'].append(total_pass)
         total['fail'].append(total_fail)
         total['percent'].append(total_percent)
