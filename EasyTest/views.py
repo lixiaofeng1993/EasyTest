@@ -83,7 +83,7 @@ def login_action(request):
             # for prj in prj_list:
             #     project_list.append(str(prj.prj_id))
             # request.session['project_list'] = project_list  # 保存项目id
-            request.session.set_expiry(0)  # 关闭浏览器后，session失效
+            request.session.set_expiry(None)  # 关闭浏览器后，session失效
             return response
             # return render(request, 'base.html', {"user": username})
         else:
