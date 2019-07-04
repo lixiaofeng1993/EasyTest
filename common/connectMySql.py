@@ -53,13 +53,14 @@ class SqL:
             cur = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
         else:
             cur = self.conn.cursor()
-        try:
-            with cur as cur:
-                cur.execute(sql)  # 执行sql
-            return cur
-        except Exception as e:
-            self.conn.rollback()
-            log.error('执行SQL语句出现异常：{}'.format(e))
+        # try:
+        #     with cur as cur:
+        #         cur.execute(sql)  # 执行sql
+        #     return cur
+        # except Exception as e:
+        #     self.conn.rollback()
+        #     log.error('执行SQL语句出现异常：{}'.format(e))
+        return cur
 
     def execute_sql(self, sql, dict_type=False, num=1):
         """返回查询结果集
@@ -72,6 +73,8 @@ class SqL:
             log.error('sql执行，查询数据失败！！！')
             return None
         try:
+            with cur as cur:
+                cur.execute(sql)  # 执行sql
             if 'delete' in sql or 'insert' in sql or 'update' in sql:
                 self.conn.commit()  # 提交
             else:
@@ -96,8 +99,8 @@ class SqL:
             log.error('执行SQL语句出现异常1：{}'.format(e))
             return None
 
-    def __del__(self):
-        self.conn.close()
+    # def __del__(self):
+    #     self.conn.close()
 
     def decimal_format(self, money):
         """改变数据库数据编码格式"""
