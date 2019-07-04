@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/views.py" afterPath="$PROJECT_DIR$/base/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/execute.py" afterPath="$PROJECT_DIR$/lib/execute.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -101,8 +102,8 @@
       <file leaf-file-name="report.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/report.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="299">
-              <caret line="7100" column="101" lean-forward="false" selection-start-line="7100" selection-start-column="92" selection-end-line="7100" selection-end-column="101" />
+            <state relative-caret-position="519">
+              <caret line="7194" column="71" lean-forward="false" selection-start-line="7194" selection-start-column="52" selection-end-line="7194" selection-end-column="71" />
               <folding />
             </state>
           </provider>
@@ -121,21 +122,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="execute.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="execute.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/execute.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="341">
-              <caret line="33" column="38" lean-forward="false" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="38" />
+            <state relative-caret-position="343">
+              <caret line="178" column="64" lean-forward="false" selection-start-line="178" selection-start-column="64" selection-end-line="178" selection-end-column="64" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="429">
-              <caret line="1147" column="53" lean-forward="false" selection-start-line="1147" selection-start-column="53" selection-end-line="1147" selection-end-column="53" />
+            <state relative-caret-position="607">
+              <caret line="1140" column="34" lean-forward="true" selection-start-line="1140" selection-start-column="34" selection-end-line="1140" selection-end-column="34" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -155,10 +156,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>console.log</find>
-      <find>panel-body</find>
-      <find>render_to_response</find>
-      <find>CELERYBEAT_SCHEDULER</find>
       <find>BROKER_URL</find>
       <find>RESULT_BACKEND</find>
       <find>main</find>
@@ -182,9 +179,13 @@
       <find>USE_TZ</find>
       <find>CELERY_ENABLE_UTC</find>
       <find>DJANGO_CELERY_BEAT_TZ_AWARE</find>
-      <find>get_sign</find>
       <find>plan_ru</find>
+      <find>totalTime</find>
+      <find>s</find>
+      <find>get_sign</find>
       <find>animated</find>
+      <find>begin_time</find>
+      <find>interface_totalTime</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -225,7 +226,6 @@
         <option value="$PROJECT_DIR$/EasyTest/urls.py" />
         <option value="$PROJECT_DIR$/EasyTest/views.py" />
         <option value="$PROJECT_DIR$/run_this.py" />
-        <option value="$PROJECT_DIR$/lib/execute.py" />
         <option value="$PROJECT_DIR$/flowerconfig.py" />
         <option value="$PROJECT_DIR$/common/connectMySql.py" />
         <option value="$PROJECT_DIR$/base/tasks.py" />
@@ -233,6 +233,7 @@
         <option value="$PROJECT_DIR$/EasyTest/celery.py" />
         <option value="$PROJECT_DIR$/EasyTest/settings.py" />
         <option value="$PROJECT_DIR$/base/views.py" />
+        <option value="$PROJECT_DIR$/lib/execute.py" />
       </list>
     </option>
   </component>
@@ -979,6 +980,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2838">
           <caret line="129" column="97" lean-forward="false" selection-start-line="129" selection-start-column="97" selection-end-line="130" selection-end-column="72" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -986,6 +988,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2244">
           <caret line="102" column="48" lean-forward="false" selection-start-line="102" selection-start-column="48" selection-end-line="102" selection-end-column="48" />
+          <folding>
+            <element signature="e#2165#2171#0#HTML" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1118,29 +1123,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/execute.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="341">
-          <caret line="33" column="38" lean-forward="false" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/report.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="299">
-          <caret line="7100" column="101" lean-forward="false" selection-start-line="7100" selection-start-column="92" selection-end-line="7100" selection-end-column="101" />
+        <state relative-caret-position="519">
+          <caret line="7194" column="71" lean-forward="false" selection-start-line="7194" selection-start-column="52" selection-end-line="7194" selection-end-column="71" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/base/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="429">
-          <caret line="1147" column="53" lean-forward="false" selection-start-line="1147" selection-start-column="53" selection-end-line="1147" selection-end-column="53" />
+        <state relative-caret-position="607">
+          <caret line="1140" column="34" lean-forward="true" selection-start-line="1140" selection-start-column="34" selection-end-line="1140" selection-end-column="34" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/execute.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="343">
+          <caret line="178" column="64" lean-forward="false" selection-start-line="178" selection-start-column="64" selection-end-line="178" selection-end-column="64" />
+          <folding />
         </state>
       </provider>
     </entry>
