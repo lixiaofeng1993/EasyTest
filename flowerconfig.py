@@ -7,13 +7,16 @@
 # @Software: PyCharm
 
 # Broker settings
-BROKER_URL = 'amqp://guest:guest@localhost:5672//'
+BROKER_URL = 'amqp:redis://localhost:6379/0'
 
 # RabbitMQ management api
-broker_api = 'http://guest:guest@localhost:15672/api/'
+broker_api = 'http://guest:guest@39.105.136.231:15672/api/'
 
 # Enable debug logging
-logging = 'DEBUG'
+logging = 'INFO'
 
 # 持久模式
-persistent = False
+persistent = True
+
+# 最大
+max_tasks = 100
