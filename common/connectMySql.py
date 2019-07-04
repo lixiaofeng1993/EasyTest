@@ -38,18 +38,13 @@ class SqL:
             except Exception as e:
                 log.error('本地 数据库链接异常! {}'.format(e))
 
-    def execute_sql(self, sql, dict_type=False, num=1):
-        """返回查询结果集
-            sql: 执行的sql语句；
-            dict_type: 是否返回的数据是字典类型；
-            num： 返回的数据是一个还是多个
-        """
-        # try:
-        #     self.conn.ping(reconnect=True)  # pymysql.err.InterfaceError: (0, '')
-        #     log.info('数据库已经连接成功！')
-        # except:
-        #     log.warning('数据库以断开，重连中...')
-        #     self.to_connect(self.job)
+    def reconnect(self, dict_type, sql):
+        try:
+            self.conn.ping(reconnect=True)  # pymysql.err.InterfaceError: (0, '')
+            log.info('数据库已经连接成功！')
+        except:
+            log.warning('数据库已断开，重连中...')
+            self.to_connect(self.job)
         if dict_type:  # 返回数据字典类型
             cur = self.conn.cursor(cursor=pymysql.cursors.DictCursor)
         else:
@@ -57,29 +52,47 @@ class SqL:
         try:
             with cur as cur:
                 cur.execute(sql)  # 执行sql
-            if 'delete' in sql or 'insert' in sql or 'update' in sql:
-                self.conn.commit()  # 提交
-            else:
-                if num == 1:  # 返回一条数据
-                    data = cur.fetchone()
-                    if dict_type:
-                        return data
-                    else:
-                        return data[0]
-                else:  # 返回多条数据
-                    data_str = ''
-                    data = cur.fetchall()
-                    if dict_type:
-                        return data
-                    else:
-                        for i in data:
-                            for j in i:
-                                data_str += str(j) + ','  # 拼接返回数据
-                        return data_str
         except Exception as e:
             self.conn.rollback()
             log.error('执行SQL语句出现异常：{}'.format(e))
             return None
+        return cur
+
+    def execute_sql(self, sql, dict_type=False, num=1):
+        """返回查询结果集
+            sql: 执行的sql语句；
+            dict_type: 是否返回的数据是字典类型；
+            num： 返回的数据是一个还是多个
+        """
+        try:
+            cur = self.reconnect(dict_type, sql)
+        except:
+            cur = self.reconnect(dict_type, sql)
+        if cur:
+            try:
+                if 'delete' in sql or 'insert' in sql or 'update' in sql:
+                    self.conn.commit()  # 提交
+                else:
+                    if num == 1:  # 返回一条数据
+                        data = cur.fetchone()
+                        if dict_type:
+                            return data
+                        else:
+                            return data[0]
+                    else:  # 返回多条数据
+                        data_str = ''
+                        data = cur.fetchall()
+                        if dict_type:
+                            return data
+                        else:
+                            for i in data:
+                                for j in i:
+                                    data_str += str(j) + ','  # 拼接返回数据
+                            return data_str
+            except Exception as e:
+                self.conn.rollback()
+                log.error('执行SQL语句出现异常1：{}'.format(e))
+                return None
 
     def __del__(self):
         self.conn.close()
