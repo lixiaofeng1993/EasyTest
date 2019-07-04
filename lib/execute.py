@@ -176,7 +176,7 @@ class Test_execute():
         if interface.data_type == 'file':
             if_dict["body"] = {'file': '上传图片'}
         end_time = time.clock()
-        interface_totalTime = str(end_time - self.begin_time)[:6] + 's'
+        interface_totalTime = str(end_time - self.begin_time)[:6] + ' s'
         if_dict['interface_totalTime'] = interface_totalTime
         return if_dict
 

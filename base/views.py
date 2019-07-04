@@ -1145,7 +1145,7 @@ def plan_run(request):
                 else:
                     return HttpResponse(case_result)
             end_time = time.clock()
-            totalTime = str(end_time - begin_time)[:6] + 's'
+            totalTime = str(end_time - begin_time)[:6] + ' s'
             for step in content:
                 for s in step['step_list']:
                     if s["result"] == "pass":

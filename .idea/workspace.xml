@@ -122,21 +122,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="execute.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="execute.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/execute.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="343">
-              <caret line="178" column="64" lean-forward="false" selection-start-line="178" selection-start-column="64" selection-end-line="178" selection-end-column="64" />
+              <caret line="178" column="70" lean-forward="false" selection-start-line="178" selection-start-column="70" selection-end-line="178" selection-end-column="70" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/base/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="607">
-              <caret line="1140" column="34" lean-forward="true" selection-start-line="1140" selection-start-column="34" selection-end-line="1140" selection-end-column="34" />
+            <state relative-caret-position="761">
+              <caret line="1147" column="59" lean-forward="false" selection-start-line="1147" selection-start-column="59" selection-end-line="1147" selection-end-column="59" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -232,8 +232,8 @@
         <option value="$PROJECT_DIR$/templates/report.html" />
         <option value="$PROJECT_DIR$/EasyTest/celery.py" />
         <option value="$PROJECT_DIR$/EasyTest/settings.py" />
-        <option value="$PROJECT_DIR$/base/views.py" />
         <option value="$PROJECT_DIR$/lib/execute.py" />
+        <option value="$PROJECT_DIR$/base/views.py" />
       </list>
     </option>
   </component>
@@ -1131,21 +1131,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/base/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="607">
-          <caret line="1140" column="34" lean-forward="true" selection-start-line="1140" selection-start-column="34" selection-end-line="1140" selection-end-column="34" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/execute.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="343">
-          <caret line="178" column="64" lean-forward="false" selection-start-line="178" selection-start-column="64" selection-end-line="178" selection-end-column="64" />
+          <caret line="178" column="70" lean-forward="false" selection-start-line="178" selection-start-column="70" selection-end-line="178" selection-end-column="70" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="761">
+          <caret line="1147" column="59" lean-forward="false" selection-start-line="1147" selection-start-column="59" selection-end-line="1147" selection-end-column="59" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
