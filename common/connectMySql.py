@@ -64,10 +64,10 @@ class SqL:
             dict_type: 是否返回的数据是字典类型；
             num： 返回的数据是一个还是多个
         """
-        try:
-            cur = self.reconnect(dict_type, sql)
-        except:
-            cur = self.reconnect(dict_type, sql)
+        # try:
+        cur = self.reconnect(dict_type, sql)
+        # except:
+        #     cur = self.reconnect(dict_type, sql)
         if cur:
             try:
                 if 'delete' in sql or 'insert' in sql or 'update' in sql:

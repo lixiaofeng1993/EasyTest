@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EasyTest/settings.py" afterPath="$PROJECT_DIR$/EasyTest/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/connectMySql.py" afterPath="$PROJECT_DIR$/common/connectMySql.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -25,11 +25,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="814">
-              <caret line="51" column="57" lean-forward="false" selection-start-line="51" selection-start-column="57" selection-end-line="51" selection-end-column="57" />
+            <state relative-caret-position="462">
+              <caret line="35" column="26" lean-forward="true" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -72,9 +72,13 @@
       <file leaf-file-name="tasks.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/tasks.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2068">
-              <caret line="103" column="22" lean-forward="false" selection-start-line="103" selection-start-column="22" selection-end-line="103" selection-end-column="22" />
-              <folding />
+            <state relative-caret-position="220">
+              <caret line="49" column="16" lean-forward="true" selection-start-line="49" selection-start-column="16" selection-end-line="49" selection-end-column="16" />
+              <folding>
+                <marker date="1561967558221" expanded="true" signature="902:1004" ph="select bp.en... base_plan" />
+                <marker date="1561967558221" expanded="true" signature="2251:2463" ph="insert into base_report... " />
+                <marker date="1561967558221" expanded="true" signature="2669:2714" ph="update base_... " />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -97,14 +101,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="connectMySql.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="connectMySql.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/common/connectMySql.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="625">
-              <caret line="67" column="32" lean-forward="false" selection-start-line="67" selection-start-column="23" selection-end-line="67" selection-end-column="32" />
+              <caret line="67" column="0" lean-forward="false" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
-                <marker date="1562218036659" expanded="true" signature="3655:3684" ph="select plan_... base_plan" />
+                <marker date="1562218351952" expanded="true" signature="3657:3686" ph="select plan_... base_plan" />
               </folding>
             </state>
           </provider>
@@ -219,8 +223,8 @@
         <option value="$PROJECT_DIR$/run_this.py" />
         <option value="$PROJECT_DIR$/lib/execute.py" />
         <option value="$PROJECT_DIR$/flowerconfig.py" />
-        <option value="$PROJECT_DIR$/common/connectMySql.py" />
         <option value="$PROJECT_DIR$/EasyTest/settings.py" />
+        <option value="$PROJECT_DIR$/common/connectMySql.py" />
       </list>
     </option>
   </component>
@@ -721,7 +725,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="20" />
+      <option name="time" value="23" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1024,14 +1028,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/base/tasks.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2068">
-          <caret line="103" column="22" lean-forward="false" selection-start-line="103" selection-start-column="22" selection-end-line="103" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/sql_parameter.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1044,16 +1040,6 @@
             <marker date="1561947633672" expanded="true" signature="3626:3696" ph="select be.se... base_environment" />
             <marker date="1561947633672" expanded="true" signature="6569:6633" ph="update base_... " />
             <marker date="1561947633672" expanded="true" signature="7688:7792" ph="select bp.en... base_plan" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/run_this.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="449">
-          <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1074,22 +1060,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/connectMySql.py">
+    <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="625">
-          <caret line="67" column="32" lean-forward="false" selection-start-line="67" selection-start-column="23" selection-end-line="67" selection-end-column="32" />
+        <state relative-caret-position="462">
+          <caret line="35" column="26" lean-forward="true" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run_this.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="449">
+          <caret line="142" column="0" lean-forward="false" selection-start-line="142" selection-start-column="0" selection-end-line="142" selection-end-column="0" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
-            <marker date="1562218036659" expanded="true" signature="3655:3684" ph="select plan_... base_plan" />
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
+    <entry file="file://$PROJECT_DIR$/base/tasks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="814">
-          <caret line="51" column="57" lean-forward="false" selection-start-line="51" selection-start-column="57" selection-end-line="51" selection-end-column="57" />
-          <folding />
+        <state relative-caret-position="220">
+          <caret line="49" column="16" lean-forward="true" selection-start-line="49" selection-start-column="16" selection-end-line="49" selection-end-column="16" />
+          <folding>
+            <marker date="1561967558221" expanded="true" signature="902:1004" ph="select bp.en... base_plan" />
+            <marker date="1561967558221" expanded="true" signature="2251:2463" ph="insert into base_report... " />
+            <marker date="1561967558221" expanded="true" signature="2669:2714" ph="update base_... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/common/connectMySql.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="625">
+          <caret line="67" column="0" lean-forward="false" selection-start-line="67" selection-start-column="0" selection-end-line="67" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+            <marker date="1562218351952" expanded="true" signature="3657:3686" ph="select plan_... base_plan" />
+          </folding>
         </state>
       </provider>
     </entry>
