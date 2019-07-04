@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
-import os, datetime
+import os
 from celery import Celery
 from django.conf import settings
 
@@ -9,7 +9,6 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'EasyTest.settings')
 
 app = Celery('EasyTest')
 
-app.now = datetime.datetime.now()
 # Using a string here means the worker don't have to serialize
 # the configuration object to child processes.
 # - namespace='CELERY' means all celery-related configuration keys

@@ -124,7 +124,7 @@ USE_I18N = True
 USE_L10N = True
 
 # 页面展示时间比数据库时间快8h
-USE_TZ = False
+# USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
@@ -259,8 +259,8 @@ BROKER_URL = 'redis://127.0.0.1:6379/'
 CELERY_IMPORTS = ('base.tasks')
 CELERY_TIMEZONE = 'Asia/Shanghai'
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
-CELERY_ENABLE_UTC = False
-DJANGO_CELERY_BEAT_TZ_AWARE = False
+# CELERY_ENABLE_UTC = False
+# DJANGO_CELERY_BEAT_TZ_AWARE = False
 CELERYBEAT_SCHEDULE = {  # 定时器策略
     # 定时任务一：　每隔30s运行一次
     # u'测试定时器1': {
