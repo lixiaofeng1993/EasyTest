@@ -75,25 +75,25 @@ class SqL:
         try:
             with cur as cur:
                 cur.execute(sql)  # 执行sql
-                if 'delete' in sql or 'insert' in sql or 'update' in sql:
-                    self.conn.commit()  # 提交
-                else:
-                    if num == 1:  # 返回一条数据
-                        data = cur.fetchone()
-                        if dict_type:
-                            return data
-                        else:
-                            return data[0]
-                    else:  # 返回多条数据
-                        data_str = ''
-                        data = cur.fetchall()
-                        if dict_type:
-                            return data
-                        else:
-                            for i in data:
-                                for j in i:
-                                    data_str += str(j) + ','  # 拼接返回数据
-                            return data_str
+            if 'delete' in sql or 'insert' in sql or 'update' in sql:
+                self.conn.commit()  # 提交
+            else:
+                if num == 1:  # 返回一条数据
+                    data = cur.fetchone()
+                    if dict_type:
+                        return data
+                    else:
+                        return data[0]
+                else:  # 返回多条数据
+                    data_str = ''
+                    data = cur.fetchall()
+                    if dict_type:
+                        return data
+                    else:
+                        for i in data:
+                            for j in i:
+                                data_str += str(j) + ','  # 拼接返回数据
+                        return data_str
         except Exception as e:
             self.conn.rollback()
             log.error('执行SQL语句出现异常1：{}'.format(e))

@@ -2,7 +2,7 @@
 # coding:utf-8
 from __future__ import absolute_import
 from EasyTest.celery import app
-from celery import shared_task
+# from celery import shared_task
 import time, logging, os
 from common.connectMySql import SqL
 from lib.public import DrawPie, remove_logs
