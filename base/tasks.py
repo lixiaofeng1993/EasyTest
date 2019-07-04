@@ -76,8 +76,8 @@ def run_plan():
                 i += 1
                 s['id'] = i
     pic_name = DrawPie(pass_num, fail_num, error_num)
-    report_name = plan['plan_name'] + "-" + str(start_time)
-    report = Report(plan=plan, report_name=report_name, content=content, case_num=case_num,
+    report_name = plan[0]['plan_name'] + "-" + str(start_time)
+    report = Report(plan_id=plan_id, report_name=report_name, content=content, case_num=case_num,
                     pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
                     totalTime=totalTime, startTime=start_time, update_user='root')
     report.save()

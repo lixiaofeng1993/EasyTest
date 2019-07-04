@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/tasks.py" afterPath="$PROJECT_DIR$/base/tasks.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -62,13 +61,13 @@
       <file leaf-file-name="tasks.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/base/tasks.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="704">
-              <caret line="104" column="0" lean-forward="true" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+            <state relative-caret-position="275">
+              <caret line="79" column="27" lean-forward="false" selection-start-line="79" selection-start-column="20" selection-end-line="79" selection-end-column="27" />
               <folding>
                 <element signature="e#34#72#0" expanded="true" />
-                <marker date="1562248478750" expanded="true" signature="1138:1240" ph="select bp.en... base_plan" />
-                <marker date="1562248478750" expanded="true" signature="3007:3219" ph="insert into base_report... " />
-                <marker date="1562248478750" expanded="true" signature="3431:3476" ph="update base_... " />
+                <marker date="1562248840625" expanded="true" signature="1138:1240" ph="select bp.en... base_plan" />
+                <marker date="1562248840625" expanded="true" signature="3016:3228" ph="insert into base_report... " />
+                <marker date="1562248840625" expanded="true" signature="3440:3485" ph="update base_... " />
               </folding>
             </state>
           </provider>
@@ -118,9 +117,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>btn-toggle-collapse</find>
-      <find>fa fa-</find>
-      <find>'fa fa-chevron-up'</find>
       <find>panel-heading</find>
       <find>if_id</find>
       <find>var if_id = $(this).find(&quot;div[class='panel-heading']&quot;).attr(&quot;id&quot;);</find>
@@ -148,6 +144,9 @@
       <find>plan_run</find>
       <find>get_sign</find>
       <find>plan_ru</find>
+      <find>plan</find>
+      <find>paln_id</find>
+      <find>plan_id</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -1069,13 +1068,13 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/base/tasks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="704">
-          <caret line="104" column="0" lean-forward="true" selection-start-line="104" selection-start-column="0" selection-end-line="104" selection-end-column="0" />
+        <state relative-caret-position="275">
+          <caret line="79" column="27" lean-forward="false" selection-start-line="79" selection-start-column="20" selection-end-line="79" selection-end-column="27" />
           <folding>
             <element signature="e#34#72#0" expanded="true" />
-            <marker date="1562248478750" expanded="true" signature="1138:1240" ph="select bp.en... base_plan" />
-            <marker date="1562248478750" expanded="true" signature="3007:3219" ph="insert into base_report... " />
-            <marker date="1562248478750" expanded="true" signature="3431:3476" ph="update base_... " />
+            <marker date="1562248840625" expanded="true" signature="1138:1240" ph="select bp.en... base_plan" />
+            <marker date="1562248840625" expanded="true" signature="3016:3228" ph="insert into base_report... " />
+            <marker date="1562248840625" expanded="true" signature="3440:3485" ph="update base_... " />
           </folding>
         </state>
       </provider>
