@@ -6,6 +6,7 @@ from EasyTest.celery import app
 import time, logging, os
 from common.connectMySql import SqL
 from lib.public import DrawPie, remove_logs
+from base.models import Plan, Report
 from datetime import datetime
 from lib.sql_parameter import test_case, get_sign, get_env
 from run_this import send_email
@@ -32,6 +33,8 @@ sql = SqL()
 def run_plan():
     log.info('run plan------->执行测试计划中<--------------')
     start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    plan = Plan.objects.filter(is_task=1).all().values()
+    log.info('----------------------------------------- {}'.format(plan))
     plan = sql.execute_sql(
         'select bp.environment_id, bp.content,bp.plan_name,bp.plan_id from base_plan as bp where bp.is_task = 1',
         dict_type=True)
