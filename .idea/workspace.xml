@@ -2,6 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EasyTest/celery.py" afterPath="$PROJECT_DIR$/EasyTest/celery.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EasyTest/settings.py" afterPath="$PROJECT_DIR$/EasyTest/settings.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/tasks.py" afterPath="$PROJECT_DIR$/base/tasks.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,12 +27,24 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="26" column="13" lean-forward="false" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="13" />
+            <state relative-caret-position="517">
+              <caret line="137" column="40" lean-forward="true" selection-start-line="137" selection-start-column="40" selection-end-line="137" selection-end-column="40" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="celery.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/EasyTest/celery.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="15" column="7" lean-forward="false" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+              <folding>
+                <element signature="e#24#80#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -48,26 +62,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tests.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/base/tests.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="tasks.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="tasks.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/tasks.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="79" column="27" lean-forward="false" selection-start-line="79" selection-start-column="20" selection-end-line="79" selection-end-column="27" />
+            <state relative-caret-position="361">
+              <caret line="36" column="56" lean-forward="true" selection-start-line="36" selection-start-column="56" selection-end-line="39" selection-end-column="25" />
               <folding>
                 <element signature="e#34#72#0" expanded="true" />
-                <marker date="1562248840625" expanded="true" signature="1138:1240" ph="select bp.en... base_plan" />
-                <marker date="1562248840625" expanded="true" signature="3016:3228" ph="insert into base_report... " />
-                <marker date="1562248840625" expanded="true" signature="3440:3485" ph="update base_... " />
+                <marker date="1562249738816" expanded="true" signature="1041:1143" ph="select bp.en... base_plan" />
               </folding>
             </state>
           </provider>
@@ -96,7 +98,7 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="363">
+            <state relative-caret-position="1089">
               <caret line="1165" column="12" lean-forward="false" selection-start-line="1165" selection-start-column="12" selection-end-line="1169" selection-end-column="113" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
@@ -117,9 +119,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>panel-heading</find>
-      <find>if_id</find>
-      <find>var if_id = $(this).find(&quot;div[class='panel-heading']&quot;).attr(&quot;id&quot;);</find>
       <find>class='panel'</find>
       <find>right</find>
       <find>icon-submenu</find>
@@ -143,10 +142,13 @@
       <find>logging</find>
       <find>plan_run</find>
       <find>get_sign</find>
-      <find>plan_ru</find>
       <find>plan</find>
       <find>paln_id</find>
+      <find>plan_ru</find>
       <find>plan_id</find>
+      <find>CELERY_TIMEZONE</find>
+      <find>CELERY_TIMEZONE</find>
+      <find>CELERY_ENABLE_UTC</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -192,8 +194,9 @@
         <option value="$PROJECT_DIR$/lib/execute.py" />
         <option value="$PROJECT_DIR$/flowerconfig.py" />
         <option value="$PROJECT_DIR$/common/connectMySql.py" />
-        <option value="$PROJECT_DIR$/EasyTest/settings.py" />
         <option value="$PROJECT_DIR$/base/tasks.py" />
+        <option value="$PROJECT_DIR$/EasyTest/celery.py" />
+        <option value="$PROJECT_DIR$/EasyTest/settings.py" />
       </list>
     </option>
   </component>
@@ -708,18 +711,11 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="24" />
+      <option name="time" value="25" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/base/interface/add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="27" lean-forward="false" selection-start-line="0" selection-start-column="27" selection-end-line="0" selection-end-column="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/interface/update.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="454">
@@ -1021,14 +1017,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/base/tests.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/common/connectMySql.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1479">
@@ -1037,14 +1025,6 @@
             <element signature="e#0#14#0" expanded="true" />
             <marker date="1562247354219" expanded="true" signature="3786:3815" ph="select plan_... base_plan" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="26" column="13" lean-forward="false" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="13" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1058,7 +1038,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/base/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="363">
+        <state relative-caret-position="1089">
           <caret line="1165" column="12" lean-forward="false" selection-start-line="1165" selection-start-column="12" selection-end-line="1169" selection-end-column="113" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
@@ -1066,16 +1046,40 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/base/tests.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/base/tasks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="79" column="27" lean-forward="false" selection-start-line="79" selection-start-column="20" selection-end-line="79" selection-end-column="27" />
+        <state relative-caret-position="361">
+          <caret line="36" column="56" lean-forward="true" selection-start-line="36" selection-start-column="56" selection-end-line="39" selection-end-column="25" />
           <folding>
             <element signature="e#34#72#0" expanded="true" />
-            <marker date="1562248840625" expanded="true" signature="1138:1240" ph="select bp.en... base_plan" />
-            <marker date="1562248840625" expanded="true" signature="3016:3228" ph="insert into base_report... " />
-            <marker date="1562248840625" expanded="true" signature="3440:3485" ph="update base_... " />
+            <marker date="1562249738816" expanded="true" signature="1041:1143" ph="select bp.en... base_plan" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EasyTest/celery.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="15" column="7" lean-forward="false" selection-start-line="15" selection-start-column="7" selection-end-line="15" selection-end-column="7" />
+          <folding>
+            <element signature="e#24#80#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="517">
+          <caret line="137" column="40" lean-forward="true" selection-start-line="137" selection-start-column="40" selection-end-line="137" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>

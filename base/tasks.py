@@ -35,7 +35,6 @@ def run_plan():
     log.info('run plan------->执行测试计划中<--------------')
     start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     plan = Plan.objects.filter(is_task=1).all().values()
-    log.info('----------------------------------------- {} {}'.format(plan, plan[0]['plan_id']))
     # plan = sql.execute_sql(
     #     'select bp.environment_id, bp.content,bp.plan_name,bp.plan_id from base_plan as bp where bp.is_task = 1',
     #     dict_type=True)
