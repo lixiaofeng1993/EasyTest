@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EasyTest/celery.py" afterPath="$PROJECT_DIR$/EasyTest/celery.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EasyTest/settings.py" afterPath="$PROJECT_DIR$/EasyTest/settings.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/views.py" afterPath="$PROJECT_DIR$/base/views.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -46,13 +45,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="celery.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="celery.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/EasyTest/celery.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="22" column="23" lean-forward="true" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
+            <state relative-caret-position="528">
+              <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding>
                 <element signature="e#24#80#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="performance.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/base/performance.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="330">
+              <caret line="15" column="17" lean-forward="false" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sql_parameter.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/sql_parameter.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="430">
+              <caret line="183" column="18" lean-forward="false" selection-start-line="183" selection-start-column="4" selection-end-line="183" selection-end-column="18" />
+              <folding>
+                <marker date="1561990785419" expanded="true" signature="605:669" ph="select bp.si... base_project" />
+                <marker date="1561990785419" expanded="true" signature="816:909" ph="select be.pr... base_environment" />
+                <marker date="1561990785419" expanded="true" signature="1183:1259" ph="select bs.ca... base_case" />
+                <marker date="1561990785419" expanded="true" signature="2819:2927" ph="select bi.ur... base_interface" />
+                <marker date="1561990785419" expanded="true" signature="3626:3696" ph="select be.se... base_environment" />
+                <marker date="1561990785419" expanded="true" signature="6569:6633" ph="update base_... " />
+                <marker date="1561990785419" expanded="true" signature="7688:7792" ph="select bp.en... base_plan" />
               </folding>
             </state>
           </provider>
@@ -74,8 +101,8 @@
       <file leaf-file-name="report.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/report.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="91">
-              <caret line="7277" column="32" lean-forward="false" selection-start-line="7277" selection-start-column="24" selection-end-line="7277" selection-end-column="32" />
+            <state relative-caret-position="299">
+              <caret line="7100" column="101" lean-forward="false" selection-start-line="7100" selection-start-column="92" selection-end-line="7100" selection-end-column="101" />
               <folding />
             </state>
           </provider>
@@ -94,31 +121,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="flowerconfig.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/flowerconfig.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="484">
-              <caret line="22" column="0" lean-forward="false" selection-start-line="22" selection-start-column="0" selection-end-line="22" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="execute.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/execute.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
+            <state relative-caret-position="341">
               <caret line="33" column="38" lean-forward="false" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="38" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/base/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1089">
-              <caret line="1165" column="12" lean-forward="false" selection-start-line="1165" selection-start-column="12" selection-end-line="1169" selection-end-column="113" />
+            <state relative-caret-position="429">
+              <caret line="1147" column="53" lean-forward="false" selection-start-line="1147" selection-start-column="53" selection-end-line="1147" selection-end-column="53" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -155,19 +172,19 @@
       <find>headers</find>
       <find>logging</find>
       <find>plan_run</find>
-      <find>get_sign</find>
       <find>plan</find>
       <find>paln_id</find>
-      <find>plan_ru</find>
       <find>plan_id</find>
       <find>CELERY_TIMEZONE</find>
       <find>CELERY_TIMEZONE</find>
       <find>fa fa-chevron-up</find>
       <find>tooltip-demo</find>
-      <find>animated</find>
       <find>USE_TZ</find>
       <find>CELERY_ENABLE_UTC</find>
       <find>DJANGO_CELERY_BEAT_TZ_AWARE</find>
+      <find>get_sign</find>
+      <find>plan_ru</find>
+      <find>animated</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -201,7 +218,6 @@
         <option value="$PROJECT_DIR$/templates/base/case/add.html" />
         <option value="$PROJECT_DIR$/templates/base/case/update.html" />
         <option value="$PROJECT_DIR$/templates/system/task/task_index.html" />
-        <option value="$PROJECT_DIR$/base/views.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/templates/base.html" />
         <option value="$PROJECT_DIR$/templates/index.html" />
@@ -216,6 +232,7 @@
         <option value="$PROJECT_DIR$/templates/report.html" />
         <option value="$PROJECT_DIR$/EasyTest/celery.py" />
         <option value="$PROJECT_DIR$/EasyTest/settings.py" />
+        <option value="$PROJECT_DIR$/base/views.py" />
       </list>
     </option>
   </component>
@@ -749,13 +766,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/base/interface/update.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="454">
-          <caret line="505" column="40" lean-forward="false" selection-start-line="505" selection-start-column="39" selection-end-line="505" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/performance/performance.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -984,14 +994,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/sql_parameter.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/run_this.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="449">
@@ -1024,6 +1026,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="609">
           <caret line="520" column="7" lean-forward="true" selection-start-line="520" selection-start-column="7" selection-end-line="520" selection-end-column="7" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1046,36 +1049,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/execute.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="33" column="38" lean-forward="false" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/base/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1089">
-          <caret line="1165" column="12" lean-forward="false" selection-start-line="1165" selection-start-column="12" selection-end-line="1169" selection-end-column="113" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/base/tests.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/report.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="91">
-          <caret line="7277" column="32" lean-forward="false" selection-start-line="7277" selection-start-column="24" selection-end-line="7277" selection-end-column="32" />
           <folding />
         </state>
       </provider>
@@ -1109,10 +1086,60 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/EasyTest/celery.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="484">
-          <caret line="22" column="23" lean-forward="true" selection-start-line="22" selection-start-column="23" selection-end-line="22" selection-end-column="23" />
+        <state relative-caret-position="528">
+          <caret line="24" column="0" lean-forward="true" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding>
             <element signature="e#24#80#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/performance.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="15" column="17" lean-forward="false" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/sql_parameter.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="183" column="18" lean-forward="false" selection-start-line="183" selection-start-column="4" selection-end-line="183" selection-end-column="18" />
+          <folding>
+            <marker date="1561990785419" expanded="true" signature="605:669" ph="select bp.si... base_project" />
+            <marker date="1561990785419" expanded="true" signature="816:909" ph="select be.pr... base_environment" />
+            <marker date="1561990785419" expanded="true" signature="1183:1259" ph="select bs.ca... base_case" />
+            <marker date="1561990785419" expanded="true" signature="2819:2927" ph="select bi.ur... base_interface" />
+            <marker date="1561990785419" expanded="true" signature="3626:3696" ph="select be.se... base_environment" />
+            <marker date="1561990785419" expanded="true" signature="6569:6633" ph="update base_... " />
+            <marker date="1561990785419" expanded="true" signature="7688:7792" ph="select bp.en... base_plan" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/execute.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="33" column="38" lean-forward="false" selection-start-line="33" selection-start-column="30" selection-end-line="33" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/report.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="7100" column="101" lean-forward="false" selection-start-line="7100" selection-start-column="92" selection-end-line="7100" selection-end-column="101" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="429">
+          <caret line="1147" column="53" lean-forward="false" selection-start-line="1147" selection-start-column="53" selection-end-line="1147" selection-end-column="53" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
