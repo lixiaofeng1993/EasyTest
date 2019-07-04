@@ -8,7 +8,8 @@ from common.connectMySql import SqL
 from lib.public import DrawPie, remove_logs
 from base.models import Plan, Report
 from datetime import datetime
-from lib.sql_parameter import test_case, get_sign, get_env
+# from lib.sql_parameter import test_case, get_sign, get_env
+from lib.execute import Test_execute
 from run_this import send_email
 from common import readConfig
 
@@ -35,18 +36,18 @@ def run_plan():
     start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     plan = Plan.objects.filter(is_task=1).all().values()
     log.info('----------------------------------------- {} {}'.format(plan, plan[0]['plan_id']))
-    plan = sql.execute_sql(
-        'select bp.environment_id, bp.content,bp.plan_name,bp.plan_id from base_plan as bp where bp.is_task = 1',
-        dict_type=True)
+    # plan = sql.execute_sql(
+    #     'select bp.environment_id, bp.content,bp.plan_name,bp.plan_id from base_plan as bp where bp.is_task = 1',
+    #     dict_type=True)
     if plan == None:
         log.error('查询定时任务计划为空！')
         return
-    plan_id = plan['plan_id']
-    env_id = plan['environment_id']
-    case_id_list = eval(plan['content'])
+    plan_id = plan[0]['plan_id']
+    env_id = plan[0]['environment_id']
+    case_id_list = eval(plan[0]['content'])
     begin_time = time.clock()
-    prj_id, env_url, private_key = get_env(env_id)
-    sign_type = get_sign(prj_id)
+    # prj_id, env_url, private_key = get_env(env_id)
+    # sign_type = get_sign(prj_id)
     case_num = len(case_id_list)
     content = []
     pass_num = 0
@@ -54,7 +55,9 @@ def run_plan():
     error_num = 0
     i = 0
     for case_id in case_id_list:
-        case_result = test_case(case_id, env_id, case_id_list, sign_type, private_key, env_url, begin_time)
+        execute = Test_execute(case_id, env_id, case_id_list)
+        case_result = execute.test_case()
+        # case_result = test_case(case_id, env_id, case_id_list, sign_type, private_key, env_url, begin_time)
         content.append(case_result)
     end_time = time.clock()
     totalTime = str(end_time - begin_time) + 's'
@@ -74,11 +77,16 @@ def run_plan():
                 s['id'] = i
     pic_name = DrawPie(pass_num, fail_num, error_num)
     report_name = plan['plan_name'] + "-" + str(start_time)
-    sql.execute_sql(
-        'insert into base_report(report_name,pic_name,totalTime,startTime,content,case_num,pass_num,fail_num,error_num,plan_id,update_time, update_user) values("{}","{}","{}","{}","{}","{}","{}","{}","{}","{}","{}", "{}")'.format(
-            report_name,pic_name,totalTime,start_time,str(content).replace('"', "'"), case_num,pass_num,fail_num,
-            error_num,plan_id, str(datetime.now()), 'root'))
-    sql.execute_sql('update base_plan set make=0, update_time="{}"'.format(datetime.now()))
+    report = Report(plan=plan, report_name=report_name, content=content, case_num=case_num,
+                    pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
+                    totalTime=totalTime, startTime=start_time, update_user='root')
+    report.save()
+    Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now(), update_user='root')
+    # sql.execute_sql(
+    #     'insert into base_report(report_name,pic_name,totalTime,startTime,content,case_num,pass_num,fail_num,error_num,plan_id,update_time, update_user) values("{}","{}","{}","{}","{}","{}","{}","{}","{}","{}","{}", "{}")'.format(
+    #         report_name,pic_name,totalTime,start_time,str(content).replace('"', "'"), case_num,pass_num,fail_num,
+    #         error_num,plan_id, str(datetime.now()), 'root'))
+    # sql.execute_sql('update base_plan set make=0, update_time="{}"'.format(datetime.now()))
     if fail_num or error_num:
         # report_file_html = get_new_report_html(report_path)
         # report_file_list.append(report_file_html)
