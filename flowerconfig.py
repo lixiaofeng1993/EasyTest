@@ -16,4 +16,4 @@ broker_api = 'http://guest:guest@localhost:15672/api/'
 logging = 'DEBUG'
 
 # 持久模式
-persistent = True
+persistent = False
