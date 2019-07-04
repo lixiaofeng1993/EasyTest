@@ -73,14 +73,13 @@ class SqL:
             log.error('sql执行，查询数据失败！！！')
             return None
         try:
-            # with cur as cur:
-            cur.execute(sql)  # 执行sql
+            with cur as cur:
+                cur.execute(sql)  # 执行sql
             if 'delete' in sql or 'insert' in sql or 'update' in sql:
                 self.conn.commit()  # 提交
             else:
                 if num == 1:  # 返回一条数据
                     data = cur.fetchone()
-                    cur.close()
                     if dict_type:
                         return data
                     else:
@@ -88,7 +87,6 @@ class SqL:
                 else:  # 返回多条数据
                     data_str = ''
                     data = cur.fetchall()
-                    cur.close()
                     if dict_type:
                         return data
                     else:
@@ -98,7 +96,7 @@ class SqL:
                         return data_str
         except Exception as e:
             self.conn.rollback()
-            log.error('执行SQL语句出现异常1：{}'.format(e))
+            log.error('执行SQL语句出现异常：{}'.format(e))
             return None
 
     # def __del__(self):
