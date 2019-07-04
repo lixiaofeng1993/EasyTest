@@ -7,6 +7,7 @@ import time, logging, os
 from common.connectMySql import SqL
 from lib.public import DrawPie, remove_logs
 from datetime import datetime
+from base.models import Project, Sign, Environment, Interface, Case, Plan, Report
 from lib.sql_parameter import test_case, get_sign, get_env
 from run_this import send_email
 from common import readConfig
