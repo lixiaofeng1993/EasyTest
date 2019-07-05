@@ -275,7 +275,7 @@
                         $('.spinner1').hide();
                         var data = res['step_list'];
                         for (i in data) {
-                            html = '<h5>' + (parseInt(i) + 1) + '. ' + data[i].if_name + '</h5><p style="font-family: Consolas;font-size:12px">' + '请求方式：' + data[i].method + '，请求url：' + data[i].url + '</p><p style="font-family: Consolas;font-size:12px">' + '检查点：' + data[i].checkpoint + '</p><p style="font-family: Consolas;font-size:12px">' + '接口返回信息：' + JSON.stringify(data[i].res_content).slice(0, 100) + '... </p>';
+                            html = '<h5>' + (parseInt(i) + 1) + '. ' + data[i].if_name + '</h5><p style="font-family: Consolas;font-size:12px">' + '请求方式：' + data[i].method + '，请求url：' + data[i].url + '</p><p style="font-family: Consolas;font-size:12px">' + '检查点：' + data[i].checkpoint + '</p><p style="font-family: Consolas;font-size:12px">' + '接口返回信息：' + JSON.stringify(data[i].res_content).slice(0, 100) + '  ... </p>';
                             if (data[i].msg.indexOf('success')) {
                                 _html = '<p style="font-family: Consolas;font-size:12px;color:red">' + '测试结果：' + data[i].msg + '</p>'
                             } else {

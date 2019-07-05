@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/case/index.html" afterPath="$PROJECT_DIR$/templates/base/case/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/report.html" afterPath="$PROJECT_DIR$/templates/report.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -40,7 +39,7 @@
         <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="355">
-              <caret line="277" column="404" lean-forward="false" selection-start-line="277" selection-start-column="404" selection-end-line="277" selection-end-column="404" />
+              <caret line="277" column="411" lean-forward="false" selection-start-line="277" selection-start-column="411" selection-end-line="277" selection-end-column="411" />
               <folding />
             </state>
           </provider>
@@ -1085,7 +1084,7 @@
     <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="355">
-          <caret line="277" column="404" lean-forward="false" selection-start-line="277" selection-start-column="404" selection-end-line="277" selection-end-column="404" />
+          <caret line="277" column="411" lean-forward="false" selection-start-line="277" selection-start-column="411" selection-end-line="277" selection-end-column="411" />
           <folding />
         </state>
       </provider>
