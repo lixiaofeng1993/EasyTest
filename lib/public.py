@@ -57,11 +57,18 @@ def validators_result(validators_list, res):
 
 
 # 在response中提取参数, 并放到列表中
-def get_extract(extract_dict, res):
+def get_extract(extract_dict, res, url=''):
+    with_extract_dict = {}
     for key, value in extract_dict.items():
         key_value = get_param(key, res)
-        extract_dict[key] = key_value
-    return extract_dict
+        if url:
+            if isinstance(url, str):
+                url = url.strip('/').replace('/', '_')
+                url_key = url + '_' + key  # 拼接接口路径和参数
+        else:
+            url_key = key
+        with_extract_dict[url_key] = key_value
+    return with_extract_dict
 
 
 # 替换内容中的变量, 返回字符串型

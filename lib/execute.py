@@ -33,7 +33,8 @@ class Test_execute():
         self.prj_id, self.env_url, self.private_key = self.get_env(self.env_id)
         self.sign_type = self.get_sign(self.prj_id)
         self.s = requests.session()
-        self.extract_dict = {}
+        # self.extract_dict = {}
+        self.extract_list = []
         self.glo_var = {}
         self.step_json = []
         # self.sql = SqL(job=True)
@@ -86,7 +87,9 @@ class Test_execute():
                 if var_value is None:
                     var_value = get_param(var_name, self.step_json)
                 if var_value is None:
-                    var_value = self.extract_dict[var_name]
+                    for extract_dict in self.extract_list:  # 把变量替换为提取的参数
+                        if var_name in extract_dict.keys():
+                            var_value = extract_dict[var_name]
                 step_content = json.loads(replace_var(step_content, var_name, var_value))
         if_dict = {"url": interface.url, "header": step_content["header"], "body": step_content["body"]}
         set_headers = Environment.objects.get(env_id=self.env_id).set_headers
@@ -162,7 +165,9 @@ class Test_execute():
             return if_dict
 
         if step_content["extract"]:
-            self.extract_dict = get_extract(step_content["extract"], if_dict["res_content"])
+            extract_dict = get_extract(step_content["extract"], if_dict["res_content"],
+                                       interface.url)  # 从有提取参数的接口中把参数抓出来
+            self.extract_list.append(extract_dict)
         if step_content["validators"]:
             if_dict["result"], if_dict["msg"], if_dict['checkpoint'] = validators_result(step_content["validators"],
                                                                                          if_dict["res_content"])
@@ -229,10 +234,9 @@ def get_total_values():
             total_fail = 0
 
         total_percent = round(total_pass / (total_pass + total_fail) * 100, 2) if (
-                                                                                  total_pass + total_fail) != 0 else 0.00
+                                                                                      total_pass + total_fail) != 0 else 0.00
         total['pass'].append(total_pass)
         total['fail'].append(total_fail)
         total['percent'].append(total_percent)
 
     return total
-
