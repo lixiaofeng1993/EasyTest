@@ -166,14 +166,17 @@ def get_param_response(param_name, dict_data, num='', default=None):
                 if ret is not default:
                     return ret
             if isinstance(v, list):
-                try:
-                    num = int(num)
-                except ValueError:
-                    num = 0
-                if isinstance(v[num], dict):
-                    ret = get_param_response(param_name, v[num])
-                    if ret is not default:
-                        return ret
+                if num:
+                    if isinstance(v[num], dict):
+                        ret = get_param_response(param_name, v[num])
+                        if ret is not default:
+                            return ret
+                else:
+                    for i in v:
+                        if isinstance(v[i], dict):
+                            ret = get_param_response(param_name, v[i])
+                            if ret is not default:
+                                return ret
     return default
 
 
