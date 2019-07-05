@@ -75,7 +75,7 @@ def get_extract(extract_dict, res, url=''):
                 if len(key_list) > 2:
                     key_value = get_param(key, res)
                 else:
-                    key_value = get_param(key_list[0], res, key_list[1])
+                    key_value = get_param(key_list[0], res, num)
             else:
                 key_value = get_param(key, res)
         else:
