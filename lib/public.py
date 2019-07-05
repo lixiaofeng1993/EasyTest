@@ -173,8 +173,8 @@ def get_param_response(param_name, dict_data, num='', default=None):
                             return ret
                 else:
                     for i in v:
-                        if isinstance(v[i], dict):
-                            ret = get_param_response(param_name, v[i])
+                        if isinstance(i, dict):
+                            ret = get_param_response(param_name, i)
                             if ret is not default:
                                 return ret
     return default
