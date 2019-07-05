@@ -59,7 +59,7 @@ def run_plan():
         # case_result = test_case(case_id, env_id, case_id_list, sign_type, private_key, env_url, begin_time)
         content.append(case_result)
     end_time = time.clock()
-    totalTime = str(end_time - begin_time) + 's'
+    totalTime = str(end_time - begin_time)[:6] + 's'
     for step in content:
         for s in step['step_list']:
             if s["result"] == "pass":
