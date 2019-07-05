@@ -13,7 +13,7 @@ sys.path.insert(0, r'/home/lixiaofeng/EasyTest')
 from locust import HttpLocust, TaskSet, task, Locust, events
 from locust.clients import HttpSession
 import queue, json, subprocess, os
-from lib.sql_parameter import get_parameters
+from lib.execute import get_parameters
 from lib.public import get_extract
 import logging
 
