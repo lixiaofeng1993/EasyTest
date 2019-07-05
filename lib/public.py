@@ -21,10 +21,9 @@ def paginator(data, page):
     return contacts
 
 
-# 格式化utl<带有 {} 的情况>
 def format_url(url, body):
     # url_params = re.findall('({\w+})', url)
-    url_params = re.findall('{(\w+)}', url)
+    url_params = re.findall('{(\w+)}', url)  # 格式化utl<带有 {} 的情况
     if url_params:
         url = url.replace(url_params[0], '')
         for k, v in body.items():
@@ -58,9 +57,22 @@ def validators_result(validators_list, res):
 
 # 在response中提取参数, 并放到列表中
 def get_extract(extract_dict, res, url=''):
+    """
+    :param extract_dict: 要提取参数的字典
+    :param res: 要提取参数的返回值
+    :param url: 要拼接的接口路径
+    :return: 处理好的要提取的参数和值，装在字典中返回
+    """
     with_extract_dict = {}
     for key, value in extract_dict.items():
-        key_value = get_param(key, res)
+        if '_' in key:
+            key_list = key.split('_')
+            if len(key_list) > 2:
+                key_value = get_param(key, res)
+            else:
+                key_value = get_param(key_list[0], res, key_list[1])
+        else:
+            key_value = get_param(key, res)
         if url:
             if isinstance(url, str):
                 url = url.strip('/').replace('/', '_')
@@ -73,6 +85,12 @@ def get_extract(extract_dict, res, url=''):
 
 # 替换内容中的变量, 返回字符串型
 def replace_var(content, var_name, var_value):
+    """
+    :param content: 要被提取变量的用例数据
+    :param var_name: 提取的参数
+    :param var_value: 提取的参数值
+    :return: 返回替换后的用例数据
+    """
     if not isinstance(content, str):
         content = json.dumps(content)
     var_name = "$" + var_name
@@ -82,6 +100,10 @@ def replace_var(content, var_name, var_value):
 
 # 从内容中提取所有变量名, 变量格式为$variable,返回变量名list
 def extract_variables(content):
+    """
+    :param content: 要被提取变量的用例数据
+    :return: 要所有提取的变量
+    """
     variable_regexp = r"\$([\w_]+)"
     if not isinstance(content, str):
         content = str(content)
@@ -92,7 +114,13 @@ def extract_variables(content):
 
 
 # 在内容中获取某一参数的值
-def get_param(param, content):
+def get_param(param, content, num=''):
+    """
+    :param param: 从接口返回值中要提取的参数
+    :param content: 接口返回值
+    :param num: 返回值中存在list时，取指定第几个
+    :return: 返回非变量的提取参数值
+    """
     param_val = None
     if isinstance(content, str):
         # content = json.loads(content)
@@ -101,7 +129,7 @@ def get_param(param, content):
         except:
             content = ""
     if isinstance(content, dict):
-        param_val = get_param_response(param, content)
+        param_val = get_param_response(param, content, num)
     if isinstance(content, list):
         dict_data = {}
         for i in range(len(content)):
@@ -109,7 +137,7 @@ def get_param(param, content):
                 dict_data[str(i)] = eval(content[i])
             except:
                 dict_data[str(i)] = content[i]
-        param_val = get_param_response(param, dict_data)
+        param_val = get_param_response(param, dict_data, num)
     if param_val is None:
         return param_val
     else:
@@ -118,7 +146,14 @@ def get_param(param, content):
         return param_val
 
 
-def get_param_response(param_name, dict_data, default=None):
+def get_param_response(param_name, dict_data, num='', default=None):
+    """
+    :param param_name: 从接口返回值中要提取的参数
+    :param dict_data: 接口返回值
+    :param num: 返回值中存在list时，取指定第几个
+    :param default: 函数异常返回
+    :return: 提取的参数值
+    """
     for k, v in dict_data.items():
         if k == param_name:
             return v
@@ -128,19 +163,20 @@ def get_param_response(param_name, dict_data, default=None):
                 if ret is not default:
                     return ret
             if isinstance(v, list):
-                for i in v:
-                    if isinstance(i, dict):
-                        ret = get_param_response(param_name, i)
-                        if ret is not default:
-                            return ret
-                    else:
-                        pass
+                try:
+                    num = int(num)
+                except ValueError:
+                    num = 0
+                if isinstance(v[num], dict):
+                    ret = get_param_response(param_name, v[num])
+                    if ret is not default:
+                        return ret
     return default
 
 
 # 发送请求
 def call_interface(s, method, url, header, data, content_type='json'):
-    log.info('========interface params==============> {} {} {} {}'.format(url, header, data, content_type))
+    # log.info('========interface params==============> {} {} {} {}'.format(url, header, data, content_type))
     if method in ["post", "put"]:
         if content_type in ["json", 'sql']:
             res = s.request(method=method, url=url, json=data, headers=header, verify=False)
@@ -158,7 +194,7 @@ def call_interface(s, method, url, header, data, content_type='json'):
     if content_type == 'file':
         # res = s.request(method=method, url=url, params=data, headers=header, verify=False)
         res = s.request(method=method, url=url, files=data, headers=header, verify=False)
-    log.info('========接口返回信息==============> {} {}'.format(res.status_code, res.text))
+    # log.info('========接口返回信息==============> {} {}'.format(res.status_code, res.text))
     return res
 
 

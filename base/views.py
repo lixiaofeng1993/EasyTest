@@ -486,6 +486,8 @@ def interface_add(request):
             response_header_data = request.POST['response_header_data']
             response_body_data = request.POST['response_body_data']
             username = request.session.get('user', '')
+            if is_headers == '1':
+                Interface.objects.filter(is_header=1).update(is_header=0)
             interface = Interface(if_name=if_name, url=url, project=project, method=method, data_type=data_type,
                                   is_sign=is_sign, description=description, request_header_param=request_header_data,
                                   request_body_param=request_body_data, response_header_param=response_header_data,
@@ -593,6 +595,8 @@ def interface_update(request):
             response_body_data_list = request.POST.getlist('response_body_data', [])
             response_body_data = interface_format_params(response_body_data_list)
             username = request.session.get('user', '')
+            if is_headers == '1':
+                Interface.objects.filter(is_header=1).update(is_header=0)
             Interface.objects.filter(if_id=if_id).update(if_name=if_name, url=url, project=project, method=method,
                                                          data_type=data_type, is_header=is_headers,
                                                          is_sign=is_sign, description=description,
@@ -954,7 +958,7 @@ def case_run(request):
             case_id = request.POST['case_id']
             env_id = request.POST['env_id']
             username = request.session.get('user', '')
-            log.info('用户 {} 在 {} 环境 运行用例 {} 成功.'.format(username, env_id, case_id))
+            log.info('用户 {} 在 {} 环境 运行用例 {} .'.format(username, env_id, case_id))
             execute = Test_execute(case_id, env_id, ['1'])
             case_result = execute.test_case()
             Case.objects.filter(case_id=case_id).update(update_user=username)
@@ -1451,7 +1455,7 @@ def file_download(request):
             response = StreamingHttpResponse(file_iterator(name))
             response['Content-Type'] = 'application/octet-stream'
             response['Content-Disposition'] = 'attachment;filename="{0}"'.format(name)
-            log.info('用户 {} 下载测试报告或日志文件：{} 成功.'.format(user_id, name))
+            log.info('用户 {} 下载测试报告或日志文件：{} .'.format(user_id, name))
             return response
 
 
