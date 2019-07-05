@@ -25,11 +25,10 @@ j = 0
 
 
 class Test_execute():
-    def __init__(self, case_id, env_id, case_id_list, locust=False):
+    def __init__(self, case_id, env_id, case_id_list):
         self.case_id = case_id
         self.env_id = env_id
         self.case_id_list = case_id_list
-        self.locust = locust
         self.begin_time = time.clock()
         self.prj_id, self.env_url, self.private_key = self.get_env(self.env_id)
         self.sign_type = self.get_sign(self.prj_id)
@@ -54,23 +53,17 @@ class Test_execute():
         case_run = {"case_id": self.case_id, "case_name": case.case_name}
         case_step_list = []
         for step in self.step_list:
-            if not self.locust:
-                step_info = self.step(step)
-                if isinstance(step_info, dict):
-                    case_step_list.append(step_info)
-                    if step_info["result"] == "fail":
-                        case_run["result"] = "fail"
-                        # break
-                    if step_info["result"] == "error":
-                        case_run["result"] = "error"
-                        # break
-                else:
-                    return {'error': '用例 {} 中的接口 {} 已被删除！'.format(case.case_name, step["if_name"])}
-            else:
-                step_info, url = self.step(step)
+            step_info = self.step(step)
+            if isinstance(step_info, dict):
                 case_step_list.append(step_info)
-        if self.locust:
-            return
+                if step_info["result"] == "fail":
+                    case_run["result"] = "fail"
+                    # break
+                if step_info["result"] == "error":
+                    case_run["result"] = "error"
+                    # break
+            else:
+                return {'error': '用例 {} 中的接口 {} 已被删除！'.format(case.case_name, step["if_name"])}
         class_name = self.__class__.__name__
         func_name = sys._getframe().f_code.co_name
         method_doc = self.test_case.__doc__
@@ -87,7 +80,7 @@ class Test_execute():
             return
         var_list = extract_variables(step_content)
         # 检查是否存在变量
-        if var_list and not self.locust:
+        if var_list:
             for var_name in var_list:
                 var_value = get_param(var_name, step_content)
                 if var_value is None:
@@ -95,8 +88,6 @@ class Test_execute():
                 if var_value is None:
                     var_value = self.extract_dict[var_name]
                 step_content = json.loads(replace_var(step_content, var_name, var_value))
-        else:
-            extract = step_content['extract']
         if_dict = {"url": interface.url, "header": step_content["header"], "body": step_content["body"]}
         set_headers = Environment.objects.get(env_id=self.env_id).set_headers
         if set_headers:
@@ -133,10 +124,7 @@ class Test_execute():
         if '[' in json.dumps(if_dict["body"]):  # body参数是list的情况
             for k, v in if_dict['body'].items():
                 if_dict["body"][k] = eval(v)
-        if not self.locust:
-            if_dict["url"] = self.env_url + interface.url
-        else:
-            if_dict["url"] = interface.url
+        if_dict["url"] = self.env_url + interface.url
         if_dict["url"], if_dict["body"] = format_url(if_dict["url"], if_dict["body"])
         if interface.data_type == 'file':
             if_dict["body"] = {
@@ -145,9 +133,6 @@ class Test_execute():
         if_dict["if_name"] = step_content["if_name"]
         if_dict["method"] = interface.method
         if_dict["data_type"] = interface.data_type
-        if self.locust:
-            if_dict['extract'] = extract
-            return if_dict, self.env_url
         try:
             # if self.sign_type == 4:
             if interface.is_sign:
@@ -244,33 +229,10 @@ def get_total_values():
             total_fail = 0
 
         total_percent = round(total_pass / (total_pass + total_fail) * 100, 2) if (
-                                                                                      total_pass + total_fail) != 0 else 0.00
+                                                                                  total_pass + total_fail) != 0 else 0.00
         total['pass'].append(total_pass)
         total['fail'].append(total_fail)
         total['percent'].append(total_percent)
 
     return total
 
-
-def get_parameters():
-    """
-    locust 运行参数处理
-    :return: if_dict 接口请求参数
-             url     请求地址
-    """
-    plan = Plan.objects.filter(is_locust=1).all().values()
-    if plan != []:
-        env_id = plan[0]['environment_id']
-        case_id_list = eval(plan[0]['content'])
-        # prj_id, env_url, private_key = get_env(env_id)
-        # sign_type = get_sign(prj_id)
-        if_dict_list = []
-        for case_id in case_id_list:
-            execute = Test_execute(case_id, env_id, case_id_list)
-            if_dict, url = execute.test_case()
-            # if_dict, url = test_case(case_id, env_id, case_id_list, sign_type, private_key, env_url, locust=True)
-            if_dict_list.append(if_dict)
-        return if_dict_list, url
-    else:
-        log.error('查询性能测试数据为空！')
-        return False
