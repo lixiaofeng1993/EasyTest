@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/case/index.html" afterPath="$PROJECT_DIR$/templates/base/case/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/report.html" afterPath="$PROJECT_DIR$/templates/report.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -38,8 +39,18 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="575">
-              <caret line="281" column="412" lean-forward="false" selection-start-line="281" selection-start-column="412" selection-end-line="281" selection-end-column="412" />
+            <state relative-caret-position="355">
+              <caret line="277" column="404" lean-forward="false" selection-start-line="277" selection-start-column="404" selection-end-line="277" selection-end-column="404" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="report.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/report.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1914">
+              <caret line="7223" column="81" lean-forward="false" selection-start-line="7223" selection-start-column="81" selection-end-line="7223" selection-end-column="81" />
               <folding />
             </state>
           </provider>
@@ -57,7 +68,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>s</find>
       <find>get_sign</find>
       <find>animated</find>
       <find>begin_time</find>
@@ -87,6 +97,7 @@
       <find>url</find>
       <find>panel-heading</find>
       <find>result</find>
+      <find>log</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -119,7 +130,6 @@
         <option value="$PROJECT_DIR$/EasyTest/urls.py" />
         <option value="$PROJECT_DIR$/flowerconfig.py" />
         <option value="$PROJECT_DIR$/common/connectMySql.py" />
-        <option value="$PROJECT_DIR$/templates/report.html" />
         <option value="$PROJECT_DIR$/EasyTest/celery.py" />
         <option value="$PROJECT_DIR$/base/tasks.py" />
         <option value="$PROJECT_DIR$/EasyTest/settings.py" />
@@ -135,6 +145,7 @@
         <option value="$PROJECT_DIR$/base/views.py" />
         <option value="$PROJECT_DIR$/templates/base/case/add.html" />
         <option value="$PROJECT_DIR$/templates/base/case/update.html" />
+        <option value="$PROJECT_DIR$/templates/report.html" />
         <option value="$PROJECT_DIR$/templates/base/case/index.html" />
       </list>
     </option>
@@ -771,13 +782,6 @@
     <entry file="file://$PROJECT_DIR$/base/tests.py" />
     <entry file="file://$PROJECT_DIR$/EasyTest/urls.py" />
     <entry file="file://$PROJECT_DIR$/EasyTest/celery.py" />
-    <entry file="file://$PROJECT_DIR$/templates/report.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="7194" column="71" lean-forward="false" selection-start-line="7194" selection-start-column="52" selection-end-line="7194" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/wxCode.jpg" />
     <entry file="file://$PROJECT_DIR$/media/1562302879small-qrcode.png" />
     <entry file="file://$PROJECT_DIR$/templates/base/interface/add.html">
@@ -1070,10 +1074,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/report.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1914">
+          <caret line="7223" column="81" lean-forward="false" selection-start-line="7223" selection-start-column="81" selection-end-line="7223" selection-end-column="81" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="281" column="412" lean-forward="false" selection-start-line="281" selection-start-column="412" selection-end-line="281" selection-end-column="412" />
+        <state relative-caret-position="355">
+          <caret line="277" column="404" lean-forward="false" selection-start-line="277" selection-start-column="404" selection-end-line="277" selection-end-column="404" />
           <folding />
         </state>
       </provider>

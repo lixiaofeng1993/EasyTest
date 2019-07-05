@@ -231,7 +231,6 @@
             var case_id = obj.parentNode.parentNode.children[0].innerText;
             var case_name = obj.parentNode.parentNode.children[1].innerText;
             var prj_id = obj.parentNode.parentNode.children[2].getAttribute("prj_id");
-            console.log('case_name=======>', case_name);
             $("#debug_case_id").val(case_id);
             $("#cancel_run").html("取消");
             $("#cancel_run").attr("class", "btn btn-default");
@@ -273,13 +272,10 @@
                     if (res == '0') {
                         $("#run_return_parameter").val("用户未登录！");
                     } else {
-                        console.log('------>', res['step_list']);
                         $('.spinner1').hide();
                         var data = res['step_list'];
-                        console.log(data)
                         for (i in data) {
-                            console.log(typeof i, data[i].url, JSON.stringify(data[i].body));
-                            html = '<h5>' + (parseInt(i) + 1) + '. ' + data[i].if_name + '</h5><p style="font-family: Consolas;font-size:12px">' + '请求方式：' + data[i].method + '，请求url：' + data[i].url + '</p><p style="font-family: Consolas;font-size:12px">' + '检查点：' + data[i].checkpoint + '</p><p style="font-family: Consolas;font-size:12px">' + '接口返回信息：' + JSON.stringify(data[i].res_content).slice(0, 80) + '... </p>';
+                            html = '<h5>' + (parseInt(i) + 1) + '. ' + data[i].if_name + '</h5><p style="font-family: Consolas;font-size:12px">' + '请求方式：' + data[i].method + '，请求url：' + data[i].url + '</p><p style="font-family: Consolas;font-size:12px">' + '检查点：' + data[i].checkpoint + '</p><p style="font-family: Consolas;font-size:12px">' + '接口返回信息：' + JSON.stringify(data[i].res_content).slice(0, 100) + '... </p>';
                             if (data[i].msg.indexOf('success')) {
                                 _html = '<p style="font-family: Consolas;font-size:12px;color:red">' + '测试结果：' + data[i].msg + '</p>'
                             } else {
