@@ -796,7 +796,7 @@ def case_add(request):
             content = request.POST.get('content')
             username = request.session.get('user', '')
             if content == '[]':
-                return HttpResponse('请输入接口参数信息11！')
+                return HttpResponse('请输入接口参数信息！')
             case = Case(case_name=case_name, project=project, description=description,
                         content=content, update_user=username)
             case.save()
