@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '0y=3effs=f2e3wqz^sbqt(@d@&+*6*r^86(!p1f8n$ygumkk!i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*', '39.105.136.231', '127.0.0.1']
 
@@ -141,7 +141,7 @@ SIMPLEUI_STATIC_OFFLINE = True  # 访问静态文件
 SIMPLEUI_HOME_ICON = 'fa fa-user'
 
 # 上传
-MEDIA_ROOT = 'media'  # 对应文件夹
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # 对应文件夹
 MEDIA_URL = '/media/'  # 对应上线后的url
 
 STATIC_URL = '/static/'

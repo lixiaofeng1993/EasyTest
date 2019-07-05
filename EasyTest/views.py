@@ -5,29 +5,47 @@ from django.contrib import auth  # django认证系统
 from djcelery.models import PeriodicTask, CrontabSchedule
 from django.contrib.auth.models import User
 from django.db.models import Count
-from django.shortcuts import render_to_response
+from django.conf import settings
+# from django.shortcuts import render_to_response
 from base.models import Project, Sign, Environment, Interface, Case, Plan, Report
 import logging, os
 from django.http import StreamingHttpResponse
-from lib.public import gr_code
+from lib.public import gr_code, getACodeImage
 from lib.execute import get_user, get_total_values
 
 log = logging.getLogger('log')  # 初始化log
 num_list = []
 
 
+# appid = 'wx506830910cbd77e9'
+# appsecret = 'e0e5d5ed1d507103f73d6667eef00d7a' pages/index/detail/index?id=365&campId=12&index=1
+
 # 首页
-# @login_required
-# @page_cache(5)
 def index(request):
     if request.method == 'POST':
         user_id = request.session.get('user_id', '')  # 从session中获取user_id
         if get_user(user_id):
             url = request.POST.get('url', '')
-            if url:
+            path = request.POST.get('path', '')
+            appid = request.POST.get('appid', '')
+            appsecret = request.POST.get('appsecret', '')
+            if appid != '' and appsecret != '':
+                if path == '':
+                    path = '?from=1'
+                url = {'path': path}
+                qr_code_name = getACodeImage(appid, appsecret, url)
+                if not qr_code_name:
+                    log.info('用户 {} 生成小程序码 失败！appid、appsecret错误，未返回正确的token！')
+                    return HttpResponse('2')
+                else:
+                    log.info('用户 {} 生成小程序码 {}-->{}'.format(user_id, qr_code_name, url))
+                    return JsonResponse(str(qr_code_name), safe=False)
+            elif url != '':
                 qr_code_name = gr_code(url)
                 log.info('用户 {} 生成二维码 {}-->{}'.format(user_id, qr_code_name, url))
                 return JsonResponse(str(qr_code_name), safe=False)
+            else:
+                return HttpResponse('1')
         else:
             return HttpResponse('0')
     else:
@@ -99,7 +117,8 @@ def img_download(request):
     if get_user(user_id):
         if request.method == 'GET':
             name = request.GET.get('log_file', '')
-            name_path = os.path.join('/home/lixiaofeng/EasyTest/media', name)
+            # name_path = os.path.join('/home/lixiaofeng/EasyTest/media', name)
+            name_path = os.path.join(settings.MEDIA_ROOT, name)
 
             def file_iterator(file_name, chunk_size=512):
                 with open(file_name, 'rb') as f:

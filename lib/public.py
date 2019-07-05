@@ -259,6 +259,67 @@ def gr_code(url):
     return str(now_time) + "qrcode.png"
 
 
+import urllib.request
+import urllib.parse
+import json
+
+appid = 'wx506830910cbd77e9'
+appsecret = 'e0e5d5ed1d507103f73d6667eef00d7a'
+
+
+# 获取TOKEN
+def getToken(appid, appsecret):
+    # 这个是微信获取小程序码的接口
+    url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={appid}&secret={appsecret}'.format(
+        appid=appid, appsecret=appsecret)
+    # 准备一下头
+    headers = {
+        'User-Agent': 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
+    }
+
+    request = urllib.request.Request(url, headers=headers)
+    response = urllib.request.urlopen(request)
+    readData = response.read()
+    readData = readData.decode('utf-8')
+    obj = json.loads(readData)
+    try:
+        access_token = obj['access_token']
+        return access_token
+    except KeyError:
+        return None
+
+
+# 获取小程序码
+def getACodeImage(appid, appsecret, values):
+    # 这个是微信获取小程序码的接口
+    token = getToken(appid, appsecret)
+    if not token:
+        return None
+    url = 'https://api.weixin.qq.com/wxa/getwxacode?access_token={token}'.format(token=token)
+    # 准备一下头
+    headers = {
+        'User-Agent': 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
+    }
+    # 用Post传值，这里值用JSON的形式
+    # values = {"path": "pages/index/detail/index?id=365&campId=12&index=1"}
+    # 将字典格式化成能用的形式,urlencode不能用
+    # data = urllib.parse.urlencode(values).encode('utf-8')
+    # 使用json.dumps的方式序列化为字符串，然后bytes进行编码
+    data = json.dumps(values)
+    data = bytes(data, 'utf8')
+    # 创建一个request,放入我们的地址、数据、头
+    request = urllib.request.Request(url, data, headers)
+    # 将获取的数据存在本地文件
+    readData = urllib.request.urlopen(request).read()
+    start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+    now_time = int(time.mktime(time.strptime(start_time, '%Y-%m-%d %H:%M:%S')))
+    pic_path = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'media')
+    imgPath = os.path.join(pic_path, str(now_time) + "small-qrcode.png")
+    with open(imgPath, 'wb') as f:
+        f.write(readData)
+    return str(now_time) + "small-qrcode.png"
+
+
 def remove_logs(path):
     """到期删除日志文件"""
     file_list = os.listdir(path)  # 返回目录下的文件list

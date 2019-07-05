@@ -19,16 +19,31 @@
 
         .img_qr {
             width: 15%;
+            margin: 0 40%;
         }
 
         .btn-primary {
-            margin-left: 15%;
+            margin-left: 20%;
         }
 
         #main {
             height: 40em;
             width: 100%;
             left: 0;
+        }
+
+        .small-qcode {
+            display: none;
+        }
+
+        .sure-btn {
+            color: #3b98c8;
+            float: left;
+            margin-left: 2%;
+        }
+
+        .sure-btn:hover {
+            color: red;
         }
     </style>
 {% endblock %}
@@ -78,15 +93,28 @@
                     <div id="main"></div>
                 </div>
                 <div class="panel-body">
-                    <h5>下载二维码</h5>
-                    <br>
-                    <div class="input-group input-group-lg" style="width: 35%;float: left;">
-                        <span class="input-group-addon"><i class="fa fa-link"></i>&nbsp;url：</span>
-                        <input type="text" id="qcode" class="form-control" placeholder="">
-
+                    <div class="qcode">
+                        <h5>二维码</h5>
+                        <br>
+                        <div class="left" style="float: left;margin-left: 5%">
+                            <p class="">url：</p><input type="text" id="qcode" class="" placeholder="">
+                        </div>
                     </div>
-                    <button id="submit" class="btn btn-primary" lay-filter="demo1" style="height: 45px;margin-left: 1%">
-                        <i class="fa fa-gavel"></i></button>
+                    <div class="small-qcode">
+                        <h5>小程序码</h5>
+                        <br>
+                        <div class="left" style="float: left;margin-left: 5%">
+                            <p class="">appid：</p>
+                            <input type="text" id="appid" class="" placeholder="">
+                            <p class="">appsecret：</p>
+                            <input type="text" id="appsecret" class="" placeholder="">
+                            <p class="">url：</p>
+                            <input type="text" id="small-qcode" class="" placeholder="">
+                        </div>
+                    </div>
+                    <div id="submit" class="sure-btn" lay-filter="demo1"><i class="fa fa-gavel"></i>&nbsp;确定
+                    </div>
+                    <div class="switch sure-btn"><i class="fa fa-exchange"></i>&nbsp;切换</div>
                     <div class="img_qr">
                     </div>
                 </div>
@@ -113,7 +141,8 @@
             src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
-    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=QI0Gwkg9y0oaZmyMRc58dp5uQXsgloBh"></script>
+    <script type="text/javascript"
+            src="http://api.map.baidu.com/api?v=2.0&ak=QI0Gwkg9y0oaZmyMRc58dp5uQXsgloBh"></script>
     <script type="text/javascript"
             src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
     <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
@@ -243,25 +272,47 @@
     <script type="text/javascript">
         $('#submit').click(function () {
             var url = $("#qcode").val();
+            var path = $("#small-qcode").val();
+            var appid = $("#appid").val();
+            var appsecret = $("#appsecret").val();
             console.log(url);
             $.ajax({
                 url: '/index/?' + Math.random(),
                 cache: false,
                 type: 'post',
-                data: {'url': url},
+                data: {'url': url, 'appid': appid, 'appsecret': appsecret, 'path': path},
                 success: function (data) {
                     if (data == '0') {
                         alert('用户未登录！');
                         location.reload()
+                    } else if (data == '1') {
+                        alert('输入框不能为空！')
+                    } else if (data == '2') {
+                        alert('返回token异常！')
                     } else {
                         console.log(data);
-                        html = '<img src="/media/' + data + '">' + '<a href="/img_download?log_file=' + data + '" class="btn btn-primary"><i class="fa fa-cloud-download"></i>&nbsp;下载二维码</a>';
+                        html = '<img src="/media/' + data + '"><br>' + '<a href="/img_download?log_file=' + data + '" class="btn btn-primary"><i class="fa fa-cloud-download"></i>&nbsp;下载二维码</a>';
                         $('.img_qr').empty();
                         $('.img_qr').append(html);
                     }
                 }
             })
         });
+        $('.switch').click(function () {
+            var isShow = $(".qcode").is(":visible");
+            if (isShow) {
+                $('.qcode').hide();
+                $("#qcode").val("");
+                $('.small-qcode').show();
+            } else {
+                $('.qcode').show();
+                $('.small-qcode').hide();
+                $("#small-qcode").val("");
+                $("#appid").val("");
+                $("#appsecret").val("");
+            }
+        });
+
         // 回车提交搜索
         $(document).keyup(function (event) {
             if (event.keyCode == 13) {
