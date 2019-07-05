@@ -25,13 +25,13 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="execute.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="execute.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/execute.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2068">
-              <caret line="157" column="71" lean-forward="false" selection-start-line="157" selection-start-column="71" selection-end-line="157" selection-end-column="71" />
+            <state relative-caret-position="365">
+              <caret line="191" column="39" lean-forward="false" selection-start-line="191" selection-start-column="36" selection-end-line="191" selection-end-column="39" />
               <folding>
-                <marker date="1562345986440" expanded="true" signature="9520:9770" ph="..." />
+                <marker date="1562348464183" expanded="true" signature="9520:9770" ph="..." />
               </folding>
             </state>
           </provider>
@@ -47,13 +47,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="public.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="public.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/public.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="233">
-              <caret line="151" column="44" lean-forward="false" selection-start-line="151" selection-start-column="35" selection-end-line="151" selection-end-column="44" />
+            <state relative-caret-position="160">
+              <caret line="163" column="34" lean-forward="true" selection-start-line="163" selection-start-column="34" selection-end-line="163" selection-end-column="34" />
               <folding>
-                <marker date="1562347301580" expanded="true" signature="12273:12284" ph="..." />
+                <marker date="1562348471334" expanded="true" signature="12375:12386" ph="..." />
               </folding>
             </state>
           </provider>
@@ -131,7 +131,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>switch</find>
       <find>qcode</find>
       <find>sure-btn</find>
       <find>parse</find>
@@ -157,10 +156,11 @@
       <find>interface_add</find>
       <find>is_headers</find>
       <find>get_param_response</find>
-      <find>extract_list</find>
       <find>slice</find>
-      <find>extract_variables</find>
       <find>成功</find>
+      <find>extract_variables</find>
+      <find>extract_list</find>
+      <find>prin</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -206,10 +206,10 @@
         <option value="$PROJECT_DIR$/templates/base/case/update.html" />
         <option value="$PROJECT_DIR$/templates/report.html" />
         <option value="$PROJECT_DIR$/templates/base/case/index.html" />
-        <option value="$PROJECT_DIR$/lib/execute.py" />
         <option value="$PROJECT_DIR$/run_this.py" />
         <option value="$PROJECT_DIR$/base/views.py" />
         <option value="$PROJECT_DIR$/lib/public.py" />
+        <option value="$PROJECT_DIR$/lib/execute.py" />
       </list>
     </option>
   </component>
@@ -982,16 +982,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/execute.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2068">
-          <caret line="157" column="71" lean-forward="false" selection-start-line="157" selection-start-column="71" selection-end-line="157" selection-end-column="71" />
-          <folding>
-            <marker date="1562345986440" expanded="true" signature="9520:9770" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/run_this.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1002">
@@ -1018,10 +1008,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/public.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="233">
-          <caret line="151" column="44" lean-forward="false" selection-start-line="151" selection-start-column="35" selection-end-line="151" selection-end-column="44" />
+        <state relative-caret-position="160">
+          <caret line="163" column="34" lean-forward="true" selection-start-line="163" selection-start-column="34" selection-end-line="163" selection-end-column="34" />
           <folding>
-            <marker date="1562347301580" expanded="true" signature="12273:12284" ph="..." />
+            <marker date="1562348471334" expanded="true" signature="12375:12386" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/execute.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="365">
+          <caret line="191" column="39" lean-forward="false" selection-start-line="191" selection-start-column="36" selection-end-line="191" selection-end-column="39" />
+          <folding>
+            <marker date="1562348464183" expanded="true" signature="9520:9770" ph="..." />
           </folding>
         </state>
       </provider>

@@ -67,13 +67,17 @@ def get_extract(extract_dict, res, url=''):
     for key, value in extract_dict.items():
         if '_' in key:
             key_list = key.split('_')
-            if len(key_list) > 2:
-                key_value = get_param(key, res)
-            else:
-                if isinstance(key_list[1], int):
-                    key_value = get_param(key_list[0], res, key_list[1])
-                else:
+            try:
+                num = int(key_list[1])
+            except ValueError:
+                num = ''
+            if isinstance(num, int):
+                if len(key_list) > 2:
                     key_value = get_param(key, res)
+                else:
+                    key_value = get_param(key_list[0], res, key_list[1])
+            else:
+                key_value = get_param(key, res)
         else:
             key_value = get_param(key, res)
         if url:
@@ -117,7 +121,7 @@ def extract_variables(content):
 
 
 # 在内容中获取某一参数的值
-def get_param(param, content, num=''):
+def get_param(param, content, num=0):
     """
     :param param: 从接口返回值中要提取的参数
     :param content: 接口返回值
@@ -149,7 +153,7 @@ def get_param(param, content, num=''):
         return param_val
 
 
-def get_param_response(param_name, dict_data, num='', default=None):
+def get_param_response(param_name, dict_data, num=0, default=None):
     """
     :param param_name: 从接口返回值中要提取的参数
     :param dict_data: 接口返回值
