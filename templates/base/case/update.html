@@ -84,86 +84,87 @@
 
 {% block body %}
     <div class="row">
-    <div class="col-md-12">
-        <div class="ibox float-e-margins">
-            <div class="ibox-title">
-                <h3 class="panel-title">编辑用例</h3>
-            </div>
-            <div class="ibox-content">
-                <input name="case_id" id="case_id" value={{ case_id }} hidden>
-                <input name="if_list" id="if_list" value={{ if_list }} hidden>
-                <div class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">用例名称</label>
-                        <div class="col-sm-8">
-                            <input type="text" id="case_name" name="case_name" value="{{ case.case_name }}"
-                                   class="form-control">
+        <div class="col-md-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h3 class="panel-title">编辑用例</h3>
+                </div>
+                <div class="ibox-content">
+                    <input name="case_id" id="case_id" value={{ case_id }} hidden>
+                    <input name="if_list" id="if_list" value={{ if_list }} hidden>
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">用例名称</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="case_name" name="case_name" value="{{ case.case_name }}"
+                                       class="form-control">
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">所属项目</label>
-                        <div class="col-sm-8">
-                            <select id="prj_id" class="form-control" onchange=get_if()>
-                                <option value="{{ case.project_id }}">{{ case.project }}</option>
-                                {#                                <option value=>请选择项目</option>#}
-                                {% for prj in prj_list %}
-                                    <option value={{ prj.prj_id }}>{{ prj.prj_name }}</option>
-                                {% endfor %}
-                            </select>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">所属项目</label>
+                            <div class="col-sm-8">
+                                <select id="prj_id" class="form-control" onchange=get_if()>
+                                    <option value="{{ case.project_id }}">{{ case.project }}</option>
+                                    {#                                <option value=>请选择项目</option>#}
+                                    {% for prj in prj_list %}
+                                        <option value={{ prj.prj_id }}>{{ prj.prj_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">用例描述</label>
-                        <div class="col-sm-8">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">用例描述</label>
+                            <div class="col-sm-8">
                             <textarea id="description" name="description" placeholder="请输入内容" class="form-control"
                                       rows="3">{{ case.description }}</textarea>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">步骤查询</label>
-                        <div class="col-sm-4">
-                            <input type="search" id="search" name="search" class="form-control"
-                                   placeholder="搜索接口名称...">
-                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">步骤查询</label>
+                            <div class="col-sm-4">
+                                <input type="search" id="search" name="search" class="form-control"
+                                       placeholder="搜索接口名称...">
+                            </div>
 
-                        <div class="col-sm-4 ">
-                            <button id="search-btn" class="btn btn-primary" onclick="search()"><i
-                                    class="fa fa-search">&nbsp;查询</i>
-                            </button>
+                            <div class="col-sm-4 ">
+                                <button id="search-btn" class="btn btn-primary" onclick="search()"><i
+                                        class="fa fa-search">&nbsp;查询</i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">添加步骤</label>
-                        <div class="col-sm-4">
-                            <select class="form-control" id="if_id" name="if_id">
-                                <option value="{{ if_id }}">{{ if_name }}</option>
-                                {% for foo in interface %}
-                                    <option value="{{ foo.if_id }}">{{ foo.if_name }}</option>
-                                {% endfor %}
-                            </select>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">添加步骤</label>
+                            <div class="col-sm-4">
+                                <select class="form-control" id="if_id" name="if_id">
+                                    <option value="{{ if_id }}">{{ if_name }}</option>
+                                    {% for foo in interface %}
+                                        <option value="{{ foo.if_id }}">{{ foo.if_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="col-sm-4 ">
+                                <button id="add_interface" class="btn btn-primary" type="button"><i
+                                        class="fa fa-arrow-circle-down"></i>&nbsp;确定
+                                </button>
+                            </div>
                         </div>
-                        <div class="col-sm-4 ">
-                            <button id="add_interface" class="btn btn-primary" type="button"><i
-                                    class="fa fa-arrow-circle-down"></i>&nbsp;确定
-                            </button>
+                        <div id="case-list">
                         </div>
-                    </div>
-                    <div id="case-list">
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-2 col-sm-6">
-                            <button type="submit" id="submit" class="btn btn-primary float-button"><i
-                                    class="fa fa-save"></i>&nbsp;保存
-                            </button>
-                            <button id="reset" type="reset" class="btn btn-primary float-button reset"><i
-                                    class="fa fa-repeat"></i>&nbsp;重置
-                            </button>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-6">
+                                <button type="submit" id="submit" class="btn btn-primary float-button"><i
+                                        class="fa fa-save"></i>&nbsp;保存
+                                </button>
+                                <button id="reset" type="reset" class="btn btn-primary float-button reset"><i
+                                        class="fa fa-repeat"></i>&nbsp;重置
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <button onclick="topFunction()" id="myBtn" title="回顶部">返回顶部</button>
         </div>
-        <button onclick="topFunction()" id="myBtn" title="回顶部">返回顶部</button>
     </div>
 {% endblock %}
 {% block javascript %}
@@ -491,7 +492,7 @@
                                     var newtable = "<div class='row'> <div class='panel'><a class='move' href='#' onclick=" + "move(this,'MoveUp')" + ">上移</a>  <a class='move' href='#' onclick=" + "move(this,'MoveDown')" + ">下移</a><div class='col-sm-offset-1 col-sm-9'>" +
                                         "<div id= '" + item.if_id + "' class='panel-heading'>" +
                                         "<h3 class='panel-title' id='if_name' style='float: left;margin-right: 5%;'>" + item.if_name + "</h3>" + "</h3>" + "<div id='url'>" + item.url + "</div>" +
-                                        "<div class='right'><button type=\"button\" class='btn-toggle-collapse' onclick='hide_fun()'><i class='icon-submenu fa fa-chevron-up' id='icon-submenu'></i></button></div>" +
+                                        "<div class='right'><button type=\"button\" class='btn-toggle-collapse' onclick='hide_fun()'><i class='fa fa-chevron-up' id='icon-submenu'></i></button></div>" +
                                         "</div>" +
                                         "<div class='panel-body'>" +
                                         "<button onclick='add_header_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加header参数</button>" +
@@ -525,7 +526,7 @@
                                         "<tbody>" +
                                         "</tbody>" +
                                         "</table>" +
-                                        "</div> </div></div></div>";
+                                        "</div> </div></div>";
                                     $("#case-list").append(newtable);
 
                                 });
@@ -659,13 +660,13 @@
         function hide_fun() {
             var elems = document.getElementsByClassName('panel-body');
             for (var i = 0; i < elems.length; i += 1) {
-                if (elems[i].style.display == 'block'){
-                    elems[i].style.display = 'none';
-                    $('#icon-submenu').attr('class', 'fa fa-chevron-down');
-                    console.log('down')
-                }else {
+                if (elems[i].style.display == 'none') {
                     elems[i].style.display = 'block';
                     $('#icon-submenu').attr('class', 'fa fa-chevron-up');
+                    console.log('down')
+                } else {
+                    elems[i].style.display = 'none';
+                    $('#icon-submenu').attr('class', 'fa fa-chevron-down');
                     console.log('up')
                 }
             }
