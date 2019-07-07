@@ -65,28 +65,41 @@ def get_extract(extract_dict, res, url=''):
     """
     with_extract_dict = {}
     for key, value in extract_dict.items():
-        if '_' in key:
-            key_list = key.split('_')
-            try:
-                num = int(key_list[1])
-            except ValueError:
-                num = ''
-            if isinstance(num, int):
-                if len(key_list) > 2:
-                    key_value = get_param(key, res)
+        if ',' in key:  # 一个接口支持同时提取多个参数
+            key_list = key.split(',')
+            if len(key_list) > 1:
+                for k in key_list:
+                    key_value = get_param(k, res)
+                    if url:
+                        if isinstance(url, str):
+                            url = url.strip('/').replace('/', '_')
+                            url_key = url + '_' + k  # 拼接接口路径和参数
+                    else:
+                        url_key = k
+                    with_extract_dict[url_key] = key_value
+        else:
+            if '_' in key:  # 一个接口支持提取相同参数中的某个
+                key_list = key.split('_')
+                try:
+                    num = int(key_list[1])
+                except ValueError:
+                    num = ''
+                if isinstance(num, int):
+                    if len(key_list) > 2:
+                        key_value = get_param(key, res)
+                    else:
+                        key_value = get_param(key_list[0], res, num)
                 else:
-                    key_value = get_param(key_list[0], res, num)
+                    key_value = get_param(key, res)
             else:
                 key_value = get_param(key, res)
-        else:
-            key_value = get_param(key, res)
-        if url:
-            if isinstance(url, str):
-                url = url.strip('/').replace('/', '_')
-                url_key = url + '_' + key  # 拼接接口路径和参数
-        else:
-            url_key = key
-        with_extract_dict[url_key] = key_value
+            if url:
+                if isinstance(url, str):
+                    url = url.strip('/').replace('/', '_')
+                    url_key = url + '_' + key  # 拼接接口路径和参数
+            else:
+                url_key = key
+            with_extract_dict[url_key] = key_value
     return with_extract_dict
 
 
