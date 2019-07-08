@@ -4,7 +4,7 @@ import json, re, os
 import time
 import logging
 from datetime import datetime
-from common.logger import Log
+# from common.logger import Log
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger  # 分页
 
 log = logging.getLogger('log')  # 初始化log
@@ -230,7 +230,7 @@ def get_new_report_html(report_path_html):
         else:
             lists.remove(file_name)
     lists.sort(key=lambda a: os.path.getmtime(os.path.join(report_path_html, a)))
-    Log().info('最新的测试报告是：{} '.format(lists[-1]))
+    log.info('最新的测试报告是：{} '.format(lists[-1]))
     report_file_html = os.path.join(report_path_html, lists[-1])  # 找到最新的测试报告文件
     return report_file_html
 

@@ -1,8 +1,8 @@
 # !/user/bin/env python
 # coding=utf-8
 import json
-import ddt
-from common.logger import Log
+import ddt, logging
+# from common.logger import Log
 from common import base_api
 from common.processingJson import get_json
 import requests, os, unittest
@@ -11,7 +11,8 @@ demo_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/comm
 # demo_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\common' + '\config' + '\demo.json'
 
 test_data = get_json(demo_path)
-log = Log()  # 初始化log
+# log = Log()  # 初始化log
+log = logging.getLogger('log')  # 初始化log
 log.info('--------------------------------test_data: {}'.format(test_data))
 
 
@@ -19,7 +20,8 @@ log.info('--------------------------------test_data: {}'.format(test_data))
 class Test_api(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.s = requests.session()
+        # cls.s = requests.session()
+        pass
 
     @ddt.data(*test_data)
     def test_api(self, data):

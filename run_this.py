@@ -8,7 +8,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from common.logger import Log
 from common import readConfig
-# from case import test_api
+from case import test_api
 from lib.public import get_new_report_html
 
 log = logging.getLogger('log')
@@ -16,7 +16,7 @@ log = logging.getLogger('log')
 
 def add_case(case_path):
     """加载所有的测试用例"""
-    # importlib.reload(test_api)  # 每次执行前重新加载 test_api.py 文件
+    importlib.reload(test_api)  # 每次执行前重新加载 test_api.py 文件
     discover = unittest.defaultTestLoader.discover(case_path, pattern='test*.py', top_level_dir=None)  # 定义discover方法的参数
     Log().info('测试用例：%s' % discover)
     return discover
@@ -117,22 +117,5 @@ def run_email():
 
 
 if __name__ == '__main__':
-    # run_email()
-    # from httprunner.api import HttpRunner
-    #
-    # runner = HttpRunner(failfast=False)
-    # runner.run('\Fiddler\demo1.json')
-    import io, json
+    run_email()
 
-    data = [{'case_name': '游戏排行榜', 'if_id': 60, 'if_name': '游戏排行榜', 'method': 'get',
-             'url': 'https://course.rest.xxbmm.com/games/top', 'data_type': 'data',
-             'headers': {'Accept': 'application/json;charset=UTF-8', 'token': ''}, 'body': {'1': '1'},
-             'checkpoint': [{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}], 'extract': {}}]
-
-    with open('demo.json', 'w', encoding='utf-8') as f:
-        json.dump(data, f, ensure_ascii=False, sort_keys=True, indent=4)
-
-    with open('demo.json', 'r', encoding='utf-8') as f:
-        json_data = json.load(f)
-
-    print(json_data)
