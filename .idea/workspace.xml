@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/views.py" afterPath="$PROJECT_DIR$/base/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/case/test_api.py" afterPath="$PROJECT_DIR$/case/test_api.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/common/config/res.json" afterPath="$PROJECT_DIR$/common/config/res.json" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -100,11 +98,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_api.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="test_api.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/case/test_api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="12" column="20" lean-forward="false" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="20" />
+            <state relative-caret-position="303">
+              <caret line="14" column="75" lean-forward="true" selection-start-line="14" selection-start-column="75" selection-end-line="14" selection-end-column="75" />
               <folding>
                 <element signature="e#39#50#0" expanded="true" />
               </folding>
@@ -115,18 +113,18 @@
       <file leaf-file-name="base_api.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/common/base_api.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="108" />
+            <state relative-caret-position="682">
+              <caret line="39" column="12" lean-forward="true" selection-start-line="39" selection-start-column="12" selection-end-line="39" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/base/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
-              <caret line="1206" column="18" lean-forward="true" selection-start-line="1206" selection-start-column="18" selection-end-line="1206" selection-end-column="18" />
+            <state relative-caret-position="357">
+              <caret line="1360" column="58" lean-forward="false" selection-start-line="1360" selection-start-column="58" selection-end-line="1360" selection-end-column="58" />
               <folding>
                 <element signature="e#0#40#0" expanded="true" />
               </folding>
@@ -146,7 +144,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>get_param_response</find>
       <find>slice</find>
       <find>成功</find>
       <find>extract_variables</find>
@@ -176,6 +173,7 @@
       <find>unit</find>
       <find>json_path</find>
       <find>demo_path</find>
+      <find>make</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -826,6 +824,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2832">
           <caret line="155" column="31" lean-forward="true" selection-start-line="155" selection-start-column="31" selection-end-line="155" selection-end-column="46" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -849,6 +848,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1230">
           <caret line="47" column="0" lean-forward="false" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -864,6 +864,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="311">
           <caret line="354" column="174" lean-forward="false" selection-start-line="354" selection-start-column="174" selection-end-line="354" selection-end-column="174" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1022,14 +1023,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/common/base_api.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="9" column="0" lean-forward="false" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="108" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://D:/python/Lib/site-packages/BeautifulReport/BeautifulReport.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="301">
@@ -1054,16 +1047,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/base/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="1206" column="18" lean-forward="true" selection-start-line="1206" selection-start-column="18" selection-end-line="1206" selection-end-column="18" />
-          <folding>
-            <element signature="e#0#40#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/common/processingJson.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
@@ -1074,12 +1057,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/common/base_api.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="682">
+          <caret line="39" column="12" lean-forward="true" selection-start-line="39" selection-start-column="12" selection-end-line="39" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/case/test_api.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="12" column="20" lean-forward="false" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="20" />
+        <state relative-caret-position="303">
+          <caret line="14" column="75" lean-forward="true" selection-start-line="14" selection-start-column="75" selection-end-line="14" selection-end-column="75" />
           <folding>
             <element signature="e#39#50#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="357">
+          <caret line="1360" column="58" lean-forward="false" selection-start-line="1360" selection-start-column="58" selection-end-line="1360" selection-end-column="58" />
+          <folding>
+            <element signature="e#0#40#0" expanded="true" />
           </folding>
         </state>
       </provider>

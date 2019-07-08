@@ -12,7 +12,7 @@ demo_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/comm
 
 test_data = get_json(demo_path)
 log = Log()  # 初始化log
-
+log.info('--------------------------------test_data: {}'.format(test_data))
 
 @ddt.ddt
 class Test_api(unittest.TestCase):
