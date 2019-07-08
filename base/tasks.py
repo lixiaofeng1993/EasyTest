@@ -14,8 +14,6 @@ from lib import readConfig
 
 log = logging.getLogger('log')
 
-log.info('-------------------------------------{}'.format(readConfig.title))
-
 
 # @app.task
 # def add(x, y):
