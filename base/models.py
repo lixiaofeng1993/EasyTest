@@ -110,20 +110,3 @@ class Report(models.Model):
 
     def __str__(self):
         return self.report_name
-
-# class HomeIndex(models.Model):
-#     id = models.AutoField(primary_key=True, null=False)
-#     img_name = models.CharField(max_length=255, default='')
-#     project_num = models.IntegerField(null=True)
-#     env_num = models.IntegerField(null=True)
-#     interface_num = models.IntegerField(null=True)
-#     case_num = models.IntegerField(null=True)
-#     plan_num = models.IntegerField(null=True)
-#     sign_num = models.IntegerField(null=True)
-#     report_num = models.IntegerField(null=True)
-#     task_num = models.IntegerField(null=True)
-#     qrcode_name = models.CharField(max_length=255, default='')
-#     update_time = models.DateTimeField('更新时间', auto_now=True)
-#
-#     def __str__(self):
-#         return

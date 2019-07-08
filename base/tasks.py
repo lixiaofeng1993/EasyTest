@@ -4,17 +4,15 @@ from __future__ import absolute_import
 from EasyTest.celery import app
 # from celery import shared_task
 import time, logging, os
-from common.connectMySql import SqL
 from lib.public import DrawPie, remove_logs
 from base.models import Plan, Report
 from datetime import datetime
 # from lib.sql_parameter import test_case, get_sign, get_env
 from lib.execute import Test_execute
-from run_this import send_email
-from common import readConfig
+from lib.send_email import send_email
+from lib import readConfig
 
 log = logging.getLogger('log')
-sql = SqL()
 
 
 # @app.task
@@ -35,9 +33,6 @@ def run_plan():
     log.info('run plan------->执行测试计划中<--------------')
     start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     plan = Plan.objects.filter(is_task=1).all().values()
-    # plan = sql.execute_sql(
-    #     'select bp.environment_id, bp.content,bp.plan_name,bp.plan_id from base_plan as bp where bp.is_task = 1',
-    #     dict_type=True)
     if plan == None:
         log.error('查询定时任务计划为空！')
         return
@@ -45,8 +40,6 @@ def run_plan():
     env_id = plan[0]['environment_id']
     case_id_list = eval(plan[0]['content'])
     begin_time = time.clock()
-    # prj_id, env_url, private_key = get_env(env_id)
-    # sign_type = get_sign(prj_id)
     case_num = len(case_id_list)
     content = []
     pass_num = 0
@@ -56,7 +49,6 @@ def run_plan():
     for case_id in case_id_list:
         execute = Test_execute(case_id, env_id, case_id_list)
         case_result = execute.test_case()
-        # case_result = test_case(case_id, env_id, case_id_list, sign_type, private_key, env_url, begin_time)
         content.append(case_result)
     end_time = time.clock()
     totalTime = str(end_time - begin_time)[:6] + ' s'
@@ -81,21 +73,13 @@ def run_plan():
                     totalTime=totalTime, startTime=start_time, update_user='root')
     report.save()
     Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now(), update_user='root')
-    # sql.execute_sql(
-    #     'insert into base_report(report_name,pic_name,totalTime,startTime,content,case_num,pass_num,fail_num,error_num,plan_id,update_time, update_user) values("{}","{}","{}","{}","{}","{}","{}","{}","{}","{}","{}", "{}")'.format(
-    #         report_name,pic_name,totalTime,start_time,str(content).replace('"', "'"), case_num,pass_num,fail_num,
-    #         error_num,plan_id, str(datetime.now()), 'root'))
-    # sql.execute_sql('update base_plan set make=0, update_time="{}"'.format(datetime.now()))
     if fail_num or error_num:
-        # report_file_html = get_new_report_html(report_path)
-        # report_file_list.append(report_file_html)
         user = readConfig.user
         # qq邮箱授权码
         pwd = readConfig.pwd
         user_163 = readConfig.user_163
         # 163邮箱授权码
         pwd_163 = readConfig.pwd_163
-        # _to = ['1977907603@qq.com', 'liyongfeng@tzx.com.cn']
         _to = readConfig.to
         smtp_service = readConfig.smtp_service
         smtp_service_163 = readConfig.smtp_service_163

@@ -43,7 +43,6 @@ urlpatterns = [
     url(r'plan_update/', view=views.plan_update, name='plan_update'),
     url(r'plan_delete/', view=views.plan_delete, name='plan_delete'),
     url(r'plan_run/', view=views.plan_run, name='plan_run'),
-    url(r'plan_unittest_run/', view=views.plan_unittest_run, name='plan_unittest_run'),
     # 报告
     url(r'report/', view=views.report_index, name='report'),
     url(r'report_search/', view=views.report_search, name='report_search'),

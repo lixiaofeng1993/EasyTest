@@ -1,7 +1,5 @@
-import os, time, json, logging, run_this
-from django.shortcuts import render, redirect
-# from django.contrib.auth.decorators import login_required
-# from django.conf import settings
+import os, time, json, logging
+from django.shortcuts import render
 from django.http import StreamingHttpResponse
 from base.models import Project, Sign, Environment, Interface, Case, Plan, Report
 from django.contrib.auth.models import User  # django自带user
@@ -12,13 +10,10 @@ from djcelery.models import PeriodicTask, CrontabSchedule, IntervalSchedule
 from datetime import timedelta, datetime
 from lib.swagger import AnalysisJson
 from django.shortcuts import render_to_response
-from common.processingJson import write_data
 # from base.page_cache import page_cache  # redis缓存
-from lib.public import get_new_report_html, DrawPie, is_number, paginator
+from lib.public import DrawPie, paginator
 
 log = logging.getLogger('log')  # 初始化log
-demo_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/common' + '/config' + '/demo.json'
-# demo_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\common' + '\config' + '\demo.json'
 report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/templates' + '/report'
 # report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\templates' + '\\report'
 logs_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/' + 'logs'  # 拼接删除目录完整路径
@@ -35,14 +30,9 @@ class_name = ''  # 执行测试类
 def project_index(request):
     user_id = request.session.get('user_id', '')  # 从session中获取user_id
     if get_user(user_id):
-        # prj_list = Project.objects.filter(user_id=user_id)  # 按照user_id查询项目
         prj_list = Project.objects.all()  # 按照user_id查询项目
-        # project_list = []
-        # for prj in prj_list:
-        #     project_list.append(str(prj.prj_id))
         page = request.GET.get('page')
         contacts = paginator(prj_list, page)
-        # request.session['project_list'] = project_list  # 保存项目id
         info = {"prj_list": prj_list, 'contacts': contacts}
         return render(request, "base/project/index.html", info)
     else:
@@ -65,7 +55,6 @@ def project_add(request):
                 return render(request, 'base/project/add.html', {'error': '项目名称不能为空！', "sign_list": sign_list})
 
             else:
-                # name_same = Project.objects.filter(user_id=user_id).filter(prj_name=prj_name)
                 name_same = Project.objects.filter(prj_name=prj_name)
                 if name_same:
                     return render(request, 'base/project/add.html',
@@ -99,8 +88,6 @@ def project_update(request):
                 return render(request, 'base/project/update.html',
                               {'error': '项目名称不能为空！', "prj": prj, "sign_list": sign_list})
             else:
-                # name_exit = Project.objects.filter(user_id=user_id).filter(prj_name=prj_name).exclude(
-                #     prj_id=prj_id)
                 name_exit = Project.objects.filter(prj_name=prj_name).exclude(prj_id=prj_id)
                 if name_exit:
                     prj = Project.objects.get(prj_id=prj_id)
@@ -226,13 +213,7 @@ def sign_delete(request):
 def env_index(request):
     user_id = request.session.get('user_id', '')
     if get_user(user_id):
-        # project_list = request.session.get('project_list', [])
-        # env_list = []
-        # for project_id in project_list:
-        # env = Environment.objects.filter(project_id=int(project_id))
         envs = Environment.objects.all()
-        # if env:
-        #     env_list.append(env)
         page = request.GET.get('page')
         contacts = paginator(envs, page)
         return render(request, "base/env/index.html", {"contacts": contacts})
@@ -286,13 +267,11 @@ def env_add(request):
         request.session['login_from'] = '/base/env/'
         return render(request, 'user/login_action.html')
     else:
-        # prj_list = Project.objects.filter(user_id=user_id)
         prj_list = Project.objects.all()
         if request.method == 'POST':
             env_name = request.POST['env_name'].strip()
             if env_name == '':
                 return render(request, 'base/env/add.html', {'name_error': '环境名称不能为空！', "prj_list": prj_list})
-            # name_same = Environment.objects.filter(project__user_id=user_id).filter(env_name=env_name)
             name_exit = Environment.objects.filter(env_name=env_name)
             if name_exit:
                 return render(request, 'base/env/add.html',
@@ -327,7 +306,6 @@ def env_update(request):
         request.session['login_from'] = '/base/env/'
         return render(request, 'user/login_action.html')
     else:
-        # prj_list = Project.objects.filter(user_id=user_id)
         prj_list = Project.objects.all()
         if request.method == 'POST':
             env_id = request.POST['env_id']
@@ -336,8 +314,6 @@ def env_update(request):
                 env = Environment.objects.get(env_id=env_id)
                 return render(request, 'base/env/update.html',
                               {'name_error': '环境名称不能为空！', "env": env, "prj_list": prj_list})
-            # name_exit = Environment.objects.filter(project__user_id=user_id).filter(env_name=env_name).exclude(
-            #     env_id=env_id)
             name_exit = Environment.objects.filter(env_name=env_name).exclude(env_id=env_id)
             if name_exit:
                 env = Environment.objects.get(env_id=env_id)
@@ -391,12 +367,7 @@ def env_delete(request):
 def interface_index(request):
     user_id = request.session.get('user_id', '')
     if get_user(user_id):
-        # project_list = request.session.get('project_list', [])
-        # if_list = []
-        # for project_id in project_list:
         interface = Interface.objects.all()
-        # if interface:
-        #     if_list.append(interface)
         page = request.GET.get('page')
         contacts = paginator(interface, page)
         return render(request, "base/interface/index.html", {"contacts": contacts})
@@ -412,10 +383,7 @@ def interface_search(request):
         user_id = request.session.get('user_id', '')
         if get_user(user_id):
             search = request.POST.get('search', '').strip()
-            # project_list = request.session.get('project_list', [])
             if_list = []
-            # interface_lists = []
-            # for project_id in project_list:  # 跨项目查询
             if not search:
                 return HttpResponse('0')
             else:
@@ -456,13 +424,11 @@ def interface_add(request):
         request.session['login_from'] = '/base/interface/'
         return render(request, 'user/login_action.html')
     else:
-        # prj_list = Project.objects.filter(user_id=user_id)
         prj_list = Project.objects.all()
         if request.method == 'POST':
             if_name = request.POST['if_name']
             if if_name.strip() == '':
                 return HttpResponse('接口名称不能为空！')
-            # name_same = Interface.objects.filter(project__user_id=user_id).filter(if_name=if_name)
             name_same = Interface.objects.filter(if_name=if_name)
             if name_same:
                 return HttpResponse('接口: {}，已存在！'.format(if_name))
@@ -508,7 +474,6 @@ def interface_update(request):
         request.session['login_from'] = '/base/interface/'
         return render(request, 'user/login_action.html')
     else:
-        # prj_list = Project.objects.filter(user_id=user_id)
         prj_list = Project.objects.all()
         if request.method == 'POST':
             if_id = request.POST['if_id']
@@ -542,8 +507,6 @@ def interface_update(request):
                         'response_body_param_list': response_body_param_list,
                         "prj_list": prj_list}
                 return render_to_response('base/interface/update.html', info)
-            # name_same = Interface.objects.filter(project__user_id=user_id).filter(if_name=if_name).exclude(
-            #     if_id=if_id)
             name_same = Interface.objects.filter(if_name=if_name).exclude(if_id=if_id)
             if name_same:
                 return render(request, 'base/interface/update.html',
@@ -762,13 +725,7 @@ def batch_index(request):
 def case_index(request):
     user_id = request.session.get('user_id', '')
     if get_user(user_id):
-        # project_list = request.session.get('project_list', [])
-        # case_list = []
-        # for project_id in project_list:
-        # case = Case.objects.filter(project_id=int(project_id))
         cases = Case.objects.all().order_by('-case_id')
-        # if case:
-        #     case_list.append(case)
         page = request.GET.get('page')
         contacts = paginator(cases, page)
         return render(request, "base/case/index.html", {"contacts": contacts})
@@ -789,7 +746,6 @@ def case_add(request):
             case_name = request.POST.get('case_name', '')
             if case_name == '':
                 return HttpResponse('用例名称不能为空！')
-            # name_same = Case.objects.filter(project__user_id=user_id).filter(case_name=case_name)
             name_same = Case.objects.filter(case_name=case_name)
             if name_same:
                 return HttpResponse('用例：{}， 已存在！'.format(case_name))
@@ -806,7 +762,6 @@ def case_add(request):
             log.info(
                 'add case   {}  success. case info: {} // {} // {}'.format(case_name, project, description, content))
             return HttpResponseRedirect("/base/case/")
-        # prj_list = Project.objects.filter(user_id=user_id)
         prj_list = Project.objects.all()
         return render(request, "base/case/add.html", {"prj_list": prj_list})
 
@@ -824,8 +779,6 @@ def case_update(request):
             case_name = request.POST.get('case_name', '')
             if case_name == '':
                 return HttpResponse('用例名称不能为空！')
-            # name_same = Case.objects.filter(project__user_id=user_id).filter(case_name=case_name).exclude(
-            #     case_id=case_id)
             name_same = Case.objects.filter(case_name=case_name).exclude(case_id=case_id)
             if name_same:
                 return HttpResponse('用例：{}， 已存在！'.format(case_name))
@@ -843,7 +796,6 @@ def case_update(request):
                 'edit case   {}  success. case info: {} // {} // {}'.format(case_name, project, description, content))
             return HttpResponseRedirect("/base/case/")
         elif request.method == 'GET':
-            # prj_list = Project.objects.filter(user_id=user_id)
             prj_list = Project.objects.all()
             case_id = request.GET['case_id']
             case = Case.objects.get(case_id=case_id)
@@ -970,13 +922,7 @@ def case_run(request):
 def plan_index(request):
     user_id = request.session.get('user_id', '')
     if get_user(user_id):
-        # project_list = request.session.get('project_list', [])
-        # plan_list = []
-        # for project_id in project_list:
-        # plan = Plan.objects.filter(project_id=int(project_id))
         plans = Plan.objects.all().order_by('-plan_id')
-        # if plan:
-        #     plan_list.append(plan)
         page = request.GET.get('page')
         contacts = paginator(plans, page)
         return render(request, "base/plan/index.html", {"contacts": contacts})
@@ -993,14 +939,12 @@ def plan_add(request):
         request.session['login_from'] = '/base/plan/'
         return render(request, 'user/login_action.html')
     else:
-        # prj_list = Project.objects.filter(user_id=user_id)
         prj_list = Project.objects.all()
         if request.method == 'POST':
             plan_name = request.POST['plan_name'].strip()
             if plan_name == '':
                 return render(request, 'base/plan/add.html',
                               {'name_error': '计划名称不能为空！', "prj_list": prj_list})
-            # name_same = Plan.objects.filter(project__user_id=user_id).filter(plan_name=plan_name)
             name_same = Plan.objects.filter(plan_name=plan_name)
             if name_same:
                 return render(request, 'base/plan/add.html',
@@ -1038,7 +982,6 @@ def plan_update(request):
         request.session['login_from'] = '/base/plan/'
         return render(request, 'user/login_action.html')
     else:
-        # prj_list = Project.objects.filter(user_id=user_id)
         prj_list = Project.objects.all()
         if request.method == 'POST':
             plan_id = request.POST['plan_id']
@@ -1053,8 +996,6 @@ def plan_update(request):
                 return render(request, 'base/plan/update.html',
                               {'name_error': '计划名称不能为空！', "prj_list": prj_list, 'plan': plan, 'case_list': case_list,
                                'environments': environments})
-            # name_same = Plan.objects.filter(project__user_id=user_id).filter(plan_name=plan_name).exclude(
-            #     plan_id=plan_id)
             name_same = Plan.objects.filter(plan_name=plan_name).exclude(plan_id=plan_id)
             if name_same:
                 return render(request, 'base/plan/update.html',
@@ -1171,57 +1112,6 @@ def plan_run(request):
                             totalTime=totalTime, startTime=start_time, update_user=username)
             report.save()
             Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now(), update_user=username)
-            return HttpResponse(plan.plan_name + " 执行成功！")
-
-
-# @login_required
-def plan_unittest_run(request):
-    user_id = request.session.get('user_id', '')
-    if not get_user(user_id):
-        return HttpResponse('用户未登录')
-    else:
-        if request.method == 'POST':
-            global totalTime, start_time, now_time
-            plan_id = request.POST['plan_id']
-            plan = Plan.objects.get(plan_id=plan_id)
-            env = Environment.objects.get(env_id=plan.environment_id)
-            case_path = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'case')
-            if not os.path.exists(case_path): os.mkdir(case_path)  # 如果不存在这个logs文件夹，就自动创建一个
-            # py_path = os.path.join(case_path, 'test_api.py')
-            test_data = []
-            for case_id in eval(plan.content):
-                try:
-                    case = Case.objects.get(case_id=int(case_id))
-                except Case.DoesNotExist as e:
-                    log.error('计划：{} 中的 用例 {} 已被删除！'.format(plan.plan_name, case_id))
-                    return HttpResponse('计划：{} 中的 用例 {} 已被删除！'.format(plan.plan_name, case_id))
-                set_headers = env.set_headers
-                if_list = eval(case.content)
-                for i in if_list:
-                    interface = Interface.objects.get(if_id=i['if_id'])
-                    test_data.append(
-                        {'case_name': case.case_name, 'if_id': interface.if_id, 'if_name': interface.if_name,
-                         'method': interface.method, 'url': env.url + interface.url, 'data_type': interface.data_type,
-                         'headers': eval(set_headers)['header'], 'body': i['body'], 'checkpoint': i['validators'],
-                         'extract': i['extract']})
-            write_data(test_data, demo_path)
-            # print(test_data, 11111111111111111111111111111)
-            # with open(py_path, 'w', encoding='utf-8') as f:
-            #     data = '# !/user/bin/env python\n' + '# coding=utf-8\n' + 'import json\n' + 'import ddt\n' + 'from common.logger import Log\n' + 'from common import base_api\n' + 'import unittest\n' + 'import requests\n' \
-            #            + '\ntest_data = {}'.format(
-            #         test_data) + '\n' + 'log = Log()  # 初始化log\n\n\n' + '@ddt.ddt\n' + 'class Test_api(unittest.TestCase):\n\t' + \
-            #            '@classmethod\n\t' + 'def setUpClass(cls):\n\t\t' + 'cls.s = requests.session()\n\n\t' + '@ddt.data(*test_data)\n\t' + 'def test_api(self, data):\n\t\t' + '"""{0}"""\n\t\t' \
-            #            + 'res = base_api.send_requests(self.s, data)  # 调用send_requests方法,请求接口,返回结果\n\t\t' + 'checkpoint = data["checkpoint"]  # 检查点 checkpoint\n\t\t' + 'res_text = res["text"]  # 返回结果\n\t\t' + \
-            #            'text = json.loads(res_text)\n\t\t' + "for inspect in checkpoint:\n\t\t\t" + 'self.assertTrue(inspect["expect"] in str(text[inspect["check"]]).lower(), "检查点验证失败！")  # 断言\n\n\n' \
-            #            + "if __name__ == '__main__':\n\t" + 'unittest.main()'
-            #     f.write(data)
-            run_this.run_email()
-            report_name = get_new_report_html(report_path)
-            username = request.session.get('user', '')
-            log.info('======================report_name: {}'.format(report_name))
-            Plan.objects.filter(plan_id=plan_id).update(make=1, report_name=report_name, update_time=datetime.now(),
-                                                        update_user=username)
-            log.info('-------------------------->plan_unittest_run plan_id: {}'.format(plan_id))
             return HttpResponse(plan.plan_name + " 执行成功！")
 
 
@@ -1358,7 +1248,8 @@ def report_index(request):
             make = Plan.objects.get(plan_id=plan_id).make
             plan_name = Plan.objects.get(plan_id=plan_id).report_name
             if make:  # unittest报告
-                log.info('-------------------------------->report_index plan_id: {} , plan_name: {}'.format(plan_id, plan_name))
+                log.info('report_index plan_id: {} , plan_name: {}'.format(plan_id,
+                                                                                                            plan_name))
                 return render(request, '{}'.format(plan_name))
             report = Report.objects.get(report_id=report_id)
             case_num = report.case_num
@@ -1422,7 +1313,6 @@ def report_delete(request):
 # 下载unittest报告
 # @login_required
 def file_download(request):
-    # do something...
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/report_page/'

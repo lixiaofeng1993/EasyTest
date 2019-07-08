@@ -1,11 +1,9 @@
 import json
 # from common.connectDB import SqL
-# import logging
-from common.logger import Log
+import logging
 
 # sql = SqL()
-# log = logging.getLogger('log')  # 初始化log
-log = Log()  # 初始化log
+log = logging.getLogger('log')  # 初始化log
 
 
 def get_json(path, field=''):

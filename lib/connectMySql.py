@@ -1,6 +1,6 @@
 import pymysql
 from decimal import Decimal
-from common import readConfig
+from lib import readConfig
 import logging
 
 log = logging.getLogger('log')

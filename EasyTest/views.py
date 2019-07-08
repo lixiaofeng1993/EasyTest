@@ -58,7 +58,6 @@ def index(request):
         report_num = Report.objects.aggregate(Count('report_id'))['report_id__count']
         periodic_num = PeriodicTask.objects.aggregate(Count('id'))['id__count']
         crontabSchedule_num = CrontabSchedule.objects.aggregate(Count('id'))['id__count']
-        # username = request.session.get('user', '')
 
         total = get_total_values()
 
@@ -96,16 +95,9 @@ def login_action(request):
             response = redirect(request.session['login_from'])
             # response = HttpResponseRedirect('/index/')
             log.info('用户： {} 登录成功！'.format(username))
-            # prj_list = Project.objects.filter(user_id=user_.id)  # 按照user_id查询项目
-            # project_list = []
-            # for prj in prj_list:
-            #     project_list.append(str(prj.prj_id))
-            # request.session['project_list'] = project_list  # 保存项目id
             request.session.set_expiry(None)  # 关闭浏览器后，session失效
             return response
-            # return render(request, 'base.html', {"user": username})
         else:
-            # return render(request, 'sign/login.html', {'error': 'username or password error!'})
             log.error('用户名或密码错误... {} {}'.format(username, password))
             return render(request, 'user/login_action.html', {'error': 'username or password error!'})
 
@@ -117,7 +109,6 @@ def img_download(request):
     if get_user(user_id):
         if request.method == 'GET':
             name = request.GET.get('log_file', '')
-            # name_path = os.path.join('/home/lixiaofeng/EasyTest/media', name)
             name_path = os.path.join(settings.MEDIA_ROOT, name)
 
             def file_iterator(file_name, chunk_size=512):
