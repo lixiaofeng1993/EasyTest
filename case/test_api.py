@@ -7,7 +7,7 @@ from common import base_api
 from common.processingJson import get_json
 import requests, os, unittest
 
-demo_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\common' + '\config' + '\demo.json'
+demo_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/common' + '/config' + '/demo.json'
 
 test_data = get_json(demo_path)
 print(test_data, 1111111111111111111111)

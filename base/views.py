@@ -17,7 +17,7 @@ from common.processingJson import write_data
 from lib.public import get_new_report_html, DrawPie, is_number, paginator
 
 log = logging.getLogger('log')  # 初始化log
-demo_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\common' + '\config' + '\demo.json'
+demo_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/common' + '/config' + '/demo.json'
 report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/templates' + '/report'
 # report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\templates' + '\\report'
 logs_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/' + 'logs'  # 拼接删除目录完整路径
