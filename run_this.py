@@ -117,4 +117,22 @@ def run_email():
 
 
 if __name__ == '__main__':
-    run_email()
+    # run_email()
+    # from httprunner.api import HttpRunner
+    #
+    # runner = HttpRunner(failfast=False)
+    # runner.run('\Fiddler\demo1.json')
+    import io, json
+
+    data = [{'case_name': '游戏排行榜', 'if_id': 60, 'if_name': '游戏排行榜', 'method': 'get',
+             'url': 'https://course.rest.xxbmm.com/games/top', 'data_type': 'data',
+             'headers': {'Accept': 'application/json;charset=UTF-8', 'token': ''}, 'body': {'1': '1'},
+             'checkpoint': [{'check': 'msg', 'comparator': 'eq', 'expect': '成功'}], 'extract': {}}]
+
+    with open('demo.json', 'w', encoding='utf-8') as f:
+        json.dump(data, f, ensure_ascii=False, sort_keys=True, indent=4)
+
+    with open('demo.json', 'r', encoding='utf-8') as f:
+        json_data = json.load(f)
+
+    print(json_data)

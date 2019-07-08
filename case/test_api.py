@@ -1,11 +1,16 @@
+# !/user/bin/env python
+# coding=utf-8
 import json
 import ddt
 from common.logger import Log
 from common import base_api
-import unittest
-import requests
+from common.processingJson import get_json
+import requests, os, unittest
 
-test_data = []
+demo_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\common' + '\config' + '\demo.json'
+
+test_data = get_json(demo_path)
+print(test_data, 1111111111111111111111)
 log = Log()  # 初始化log
 
 

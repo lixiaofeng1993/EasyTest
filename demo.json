@@ -1,0 +1,25 @@
+[
+    {
+        "body": {
+            "1": "1"
+        },
+        "case_name": "游戏排行榜",
+        "checkpoint": [
+            {
+                "check": "msg",
+                "comparator": "eq",
+                "expect": "成功"
+            }
+        ],
+        "data_type": "data",
+        "extract": {},
+        "headers": {
+            "Accept": "application/json;charset=UTF-8",
+            "token": ""
+        },
+        "if_id": 60,
+        "if_name": "游戏排行榜",
+        "method": "get",
+        "url": "https://course.rest.xxbmm.com/games/top"
+    }
+]

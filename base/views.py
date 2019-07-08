@@ -1,4 +1,4 @@
-import os
+import os, time, json, logging, run_this
 from django.shortcuts import render, redirect
 # from django.contrib.auth.decorators import login_required
 # from django.conf import settings
@@ -12,14 +12,12 @@ from djcelery.models import PeriodicTask, CrontabSchedule, IntervalSchedule
 from datetime import timedelta, datetime
 from lib.swagger import AnalysisJson
 from django.shortcuts import render_to_response
-import time
-import json
-import logging
+from common.processingJson import write_data
 # from base.page_cache import page_cache  # redis缓存
 from lib.public import get_new_report_html, DrawPie, is_number, paginator
-import run_this
 
 log = logging.getLogger('log')  # 初始化log
+demo_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\common' + '\config' + '\demo.json'
 report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/templates' + '/report'
 # report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\templates' + '\\report'
 logs_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/' + 'logs'  # 拼接删除目录完整路径
@@ -862,8 +860,8 @@ def case_update(request):
             for i in interface:
                 interface_list.append(i)
             info = {"prj_list": prj_list, 'case': case, 'interface': interface, 'case_id': case_id,
-                           'if_id': if_id, 'if_list': str(if_list), 'if_name': if_name}
-            return render_to_response('base/case/update.html',info)
+                    'if_id': if_id, 'if_list': str(if_list), 'if_name': if_name}
+            return render_to_response('base/case/update.html', info)
 
 
 # @login_required
@@ -1188,7 +1186,7 @@ def plan_unittest_run(request):
             env = Environment.objects.get(env_id=plan.environment_id)
             case_path = os.path.join(os.path.abspath(os.path.dirname(os.path.dirname(__file__))), 'case')
             if not os.path.exists(case_path): os.mkdir(case_path)  # 如果不存在这个logs文件夹，就自动创建一个
-            py_path = os.path.join(case_path, 'test_api.py')
+            # py_path = os.path.join(case_path, 'test_api.py')
             test_data = []
             for case_id in eval(plan.content):
                 try:
@@ -1205,15 +1203,17 @@ def plan_unittest_run(request):
                          'method': interface.method, 'url': env.url + interface.url, 'data_type': interface.data_type,
                          'headers': eval(set_headers)['header'], 'body': i['body'], 'checkpoint': i['validators'],
                          'extract': i['extract']})
-            with open(py_path, 'w', encoding='utf-8') as f:
-                data = '# !/user/bin/env python\n' + '# coding=utf-8\n' + 'import json\n' + 'import ddt\n' + 'from common.logger import Log\n' + 'from common import base_api\n' + 'import unittest\n' + 'import requests\n' \
-                       + '\ntest_data = {}'.format(
-                    test_data) + '\n' + 'log = Log()  # 初始化log\n\n\n' + '@ddt.ddt\n' + 'class Test_api(unittest.TestCase):\n\t' + \
-                       '@classmethod\n\t' + 'def setUpClass(cls):\n\t\t' + 'cls.s = requests.session()\n\n\t' + '@ddt.data(*test_data)\n\t' + 'def test_api(self, data):\n\t\t' + '"""{0}"""\n\t\t' \
-                       + 'res = base_api.send_requests(self.s, data)  # 调用send_requests方法,请求接口,返回结果\n\t\t' + 'checkpoint = data["checkpoint"]  # 检查点 checkpoint\n\t\t' + 'res_text = res["text"]  # 返回结果\n\t\t' + \
-                       'text = json.loads(res_text)\n\t\t' + "for inspect in checkpoint:\n\t\t\t" + 'self.assertTrue(inspect["expect"] in str(text[inspect["check"]]).lower(), "检查点验证失败！")  # 断言\n\n\n' \
-                       + "if __name__ == '__main__':\n\t" + 'unittest.main()'
-                f.write(data)
+            write_data(test_data, demo_path)
+            # print(test_data, 11111111111111111111111111111)
+            # with open(py_path, 'w', encoding='utf-8') as f:
+            #     data = '# !/user/bin/env python\n' + '# coding=utf-8\n' + 'import json\n' + 'import ddt\n' + 'from common.logger import Log\n' + 'from common import base_api\n' + 'import unittest\n' + 'import requests\n' \
+            #            + '\ntest_data = {}'.format(
+            #         test_data) + '\n' + 'log = Log()  # 初始化log\n\n\n' + '@ddt.ddt\n' + 'class Test_api(unittest.TestCase):\n\t' + \
+            #            '@classmethod\n\t' + 'def setUpClass(cls):\n\t\t' + 'cls.s = requests.session()\n\n\t' + '@ddt.data(*test_data)\n\t' + 'def test_api(self, data):\n\t\t' + '"""{0}"""\n\t\t' \
+            #            + 'res = base_api.send_requests(self.s, data)  # 调用send_requests方法,请求接口,返回结果\n\t\t' + 'checkpoint = data["checkpoint"]  # 检查点 checkpoint\n\t\t' + 'res_text = res["text"]  # 返回结果\n\t\t' + \
+            #            'text = json.loads(res_text)\n\t\t' + "for inspect in checkpoint:\n\t\t\t" + 'self.assertTrue(inspect["expect"] in str(text[inspect["check"]]).lower(), "检查点验证失败！")  # 断言\n\n\n' \
+            #            + "if __name__ == '__main__':\n\t" + 'unittest.main()'
+            #     f.write(data)
             run_this.run_email()
             report_name = get_new_report_html(report_path)
             username = request.session.get('user', '')
