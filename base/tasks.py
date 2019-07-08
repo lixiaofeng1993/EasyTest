@@ -90,15 +90,12 @@ def run_plan():
 # @shared_task
 def delete_logs():
     log.info('remove logs------->删除过期日志中<--------------')
-    report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/templates' + '/report'
-    # report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\templates' + '\\report'
     logs_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/' + 'logs'  # 拼接删除目录完整路径
     # logs_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\' + 'logs'  # 拼接删除目录完整路径
     pic_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/media'
-    report_num = remove_logs(report_path)
     logs_num = remove_logs(logs_path)
     pic_num = remove_logs(pic_path)
-    total_num = report_num + logs_num + pic_num
+    total_num = logs_num + pic_num
     if total_num == 0:
         log.info('remove logs------->没有要删除的文件.<--------------')
     else:
