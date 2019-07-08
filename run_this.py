@@ -8,7 +8,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from common.logger import Log
 from common import readConfig
-from case import test_api
+# from case import test_api
 from lib.public import get_new_report_html
 
 log = logging.getLogger('log')
