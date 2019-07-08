@@ -11,16 +11,18 @@ import smtplib
 import logging
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from lib import readConfig
+
+# from lib import readConfig
 
 log = logging.getLogger('log')
 
 
-def send_email(user, pwd, user_163, pwd_163, _to, smtp_service, smtp_service_163, report_file_list=''):
+def send_email(user, pwd, user_163, pwd_163, _to, smtp_service, smtp_service_163, title, email_text, email_task,
+               report_file_list=''):
     """发送邮件"""
     make = False
     msg = MIMEMultipart()
-    msg['Subject'] = readConfig.title
+    msg['Subject'] = title
     msg['from'] = user
     msg['to'] = ';'.join(_to)  # 支持多个收件人
     msg["Accept-Language"] = "zh-CN"
@@ -31,7 +33,7 @@ def send_email(user, pwd, user_163, pwd_163, _to, smtp_service, smtp_service_163
         make = True
         for report_file in report_file_list:
             if os.path.splitext(report_file)[1] == '.html':
-                mail_body = readConfig.email_text
+                mail_body = email_text
                 body = MIMEText(mail_body, 'html', 'utf-8')
                 msg.attach(body)
                 log.info('写入邮件正文')
@@ -41,7 +43,7 @@ def send_email(user, pwd, user_163, pwd_163, _to, smtp_service, smtp_service_163
             msg.attach(att)
         log.info('添加邮件附件')
     else:
-        mail_body = readConfig.email_task
+        mail_body = email_task
         body = MIMEText(mail_body, 'html', 'utf-8')
         msg.attach(body)
         log.info('写入邮件正文')
