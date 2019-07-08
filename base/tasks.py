@@ -14,6 +14,8 @@ from lib import readConfig
 
 log = logging.getLogger('log')
 
+log.info('-------------------------------------{}'.format(readConfig.title))
+
 
 # @app.task
 # def add(x, y):
@@ -75,6 +77,9 @@ def run_plan():
     Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now(), update_user='root')
     if fail_num or error_num:
         user = readConfig.user
+        title = readConfig.title
+        email_text = readConfig.email_text
+        email_task = readConfig.email_task
         log.info('-------------------------------------{}'.format(user))
         # qq邮箱授权码
         pwd = readConfig.pwd
@@ -84,8 +89,7 @@ def run_plan():
         _to = readConfig.to
         smtp_service = readConfig.smtp_service
         smtp_service_163 = readConfig.smtp_service_163
-        send_email(user, pwd, user_163, pwd_163, _to, smtp_service, smtp_service_163, readConfig.title,
-                   readConfig.email_text, readConfig.email_task)
+        send_email(user, pwd, user_163, pwd_163, _to, smtp_service, smtp_service_163, title, email_text, email_task)
     log.info('测试任务执行完成！')
 
 
