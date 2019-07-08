@@ -42,7 +42,7 @@ def validators_result(validators_list, res):
     checkpoint = ''
     for var_field in validators_list:
         check_filed = var_field["check"]
-        expect_filed = var_field["expect"]
+        expect_filed = var_field["expect"].lower()
         checkpoint += '字段：' + check_filed + '--> 值：' + expect_filed + '    '
         check_filed_value = str(get_param(check_filed, res)).lower()
         if check_filed_value == expect_filed:
