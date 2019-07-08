@@ -16,11 +16,11 @@ from lib import readConfig
 log = logging.getLogger('log')
 
 
-def send_email(user, pwd, user_163, pwd_163, _to, smtp_service, smtp_service_163, title, report_file_list=''):
+def send_email(user, pwd, user_163, pwd_163, _to, smtp_service, smtp_service_163, report_file_list=''):
     """发送邮件"""
     make = False
     msg = MIMEMultipart()
-    msg['Subject'] = title
+    msg['Subject'] = readConfig.title
     msg['from'] = user
     msg['to'] = ';'.join(_to)  # 支持多个收件人
     msg["Accept-Language"] = "zh-CN"

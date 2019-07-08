@@ -75,6 +75,7 @@ def run_plan():
     Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now(), update_user='root')
     if fail_num or error_num:
         user = readConfig.user
+        log.info('-------------------------------------{}'.format(user))
         # qq邮箱授权码
         pwd = readConfig.pwd
         user_163 = readConfig.user_163
@@ -83,7 +84,7 @@ def run_plan():
         _to = readConfig.to
         smtp_service = readConfig.smtp_service
         smtp_service_163 = readConfig.smtp_service_163
-        send_email(user, pwd, user_163, pwd_163, _to, smtp_service, smtp_service_163, readConfig.title)
+        send_email(user, pwd, user_163, pwd_163, _to, smtp_service, smtp_service_163)
     log.info('测试任务执行完成！')
 
 @app.task
