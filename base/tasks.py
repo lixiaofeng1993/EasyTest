@@ -83,7 +83,7 @@ def run_plan():
         _to = readConfig.to
         smtp_service = readConfig.smtp_service
         smtp_service_163 = readConfig.smtp_service_163
-        send_email(user, pwd, user_163, pwd_163, _to, smtp_service, smtp_service_163)
+        send_email(user, pwd, user_163, pwd_163, _to, smtp_service, smtp_service_163, readConfig.title)
     log.info('测试任务执行完成！')
 
 @app.task
