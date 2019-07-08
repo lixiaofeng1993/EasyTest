@@ -16,7 +16,7 @@ log = logging.getLogger('log')
 
 def add_case(case_path):
     """加载所有的测试用例"""
-    importlib.reload(test_api)  # 每次执行前重新加载 test_api.py 文件
+    # importlib.reload(test_api)  # 每次执行前重新加载 test_api.py 文件
     discover = unittest.defaultTestLoader.discover(case_path, pattern='test*.py', top_level_dir=None)  # 定义discover方法的参数
     Log().info('测试用例：%s' % discover)
     return discover
