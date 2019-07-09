@@ -45,16 +45,18 @@ def validators_result(validators_list, res):
         check_filed = var_field["check"]
         expect_filed = var_field["expect"].lower()
         comparator = var_field['comparator']
-        print(comparator, 1111111111111111111111111111)
         checkpoint += '字段：' + check_filed + '--> 值：' + expect_filed + '    '
         check_filed_value = str(get_param(check_filed, res)).lower()
-        if comparator == 'eq':
+        if expect_filed == 'error_index':
+            result += "error" + '    '
+            msg += 'error_index'
+        elif comparator == 'eq':
             if check_filed_value == expect_filed:
                 result += "pass" + '    '
                 msg += "success！" + '    '
             else:
                 result += "fail" + '    '
-                msg += "断言方式：等于    字段: " + check_filed + " 实际值为：" + str(
+                msg += "断言方式 -> 等于    字段: " + check_filed + " 实际值为：" + str(
                     check_filed_value) + " 与期望值：" + expect_filed + " 不符" + '    '
         elif comparator == 'neq':
             if expect_filed != check_filed_value:
@@ -62,7 +64,7 @@ def validators_result(validators_list, res):
                 msg += "success！" + '    '
             else:
                 result += "fail" + '    '
-                msg += "断言方式：不等于    字段: " + check_filed + " 实际值为：" + str(
+                msg += "断言方式 -> 不等于    字段: " + check_filed + " 实际值为：" + str(
                     check_filed_value) + " 与期望值：" + expect_filed + " 相等" + '    '
         elif comparator == 'included':
             if expect_filed in check_filed_value:
@@ -70,24 +72,20 @@ def validators_result(validators_list, res):
                 msg += "success！" + '    '
             else:
                 result += "fail" + '    '
-                msg += "断言方式：包含    字段: " + check_filed + " 实际值为：" + str(
-                    check_filed_value) + "  不含包  " + " 期望值：" + expect_filed + '    '
+                msg += "断言方式 -> 包含    字段: " + check_filed + " 实际值为：" + str(
+                    check_filed_value) + "  不包含  " + " 期望值：" + expect_filed + '    '
         elif comparator == 'not_included':
             if expect_filed not in check_filed_value:
                 result += "pass" + '    '
                 msg += "success！" + '    '
             else:
                 result += "fail" + '    '
-                msg += "断言方式：不包含    字段: " + check_filed + " 实际值为：" + str(
-                    check_filed_value) + "  含包  " + " 与期望值：" + expect_filed + '    '
+                msg += "断言方式 -> 不包含    字段: " + check_filed + " 实际值为：" + str(
+                    check_filed_value) + "  包含  " + " 与期望值：" + expect_filed + '    '
         else:
-            if expect_filed == 'error_index':
-                result += "error" + '    '
-                msg += 'error_index'
-            else:
-                result += "fail" + '    '
-                msg += "字段: " + check_filed + " 实际值为：" + str(
-                    check_filed_value) + " 与期望值：" + expect_filed + " 不符" + '    '
+            result += "fail" + '    '
+            msg += "字段: " + check_filed + " 实际值为：" + str(
+                check_filed_value) + " 与期望值：" + expect_filed + " 不符" + '    '
     return result, msg, checkpoint
 
 
