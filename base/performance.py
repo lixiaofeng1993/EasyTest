@@ -24,8 +24,11 @@ class UserBehavior(TaskSet):  # 定义用户行为
 
 
     def on_start(self):
-        self.if_dict_list, self.url = get_parameters()
-        self.extract_dict = ''
+        try:
+            self.if_dict_list, self.url = get_parameters()
+            self.extract_dict = ''
+        except TypeError:
+            exit()
 
     def teardown(self):
         log.info('结束！')
