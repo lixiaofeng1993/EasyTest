@@ -5,7 +5,6 @@ import time
 import logging
 from datetime import datetime
 from django.conf import settings
-# from common.logger import Log
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger  # 分页
 
 log = logging.getLogger('log')  # 初始化log

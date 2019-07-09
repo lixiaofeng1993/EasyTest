@@ -13,7 +13,7 @@ from lib.connectMySql import SqL
 from lib.public import validators_result, get_extract, get_param, replace_var, extract_variables, call_interface, format_url
 
 s = requests.session()
-extract_dict = {}
+extract_list = []
 step_json = []
 log = logging.getLogger('log')
 sql = SqL()
@@ -72,7 +72,7 @@ def test_case(case_id, env_id, case_id_list, sign_type, private_key, env_url, be
 
 
 def step(step_content, sign_type, private_key, env_url, begin_time=0, locust=False, env_id=''):
-    global step_json, extract_dict, s
+    global step_json, extract_list, s
     if_id = step_content["if_id"]
     interface = sql.execute_sql(
         'select bi.url, bi.method, bi.data_type, bi.is_sign, bi.is_header from base_interface as bi where bi.if_id = {};'.format(
@@ -85,7 +85,9 @@ def step(step_content, sign_type, private_key, env_url, begin_time=0, locust=Fal
             if var_value is None:
                 var_value = get_param(var_name, step_json)
             if var_value is None:
-                var_value = extract_dict[var_name]
+                for extract_dict in extract_list:  # 把变量替换为提取的参数
+                    if var_name in extract_dict.keys():
+                        var_value = extract_dict[var_name]
             step_content = json.loads(replace_var(step_content, var_name, var_value))
     else:
         extract = step_content['extract']
@@ -100,6 +102,8 @@ def step(step_content, sign_type, private_key, env_url, begin_time=0, locust=Fal
             if k and v:
                 if '$' not in v:
                     make = True
+                if v == '系统异常':
+                    headers[k] = ''
     if make:
         if_dict['header'] = eval(headers)['header']
     if interface['data_type'] == 'sql':
@@ -156,7 +160,10 @@ def step(step_content, sign_type, private_key, env_url, begin_time=0, locust=Fal
             if headers:
                 for k, v in eval(headers)['header'].items():
                     if k == 'token':
-                        eval(headers)['header'][k] = if_dict["res_content"]['data']
+                        if if_dict["res_content"]['data'] == '系统异常':
+                            eval(headers)['header'][k] = ''
+                        else:
+                            eval(headers)['header'][k] = if_dict["res_content"]['data']
                         now_time = datetime.now()
                         sql.execute_sql('update base_environment as be set be.env_id = {}, update_time = {};'.format(env_id, now_time))
     except requests.RequestException as e:
@@ -165,18 +172,23 @@ def step(step_content, sign_type, private_key, env_url, begin_time=0, locust=Fal
         return if_dict
     if step_content["extract"]:
         extract_dict = get_extract(step_content["extract"], if_dict["res_content"])
+        extract_list.append(extract_dict)
     if step_content["validators"]:
         if_dict["result"], if_dict["msg"], if_dict['checkpoint'] = validators_result(step_content["validators"],
                                                                                      if_dict["res_content"])
-        if 'fail' in if_dict['result']:
+        if 'error' in if_dict['result']:
+            if_dict['result'] = 'error'
+        elif 'fail' in if_dict['result']:
             if_dict['result'] = 'fail'
         else:
             if_dict['result'] = 'pass'
     else:
         if_dict["result"] = "pass"
         if_dict["msg"] = {}
+    if interface.data_type == 'file':
+        if_dict["body"] = {'file': '上传图片'}
     end_time = time.clock()
-    interface_totalTime = str(end_time - begin_time) + 's'
+    interface_totalTime = str(end_time - begin_time)[:6] + ' s'
     if_dict['interface_totalTime'] = interface_totalTime
     return if_dict
 
