@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/execute.py" afterPath="$PROJECT_DIR$/lib/execute.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/public.py" afterPath="$PROJECT_DIR$/lib/public.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/case/update.html" afterPath="$PROJECT_DIR$/templates/base/case/update.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -34,11 +34,21 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="execute.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="execute.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/execute.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="467">
               <caret line="160" column="4" lean-forward="false" selection-start-line="160" selection-start-column="4" selection-end-line="160" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="add.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base/interface/add.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="704">
+              <caret line="116" column="70" lean-forward="true" selection-start-line="116" selection-start-column="70" selection-end-line="116" selection-end-column="70" />
               <folding />
             </state>
           </provider>
@@ -57,8 +67,8 @@
       <file leaf-file-name="update.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base/case/update.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="490">
-              <caret line="521" column="56" lean-forward="true" selection-start-line="521" selection-start-column="56" selection-end-line="521" selection-end-column="56" />
+            <state relative-caret-position="280">
+              <caret line="429" column="85" lean-forward="false" selection-start-line="429" selection-start-column="73" selection-end-line="429" selection-end-column="85" />
               <folding />
             </state>
           </provider>
@@ -76,11 +86,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="public.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="public.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/public.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="301">
-              <caret line="39" column="4" lean-forward="false" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="4" />
+            <state relative-caret-position="396">
+              <caret line="74" column="40" lean-forward="false" selection-start-line="74" selection-start-column="28" selection-end-line="74" selection-end-column="40" />
               <folding>
                 <element signature="e#37#56#0" expanded="true" />
               </folding>
@@ -129,9 +139,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>write_data</find>
-      <find>unit</find>
-      <find>json_path</find>
       <find>demo_path</find>
       <find>Log</find>
       <find>unitte</find>
@@ -153,12 +160,15 @@
       <find>extract_list</find>
       <find>print</find>
       <find>prin</find>
-      <find>comparator</find>
       <find>validators</find>
-      <find>add_validators_row</find>
       <find>系统异常</find>
-      <find>set_headers</find>
       <find>add_interface</find>
+      <find>validators_table</find>
+      <find>断言方</find>
+      <find>not_included</find>
+      <find>add_validators_row</find>
+      <find>set_headers</find>
+      <find>comparator</find>
     </findStrings>
     <replaceStrings>
       <replace>log</replace>
@@ -170,7 +180,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/uwsgi.ini" />
         <option value="$PROJECT_DIR$/gunicorn-config.py" />
         <option value="$PROJECT_DIR$/common/base_api.py" />
         <option value="$PROJECT_DIR$/templates/base/env/set_headers.html" />
@@ -217,10 +226,11 @@
         <option value="$PROJECT_DIR$/base/tasks.py" />
         <option value="$PROJECT_DIR$/EasyTest/views.py" />
         <option value="$PROJECT_DIR$/templates/base/case/index.html" />
-        <option value="$PROJECT_DIR$/lib/public.py" />
-        <option value="$PROJECT_DIR$/templates/base/case/update.html" />
         <option value="$PROJECT_DIR$/templates/base/plan/index.html" />
         <option value="$PROJECT_DIR$/lib/execute.py" />
+        <option value="$PROJECT_DIR$/templates/base/interface/add.html" />
+        <option value="$PROJECT_DIR$/templates/base/case/update.html" />
+        <option value="$PROJECT_DIR$/lib/public.py" />
       </list>
     </option>
   </component>
@@ -1025,7 +1035,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/common/processingJson.py" />
     <entry file="file://$PROJECT_DIR$/common/logger.py" />
     <entry file="file://$PROJECT_DIR$/case/test_api.py" />
     <entry file="file://$PROJECT_DIR$/templates/report/2019-07-08 22-07-17report.html" />
@@ -1401,14 +1410,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="704">
-          <caret line="292" column="53" lean-forward="false" selection-start-line="292" selection-start-column="53" selection-end-line="292" selection-end-column="53" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/plan/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="506">
@@ -1424,21 +1425,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/case/update.html">
+    <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
-          <caret line="521" column="56" lean-forward="true" selection-start-line="521" selection-start-column="56" selection-end-line="521" selection-end-column="56" />
+        <state relative-caret-position="704">
+          <caret line="292" column="53" lean-forward="false" selection-start-line="292" selection-start-column="53" selection-end-line="292" selection-end-column="53" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/public.py">
+    <entry file="file://$PROJECT_DIR$/templates/base/interface/add.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="301">
-          <caret line="39" column="4" lean-forward="false" selection-start-line="39" selection-start-column="4" selection-end-line="39" selection-end-column="4" />
-          <folding>
-            <element signature="e#37#56#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="704">
+          <caret line="116" column="70" lean-forward="true" selection-start-line="116" selection-start-column="70" selection-end-line="116" selection-end-column="70" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1447,6 +1446,24 @@
         <state relative-caret-position="467">
           <caret line="160" column="4" lean-forward="false" selection-start-line="160" selection-start-column="4" selection-end-line="160" selection-end-column="4" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/case/update.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="429" column="85" lean-forward="false" selection-start-line="429" selection-start-column="73" selection-end-line="429" selection-end-column="85" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/public.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="74" column="40" lean-forward="false" selection-start-line="74" selection-start-column="28" selection-end-line="74" selection-end-column="40" />
+          <folding>
+            <element signature="e#37#56#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
