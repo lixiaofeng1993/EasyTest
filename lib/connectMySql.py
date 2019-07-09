@@ -2,9 +2,7 @@ import pymysql
 from decimal import Decimal
 from lib import readConfig
 import logging
-import sys
 
-sys.path.insert(0, r'/home/lixiaofeng/EasyTest')
 log = logging.getLogger('log')
 
 
