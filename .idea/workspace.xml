@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/tasks.py" afterPath="$PROJECT_DIR$/base/tasks.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/views.py" afterPath="$PROJECT_DIR$/base/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/public.py" afterPath="$PROJECT_DIR$/lib/public.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/readConfig.py" afterPath="$PROJECT_DIR$/lib/readConfig.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -46,11 +44,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="public.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="public.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/public.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7678">
-              <caret line="385" column="25" lean-forward="true" selection-start-line="385" selection-start-column="25" selection-end-line="385" selection-end-column="25" />
+            <state relative-caret-position="189">
+              <caret line="292" column="12" lean-forward="false" selection-start-line="292" selection-start-column="4" selection-end-line="292" selection-end-column="12" />
               <folding>
                 <element signature="e#37#56#0" expanded="true" />
               </folding>
@@ -110,7 +108,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="swagger.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="swagger.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/swagger.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="555">
@@ -156,7 +154,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>测试结果</find>
       <find>repl</find>
       <find>replace</find>
       <find>backend_cleanup</find>
@@ -186,6 +183,7 @@
       <find>make</find>
       <find>report_path</find>
       <find>settings</find>
+      <find>pic_path</find>
     </findStrings>
     <replaceStrings>
       <replace>log</replace>
@@ -1444,16 +1442,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/public.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7678">
-          <caret line="385" column="25" lean-forward="true" selection-start-line="385" selection-start-column="25" selection-end-line="385" selection-end-column="25" />
-          <folding>
-            <element signature="e#37#56#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/send_email.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-242">
@@ -1485,6 +1473,16 @@
         <state relative-caret-position="555">
           <caret line="107" column="40" lean-forward="false" selection-start-line="107" selection-start-column="27" selection-end-line="107" selection-end-column="40" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/public.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="189">
+          <caret line="292" column="12" lean-forward="false" selection-start-line="292" selection-start-column="4" selection-end-line="292" selection-end-column="12" />
+          <folding>
+            <element signature="e#37#56#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -290,7 +290,7 @@ def DrawPie(pass_num=0, fail=0, error=0):
     plt.axis('equal')
     # plt.show()
     # 保存饼图
-    pic_path = os.path.join(settings.MEDIA_ROOT, 'media')
+    pic_path = settings.MEDIA_ROOT
     imgPath = os.path.join(pic_path, str(now_time) + "pie.png")
     plt.savefig(imgPath)
     plt.tight_layout()
@@ -311,7 +311,7 @@ def gr_code(url):
     import qrcode
     start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     now_time = int(time.mktime(time.strptime(start_time, '%Y-%m-%d %H:%M:%S')))
-    pic_path = os.path.join(settings.MEDIA_ROOT, 'media')
+    pic_path = settings.MEDIA_ROOT
     imgPath = os.path.join(pic_path, str(now_time) + "qrcode.png")
     qr = qrcode.QRCode(
         version=1,
@@ -380,7 +380,7 @@ def getACodeImage(appid, appsecret, values):
     readData = urllib.request.urlopen(request).read()
     start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     now_time = int(time.mktime(time.strptime(start_time, '%Y-%m-%d %H:%M:%S')))
-    pic_path = os.path.join(settings.MEDIA_ROOT, 'media')
+    pic_path = settings.MEDIA_ROOT
     imgPath = os.path.join(pic_path, str(now_time) + "small-qrcode.png")
     with open(imgPath, 'wb') as f:
         f.write(readData)
