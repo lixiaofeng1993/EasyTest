@@ -155,7 +155,10 @@ class Test_execute():
                 if headers:
                     for k, v in headers.items():
                         if k == 'token':
-                            headers[k] = if_dict["res_content"]['data']
+                            if if_dict["res_content"]['data'] == '系统异常':
+                                headers[k] = ''
+                            else:
+                                headers[k] = if_dict["res_content"]['data']
                             now_time = datetime.datetime.now()
                             Environment.objects.filter(env_id=self.env_id).update(set_headers={'header': headers},
                                                                                   update_time=now_time)
