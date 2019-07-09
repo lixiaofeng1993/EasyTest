@@ -80,7 +80,7 @@ def run_plan():
         log.info('--------------------{}'.format(_to))
         title = plan[0]['plan_name']
         log.info('--------------------{}'.format(title))
-        report_id = Report.objects.get(report_name=report_name).id
+        report_id = Report.objects.get(report_name=report_name).report_id
         log.info('--------------------{}'.format(report_id))
         send_email(_to=_to, title=title, report_id=report_id)
     log.info('测试任务执行完成！')
