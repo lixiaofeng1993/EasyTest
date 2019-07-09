@@ -77,9 +77,12 @@ def run_plan():
         user = User.objects.filter(is_superuser=1).filter(is_staff=1).filter(is_active=1).values()
         for u in user:
             _to.append(u['email'])
-        title = plan[0]['plan_name']
-        report_id = Report.objects.get(report_name=report_name).report_id
-        send_email(_to=_to, title=title, report_id=report_id)
+        if _to:
+            title = plan[0]['plan_name']
+            report_id = Report.objects.get(report_name=report_name).report_id
+            send_email(_to=_to, title=title, report_id=report_id)
+        else:
+            log.warning('收件人邮箱为空，无法发送邮件！请在 EasyTeat接口测试平台 - 用户管理 模块中设置.')
     log.info('测试任务执行完成！')
 
 
