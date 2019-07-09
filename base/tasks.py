@@ -5,12 +5,11 @@ from EasyTest.celery import app
 # from celery import shared_task
 import time, logging, os
 from lib.public import DrawPie, remove_logs
-from base.models import Plan, Report
+from base.models import Plan, Report, User
 from datetime import datetime
 # from lib.sql_parameter import test_case, get_sign, get_env
 from lib.execute import Test_execute
 from lib.send_email import send_email
-from lib import readConfig
 
 log = logging.getLogger('log')
 
@@ -74,20 +73,16 @@ def run_plan():
     report.save()
     Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now(), update_user='root')
     if fail_num or error_num:
-        user = readConfig.user
-        title = readConfig.title
-        email_text = readConfig.email_text
-        email_task = readConfig.email_task
-        log.info('-------------------------------------{}'.format(user))
-        # qq邮箱授权码
-        pwd = readConfig.pwd
-        user_163 = readConfig.user_163
-        # 163邮箱授权码
-        pwd_163 = readConfig.pwd_163
-        _to = readConfig.to
-        smtp_service = readConfig.smtp_service
-        smtp_service_163 = readConfig.smtp_service_163
-        send_email(user, pwd, user_163, pwd_163, _to, smtp_service, smtp_service_163, title, email_text, email_task)
+        _to = []
+        user = User.objects.filter(is_superuser=1).filter(is_staff=1).filter(is_active=1).values()
+        for u in user:
+            _to.append(u['email'])
+        log.info('--------------------{}'.format(_to))
+        title = plan[0]['plan_name']
+        log.info('--------------------{}'.format(title))
+        report_id = Report.objects.get(report_name=report_name).id
+        log.info('--------------------{}'.format(report_id))
+        send_email(_to=_to, title=title, report_id=report_id)
     log.info('测试任务执行完成！')
 
 
