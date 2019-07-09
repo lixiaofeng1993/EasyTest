@@ -171,10 +171,10 @@ class Test_execute():
         if step_content["validators"]:
             if_dict["result"], if_dict["msg"], if_dict['checkpoint'] = validators_result(step_content["validators"],
                                                                                          if_dict["res_content"])
-            if 'fail' in if_dict['result']:
-                if_dict['result'] = 'fail'
-            elif 'error' in if_dict['result']:
+            if 'error' in if_dict['result']:
                 if_dict['result'] = 'error'
+            elif 'fail' in if_dict['result']:
+                if_dict['result'] = 'fail'
             else:
                 if_dict['result'] = 'pass'
         else:
