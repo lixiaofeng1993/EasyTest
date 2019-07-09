@@ -123,7 +123,7 @@ def img_download(request):
             response = StreamingHttpResponse(file_iterator(name_path))
             response['Content-Type'] = 'application/octet-stream'
             response['Content-Disposition'] = 'attachment;filename="{0}"'.format(name_path)
-            log.info('用户 {} 下载的二维码：{}'.format(user_id, name_path))
+            log.info('用户 {} 下载的二维码：{}'.format(user_id, 'http://39.105.136.231/media/{}'.format(name)))
             return response
     else:
         request.session['login_from'] = '/index/'
