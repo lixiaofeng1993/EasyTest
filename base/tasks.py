@@ -5,9 +5,9 @@ from EasyTest.celery import app
 # from celery import shared_task
 import time, logging, os
 from lib.public import DrawPie, remove_logs
+from django.conf import settings
 from base.models import Plan, Report, User
 from datetime import datetime
-# from lib.sql_parameter import test_case, get_sign, get_env
 from lib.execute import Test_execute
 from lib.send_email import send_email
 
@@ -90,9 +90,8 @@ def run_plan():
 # @shared_task
 def delete_logs():
     log.info('remove logs------->删除过期日志中<--------------')
-    logs_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/' + 'logs'  # 拼接删除目录完整路径
-    # logs_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\' + 'logs'  # 拼接删除目录完整路径
-    pic_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/media'
+    logs_path = os.path.join(os.getcwd(), 'logs')
+    pic_path = os.path.join(settings.MEDIA_ROOT, 'media')
     logs_num = remove_logs(logs_path)
     pic_num = remove_logs(pic_path)
     total_num = logs_num + pic_num

@@ -14,10 +14,7 @@ from django.shortcuts import render_to_response
 from lib.public import DrawPie, paginator
 
 log = logging.getLogger('log')  # 初始化log
-report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/templates' + '/report'
-# report_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\templates' + '\\report'
-logs_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/' + 'logs'  # 拼接删除目录完整路径
-# logs_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '\\' + 'logs'  # 拼接删除目录完整路径
+logs_path = os.path.join(os.getcwd(), 'logs')  # 拼接删除目录完整路径
 start_time = ''  # 执行测试计划开始时间
 totalTime = ''  # 执行测试计划运行时间
 now_time = ''  # 饼图命名区分
