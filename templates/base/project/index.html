@@ -75,10 +75,8 @@
                                     <td id="cen">{{ prj.update_time }}</td>
                                     <td id="cen">{{ prj.user }}</td>
                                     <td id="cen">
-                                        <a href="/base/project_delete?prj_id={{ prj.prj_id }}"
-                                           class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" id="del"
-                                           onclick="return delete_btn()"><img
-                                                src="/static/admin/img/icon-deletelink.svg"/></a></td>
+                                        <a href="/base/project_delete?prj_id={{ prj.prj_id }}" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" id="del"
+                                           onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a></td>
                                     </td>
                                 </tr>
                             {% endfor %}

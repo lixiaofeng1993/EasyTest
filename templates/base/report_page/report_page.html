@@ -80,19 +80,16 @@
                                 <td id="cen">{{ env.update_time }}</td>
                                 <td id="cen">{{ env.update_user }}</td>
                                 <td id="cen">
-                                    <a href="/base/report?report_id={{ env.report_id }}"
-                                       class="layui-btn layui-btn-danger layui-btn-xs"><i class="fa fa-bar-chart"></i>&nbsp;
+                                    <a href="/base/report?report_id={{ env.report_id }}" class="layui-btn layui-btn-danger layui-btn-xs">
+                                        <i class="fa fa-bar-chart"></i>&nbsp;&nbsp;&nbsp;
                                     </a>
-                                    <a href="/base/report_logs?report_id={{ env.report_id }}"
-                                       class="layui-btn layui-btn-danger layui-btn-xs"><i
-                                            class="fa fa-file-text-o"></i>&nbsp;</a>
+                                    <a href="/base/report_logs?report_id={{ env.report_id }}" class="layui-btn layui-btn-danger layui-btn-xs">
+                                        <i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;</a>
                                     {#                                    <a href="/base/file_download?plan_id={{ env.plan_id }}"#}
                                     {#                                       class="layui-btn layui-btn-danger layui-btn-xs"#}
                                     {#                                       onclick="return download_btn()"><i class="fa fa-cloud-download"></i>&nbsp;</a>#}
-                                    <a href="/base/report_delete?report_id={{ env.report_id }}"
-                                       class="layui-btn layui-btn-danger layui-btn-xs"
-                                       lay-event="del" onclick="return delete_btn()"><img
-                                            src="/static/admin/img/icon-deletelink.svg"/></a>
+                                    <a href="/base/report_delete?report_id={{ env.report_id }}" class="layui-btn layui-btn-danger layui-btn-xs"
+                                       onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
                                 </td>
                             </tr>
                         {% endfor %}

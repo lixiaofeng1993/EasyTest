@@ -77,11 +77,8 @@ def run_plan():
         user = User.objects.filter(is_superuser=1).filter(is_staff=1).filter(is_active=1).values()
         for u in user:
             _to.append(u['email'])
-        log.info('--------------------{}'.format(_to))
         title = plan[0]['plan_name']
-        log.info('--------------------{}'.format(title))
         report_id = Report.objects.get(report_name=report_name).report_id
-        log.info('--------------------{}'.format(report_id))
         send_email(_to=_to, title=title, report_id=report_id)
     log.info('测试任务执行完成！')
 

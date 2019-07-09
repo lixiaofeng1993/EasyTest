@@ -78,15 +78,9 @@
                                 <td id="cen">{{ task.date_changed }}</td>
                                 <td id="cen">{{ task.enabled }}</td>
                                 <td id="cen">
-                                {#                                    <a href="/base/plan/" target="mainFrame"#}
-                                {#                                                class="runCaseForm btn btn-primary"><i#}
-                                {#                                        class="fa fa-recycle"></i>&nbsp;运行</a>#}
-                                {#                                    <a class="runCaseForm btn btn-danger" id="add_id_Apitest"#}
-                                {#                                       href="../admin/djcelery/periodictask/{{ task.id }}/delete/?_to_field=id&_popup=1"><i#}
-                                {#                                            class="fa fa-trash-o">&nbsp;删除</i></a></td>#}
                                 <a href="../admin/djcelery/periodictask/{{ task.id }}/delete/?_to_field=id&_popup=1"
                                    class="layui-btn layui-btn-danger layui-btn-xs"><img
-                                        src="/static/admin/img/icon-deletelink.svg"/></a>
+                                        src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
 
                             {% else %}
 

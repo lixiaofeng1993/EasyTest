@@ -6,7 +6,6 @@
 # 说   明: 
 # 创建时间: 2019/7/8 22:53
 '''
-import os
 import smtplib
 import logging
 from email.mime.multipart import MIMEMultipart
@@ -25,14 +24,14 @@ def send_email(_to, title, report_id):
     pwd = 'hlymvkoqcukvbdif'
 
     msg = MIMEMultipart()
-    msg['Subject'] = title + '测试报告'
-    msg['from'] = Header("EasyTest-定时任务", 'utf-8')
-    msg['to'] = Header("tester", 'utf-8')
+    msg['Subject'] = title + ' 执行报告'
+    msg['from'] = Header("EasyTest接口测试平台", 'utf-8')
+    msg['to'] = "tester"
     msg["Accept-Language"] = "zh-CN"
     msg["Accept-Charset"] = "ISO-8859-1,utf-8"
     # 邮件正文
     body = MIMEText(
-        '{} 执行出现异常，请查看执行详情：http://39.105.136.231/base/report/?report_id={} <测试报告地址>'.format(title, report_id), 'plain',
+        '{} 执行出现异常，请查看执行详情：http://39.105.136.231/base/report/?report_id={} <测试报告地址>；'.format(title, report_id), 'plain',
         'utf-8')
     msg.attach(body)
     log.info('写入邮件正文')

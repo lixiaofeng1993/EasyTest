@@ -89,11 +89,10 @@
                                 <td id="cen">{{ env.update_time }}</td>
                                 <td id="cen">{{ env.update_user }}</td>
                                 <td id="cen">
-                                    <a href="/base/set_headers?env_id={{ env.env_id }}" class="btn btn-primary"><i
-                                            class="fa fa-plus-circle"></i>&nbsp;设置headers</a>
-                                    <a href="/base/env_delete?env_id={{ env.env_id }}"
-                                       class="runCaseForm btn btn-danger"
-                                       onclick="return delete_btn()"><i class="fa fa-trash-o">&nbsp;删除</i></a>
+                                    <a href="/base/set_headers?env_id={{ env.env_id }}" class="layui-btn layui-btn-danger layui-btn-xs"><i
+                                            class="fa fa-header"></i>&nbsp;&nbsp;&nbsp;</a>
+                                    <a href="/base/env_delete?env_id={{ env.env_id }}" class="layui-btn layui-btn-danger layui-btn-xs" onclick="return delete_btn()"><img
+                                            src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
                                 </td>
                             </tr>
                             {#                            {% endfor %}#}

@@ -173,10 +173,8 @@
                                 <td id="cen">{{ if.update_time }}</td>
                                 <td id="cen">{{ if.update_user }}</td>
                                 <td id="cen">
-                                    <a href="/base/interface_delete?if_id={{ if.if_id }}"
-                                       class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"
-                                       onclick="return delete_btn()"><img
-                                            src="/static/admin/img/icon-deletelink.svg"/></a>
+                                    <a href="/base/interface_delete?if_id={{ if.if_id }}" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"
+                                       onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
                                 </td>
                             </tr>
                             {#                            {% endfor %}#}

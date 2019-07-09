@@ -84,7 +84,6 @@
                             <th id="cen">更新时间</th>
                             <th id="cen">更新用户</th>
                             <th id="cen">操作</th>
-                            <th id="cen">报告</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -104,23 +103,16 @@
                                 <td id="cen">{{ plan.update_time }}</td>
                                 <td id="cen">{{ plan.update_user }}</td>
                                 <td id="cen">
-                                    <button class="btn btn-primary" onclick="run_button(this);"><i
-                                            class="fa fa-spinner"></i>&nbsp;执行计划
-                                    </button>
-                                    {#                                    <button class="btn btn-primary" onclick="run_unittest(this);"><i#}
-                                    {#                                            class="fa fa-spinner"></i>&nbsp;执行unittest#}
-                                    {#                                    </button>#}
-                                    <a href="/base/plan_delete?plan_id={{ plan.plan_id }}"
-                                       class="runCaseForm btn btn-danger" lay-event="del"
-                                       onclick="return delete_btn()"><i class="fa fa-trash-o">&nbsp;删除</i></a>
-                                </td>
-                                <td id="cen">
-                                    <a class="btn btn-primary"
-                                       href="/base/report_page?plan_id={{ plan.plan_id }}"><i
-                                            class="fa fa-edit"></i>&nbsp;查看报告</a>
+                                    <a href="#" class="layui-btn layui-btn-danger layui-btn-xs" onclick="run_button(this);"
+                                       data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;
+                                    </a>
+                                    <a class="layui-btn layui-btn-danger layui-btn-xs" href="/base/report_page?plan_id={{ plan.plan_id }}">
+                                        <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;
+                                    </a>
+                                    <a href="/base/plan_delete?plan_id={{ plan.plan_id }}" class="layui-btn layui-btn-danger layui-btn-xs" onclick="return delete_btn()">
+                                        <img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
                                 </td>
                             </tr>
-                            {#                            {% endfor %}#}
                         {% endfor %}
                         </tbody>
                     </table>
