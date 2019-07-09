@@ -5,9 +5,11 @@
         #cen {
             text-align: center;
         }
+
         a:hover {
             color: red;
         }
+
         #case_name {
             max-width: 200px;
             word-wrap: break-word;
@@ -15,13 +17,16 @@
             white-space: nowrap;
             overflow: hidden;
         }
+
         #case_name:hover {
             white-space: normal;
             overflow: auto;
         }
+
         .btn-primary:hover {
             color: red;
         }
+
         .spinner1 {
             width: 40px;
             height: 40px;
@@ -32,6 +37,7 @@
             -webkit-animation: scaleout 1.0s infinite ease-in-out;
             animation: scaleout 1.0s infinite ease-in-out;
         }
+
         @-webkit-keyframes scaleout {
             0% {
                 -webkit-transform: scale(0.0)
@@ -41,6 +47,7 @@
                 opacity: 0;
             }
         }
+
         @keyframes scaleout {
             0% {
                 transform: scale(0.0);
@@ -107,13 +114,17 @@
                                 <td id="cen">{{ case.update_time }}</td>
                                 <td id="cen">{{ case.update_user }}</td>
                                 <td id="cen">
-                                    <a href="#" class="layui-btn layui-btn-danger layui-btn-xs" onclick="debug_button(this);"
+                                    <a href="#" class="layui-btn layui-btn-danger layui-btn-xs"
+                                       onclick="debug_button(this);"
                                        data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;
                                     </a>
-                                    <a href="/base/case_copy?case_id={{ case.case_id }}" class="layui-btn layui-btn-danger layui-btn-xs"
+                                    <a href="/base/case_copy?case_id={{ case.case_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="return copy_btn()"><i class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;</a>
-                                    <a href="/base/case_delete?case_id={{ case.case_id }}" class="layui-btn layui-btn-danger layui-btn-xs"
-                                       onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
+                                    <a href="/base/case_delete?case_id={{ case.case_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs"
+                                       onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;
+                                    </a>
                                 </td>
 
                             </tr>
@@ -262,9 +273,12 @@
                         console.log(data);
                         for (i in data) {
                             html = '<h5>' + (parseInt(i) + 1) + '. ' + data[i].if_name + '</h5><p style="font-family: Consolas;font-size:12px">' + '请求方式：' + data[i].method + '，请求url：' + data[i].url + '</p><p style="font-family: Consolas;font-size:12px">' + '请求参数：' + JSON.stringify(data[i].body) + '</p><p style="font-family: Consolas;font-size:12px">' + '检查点：' + data[i].checkpoint + '</p><p style="font-family: Consolas;font-size:12px">' + '接口返回信息：' + JSON.stringify(data[i].res_content).slice(0, 100) + '  ... </p>';
-                            console.log(data[i].msg.indexOf('字段'));
-                            if (data[i].result.indexOf('fail')) {
-                                _html = '<p style="font-family: Consolas;font-size:12px;color:green">' + '测试结果：' + data[i].msg + '</p>'
+                            if (data[i].result.indexOf('error') == -1) {
+                                if (data[i].result.indexOf('fail') == -1) {
+                                    _html = '<p style="font-family: Consolas;font-size:12px;color:green">' + '测试结果：' + data[i].msg + '</p>'
+                                } else {
+                                    _html = '<p style="font-family: Consolas;font-size:12px;color:orange">' + '测试结果：' + data[i].msg + '</p>'
+                                }
                             } else {
                                 _html = '<p style="font-family: Consolas;font-size:12px;color:red">' + '测试结果：' + data[i].msg + '</p>'
                             }

@@ -50,9 +50,13 @@ def validators_result(validators_list, res):
             result += "pass" + '    '
             msg += "success！" + '    '
         else:
-            result += "fail" + '    '
-            msg += "字段: " + check_filed + " 实际值为：" + str(check_filed_value) + " 与期望值：" + expect_filed + " 不符" + '    '
-            # break
+            if expect_filed == 'error_index':
+                result += "error" + '    '
+                msg += 'error_index'
+            else:
+                result += "fail" + '    '
+                msg += "字段: " + check_filed + " 实际值为：" + str(
+                    check_filed_value) + " 与期望值：" + expect_filed + " 不符" + '    '
     return result, msg, checkpoint
 
 
@@ -70,38 +74,58 @@ def get_extract(extract_dict, res, url=''):
             key_list = key.split(',')
             if len(key_list) > 1:
                 for k in key_list:
-                    key_value = get_param(k, res)
-                    if url:
-                        if isinstance(url, str):
-                            url = url.strip('/').replace('/', '_')
-                            url_key = url + '_' + k  # 拼接接口路径和参数
-                    else:
-                        url_key = k
+                    key_value = the_same_one(k, res)
+                    url_key = splicing_url(url, k)
                     with_extract_dict[url_key] = key_value
-        else:
-            if '_' in key:  # 一个接口支持提取相同参数中的某个
-                key_list = key.split('_')
-                try:
-                    num = int(key_list[1])
-                except ValueError:
-                    num = ''
-                if isinstance(num, int):
-                    if len(key_list) > 2:
-                        key_value = get_param(key, res)
-                    else:
-                        key_value = get_param(key_list[0], res, num)
-                else:
-                    key_value = get_param(key, res)
             else:
+                key = key.strip(',')
                 key_value = get_param(key, res)
-            if url:
-                if isinstance(url, str):
-                    url = url.strip('/').replace('/', '_')
-                    url_key = url + '_' + key  # 拼接接口路径和参数
-            else:
-                url_key = key
+                url_key = splicing_url(url, key)
+                with_extract_dict[url_key] = key_value
+        else:
+            key_value = the_same_one(key, value)
+            url_key = splicing_url(url, key)
             with_extract_dict[url_key] = key_value
     return with_extract_dict
+
+
+def the_same_one(key, res):
+    """
+    :param key:  提取的参数名称
+    :param res: 返回值
+    :return:
+    """
+    if '_' in key:  # 一个接口支持提取相同参数中的某个
+        key_list = key.split('_')
+        try:
+            num = int(key_list[-1])
+        except ValueError:
+            num = ''
+        if isinstance(num, int):
+            if len(key_list) == 1:  # 参数不能为数字
+                key_value = get_param(key, res)
+            else:
+                key_value = get_param(key[:-(len(str(num)) + 1)], res, num)  # 符合上述条件，去掉后num位数的加1位 传参
+        else:
+            key_value = get_param(key, res)
+    else:
+        key_value = get_param(key, res)
+    return key_value
+
+
+def splicing_url(url, key):
+    """
+    :param url: api 路径
+    :param key:  提取的参数
+    :return: 拼接后的key
+    """
+    if url:
+        if isinstance(url, str):
+            url = url.strip('/').replace('/', '_')
+            url_key = url + '_' + key  # 拼接接口路径和参数
+    else:
+        url_key = key
+    return url_key
 
 
 # 替换内容中的变量, 返回字符串型
@@ -185,10 +209,13 @@ def get_param_response(param_name, dict_data, num=0, default=None):
                     return ret
             if isinstance(v, list):
                 if num:
-                    if isinstance(v[num], dict):
-                        ret = get_param_response(param_name, v[num])
-                        if ret is not default:
-                            return ret
+                    try:
+                        if isinstance(v[num], dict):
+                            ret = get_param_response(param_name, v[num])
+                            if ret is not default:
+                                return ret
+                    except IndexError:
+                        return 'error_index'
                 else:
                     for i in v:
                         if isinstance(i, dict):

@@ -173,6 +173,8 @@ class Test_execute():
                                                                                          if_dict["res_content"])
             if 'fail' in if_dict['result']:
                 if_dict['result'] = 'fail'
+            elif 'error' in if_dict['result']:
+                if_dict['result'] = 'error'
             else:
                 if_dict['result'] = 'pass'
         else:

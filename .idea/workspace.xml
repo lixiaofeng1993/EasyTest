@@ -2,7 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EasyTest/views.py" afterPath="$PROJECT_DIR$/EasyTest/views.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/execute.py" afterPath="$PROJECT_DIR$/lib/execute.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/public.py" afterPath="$PROJECT_DIR$/lib/public.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/case/index.html" afterPath="$PROJECT_DIR$/templates/base/case/index.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -15,7 +17,7 @@
     <SUITE FILE_PATH="coverage/EasyTest$views.coverage" NAME="views Coverage Results" MODIFIED="1562576067012" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/base" />
     <SUITE FILE_PATH="coverage/EasyTest$send_email.coverage" NAME="send_email Coverage Results" MODIFIED="1562600414532" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib" />
     <SUITE FILE_PATH="coverage/EasyTest$tasks.coverage" NAME="tasks Coverage Results" MODIFIED="1562600460239" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/base" />
-    <SUITE FILE_PATH="coverage/EasyTest$public.coverage" NAME="public Coverage Results" MODIFIED="1561018390719" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib" />
+    <SUITE FILE_PATH="coverage/EasyTest$public.coverage" NAME="public Coverage Results" MODIFIED="1562655581204" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib" />
     <SUITE FILE_PATH="coverage/EasyTest$test.coverage" NAME="test Coverage Results" MODIFIED="1562600182981" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib" />
     <SUITE FILE_PATH="coverage/EasyTest$py_test_in_Test_api.coverage" NAME="py.test in Test_api Coverage Results" MODIFIED="1562582559404" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/EasyTest$connectMySql.coverage" NAME="connectMySql Coverage Results" MODIFIED="1562597259431" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/lib" />
@@ -33,6 +35,26 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="execute.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/lib/execute.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="35">
+              <caret line="175" column="46" lean-forward="false" selection-start-line="175" selection-start-column="46" selection-end-line="175" selection-end-column="46" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="704">
+              <caret line="292" column="53" lean-forward="false" selection-start-line="292" selection-start-column="53" selection-end-line="292" selection-end-column="53" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/views.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -48,8 +70,8 @@
       <file leaf-file-name="public.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/public.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="186" column="23" lean-forward="true" selection-start-line="186" selection-start-column="23" selection-end-line="186" selection-end-column="23" />
+            <state relative-caret-position="404">
+              <caret line="107" column="101" lean-forward="false" selection-start-line="107" selection-start-column="101" selection-end-line="107" selection-end-column="101" />
               <folding>
                 <element signature="e#37#56#0" expanded="true" />
               </folding>
@@ -57,11 +79,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/EasyTest/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="594">
-              <caret line="132" column="4" lean-forward="true" selection-start-line="132" selection-start-column="4" selection-end-line="132" selection-end-column="4" />
+            <state relative-caret-position="374">
+              <caret line="20" column="49" lean-forward="false" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="98" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
               </folding>
@@ -81,8 +103,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>repl</find>
-      <find>replace</find>
       <find>backend_cleanup</find>
       <find>set_headers</find>
       <find>set_header</find>
@@ -100,7 +120,6 @@
       <find>unittest</find>
       <find>report_file_html</find>
       <find>Log()</find>
-      <find>extract_list</find>
       <find>readConfig</find>
       <find>report_file_list</find>
       <find>send_email</find>
@@ -111,6 +130,9 @@
       <find>report_path</find>
       <find>settings</find>
       <find>pic_path</find>
+      <find>extract_list</find>
+      <find>print</find>
+      <find>prin</find>
     </findStrings>
     <replaceStrings>
       <replace>log</replace>
@@ -153,12 +175,10 @@
         <option value="$PROJECT_DIR$/templates/report/2019-07-08 22-07-17report.html" />
         <option value="$PROJECT_DIR$/run_this.py" />
         <option value="$PROJECT_DIR$/base/send_email.py" />
-        <option value="$PROJECT_DIR$/lib/execute.py" />
         <option value="$PROJECT_DIR$/lib/test.py" />
         <option value="$PROJECT_DIR$/lib/config/cfg.ini" />
         <option value="$PROJECT_DIR$/lib/send_email.py" />
         <option value="$PROJECT_DIR$/templates/base/report_page/report_page.html" />
-        <option value="$PROJECT_DIR$/templates/base/case/index.html" />
         <option value="$PROJECT_DIR$/templates/base/interface/index.html" />
         <option value="$PROJECT_DIR$/templates/base/plan/index.html" />
         <option value="$PROJECT_DIR$/templates/base/project/index.html" />
@@ -171,8 +191,10 @@
         <option value="$PROJECT_DIR$/lib/readConfig.py" />
         <option value="$PROJECT_DIR$/base/views.py" />
         <option value="$PROJECT_DIR$/base/tasks.py" />
-        <option value="$PROJECT_DIR$/lib/public.py" />
         <option value="$PROJECT_DIR$/EasyTest/views.py" />
+        <option value="$PROJECT_DIR$/templates/base/case/index.html" />
+        <option value="$PROJECT_DIR$/lib/public.py" />
+        <option value="$PROJECT_DIR$/lib/execute.py" />
       </list>
     </option>
   </component>
@@ -533,7 +555,7 @@
       <recent name="D:\EasyTest\lib" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.readConfig">
+  <component name="RunManager" selected="Python.public">
     <configuration default="false" name="tasks" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -548,24 +570,6 @@
       <module name="EasyTest" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/base/tasks.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <method />
-    </configuration>
-    <configuration default="false" name="test (1)" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/base" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <module name="EasyTest" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/base/test.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -620,6 +624,24 @@
       <module name="EasyTest" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lib/readConfig.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <method />
+    </configuration>
+    <configuration default="false" name="public" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/lib" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="EasyTest" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" enabled="false" sample_coverage="true" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/lib/public.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <method />
@@ -887,18 +909,18 @@
     <list size="6">
       <item index="0" class="java.lang.String" itemvalue="Django server.EasyTest" />
       <item index="1" class="java.lang.String" itemvalue="Python.tasks" />
-      <item index="2" class="java.lang.String" itemvalue="Python.test (1)" />
-      <item index="3" class="java.lang.String" itemvalue="Python.send_email" />
-      <item index="4" class="java.lang.String" itemvalue="Python.flowerconfig" />
-      <item index="5" class="java.lang.String" itemvalue="Python.readConfig" />
+      <item index="2" class="java.lang.String" itemvalue="Python.send_email" />
+      <item index="3" class="java.lang.String" itemvalue="Python.flowerconfig" />
+      <item index="4" class="java.lang.String" itemvalue="Python.readConfig" />
+      <item index="5" class="java.lang.String" itemvalue="Python.public" />
     </list>
     <recent_temporary>
       <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Python.readConfig" />
-        <item index="1" class="java.lang.String" itemvalue="Python.flowerconfig" />
-        <item index="2" class="java.lang.String" itemvalue="Python.tasks" />
-        <item index="3" class="java.lang.String" itemvalue="Python.send_email" />
-        <item index="4" class="java.lang.String" itemvalue="Python.test (1)" />
+        <item index="0" class="java.lang.String" itemvalue="Python.public" />
+        <item index="1" class="java.lang.String" itemvalue="Python.readConfig" />
+        <item index="2" class="java.lang.String" itemvalue="Python.flowerconfig" />
+        <item index="3" class="java.lang.String" itemvalue="Python.tasks" />
+        <item index="4" class="java.lang.String" itemvalue="Python.send_email" />
       </list>
     </recent_temporary>
   </component>
@@ -932,7 +954,7 @@
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32939914" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32618025" sideWeight="0.4968017" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44189766" sideWeight="0.4978678" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3848614" sideWeight="0.4978678" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39914164" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -972,7 +994,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="46" />
+      <option name="time" value="47" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1131,24 +1153,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-216">
-          <caret line="117" column="0" lean-forward="true" selection-start-line="117" selection-start-column="0" selection-end-line="117" selection-end-column="0" />
-          <folding>
-            <element signature="e#3893#3899#0#HTML" expanded="true" />
-            <element signature="e#3899#3905#0#HTML" expanded="true" />
-            <element signature="e#3905#3911#0#HTML" expanded="true" />
-            <element signature="e#4186#4192#0#HTML" expanded="true" />
-            <element signature="e#4192#4198#0#HTML" expanded="true" />
-            <element signature="e#4198#4204#0#HTML" expanded="true" />
-            <element signature="e#4467#4473#0#HTML" expanded="true" />
-            <element signature="e#4473#4479#0#HTML" expanded="true" />
-            <element signature="e#4479#4485#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/interface/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="455">
@@ -1303,7 +1307,7 @@
         <state relative-caret-position="269">
           <caret line="92" column="49" lean-forward="false" selection-start-line="92" selection-start-column="49" selection-end-line="92" selection-end-column="49" />
           <folding>
-            <element signature="e#34#72#0" expanded="true" />
+            <element signature="e#34#72#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1323,14 +1327,6 @@
           <folding>
             <marker date="1562637697602" expanded="true" signature="3783:3812" ph="select plan_... base_plan" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/execute.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="19" column="37" lean-forward="true" selection-start-line="19" selection-start-column="37" selection-end-line="19" selection-end-column="37" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1355,7 +1351,7 @@
         <state relative-caret-position="-242">
           <caret line="7" column="3" lean-forward="false" selection-start-line="7" selection-start-column="3" selection-end-line="7" selection-end-column="3" />
           <folding>
-            <element signature="e#115#129#0" expanded="true" />
+            <element signature="e#115#129#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1384,6 +1380,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/EasyTest/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="374">
+          <caret line="20" column="49" lean-forward="false" selection-start-line="20" selection-start-column="49" selection-end-line="20" selection-end-column="98" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/base/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="771">
@@ -1394,23 +1400,29 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="704">
+          <caret line="292" column="53" lean-forward="false" selection-start-line="292" selection-start-column="53" selection-end-line="292" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/lib/public.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="186" column="23" lean-forward="true" selection-start-line="186" selection-start-column="23" selection-end-line="186" selection-end-column="23" />
+        <state relative-caret-position="404">
+          <caret line="107" column="101" lean-forward="false" selection-start-line="107" selection-start-column="101" selection-end-line="107" selection-end-column="101" />
           <folding>
             <element signature="e#37#56#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/EasyTest/views.py">
+    <entry file="file://$PROJECT_DIR$/lib/execute.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="132" column="4" lean-forward="true" selection-start-line="132" selection-start-column="4" selection-end-line="132" selection-end-column="4" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="35">
+          <caret line="175" column="46" lean-forward="false" selection-start-line="175" selection-start-column="46" selection-end-line="175" selection-end-column="46" />
+          <folding />
         </state>
       </provider>
     </entry>
