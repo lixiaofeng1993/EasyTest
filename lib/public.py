@@ -83,7 +83,7 @@ def get_extract(extract_dict, res, url=''):
                 url_key = splicing_url(url, key)
                 with_extract_dict[url_key] = key_value
         else:
-            key_value = the_same_one(key, value)
+            key_value = the_same_one(key, res)
             url_key = splicing_url(url, key)
             with_extract_dict[url_key] = key_value
     return with_extract_dict
@@ -106,8 +106,6 @@ def the_same_one(key, res):
                 key_value = get_param(key, res)
             else:
                 key_value = get_param(key[:-(len(str(num)) + 1)], res, num)  # 符合上述条件，去掉后num位数的加1位 传参
-                log.info('========================{} {} {} {} '.format(key[:-(len(str(num)) + 1)], key_value, res,
-                                                                       str(num)))
         else:
             key_value = get_param(key, res)
     else:
