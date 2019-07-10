@@ -49,6 +49,9 @@ def validators_result(validators_list, res):
         if expect_filed == 'error_index':
             result += "error" + '    '
             msg += 'error_index'
+        elif check_filed_value == 'interface_error':
+            result += "error" + '    '
+            msg += 'interface_error'
         elif comparator == 'eq':
             if check_filed_value == expect_filed:
                 result += "pass" + '    '

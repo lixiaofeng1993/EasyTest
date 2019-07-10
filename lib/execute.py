@@ -100,8 +100,6 @@ class Test_execute():
                 if k and v:
                     if '$' not in v:
                         make = True
-                    if v == '系统异常':
-                        headers[k] = ''
             if make:
                 if_dict['header'] = headers
         if interface.data_type == 'sql':
@@ -149,13 +147,16 @@ class Test_execute():
             # if_dict["res_content"] = res.text
             if_dict["res_content"] = eval(
                 res.text.replace('false', 'False').replace('null', 'None').replace('true', 'True'))  # 查看报告时转码错误的问题
+            for key, value in if_dict['res_content'].items():
+                if value == '系统异常':
+                    if_dict['res_content'][key] = 'interface_error'
             if interface.is_header:  # 补充默认headers中的变量
                 set_headers = Environment.objects.get(env_id=self.env_id).set_headers
                 headers = eval(set_headers)['header']
                 if headers:
                     for k, v in headers.items():
                         if k == 'token':
-                            if if_dict["res_content"]['data'] == '系统异常':
+                            if if_dict["res_content"]['data'] == 'interface_error':
                                 headers[k] = ''
                             else:
                                 headers[k] = if_dict["res_content"]['data']
