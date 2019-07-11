@@ -1033,7 +1033,7 @@ def plan_update(request):
                 case_list.append(case)
             except Case.DoesNotExist as e:
                 log.error('计划 {} 中的 用例 {} 已被删除！！！'.format(plan.plan_name, case_id))
-                plans = Plan.objects.all()
+                plans = Plan.objects.all().order_by('-plan_id')
                 page = request.GET.get('page')
                 contacts = paginator(plans, page)
                 return render(request, "base/plan/index.html",
