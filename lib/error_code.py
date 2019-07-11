@@ -11,7 +11,7 @@
 class ErrorCode:
     interface_error = '系统异常，检查接口参数是否正确！'
 
-    index_error = 'list索引错误，接口返回list长度不够！'
+    index_error = 'list索引错误，提取参数设置长度超出！'
 
     validators_error = '未设置检查点！'
 

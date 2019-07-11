@@ -1062,7 +1062,7 @@ def plan_delete(request):
 def plan_run(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
-        return HttpResponse('用户未登录')
+        return JsonResponse({'error': ErrorCode.user_not_logged_in_error})
     else:
         if request.method == 'POST':
             global totalTime, start_time, now_time

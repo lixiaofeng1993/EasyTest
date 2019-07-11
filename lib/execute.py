@@ -179,6 +179,7 @@ class Test_execute():
                                        interface.url)  # 从有提取参数的接口中把参数抓出来
             if 'error' in extract_dict.keys():
                 if_dict["result"] = "error"
+                if_dict["checkpoint"] = {}
                 if_dict["msg"] = ErrorCode.index_error
                 if_dict["error"] = ErrorCode.index_error
                 return if_dict
@@ -257,7 +258,8 @@ def get_total_values():
         if not total_error:
             total_error = 0
 
-        total_percent = round(total_pass / (total_pass + total_fail + total_error) * 100, 2) if (total_pass + total_fail + total_error) != 0 else 0.00
+        total_percent = round(total_pass / (total_pass + total_fail + total_error) * 100, 2) if (
+                                                                                                    total_pass + total_fail + total_error) != 0 else 0.00
         total['pass'].append(total_pass)
         total['fail'].append(total_fail)
         total['error'].append(total_error)

@@ -103,13 +103,16 @@
                                 <td id="cen">{{ plan.update_time }}</td>
                                 <td id="cen">{{ plan.update_user }}</td>
                                 <td id="cen">
-                                    <a href="#" class="layui-btn layui-btn-danger layui-btn-xs" onclick="run_button(this);"
+                                    <a href="#" class="layui-btn layui-btn-danger layui-btn-xs"
+                                       onclick="run_button(this);"
                                        data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;
                                     </a>
-                                    <a class="layui-btn layui-btn-danger layui-btn-xs" href="/base/report_page?plan_id={{ plan.plan_id }}">
+                                    <a class="layui-btn layui-btn-danger layui-btn-xs"
+                                       href="/base/report_page?plan_id={{ plan.plan_id }}">
                                         <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;
                                     </a>
-                                    <a href="/base/plan_delete?plan_id={{ plan.plan_id }}" class="layui-btn layui-btn-danger layui-btn-xs" onclick="return delete_btn()">
+                                    <a href="/base/plan_delete?plan_id={{ plan.plan_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs" onclick="return delete_btn()">
                                         <img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
                                 </td>
                             </tr>
@@ -167,9 +170,14 @@
                 url: "/base/plan_run/",
                 data: {"plan_id": plan_id},
                 success: function (data) {
-                    console.log(data);
-                    alert(data);
-                    $('.spinner').hide();
+                    if (data.hasOwnProperty('error')) {
+                        console.log(data);
+                        alert(data['error'])
+                    } else {
+                        console.log(data);
+                        alert(data);
+                        $('.spinner').hide();
+                    }
                 },
                 error: function () {
                     alert("执行失败");
