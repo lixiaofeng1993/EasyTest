@@ -12,6 +12,7 @@ from lib.swagger import AnalysisJson
 from django.shortcuts import render_to_response
 # from base.page_cache import page_cache  # redis缓存
 from lib.public import DrawPie, paginator
+from lib.error_code import ErrorCode
 
 log = logging.getLogger('log')  # 初始化log
 logs_path = os.path.join(os.getcwd(), 'logs')  # 拼接删除目录完整路径
@@ -900,7 +901,7 @@ def case_delete(request):
 def case_run(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
-        return HttpResponse('0')
+        return JsonResponse({'error': ErrorCode.user_not_logged_in_error})
     else:
         if request.method == 'POST':
             case_id = request.POST['case_id']

@@ -16,6 +16,7 @@ import logging
 import time
 from lib.public import validators_result, get_extract, get_param, replace_var, \
     extract_variables, call_interface, format_url
+from .error_code import ErrorCode
 
 # from common.connectMySql import SqL
 
@@ -48,8 +49,11 @@ class Test_execute():
         try:
             case = Case.objects.get(case_id=self.case_id)
         except Case.DoesNotExist as e:
+            case_run = {}
             log.error('用例 {} 已被删除！'.format(self.case_id))
-            return '用例 {} 已被删除！'.format(self.case_id)
+            case_run['msg'] = '用例 {} 已被删除！'.format(self.case_id)
+            case_run['error'] = ErrorCode.case_not_exit_error
+            return case_run
         self.step_list = eval(case.content)
         case_run = {"case_id": self.case_id, "case_name": case.case_name}
         case_step_list = []
@@ -64,7 +68,9 @@ class Test_execute():
                     case_run["result"] = "error"
                     # break
             else:
-                return {'error': '用例 {} 中的接口 {} 已被删除！'.format(case.case_name, step["if_name"])}
+                case_run['msg'] = '用例 {} 中的接口 {} 已被删除！'.format(case.case_name, step["if_name"])
+                case_run['error'] = ErrorCode.interface_not_exit_error
+                return case_run
         class_name = self.__class__.__name__
         func_name = sys._getframe().f_code.co_name
         method_doc = self.test_case.__doc__
@@ -147,16 +153,15 @@ class Test_execute():
             # if_dict["res_content"] = res.text
             if_dict["res_content"] = eval(
                 res.text.replace('false', 'False').replace('null', 'None').replace('true', 'True'))  # 查看报告时转码错误的问题
-            for key, value in if_dict['res_content'].items():
-                if value == '系统异常':
-                    if_dict['res_content'][key] = 'interface_error'
+            if if_dict['res_content']['response_code'] == 1:  # 接口返回错误码
+                if_dict['error'] = ErrorCode.interface_error
             if interface.is_header:  # 补充默认headers中的变量
                 set_headers = Environment.objects.get(env_id=self.env_id).set_headers
                 headers = eval(set_headers)['header']
                 if headers:
                     for k, v in headers.items():
                         if k == 'token':
-                            if if_dict["res_content"]['data'] == 'interface_error':
+                            if 'error' in if_dict.keys():
                                 headers[k] = ''
                             else:
                                 headers[k] = if_dict["res_content"]['data']
@@ -164,14 +169,21 @@ class Test_execute():
                             Environment.objects.filter(env_id=self.env_id).update(set_headers={'header': headers},
                                                                                   update_time=now_time)
         except requests.RequestException as e:
-            if_dict["result"] = "Error"
+            if_dict["result"] = "error"
             if_dict["msg"] = str(e)
+            if_dict['error'] = ErrorCode.requests_error
             return if_dict
 
         if step_content["extract"]:
             extract_dict = get_extract(step_content["extract"], if_dict["res_content"],
                                        interface.url)  # 从有提取参数的接口中把参数抓出来
-            self.extract_list.append(extract_dict)
+            if 'error' in extract_dict.keys():
+                if_dict["result"] = "error"
+                if_dict["msg"] = {}
+                if_dict["error"] = ErrorCode.index_error
+                return if_dict
+            else:
+                self.extract_list.append(extract_dict)
         if step_content["validators"]:
             if_dict["result"], if_dict["msg"], if_dict['checkpoint'] = validators_result(step_content["validators"],
                                                                                          if_dict["res_content"])
@@ -182,8 +194,9 @@ class Test_execute():
             else:
                 if_dict['result'] = 'pass'
         else:
-            if_dict["result"] = "pass"
+            if_dict["result"] = "error"
             if_dict["msg"] = {}
+            if_dict["error"] = ErrorCode.validators_error
         if interface.data_type == 'file':
             if_dict["body"] = {'file': '上传图片'}
         end_time = time.clock()

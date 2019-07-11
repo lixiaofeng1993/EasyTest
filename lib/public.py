@@ -6,6 +6,7 @@ import logging
 from datetime import datetime
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger  # 分页
+from .error_code import ErrorCode
 
 log = logging.getLogger('log')  # 初始化log
 
@@ -46,13 +47,7 @@ def validators_result(validators_list, res):
         comparator = var_field['comparator']
         checkpoint += '字段：' + check_filed + '--> 值：' + expect_filed + '    '
         check_filed_value = str(get_param(check_filed, res)).lower()
-        if expect_filed == 'error_index':
-            result += "error" + '    '
-            msg += 'error_index'
-        elif check_filed_value == 'interface_error':
-            result += "error" + '    '
-            msg += 'interface_error'
-        elif comparator == 'eq':
+        if comparator == 'eq':
             if check_filed_value == expect_filed:
                 result += "pass" + '    '
                 msg += "success！" + '    '
@@ -106,8 +101,11 @@ def get_extract(extract_dict, res, url=''):
             if len(key_list) > 1:
                 for k in key_list:
                     key_value = the_same_one(k, res)
-                    url_key = splicing_url(url, k)
-                    with_extract_dict[url_key] = key_value
+                    if isinstance(key_value, dict):
+                        with_extract_dict = key_value
+                    else:
+                        url_key = splicing_url(url, k)
+                        with_extract_dict[url_key] = key_value
             else:
                 key = key.strip(',')
                 key_value = get_param(key, res)
@@ -115,8 +113,11 @@ def get_extract(extract_dict, res, url=''):
                 with_extract_dict[url_key] = key_value
         else:
             key_value = the_same_one(key, res)
-            url_key = splicing_url(url, key)
-            with_extract_dict[url_key] = key_value
+            if isinstance(key_value, dict):
+                with_extract_dict = key_value
+            else:
+                url_key = splicing_url(url, key)
+                with_extract_dict[url_key] = key_value
     return with_extract_dict
 
 
@@ -246,7 +247,7 @@ def get_param_response(param_name, dict_data, num=0, default=None):
                             if ret is not default:
                                 return ret
                     except IndexError:
-                        return 'error_index'
+                        return {'error': ErrorCode.index_error}
                 else:
                     for i in v:
                         if isinstance(i, dict):

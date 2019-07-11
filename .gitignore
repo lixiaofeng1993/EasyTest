@@ -15,3 +15,5 @@ static/
 media/
 config/
 *.ini
+__pycache__
+.idea
