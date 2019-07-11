@@ -7138,6 +7138,7 @@
                             <option value="" hassubinfo='true'>----------</option>
                             <option value="" hassubinfo='true'>pass</option>
                             <option value="" hassubinfo='true'>fail</option>
+                            <option value="" hassubinfo='true'>error</option>
                         </select>
                         <div style="float: right">
                             <label class="form-control">
@@ -7197,26 +7198,6 @@
                                     </td>
                                 </tr>
 
-{#                                <tr id="tr-fail" style='font-family: Consolas'>#}
-{#                                    <td>{{ step.id }}</td>#}
-{#                                    <td>{{ case.class_name }}</td>#}
-{#                                    <td>{{ case.func_name }}</td>#}
-{#                                    <td>{{ step.if_name }}</td>#}
-{#                                    <td>{{ step.interface_totalTime }}</td>#}
-{#                                    <td id="td-fail"><span class='text-navy' id="fail"#}
-{#                                                           style="color: orange">{{ step.result }}</span></td>#}
-{#                                    <td>#}
-{#                                        <button type='button' data-state="open" data-index="{{ step.id }}"#}
-{#                                                id="expand"#}
-{#                                                class='btn btn-primary btn-xs expand-{{ step.id }}'#}
-{#                                                style='margin-bottom: 0px'>#}
-{#                                            展开#}
-{#                                        </button>#}
-{#                                    </td>#}
-{#                                </tr>#}
-
-                                {#                                    <td><span class='text-navy' id="result">{{ step.result }}</span></td>#}
-
                                 <tr id="msg{{ step.id }}" class="step" style="display: none;padding-left: 10%">
                                     <td colspan="7">
                                         <p style='font-family: Consolas;font-size:12px'>
@@ -7235,8 +7216,18 @@
                                             [-------------︶---------------]接口返回信息：{{ step.res_content }}</p>
                                         <p style='font-family: Consolas;font-size:12px'>
                                             [------------------------------]检查点->：{{ step.checkpoint }}</p>
-                                        <p style='font-family: Consolas;font-size:12px'>
-                                            [------------------------------]测试结果：{{ step.msg }}</p>
+                                        {% ifequal step.result 'pass' %}
+                                            <p style='font-family: Consolas;font-size:12px'>
+                                                [------------------------------]测试结果：{{ step.msg }}</p>
+                                        {% else %}
+                                            {% ifequal step.result 'fail' %}
+                                                <p style='font-family: Consolas;font-size:12px;color: orange'>
+                                                    [------------------------------]测试结果：{{ step.msg }}</p>
+                                            {% else %}
+                                                <p style='font-family: Consolas;font-size:12px;color: red'>
+                                                    [------------------------------]测试结果：{{ step.msg }}</p>
+                                            {% endifequal %}
+                                        {% endifequal %}
                                     </td>
                                 </tr>
                             {% endfor %}

@@ -1277,7 +1277,7 @@ def report_search(request):
             except Report.DoesNotExist:
                 return render(request, "report.html")
             report_content = eval(report.content)
-            if result not in ['pass', 'fail']:
+            if result not in ['pass', 'fail', 'error']:
                 return HttpResponse(str(report_content))
             for case in report_content:
                 global class_name

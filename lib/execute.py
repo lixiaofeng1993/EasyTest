@@ -179,7 +179,7 @@ class Test_execute():
                                        interface.url)  # 从有提取参数的接口中把参数抓出来
             if 'error' in extract_dict.keys():
                 if_dict["result"] = "error"
-                if_dict["msg"] = {}
+                if_dict["msg"] = ErrorCode.index_error
                 if_dict["error"] = ErrorCode.index_error
                 return if_dict
             else:
@@ -195,7 +195,7 @@ class Test_execute():
                 if_dict['result'] = 'pass'
         else:
             if_dict["result"] = "error"
-            if_dict["msg"] = {}
+            if_dict["msg"] = ErrorCode.validators_error
             if_dict["error"] = ErrorCode.validators_error
         if interface.data_type == 'file':
             if_dict["body"] = {'file': '上传图片'}
