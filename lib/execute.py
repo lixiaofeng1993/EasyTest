@@ -186,7 +186,7 @@ class Test_execute():
                 self.extract_list.append(extract_dict)
         if step_content["validators"]:
             if_dict["result"], if_dict["msg"], if_dict['checkpoint'] = validators_result(step_content["validators"],
-                                                                                         if_dict["res_content"])
+                                                                                         if_dict)
             if 'error' in if_dict['result']:
                 if_dict['result'] = 'error'
             elif 'fail' in if_dict['result']:

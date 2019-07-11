@@ -7072,7 +7072,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label text-danger">接口失败:</label>
+                                    <label class="col-sm-2 control-label text-danger"
+                                           style="color: orange">接口失败:</label>
                                     <div class="col-sm-5">
                                         <span class="form-control text-danger" id="testFail">{{ fail_num }}</span>
                                     </div>
@@ -7083,12 +7084,12 @@
                                         <span class="form-control text-error" id="testError">{{ error_num }}</span>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label text-warning">接口跳过:</label>
-                                    <div class="col-sm-5">
-                                        <span class="form-control text-warning" id="testSkip">0</span>
-                                    </div>
-                                </div>
+                                {#                                <div class="form-group">#}
+                                {#                                    <label class="col-sm-2 control-label text-warning">接口跳过:</label>#}
+                                {#                                    <div class="col-sm-5">#}
+                                {#                                        <span class="form-control text-warning" id="testSkip">0</span>#}
+                                {#                                    </div>#}
+                                {#                                </div>#}
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label text-navy">开始时间:</label>
                                     <div class="col-sm-5">
@@ -7144,12 +7145,12 @@
                                                                           id="filterAll">{{ case_num }}</span><span> | </span>
                                 <span style="color: green">接口成功: </span><span style="color: green"
                                                                               id="filterOk">{{ pass_num }}</span><span> | </span>
-                                <span class="text-danger">接口失败: </span><span class="text-danger"
-                                                                             id="filterFail">{{ fail_num }}</span><span> | </span>
+                                <span class="text-danger" style="color: orange">接口失败: </span><span class="text-danger"
+                                                                                                   id="filterFail">{{ fail_num }}</span><span> | </span>
                                 <span class="text-error">接口错误: </span><span class="text-error"
                                                                             id="filterError">{{ error_num }}</span><span> | </span>
-                                <span class="text-warning">接口跳过: </span><span class="text-warning"
-                                                                              id="filterSkip">0</span>
+                                {#                                <span class="text-warning">接口跳过: </span><span class="text-warning"#}
+                                {#                                                                              id="filterSkip">0</span>#}
                             </label>
                         </div>
                     </div>
@@ -7168,42 +7169,52 @@
                         <tbody id="detailBody">
                         {% for case in report_content %}
                             {% for step in case.step_list %}
-                                {% ifequal step.result 'pass' %}
-                                    <tr id="tr-pass" style='font-family: Consolas'>
-                                        <td>{{ step.id }}</td>
-                                        <td>{{ case.class_name }}</td>
-                                        <td>{{ case.func_name }}</td>
-                                        <td>{{ step.if_name }}</td>
-                                        <td>{{ step.interface_totalTime }}</td>
 
+                                <tr id="tr-pass" style='font-family: Consolas'>
+                                    <td>{{ step.id }}</td>
+                                    <td>{{ case.class_name }}</td>
+                                    <td>{{ case.func_name }}</td>
+                                    <td>{{ step.if_name }}</td>
+                                    <td>{{ step.interface_totalTime }}</td>
+                                    {% ifequal step.result 'pass' %}
                                         <td><span class='text-navy' id="pass">{{ step.result }}</span></td>
-                                        <td>
-                                            <button type='button' data-state="open" data-index="{{ step.id }}"
-                                                    id="expand"
-                                                    class='btn btn-primary btn-xs expand-{{ step.id }}'
-                                                    style='margin-bottom: 0px'>
-                                                展开
-                                            </button>
-                                        </td>
-                                    </tr>
-                                {% else %}
-                                    <tr id="tr-fail" style='font-family: Consolas'>
-                                        <td>{{ step.id }}</td>
-                                        <td>{{ case.class_name }}</td>
-                                        <td>{{ case.func_name }}</td>
-                                        <td>{{ step.if_name }}</td>
-                                        <td>{{ step.interface_totalTime }}</td>
-                                        <td id="td-fail"><span class='text-navy' id="fail">{{ step.result }}</span></td>
-                                        <td>
-                                            <button type='button' data-state="open" data-index="{{ step.id }}"
-                                                    id="expand"
-                                                    class='btn btn-primary btn-xs expand-{{ step.id }}'
-                                                    style='margin-bottom: 0px'>
-                                                展开
-                                            </button>
-                                        </td>
-                                    </tr>
-                                {% endifequal %}
+                                    {% else %}
+                                        {% ifequal step.result 'fail' %}
+                                            <td id="td-fail"><span class='text-navy' id="fail"
+                                                                   style="color: orange">{{ step.result }}</span></td>
+                                        {% else %}
+                                            <td id="td-fail"><span class='text-navy' id="fail">{{ step.result }}</span>
+                                            </td>
+                                        {% endifequal %}
+                                    {% endifequal %}
+                                    <td>
+                                        <button type='button' data-state="open" data-index="{{ step.id }}"
+                                                id="expand"
+                                                class='btn btn-primary btn-xs expand-{{ step.id }}'
+                                                style='margin-bottom: 0px'>
+                                            展开
+                                        </button>
+                                    </td>
+                                </tr>
+
+{#                                <tr id="tr-fail" style='font-family: Consolas'>#}
+{#                                    <td>{{ step.id }}</td>#}
+{#                                    <td>{{ case.class_name }}</td>#}
+{#                                    <td>{{ case.func_name }}</td>#}
+{#                                    <td>{{ step.if_name }}</td>#}
+{#                                    <td>{{ step.interface_totalTime }}</td>#}
+{#                                    <td id="td-fail"><span class='text-navy' id="fail"#}
+{#                                                           style="color: orange">{{ step.result }}</span></td>#}
+{#                                    <td>#}
+{#                                        <button type='button' data-state="open" data-index="{{ step.id }}"#}
+{#                                                id="expand"#}
+{#                                                class='btn btn-primary btn-xs expand-{{ step.id }}'#}
+{#                                                style='margin-bottom: 0px'>#}
+{#                                            展开#}
+{#                                        </button>#}
+{#                                    </td>#}
+{#                                </tr>#}
+
                                 {#                                    <td><span class='text-navy' id="result">{{ step.result }}</span></td>#}
 
                                 <tr id="msg{{ step.id }}" class="step" style="display: none;padding-left: 10%">

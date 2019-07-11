@@ -41,13 +41,17 @@ def validators_result(validators_list, res):
     msg = ""
     result = ""
     checkpoint = ''
+    response = res["res_content"]
     for var_field in validators_list:
         check_filed = var_field["check"]
         expect_filed = var_field["expect"].lower()
         comparator = var_field['comparator']
         checkpoint += '字段：' + check_filed + '--> 值：' + expect_filed + '    '
-        check_filed_value = str(get_param(check_filed, res)).lower()
-        if comparator == 'eq':
+        check_filed_value = str(get_param(check_filed, response)).lower()
+        if 'error' in res.keys():
+            result += "error" + '    '
+            msg = res['error']
+        elif comparator == 'eq':
             if check_filed_value == expect_filed:
                 result += "pass" + '    '
                 msg += "success！" + '    '
