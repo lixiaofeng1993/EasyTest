@@ -248,7 +248,7 @@ def get_total_values():
             'pass_num']
         total_fail = Report.objects.filter(update_time__range=(begin, end)).aggregate(fail_num=Sum('fail_num'))[
             'fail_num']
-        total_error = Report.objects.filter(update_time__range=(begin, end)).aggregate(fail_num=Sum('error_num'))[
+        total_error = Report.objects.filter(update_time__range=(begin, end)).aggregate(error_num=Sum('error_num'))[
             'error_num']
         if not total_pass:
             total_pass = 0
