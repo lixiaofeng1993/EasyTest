@@ -236,6 +236,7 @@ def get_total_values():
     total = {
         'pass': [],
         'fail': [],
+        'error': [],
         'percent': []
     }
     today = datetime.date.today()
@@ -247,15 +248,19 @@ def get_total_values():
             'pass_num']
         total_fail = Report.objects.filter(update_time__range=(begin, end)).aggregate(fail_num=Sum('fail_num'))[
             'fail_num']
+        total_error = Report.objects.filter(update_time__range=(begin, end)).aggregate(fail_num=Sum('error_num'))[
+            'error_num']
         if not total_pass:
             total_pass = 0
         if not total_fail:
             total_fail = 0
+        if not total_error:
+            total_error = 0
 
-        total_percent = round(total_pass / (total_pass + total_fail) * 100, 2) if (
-                                                                                      total_pass + total_fail) != 0 else 0.00
+        total_percent = round(total_pass / (total_pass + total_fail + total_error) * 100, 2) if (total_pass + total_fail + total_error) != 0 else 0.00
         total['pass'].append(total_pass)
         total['fail'].append(total_fail)
+        total['error'].append(total_error)
         total['percent'].append(total_percent)
 
     return total

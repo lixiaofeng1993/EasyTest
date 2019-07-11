@@ -115,7 +115,8 @@
                     <div>
                         <a href="javascript:void(0)" id="submit" class="sure-btn"><i class="fa fa-gavel"></i>&nbsp;确定
                         </a>
-                        <a href="javascript:void(0)" class="switch sure-btn"><i class="fa fa-exchange"></i>&nbsp;切换</a></div>
+                        <a href="javascript:void(0)" class="switch sure-btn"><i class="fa fa-exchange"></i>&nbsp;切换</a>
+                    </div>
                     <div class="img_qr">
                     </div>
                 </div>
@@ -173,7 +174,7 @@
                 }
             },
             legend: {
-                data: ['失败用例', '成功用例', '通过率']
+                data: ['失败用例', '错误用例', '成功用例', '通过率']
             },
             xAxis: [
                 {
@@ -213,6 +214,11 @@
                     data: []
                 },
                 {
+                    name: '错误用例',
+                    type: 'bar',
+                    data: []
+                },
+                {
                     name: '通过率',
                     type: 'line',
                     yAxisIndex: 1,
@@ -231,13 +237,15 @@
             option.series[0].data = {{ total.fail }};
             option.series[1].data = {{ total.percent }};
             option.series[2].data = {{ total.pass }};
+            option.series[3].data = {{ total.error }};
 
             var max_fail = Math.max.apply(null, option.series[0].data);
             var max_pass = Math.max.apply(null, option.series[2].data);
+            var max_error = Math.max.apply(null, option.series[3].data);
 
-            if (Math.max(max_fail, max_pass) > 100) {
-                option.yAxis[0].max = Math.max(max_fail, max_pass) + 10;
-                option.yAxis[0].interval = parseInt(Math.max(max_fail, max_pass) / 10);
+            if (Math.max(max_fail, max_pass, max_error) > 100) {
+                option.yAxis[0].max = Math.max(max_fail, max_pass, max_error) + 10;
+                option.yAxis[0].interval = parseInt(Math.max(max_fail, max_pass, max_error) / 10);
             }
             myChart.setOption(option, true);
         }
