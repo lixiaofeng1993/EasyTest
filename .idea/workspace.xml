@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/execute.py" afterPath="$PROJECT_DIR$/lib/execute.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -38,8 +39,8 @@
       <file leaf-file-name="execute.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/execute.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="622">
-              <caret line="70" column="88" lean-forward="false" selection-start-line="70" selection-start-column="88" selection-end-line="70" selection-end-column="88" />
+            <state relative-caret-position="402">
+              <caret line="62" column="27" lean-forward="true" selection-start-line="62" selection-start-column="27" selection-end-line="62" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -48,7 +49,7 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="490">
+            <state relative-caret-position="6160">
               <caret line="280" column="386" lean-forward="false" selection-start-line="280" selection-start-column="376" selection-end-line="280" selection-end-column="386" />
               <folding />
             </state>
@@ -58,8 +59,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="783">
-              <caret line="1053" column="41" lean-forward="false" selection-start-line="1053" selection-start-column="41" selection-end-line="1053" selection-end-column="41" />
+            <state relative-caret-position="365">
+              <caret line="1265" column="90" lean-forward="false" selection-start-line="1265" selection-start-column="80" selection-end-line="1265" selection-end-column="90" />
               <folding />
             </state>
           </provider>
@@ -89,7 +90,7 @@
         <entry file="file://$PROJECT_DIR$/lib/error_code.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="462">
-              <caret line="21" column="38" lean-forward="true" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
+              <caret line="21" column="38" lean-forward="false" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -98,7 +99,7 @@
       <file leaf-file-name="public.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/public.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="818">
+            <state relative-caret-position="7722">
               <caret line="357" column="23" lean-forward="false" selection-start-line="357" selection-start-column="16" selection-end-line="357" selection-end-column="23" />
               <folding>
                 <element signature="e#37#56#0" expanded="true" />
@@ -110,7 +111,7 @@
       <file leaf-file-name="report.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/report.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160930">
+            <state relative-caret-position="160974">
               <caret line="7317" column="54" lean-forward="false" selection-start-line="7317" selection-start-column="54" selection-end-line="7317" selection-end-column="54" />
               <folding />
             </state>
@@ -129,7 +130,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>validator</find>
       <find>validators</find>
       <find>debug</find>
       <find>result</find>
@@ -141,7 +141,6 @@
       <find>}</find>
       <find>if_dict['res_content']</find>
       <find>step_content[&quot;validators&quot;]</find>
-      <find>ErrorCode</find>
       <find>1111111</find>
       <find>index_error</find>
       <find>prin</find>
@@ -159,6 +158,8 @@
       <find>error</find>
       <find>Plan.objects.all()</find>
       <find>已被删除</find>
+      <find>ErrorCode</find>
+      <find>class_name</find>
     </findStrings>
     <replaceStrings>
       <replace>log</replace>
@@ -251,6 +252,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -319,8 +322,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scratches" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -755,7 +756,7 @@
     <frame x="2391" y="-9" width="2418" height="1331" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21544369" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.21757679" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32832617" sideWeight="0.50319827" order="9" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1099,7 +1100,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/report.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160930">
+        <state relative-caret-position="160974">
           <caret line="7317" column="54" lean-forward="false" selection-start-line="7317" selection-start-column="54" selection-end-line="7317" selection-end-column="54" />
           <folding />
         </state>
@@ -1107,7 +1108,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/case/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="490">
+        <state relative-caret-position="6160">
           <caret line="280" column="386" lean-forward="false" selection-start-line="280" selection-start-column="376" selection-end-line="280" selection-end-column="386" />
           <folding />
         </state>
@@ -1139,7 +1140,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/public.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="818">
+        <state relative-caret-position="7722">
           <caret line="357" column="23" lean-forward="false" selection-start-line="357" selection-start-column="16" selection-end-line="357" selection-end-column="23" />
           <folding>
             <element signature="e#37#56#0" expanded="true" />
@@ -1150,7 +1151,7 @@
     <entry file="file://$PROJECT_DIR$/lib/error_code.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="462">
-          <caret line="21" column="38" lean-forward="true" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
+          <caret line="21" column="38" lean-forward="false" selection-start-line="21" selection-start-column="38" selection-end-line="21" selection-end-column="38" />
           <folding />
         </state>
       </provider>
@@ -1165,16 +1166,16 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/base/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="783">
-          <caret line="1053" column="41" lean-forward="false" selection-start-line="1053" selection-start-column="41" selection-end-line="1053" selection-end-column="41" />
+        <state relative-caret-position="365">
+          <caret line="1265" column="90" lean-forward="false" selection-start-line="1265" selection-start-column="80" selection-end-line="1265" selection-end-column="90" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/execute.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="622">
-          <caret line="70" column="88" lean-forward="false" selection-start-line="70" selection-start-column="88" selection-end-line="70" selection-end-column="88" />
+        <state relative-caret-position="402">
+          <caret line="62" column="27" lean-forward="true" selection-start-line="62" selection-start-column="27" selection-end-line="62" selection-end-column="27" />
           <folding />
         </state>
       </provider>

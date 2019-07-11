@@ -46,6 +46,9 @@ class Test_execute():
 
     def test_case(self):
         """接口测试用例"""
+        class_name = self.__class__.__name__
+        func_name = sys._getframe().f_code.co_name
+        method_doc = self.test_case.__doc__
         try:
             case = Case.objects.get(case_id=self.case_id)
         except Case.DoesNotExist as e:
@@ -53,6 +56,7 @@ class Test_execute():
             log.error('用例 {} 已被删除！'.format(self.case_id))
             case_run['msg'] = '用例 {} 已被删除！'.format(self.case_id)
             case_run['error'] = ErrorCode.case_not_exit_error
+            case_run['class_name'] = class_name
             return case_run
         self.step_list = eval(case.content)
         case_run = {"case_id": self.case_id, "case_name": case.case_name}
@@ -71,10 +75,8 @@ class Test_execute():
                 log.error('用例 {} 中的接口 {} 已被删除！'.format(case.case_name, step["if_name"]))
                 case_run['msg'] = '用例 {} 中的接口 {} 已被删除！'.format(case.case_name, step["if_name"])
                 case_run['error'] = ErrorCode.interface_not_exit_error
+                case_run['class_name'] = class_name
                 return case_run
-        class_name = self.__class__.__name__
-        func_name = sys._getframe().f_code.co_name
-        method_doc = self.test_case.__doc__
         case_run["step_list"], case_run['class_name'], case_run[
             'func_name'], case_run['method_doc'] = case_step_list, class_name, func_name, method_doc
         log.info('interface response data: {}'.format(case_run))
