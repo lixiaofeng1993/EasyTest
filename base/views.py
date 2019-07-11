@@ -1089,27 +1089,30 @@ def plan_run(request):
             end_time = time.clock()
             totalTime = str(end_time - begin_time)[:6] + ' s'
             for step in content:
-                for s in step['step_list']:
-                    if s["result"] == "pass":
-                        pass_num += 1
-                        i += 1
-                        s['id'] = i
-                    if s["result"] == "fail":
-                        fail_num += 1
-                        i += 1
-                        s['id'] = i
-                    if s["result"] == "error":
-                        error_num += 1
-                        i += 1
-                        s['id'] = i
-            pic_name = DrawPie(pass_num, fail_num, error_num)
-            report_name = plan.plan_name + "-" + str(start_time)
-            username = request.session.get('user', '')
-            report = Report(plan=plan, report_name=report_name, content=content, case_num=case_num,
-                            pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
-                            totalTime=totalTime, startTime=start_time, update_user=username)
-            report.save()
-            Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now(), update_user=username)
+                if 'error' in step.keys():
+                    return HttpResponse(step['msg'])
+                else:
+                    for s in step['step_list']:
+                        if s["result"] == "pass":
+                            pass_num += 1
+                            i += 1
+                            s['id'] = i
+                        if s["result"] == "fail":
+                            fail_num += 1
+                            i += 1
+                            s['id'] = i
+                        if s["result"] == "error":
+                            error_num += 1
+                            i += 1
+                            s['id'] = i
+                    pic_name = DrawPie(pass_num, fail_num, error_num)
+                    report_name = plan.plan_name + "-" + str(start_time)
+                    username = request.session.get('user', '')
+                    report = Report(plan=plan, report_name=report_name, content=content, case_num=case_num,
+                                    pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
+                                    totalTime=totalTime, startTime=start_time, update_user=username)
+                    report.save()
+                    Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now(), update_user=username)
             return HttpResponse(plan.plan_name + " 执行成功！")
 
 

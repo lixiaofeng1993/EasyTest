@@ -179,7 +179,7 @@ class Test_execute():
                                        interface.url)  # 从有提取参数的接口中把参数抓出来
             if 'error' in extract_dict.keys():
                 if_dict["result"] = "error"
-                if_dict["checkpoint"] = {}
+                if_dict["checkpoint"] = ''
                 if_dict["msg"] = ErrorCode.index_error
                 if_dict["error"] = ErrorCode.index_error
                 return if_dict
