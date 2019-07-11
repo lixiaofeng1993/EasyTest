@@ -68,6 +68,7 @@ class Test_execute():
                     case_run["result"] = "error"
                     # break
             else:
+                log.error('用例 {} 中的接口 {} 已被删除！'.format(case.case_name, step["if_name"]))
                 case_run['msg'] = '用例 {} 中的接口 {} 已被删除！'.format(case.case_name, step["if_name"])
                 case_run['error'] = ErrorCode.interface_not_exit_error
                 return case_run
