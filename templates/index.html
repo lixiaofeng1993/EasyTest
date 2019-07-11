@@ -174,7 +174,7 @@
                 }
             },
             legend: {
-                data: ['失败用例', '错误用例', '成功用例', '通过率']
+                data: ['失败用例', '成功用例', '通过率', '错误用例']
             },
             xAxis: [
                 {
@@ -214,11 +214,6 @@
                     data: []
                 },
                 {
-                    name: '错误用例',
-                    type: 'bar',
-                    data: []
-                },
-                {
                     name: '通过率',
                     type: 'line',
                     yAxisIndex: 1,
@@ -226,6 +221,11 @@
                 },
                 {
                     name: '成功用例',
+                    type: 'bar',
+                    data: []
+                },
+                {
+                    name: '错误用例',
                     type: 'bar',
                     data: []
                 }
