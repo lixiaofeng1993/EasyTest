@@ -110,5 +110,5 @@ class SqL:
 
 if __name__ == '__main__':
     r = SqL()
-    data = r.execute_sql("select plan_id from base_plan;", num=2)
+    data = r.execute_sql('select bs.case_name, bs.content from base_case as bs where bs.case_id = 15;')
     print(data)

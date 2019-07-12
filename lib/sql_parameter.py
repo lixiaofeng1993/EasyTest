@@ -10,7 +10,9 @@ import time, logging, sys, json, requests
 from datetime import datetime
 from lib.signtype import user_sign_api, encryptAES
 from lib.connectMySql import SqL
-from lib.public import validators_result, get_extract, get_param, replace_var, extract_variables, call_interface, format_url
+from lib.public import validators_result, get_extract, get_param, replace_var, extract_variables, call_interface, \
+    format_url
+from lib.error_code import ErrorCode
 
 s = requests.session()
 extract_list = []
@@ -39,32 +41,54 @@ def get_env(env_id):
 
 def test_case(case_id, env_id, case_id_list, sign_type, private_key, env_url, begin_time=0, locust=False):
     """接口测试用例"""
-    case = sql.execute_sql(
-        'select bs.case_name, bs.content from base_case as bs where bs.case_id = "{}";'.format(case_id), dict_type=True)
-    step_list = eval(case['content'])
+    class_name = '定时任务'
+    func_name = sys._getframe().f_code.co_name
+    method_doc = ''
+    try:
+        case = sql.execute_sql(
+            'select bs.case_name, bs.content from base_case as bs where bs.case_id = "{}";'.format(case_id),
+            dict_type=True)
+        step_list = eval(case['content'])
+    except TypeError:
+        case_run = {}
+        log.error('用例 {} 已被删除！'.format(case_id))
+        case_run['msg'] = '用例 {} 已被删除！'.format(case_id)
+        case_run['error'] = ErrorCode.case_not_exit_error
+        case_run['class_name'] = class_name
+        return case_run, ''
     case_run = {"case_id": case_id, "case_name": case['case_name']}
     case_step_list = []
     for ste in step_list:
         if not locust:
             step_info = step(ste, sign_type=sign_type, private_key=private_key, env_url=env_url, begin_time=begin_time,
                              locust=locust, env_id=env_id)
-            case_step_list.append(step_info)
-            if not locust:
+            if isinstance(step_info, dict):
+                case_step_list.append(step_info)
                 if step_info["result"] == "fail":
                     case_run["result"] = "fail"
                     # break
                 if step_info["result"] == "error":
                     case_run["result"] = "error"
                     # break
+            else:
+                log.error('用例 {} 中的接口 {} 已被删除！'.format(case['case_name'], ste["if_name"]))
+                case_run['msg'] = '用例 {} 中的接口 {} 已被删除！'.format(case['case_name'], ste["if_name"])
+                case_run['error'] = ErrorCode.interface_not_exit_error
+                case_run['class_name'] = class_name
+                return case_run, ''
         else:
             step_info, url = step(ste, sign_type=sign_type, private_key=private_key, env_url=env_url,
                                   begin_time=begin_time, locust=locust, env_id=env_id)
-            case_step_list.append(step_info)
+            if isinstance(step_info, dict):
+                case_step_list.append(step_info)
+            else:
+                log.error('用例 {} 中的接口 {} 已被删除！'.format(case['case_name'], ste["if_name"]))
+                case_run['msg'] = '用例 {} 中的接口 {} 已被删除！'.format(case['case_name'], ste["if_name"])
+                case_run['error'] = ErrorCode.interface_not_exit_error
+                case_run['class_name'] = class_name
+                return case_run, ''
     if locust:
         return case_step_list, url
-    class_name = '定时任务'
-    func_name = sys._getframe().f_code.co_name
-    method_doc = ''
     case_run["step_list"], case_run['class_name'], case_run[
         'func_name'], case_run['method_doc'] = case_step_list, class_name, func_name, method_doc
     log.info('interface response data: {}'.format(case_run))
@@ -74,9 +98,13 @@ def test_case(case_id, env_id, case_id_list, sign_type, private_key, env_url, be
 def step(step_content, sign_type, private_key, env_url, begin_time=0, locust=False, env_id=''):
     global step_json, extract_list, s
     if_id = step_content["if_id"]
-    interface = sql.execute_sql(
-        'select bi.url, bi.method, bi.data_type, bi.is_sign, bi.is_header from base_interface as bi where bi.if_id = {};'.format(
-            if_id), dict_type=True)
+    try:
+        interface = sql.execute_sql(
+            'select bi.url, bi.method, bi.data_type, bi.is_sign, bi.is_header from base_interface as bi where bi.if_id = {};'.format(
+                if_id), dict_type=True)
+        if_dict = {"url": interface['url'], 'if_id': if_id}
+    except TypeError:
+        return 'no'
     var_list = extract_variables(step_content)
     # 检查是否存在变量
     if var_list and not locust:
@@ -91,7 +119,7 @@ def step(step_content, sign_type, private_key, env_url, begin_time=0, locust=Fal
             step_content = json.loads(replace_var(step_content, var_name, var_value))
     else:
         extract = step_content['extract']
-    if_dict = {"url": interface['url'], "header": step_content["header"], "body": step_content["body"]}
+    if_dict['header'], if_dict['body'] = step_content["header"], step_content["body"]
     set_headers = sql.execute_sql(
         'select be.set_headers from base_environment as be where be.env_id="{}";'.format(env_id),
         dict_type=True, num=1)
@@ -102,8 +130,6 @@ def step(step_content, sign_type, private_key, env_url, begin_time=0, locust=Fal
             if k and v:
                 if '$' not in v:
                     make = True
-                if v == '系统异常':
-                    headers[k] = ''
     if make:
         if_dict['header'] = eval(headers)['header']
     if interface['data_type'] == 'sql':
@@ -156,23 +182,34 @@ def step(step_content, sign_type, private_key, env_url, begin_time=0, locust=Fal
         # if_dict["res_content"] = res.text
         if_dict["res_content"] = eval(
             res.text.replace('false', 'False').replace('null', 'None').replace('true', 'True'))  # 查看报告时转码错误的问题
+        if if_dict['res_content']['response_code'] == 1:  # 接口返回错误码
+            if_dict['error'] = ErrorCode.interface_error
         if interface['is_header']:  # 补充默认headers中的变量
             if headers:
                 for k, v in eval(headers)['header'].items():
                     if k == 'token':
-                        if if_dict["res_content"]['data'] == '系统异常':
+                        if 'error' in if_dict.keys():
                             eval(headers)['header'][k] = ''
                         else:
                             eval(headers)['header'][k] = if_dict["res_content"]['data']
                         now_time = datetime.now()
-                        sql.execute_sql('update base_environment as be set be.env_id = {}, update_time = {};'.format(env_id, now_time))
+                        sql.execute_sql(
+                            'update base_environment as be set be.env_id = {}, update_time = {};'.format(env_id,
+                                                                                                         now_time))
     except requests.RequestException as e:
         if_dict["result"] = "Error"
         if_dict["msg"] = str(e)
         return if_dict
     if step_content["extract"]:
         extract_dict = get_extract(step_content["extract"], if_dict["res_content"])
-        extract_list.append(extract_dict)
+        if 'error' in extract_dict.keys():
+            if_dict["result"] = "error"
+            if_dict["checkpoint"] = ''
+            if_dict["msg"] = ErrorCode.index_error
+            if_dict["error"] = ErrorCode.index_error
+            return if_dict
+        else:
+            extract_list.append(extract_dict)
     if step_content["validators"]:
         if_dict["result"], if_dict["msg"], if_dict['checkpoint'] = validators_result(step_content["validators"],
                                                                                      if_dict["res_content"])

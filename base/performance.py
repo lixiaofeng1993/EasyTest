@@ -27,6 +27,9 @@ class UserBehavior(TaskSet):  # 定义用户行为
         try:
             self.if_dict_list, self.url = get_parameters()
             self.extract_dict = ''
+            for if_dict in self.if_dict_list:
+                if 'error' in if_dict.keys():
+                    exit()
         except TypeError:
             exit()
 
