@@ -28,8 +28,11 @@ class UserBehavior(TaskSet):  # 定义用户行为
             self.if_dict_list, self.url = get_parameters()
             self.extract_dict = ''
             for if_dict in self.if_dict_list:
-                if 'error' in if_dict.keys():
-                    exit()
+                print(if_dict, 111111111111111111111111111)
+                print(self.if_dict_list, 2222222222222222222222222222222222)
+                if isinstance(if_dict, dict):
+                    if 'error' in if_dict.keys():
+                        exit()
         except TypeError:
             exit()
 
