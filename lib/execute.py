@@ -198,7 +198,8 @@ class Test_execute():
             else:
                 if_dict['result'] = 'pass'
         else:
-            if_dict["result"] = "error"
+            if_dict["result"] = 'error'
+            if_dict['checkpoint'] = ''
             if_dict["msg"] = ErrorCode.validators_error
             if_dict["error"] = ErrorCode.validators_error
         if interface.data_type == 'file':

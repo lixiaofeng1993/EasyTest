@@ -13,7 +13,7 @@ class ErrorCode:
 
     index_error = 'list索引错误，提取参数设置长度超出！'
 
-    validators_error = '未设置检查点！'
+    validators_error = '接口未设置检查点！'
 
     case_not_exit_error = '执行用例不存在！'
 
