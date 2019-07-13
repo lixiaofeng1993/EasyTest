@@ -22,3 +22,5 @@ class ErrorCode:
     user_not_logged_in_error = '用户未登录！！！'
 
     requests_error = '接口请求异常，检查请求接口代码是否正确！'
+
+    mock_fail = '模拟接口返回值进行断言，实际未请求！'

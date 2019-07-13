@@ -22,13 +22,14 @@ urlpatterns = [
     url(r'env_add/', view=views.env_add, name='env_add'),
     url(r'env_update/', view=views.env_update, name='env_update'),
     url(r'env_delete/', view=views.env_delete, name='env_delete'),
+    url(r'set_headers/', view=views.set_headers, name='set_headers'),
     # 接口
     url(r'interface/', view=views.interface_index, name='interface'),
     url(r'interface_add/', view=views.interface_add, name='interface_add'),
     url(r'interface_update/', view=views.interface_update, name='interface_update'),
     url(r'interface_delete/', view=views.interface_delete, name='interface_delete'),
     url(r'interface_search/', view=views.interface_search, name='interface_search'),
-    url(r'set_headers/', view=views.set_headers, name='set_headers'),
+    url(r'set_mock/', view=views.set_mock, name='set_mock'),
     # 用例
     url(r'case/', view=views.case_index, name='case'),
     url(r'case_add/', view=views.case_add, name='case_add'),

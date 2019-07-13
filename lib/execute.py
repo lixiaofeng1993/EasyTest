@@ -145,28 +145,34 @@ class Test_execute():
         if_dict["if_name"] = step_content["if_name"]
         if_dict["method"] = interface.method
         if_dict["data_type"] = interface.data_type
-
-        try:
-            # if self.sign_type == 4:
-            if interface.is_sign:
-                if self.sign_type == 4:
+        print(interface.set_mock, if_dict["if_name"])
+        if not interface.set_mock:
+            try:
+                # if self.sign_type == 4:
+                if interface.is_sign:
+                    if self.sign_type == 4:
+                        res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
+                                             {'data': if_dict["body"]}, if_dict["data_type"])
+                else:
                     res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
-                                         {'data': if_dict["body"]}, if_dict["data_type"])
-            else:
-                res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
-                                     if_dict["body"], if_dict["data_type"])
-        except requests.RequestException as e:
-            if_dict["result"] = "error"
-            if_dict["msg"] = str(e)
-            if_dict['error'] = ErrorCode.requests_error
-            return if_dict
+                                         if_dict["body"], if_dict["data_type"])
+                if_dict["res_status_code"] = res.status_code
+                # if_dict["res_content"] = res.text
+                if_dict["res_content"] = eval(
+                    res.text.replace('false', 'False').replace('null', 'None').replace('true', 'True'))  # 查看报告时转码错误的问题
+                if if_dict['res_content']['response_code'] == 1:  # 接口返回错误码
+                    if_dict['error'] = ErrorCode.interface_error
+            except requests.RequestException as e:
+                if_dict["result"] = "error"
+                if_dict["msg"] = str(e)
+                if_dict['error'] = ErrorCode.requests_error
+                return if_dict
+        else:
+            if_dict["res_content"] = \
+            eval(interface.set_mock.replace('false', 'False').replace('null', 'None').replace('true', 'True'))['mock']
+            if_dict["result"] = "fail"
+            if_dict['fail'] = ErrorCode.mock_fail
 
-        if_dict["res_status_code"] = res.status_code
-        # if_dict["res_content"] = res.text
-        if_dict["res_content"] = eval(
-            res.text.replace('false', 'False').replace('null', 'None').replace('true', 'True'))  # 查看报告时转码错误的问题
-        if if_dict['res_content']['response_code'] == 1:  # 接口返回错误码
-            if_dict['error'] = ErrorCode.interface_error
         if interface.is_header:  # 补充默认headers中的变量
             set_headers = Environment.objects.get(env_id=self.env_id).set_headers
             headers = eval(set_headers)['header']

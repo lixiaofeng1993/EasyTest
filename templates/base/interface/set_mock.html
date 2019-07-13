@@ -33,10 +33,10 @@
                     <a class="this">基础信息</a>
                 </li>
                 <li class="active">
-                    <a class="this-page" href="/base/case/">测试环境</a>
+                    <a class="this-page" href="/base/case/">接口管理</a>
                 </li>
                 <li class="active">
-                    <a class="">设置headers</a>
+                    <a class="">设置接口mock</a>
                 </li>
             </ol>
 
@@ -49,13 +49,13 @@
         <div class="col-md-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h3 class="panel-title" value="{{ env_id }}" id="env_name">设置默认headers ==> {{ env_name }}</h3>
+                    <h3 class="panel-title" value="{{ if_id }}" id="env_name">设置mock ==> {{ if_name }}</h3>
                 </div>
                 <div class="ibox-content">
 
                     <div class="form-group">
-                        <button onclick="get_header()" class="btn btn-primary" style="margin-top: 1%"><i
-                                class="fa fa-get-pocket"></i>&nbsp;获取header
+                        <button onclick="get_mock()" class="btn btn-primary" style="margin-top: 1%"><i
+                                class="fa fa-get-pocket"></i>&nbsp;获取mock
                         </button>
                     </div>
                     <div class="form-horizontal" style="margin-top: 1%">
@@ -75,7 +75,7 @@
                                     <td contenteditable='true' name='var_name'></td>
                                     <td contenteditable='true' name='var_value'></td>
                                     <td>
-                                        <button onclick='add_header_row()' class='btn btn-primary'><i
+                                        <button onclick='add_mock_row()' class='btn btn-primary'><i
                                                 class='fa fa-plus-square-o'></i></button>
                                     </td>
                                 </tr>
@@ -104,8 +104,8 @@
 {% block javascript %}
     <script>
         //添加头参数
-        function add_header_row() {
-            var newRow = "<tr><td>#</td><td contenteditable='true' name='var_name'></td><td contenteditable='true' name='var_value'></td><td><button onclick='add_header_row()' class='btn btn-primary'><i class='fa fa-plus-square-o'></i></button> <button class='btn btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i></button></td></tr>";
+        function add_mock_row() {
+            var newRow = "<tr><td>#</td><td contenteditable='true' name='var_name'></td><td contenteditable='true' name='var_value'></td><td><button onclick='add_mock_row()' class='btn btn-primary'><i class='fa fa-plus-square-o'></i></button> <button class='btn btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i></button></td></tr>";
             $('tbody').append(newRow);
         }
 
@@ -116,20 +116,20 @@
             tbody.removeChild(tr);
         }
 
-        function get_header() {
-            var env_id = $('#env_name').attr('value');
+        function get_mock() {
+            var if_id = $('#env_name').attr('value');
             $.ajax({
-                url: "/base/set_headers/",
+                url: "/base/set_mock/",
                 type: "get",
-                data: {"env_id": env_id, 'make': 1},
+                data: {"if_id": if_id, 'make': 1},
                 success: function (data) {
                     if (data == '0') {
-                        alert('未设置header！')
+                        alert('未设置mock！')
                     } else {
                         console.log(data);
                         $('#header').empty();
                         for (i in data) {
-                            params = "<tr><td>#</td><td contenteditable='true' name='var_name'>" + i + "</td><td contenteditable='true' name='var_value'>" + data[i] + "</td><td><button onclick='add_header_row()' class='btn btn-primary'><i class='fa fa-plus-square-o'></i></button> <button class='btn btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i></button></td></tr>";
+                            params = "<tr><td>#</td><td contenteditable='true' name='var_name'>" + i + "</td><td contenteditable='true' name='var_value'>" + data[i] + "</td><td><button onclick='add_mock_row()' class='btn btn-primary'><i class='fa fa-plus-square-o'></i></button> <button class='btn btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i></button></td></tr>";
                             $('#header').append(params);
                         }
 
@@ -140,8 +140,7 @@
 
         $("#submit").click(function () {
             var step = {};
-            var env_id = $('#env_name').attr('value');
-            console.log(env_id);
+            var if_id = $('#env_name').attr('value');
             $("div[class='panel']").each(function (i) {
 
                 var header_table = $(this).find("table[name='header']");
@@ -157,21 +156,21 @@
                     }
                 });
 
-                step["header"] = header;
+                step["mock"] = header;
             });
-            arr = Object.keys(step["header"]);
+            arr = Object.keys(step["mock"]);
             if (JSON.stringify(arr) == '[]') {
                 content_json = ''
             } else {
                 content_json = JSON.stringify(step);
             }
             $.ajax({
-                url: "/base/set_headers/",
+                url: "/base/set_mock/",
                 type: "post",
-                data: {"content": content_json, "env_id": env_id},
-                success: function (data) {
+                data: {"content": content_json, "if_id": if_id},
+                success: function () {
                     alert('保存成功！');
-                    window.location.replace("/base/env/");
+                    window.location.replace("/base/interface/");
 
                 },
                 error: function () {

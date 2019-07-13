@@ -257,7 +257,7 @@
         function add_validators_row(obj) {
             var panel = $(obj).parent().parent();
             var tbody = $(panel).find("table[name='validators']").children('tbody');
-            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td> <td name='comparator' contenteditable='true'><select type='text' id='data_type' class='form-control'><option value='eq'>等于</option><option value='neq'>不等于</option><option value='included'>包含</option><option value='not_included'>不包含</option></select></td><td><td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td> <td name='comparator' contenteditable='true'><select type='text' id='data_type' class='form-control'><option value='eq'>等于</option><option value='neq'>不等于</option><option value='included'>包含</option><option value='not_included'>不包含</option></select></td><td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
             $(tbody).append(newRow);
         }
 

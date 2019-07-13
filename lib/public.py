@@ -50,7 +50,10 @@ def validators_result(validators_list, res):
         check_filed_value = str(get_param(check_filed, response)).lower()
         if 'error' in res.keys():
             result += "error" + '    '
-            msg = res['error']
+            msg += res['error']
+        elif 'fail' in res.keys():
+            result += "fail" + '    '
+            msg += res['fail']
         elif comparator == 'eq':
             if check_filed_value == expect_filed:
                 result += "pass" + '    '

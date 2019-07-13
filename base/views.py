@@ -257,6 +257,41 @@ def set_headers(request):
             return HttpResponseRedirect("/base/env/")
 
 
+# @login_required
+def set_mock(request):
+    """设置默认headers"""
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/env/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            if_id = request.GET.get('if_id', '')
+            make = request.GET.get('make', '')
+            interface = Interface.objects.get(if_id=if_id)
+            if_name = interface.if_name
+            set_mock = interface.set_mock
+            if make:
+                if set_mock:
+                    set_mock = eval(set_mock)['mock']
+                    return JsonResponse(set_mock)
+                else:
+                    return JsonResponse('0', safe=False)
+            else:
+                return render(request, "base/interface/set_mock.html",
+                              {'if_id': if_id, 'if_name': if_name, 'env': set_mock})
+
+        elif request.method == 'POST':
+            content = request.POST.get('content', '')
+            if_id = request.POST.get('if_id', '')
+            now_time = datetime.now()
+            username = request.session.get('user', '')
+            Interface.objects.filter(if_id=if_id).update(set_mock=content, update_time=now_time,
+                                                             update_user=username)
+            log.info(
+                'interface {} set mock success. mock info: {} '.format(if_id, content))
+            return HttpResponseRedirect("/base/interface/")
+
 # 添加环境
 # @login_required
 def env_add(request):

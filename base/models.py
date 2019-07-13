@@ -50,6 +50,7 @@ class Interface(models.Model):
     project = models.ForeignKey('Project', on_delete=models.CASCADE)
     is_sign = models.IntegerField()
     is_header = models.IntegerField(default='')  # 标记设置header接口
+    set_mock = models.TextField(default='')  # 设置mock
     description = models.CharField(max_length=200)
     request_header_param = models.TextField()
     request_body_param = models.TextField()
