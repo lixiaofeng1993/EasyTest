@@ -270,3 +270,5 @@ CELERYBEAT_SCHEDULE = {  # 定时器策略
     #     "args": (),
     # },
 }
+
+LOGIN_URL = '/index/'

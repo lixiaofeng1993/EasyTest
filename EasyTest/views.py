@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 # from django.contrib.auth.decorators import login_required
+from django.contrib.auth.hashers import make_password, check_password
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.contrib import auth  # django认证系统
 from djcelery.models import PeriodicTask, CrontabSchedule
@@ -93,13 +94,42 @@ def login_action(request):
                 request.session['login_from'] = '/index/'
             log.info('---------地址来源-------------> {}'.format(request.session['login_from']))
             response = redirect(request.session['login_from'])
-            # response = HttpResponseRedirect('/index/')
             log.info('用户： {} 登录成功！'.format(username))
             request.session.set_expiry(None)  # 关闭浏览器后，session失效
             return response
         else:
             log.error('用户名或密码错误... {} {}'.format(username, password))
             return render(request, 'user/login_action.html', {'error': 'username or password error!'})
+
+
+# 注册
+def register(request):
+    if request.method == 'GET':
+        return render(request, 'user/register.html')
+    else:
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        pswd_again = request.POST.get('pswd-again', '')
+        email = request.POST.get('email', '')
+        if username == '' or password == '' or pswd_again == '':
+            return render(request, 'user/register.html', {'error': 'username or password cannot be empty!'})
+        elif password != pswd_again:
+            return render(request, 'user/register.html', {'error': 'two passwords are different!'})
+        try:
+            User.objects.get(username=username)
+            return render(request, 'user/register.html', {'error': 'registered username already exists!'})
+        except User.DoesNotExist:
+            User.objects.create_user(username=username, password=password, email=email)
+            user = auth.authenticate(username=username, password=password)
+            if user is not None:
+                auth.login(request, user)
+                request.session['user'] = username  # 将session信息记录到浏览器
+                user_ = User.objects.get(username=username)
+                request.session['user_id'] = user_.id  # 将session信息记录到浏览器
+                response = redirect('/index/')
+                log.info('用户： {} 注册并登录成功！'.format(username))
+                request.session.set_expiry(None)  # 关闭浏览器后，session失效
+                return response
 
 
 # @login_required
