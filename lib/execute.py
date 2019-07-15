@@ -145,8 +145,8 @@ class Test_execute():
         if_dict["if_name"] = step_content["if_name"]
         if_dict["method"] = interface.method
         if_dict["data_type"] = interface.data_type
-        print(interface.set_mock, if_dict["if_name"])
-        if not interface.set_mock:
+
+        if not interface.set_mock:  # 请求接口或者模拟接口返回值
             try:
                 # if self.sign_type == 4:
                 if interface.is_sign:
@@ -169,7 +169,8 @@ class Test_execute():
                 return if_dict
         else:
             if_dict["res_content"] = \
-            eval(interface.set_mock.replace('false', 'False').replace('null', 'None').replace('true', 'True'))['mock']
+                eval(interface.set_mock.replace('false', 'False').replace('null', 'None').replace('true', 'True'))[
+                    'mock']
             if_dict["result"] = "fail"
             if_dict['fail'] = ErrorCode.mock_fail
 
