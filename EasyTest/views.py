@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 # from django.contrib.auth.decorators import login_required
-from django.contrib.auth.hashers import make_password, check_password
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.contrib import auth  # django认证系统
 from djcelery.models import PeriodicTask, CrontabSchedule
@@ -13,6 +12,7 @@ import logging, os
 from django.http import StreamingHttpResponse
 from lib.public import gr_code, getACodeImage
 from lib.execute import get_user, get_total_values
+from lib.send_email import send_email
 
 log = logging.getLogger('log')  # 初始化log
 num_list = []
@@ -127,6 +127,7 @@ def register(request):
                 user_ = User.objects.get(username=username)
                 request.session['user_id'] = user_.id  # 将session信息记录到浏览器
                 response = redirect('/index/')
+                send_email('18701137212@163.com', '注册登录记录', report_id=username, register=True)
                 log.info('用户： {} 注册并登录成功！'.format(username))
                 request.session.set_expiry(None)  # 关闭浏览器后，session失效
                 return response

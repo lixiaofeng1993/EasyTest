@@ -17,7 +17,7 @@ from email.header import Header
 log = logging.getLogger('log')
 
 
-def send_email(_to, title, report_id):
+def send_email(_to, title, report_id='', register=False):
     """发送邮件"""
     smtp_service = 'smtp.qq.com'
     user = '954274592@qq.com'
@@ -30,9 +30,13 @@ def send_email(_to, title, report_id):
     msg["Accept-Language"] = "zh-CN"
     msg["Accept-Charset"] = "ISO-8859-1,utf-8"
     # 邮件正文
-    body = MIMEText(
-        '{} 执行出现异常，请查看执行详情：http://39.105.136.231/base/report/?report_id={} <测试报告地址>；'.format(title, report_id), 'plain',
-        'utf-8')
+    if register:
+        body = MIMEText(
+            '用户： {} 登录并注册成功！'.format(report_id), 'plain', 'utf-8')
+    else:
+        body = MIMEText(
+            '{} 执行出现异常，请查看执行详情：http://39.105.136.231/base/report/?report_id={} <测试报告地址>；'.format(title, report_id),
+            'plain', 'utf-8')
     msg.attach(body)
     log.info('写入邮件正文')
     i = 0
