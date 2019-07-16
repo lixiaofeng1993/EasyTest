@@ -82,10 +82,17 @@
                             <a href="/base/sign/?page={{ sign_list.previous_page_number }}">上一页</a>
                         {% endif %}
 
-                        <span class="current">
-                            Page {{ sign_list.number }} of {{ sign_list.paginator.num_pages }}.
-                        </span>
+                        {#                        <span class="current">#}
+                        {#                            Page {{ sign_list.number }} of {{ sign_list.paginator.num_pages }}.#}
+                        {#                        </span>#}
+                        {% for page_number in contacts.paginator.page_range %}
+                            {% ifequal page_number  contacts.number %}
+                                |  {{ page_number }}
+                            {% else %}
+                                <a href="/base/sign/?page={{ page_number }}">|  {{ page_number }} </a>
+                            {% endifequal %}
 
+                        {% endfor %}
                         {% if sign_list.has_next %}
                             <a href="/base/sign/?page={{ sign_list.next_page_number }}">下一页</a>
                         {% endif %}

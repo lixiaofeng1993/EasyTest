@@ -96,7 +96,18 @@
             color: red;
         }
 
-
+        .pagination {
+            position: fixed;
+            bottom: 25%;
+            right: 20%;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: #ffffff;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+        }
     </style>
 
 
@@ -193,9 +204,17 @@
                             <a href="/base/interface/?page={{ contacts.previous_page_number }}">上一页</a>
                         {% endif %}
 
-                        <span class="current">
-                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
-                        </span>
+                        {#                        <span class="current">#}
+{#                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.#}
+{#                        </span>#}
+                        {% for page_number in contacts.paginator.page_range %}
+                            {% ifequal page_number  contacts.number %}
+                                |  {{ page_number }}
+                            {% else %}
+                                <a href="/base/interface/?page={{ page_number }}">|  {{ page_number }} </a>
+                            {% endifequal %}
+
+                        {% endfor %}
 
                         {% if contacts.has_next %}
                             <a href="/base/interface/?page={{ contacts.next_page_number }}">下一页</a>

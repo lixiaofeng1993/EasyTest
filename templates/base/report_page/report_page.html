@@ -22,6 +22,7 @@
             white-space: normal;
             overflow: auto;
         }
+
     </style>
 {% endblock %}
 
@@ -80,16 +81,20 @@
                                 <td id="cen">{{ env.update_time }}</td>
                                 <td id="cen">{{ env.update_user }}</td>
                                 <td id="cen">
-                                    <a href="/base/report?report_id={{ env.report_id }}" class="layui-btn layui-btn-danger layui-btn-xs">
+                                    <a href="/base/report?report_id={{ env.report_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs">
                                         <i class="fa fa-bar-chart"></i>&nbsp;&nbsp;&nbsp;
                                     </a>
-                                    <a href="/base/report_logs?report_id={{ env.report_id }}" class="layui-btn layui-btn-danger layui-btn-xs">
+                                    <a href="/base/report_logs?report_id={{ env.report_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs">
                                         <i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;</a>
                                     {#                                    <a href="/base/file_download?plan_id={{ env.plan_id }}"#}
                                     {#                                       class="layui-btn layui-btn-danger layui-btn-xs"#}
                                     {#                                       onclick="return download_btn()"><i class="fa fa-cloud-download"></i>&nbsp;</a>#}
-                                    <a href="/base/report_delete?report_id={{ env.report_id }}" class="layui-btn layui-btn-danger layui-btn-xs"
-                                       onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
+                                    <a href="/base/report_delete?report_id={{ env.report_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs"
+                                       onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;
+                                    </a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -99,16 +104,24 @@
                 </div>
                 <div class="pagination">
                     <span class="step-links">
+                        {# topics.paginator.page_range 这个函数返回包含一个所有页码数的 range 对象 #}
+                        {# 即 range(1, topics.paginator.num_pages + 1) #}
                         {% if contacts.has_previous %}
-                            <a href="/base/report_page/?plan_id={{ plan_id }}&page={{ contacts.previous_page_number }}">上一页</a>
+                            <a href="/base/report_page/?plan_id={{ plan_id }}&page={{ contacts.previous_page_number }}">上一页 </a>
                         {% endif %}
+                        {#                    <span class="current">#}
+                        {#                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.#}
+                        {#                                            </span>#}
+                        {% for page_number in contacts.paginator.page_range %}
+                            {% ifequal page_number  contacts.number %}
+                                |  {{ page_number }}
+                            {% else %}
+                                <a href="/base/report_page/?plan_id={{ plan_id }}&page={{ page_number }}">|  {{ page_number }} </a>
+                            {% endifequal %}
 
-                        <span class="current">
-                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
-                        </span>
-
+                        {% endfor %}
                         {% if contacts.has_next %}
-                            <a href="/base/report_page/?plan_id={{ plan_id }}&page={{ contacts.next_page_number }}">下一页</a>
+                            <a href="/base/report_page/?plan_id={{ plan_id }}&page={{ contacts.next_page_number }}">  | 下一页</a>
                         {% endif %}
                     </span>
                 </div>

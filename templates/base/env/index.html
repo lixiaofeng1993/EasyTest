@@ -89,9 +89,12 @@
                                 <td id="cen">{{ env.update_time }}</td>
                                 <td id="cen">{{ env.update_user }}</td>
                                 <td id="cen">
-                                    <a href="/base/set_headers?env_id={{ env.env_id }}" class="layui-btn layui-btn-danger layui-btn-xs"><i
+                                    <a href="/base/set_headers?env_id={{ env.env_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs"><i
                                             class="fa fa-header"></i>&nbsp;&nbsp;&nbsp;</a>
-                                    <a href="/base/env_delete?env_id={{ env.env_id }}" class="layui-btn layui-btn-danger layui-btn-xs" onclick="return delete_btn()"><img
+                                    <a href="/base/env_delete?env_id={{ env.env_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs"
+                                       onclick="return delete_btn()"><img
                                             src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
                                 </td>
                             </tr>
@@ -106,9 +109,17 @@
                             <a href="/base/env/?page={{ contacts.previous_page_number }}">上一页</a>
                         {% endif %}
 
-                        <span class="current">
-                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
-                        </span>
+                        {#                        <span class="current">#}
+                        {#                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.#}
+                        {#                        </span>#}
+                        {% for page_number in contacts.paginator.page_range %}
+                            {% ifequal page_number  contacts.number %}
+                                |  {{ page_number }}
+                            {% else %}
+                                <a href="/base/env/?page={{ page_number }}">|  {{ page_number }} </a>
+                            {% endifequal %}
+
+                        {% endfor %}
 
                         {% if contacts.has_next %}
                             <a href="/base/env/?page={{ contacts.next_page_number }}">下一页</a>

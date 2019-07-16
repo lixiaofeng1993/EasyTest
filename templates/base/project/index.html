@@ -75,8 +75,10 @@
                                     <td id="cen">{{ prj.update_time }}</td>
                                     <td id="cen">{{ prj.user }}</td>
                                     <td id="cen">
-                                        <a href="/base/project_delete?prj_id={{ prj.prj_id }}" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" id="del"
-                                           onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a></td>
+                                        <a href="/base/project_delete?prj_id={{ prj.prj_id }}"
+                                           class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" id="del"
+                                           onclick="return delete_btn()"><img
+                                                src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a></td>
                                     </td>
                                 </tr>
                             {% endfor %}
@@ -90,10 +92,17 @@
                             <a href="/base/project/?page={{ contacts.previous_page_number }}">上一页</a>
                         {% endif %}
 
-                        <span class="current">
-                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
-                        </span>
+                        {#                        <span class="current">#}
+                        {#                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.#}
+                        {#                        </span>#}
+                        {% for page_number in contacts.paginator.page_range %}
+                            {% ifequal page_number  contacts.number %}
+                                |  {{ page_number }}
+                            {% else %}
+                                <a href="/base/project/?page={{ page_number }}">|  {{ page_number }} </a>
+                            {% endifequal %}
 
+                        {% endfor %}
                         {% if contacts.has_next %}
                             <a href="/base/project/?page={{ contacts.next_page_number }}">下一页</a>
                         {% endif %}

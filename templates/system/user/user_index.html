@@ -87,10 +87,17 @@
                             <a href="/base/user/?page={{ contacts.previous_page_number }}">上一页</a>
                         {% endif %}
 
-                        <span class="current">
-                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.
-                        </span>
+                        {#                        <span class="current">#}
+                        {#                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.#}
+                        {#                        </span>#}
+                        {% for page_number in contacts.paginator.page_range %}
+                            {% ifequal page_number  contacts.number %}
+                                |  {{ page_number }}
+                            {% else %}
+                                <a href="/base/user/?page={{ page_number }}">|  {{ page_number }} </a>
+                            {% endifequal %}
 
+                        {% endfor %}
                         {% if contacts.has_next %}
                             <a href="/base/user/?page={{ contacts.next_page_number }}">下一页</a>
                         {% endif %}
