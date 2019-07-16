@@ -5,9 +5,11 @@
         #cen {
             text-align: center;
         }
+
         a:hover {
             color: red;
         }
+
         .env-name {
             max-width: 200px;
             word-wrap: break-word;
@@ -15,6 +17,7 @@
             white-space: nowrap;
             overflow: hidden;
         }
+
         .env-name:hover {
             white-space: normal;
             overflow: auto;
@@ -98,29 +101,33 @@
                     </table>
                     <span style="color: red; font-size: 12px">{{ error }}</span>
                 </div>
-                <div class="pagination">
-                    <span class="step-links">
-                        {# topics.paginator.page_range 这个函数返回包含一个所有页码数的 range 对象 #}
-                        {# 即 range(1, topics.paginator.num_pages + 1) #}
-                        {% if contacts.has_previous %}
-                            <a href="/base/report_page/?plan_id={{ plan_id }}&page={{ contacts.previous_page_number }}">上一页 </a>
-                        {% endif %}
-                        {#                    <span class="current">#}
-                        {#                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.#}
-                        {#                                            </span>#}
-                        {% for page_number in contacts.paginator.page_range %}
-                            {% ifequal page_number  contacts.number %}
-                                |  {{ page_number }}
-                            {% else %}
-                                <a href="/base/report_page/?plan_id={{ plan_id }}&page={{ page_number }}">|  {{ page_number }} </a>
-                            {% endifequal %}
+                <ul class="pagination">
+                    {# topics.paginator.page_range 这个函数返回包含一个所有页码数的 range 对象 #}
+                    {# 即 range(1, topics.paginator.num_pages + 1) #}
+                    {% if contacts.has_previous %}
+                        <li class="page"><a
+                                href="/base/report_page/?plan_id={{ plan_id }}&page={{ contacts.previous_page_number }}">上一页 </a>
+                        </li>
+                    {% endif %}
+                    {#                    <span class="current">#}
+                    {#                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.#}
+                    {#                                            </span>#}
+                    {% for page_number in contacts.paginator.page_range %}
+                        {% ifequal page_number  contacts.number %}
+                            <li class="page"><a href="javascript:void(0)" class="active"> {{ page_number }}</a></li>
+                        {% else %}
+                            <li class="page"><a
+                                    href="/base/report_page/?plan_id={{ plan_id }}&page={{ page_number }}">{{ page_number }} </a>
+                            </li>
+                        {% endifequal %}
 
-                        {% endfor %}
-                        {% if contacts.has_next %}
-                            <a href="/base/report_page/?plan_id={{ plan_id }}&page={{ contacts.next_page_number }}">  | 下一页</a>
-                        {% endif %}
-                    </span>
-                </div>
+                    {% endfor %}
+                    {% if contacts.has_next %}
+                        <li class="page"><a
+                                href="/base/report_page/?plan_id={{ plan_id }}&page={{ contacts.next_page_number }}">下一页</a>
+                        </li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
     </div>

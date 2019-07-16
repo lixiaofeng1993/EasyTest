@@ -1,18 +1,48 @@
 /* All styles created for demo purposes only, you may not need this for your project */
 .demo-button button {
-  margin-bottom: 5px; }
+    margin-bottom: 5px;
+}
 
 .demo-icons li {
-  margin-bottom: 50px;
-  text-align: center; }
+    margin-bottom: 50px;
+    text-align: center;
+}
 
 .demo-icons .lnr,
 .demo-icons .fa {
-  font-size: 28px; }
+    font-size: 28px;
+}
 
 .demo-icons .cssclass {
-  display: block;
-  margin-top: 5px;
-  margin-left: 5px; }
+    display: block;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+ul.pagination {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+}
+
+ul.pagination li {
+    display: inline;
+}
+
+ul.pagination li a {
+    color: black;
+    float: left;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+
+ul.pagination li a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+ul.pagination li a:hover:not(.active) {
+    background-color: #ddd;
+}
 
 /*# sourceMappingURL=demo.css.map */

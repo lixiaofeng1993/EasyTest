@@ -186,29 +186,33 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="pagination">
-                    <span class="step-links">
-                        {% if contacts.has_previous %}
-                            <a href="/base/interface/?page={{ contacts.previous_page_number }}">上一页</a>
-                        {% endif %}
+                <ul class="pagination">
+                    {# topics.paginator.page_range 这个函数返回包含一个所有页码数的 range 对象 #}
+                    {# 即 range(1, topics.paginator.num_pages + 1) #}
+                    {% if contacts.has_previous %}
+                        <li class="page"><a
+                                href="/base/interface/?page={{ contacts.previous_page_number }}">上一页 </a>
+                        </li>
+                    {% endif %}
+                    {#                    <span class="current">#}
+                    {#                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.#}
+                    {#                                            </span>#}
+                    {% for page_number in contacts.paginator.page_range %}
+                        {% ifequal page_number  contacts.number %}
+                            <li class="page"><a href="javascript:void(0)" class="active"> {{ page_number }}</a></li>
+                        {% else %}
+                            <li class="page"><a
+                                    href="/base/interface/?page={{ page_number }}">{{ page_number }} </a>
+                            </li>
+                        {% endifequal %}
 
-                        {#                        <span class="current">#}
-{#                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.#}
-{#                        </span>#}
-                        {% for page_number in contacts.paginator.page_range %}
-                            {% ifequal page_number  contacts.number %}
-                                |  {{ page_number }}
-                            {% else %}
-                                <a href="/base/interface/?page={{ page_number }}">|  {{ page_number }} </a>
-                            {% endifequal %}
-
-                        {% endfor %}
-
-                        {% if contacts.has_next %}
-                            <a href="/base/interface/?page={{ contacts.next_page_number }}">下一页</a>
-                        {% endif %}
-                    </span>
-                </div>
+                    {% endfor %}
+                    {% if contacts.has_next %}
+                        <li class="page"><a
+                                href="/base/interface/?page={{ contacts.next_page_number }}">下一页</a>
+                        </li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
         <button onclick="topFunction()" id="myBtn" title="回顶部">返回顶部</button>
