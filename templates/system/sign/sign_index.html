@@ -85,8 +85,8 @@
                         {#                        <span class="current">#}
                         {#                            Page {{ sign_list.number }} of {{ sign_list.paginator.num_pages }}.#}
                         {#                        </span>#}
-                        {% for page_number in contacts.paginator.page_range %}
-                            {% ifequal page_number  contacts.number %}
+                        {% for page_number in sign_list.paginator.page_range %}
+                            {% ifequal page_number  sign_list.number %}
                                 |  {{ page_number }}
                             {% else %}
                                 <a href="/base/sign/?page={{ page_number }}">|  {{ page_number }} </a>
