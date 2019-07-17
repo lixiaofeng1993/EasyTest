@@ -271,4 +271,4 @@ CELERYBEAT_SCHEDULE = {  # 定时器策略
     # },
 }
 
-LOGIN_URL = '/index/'
+LOGIN_URL = '/login_action/'

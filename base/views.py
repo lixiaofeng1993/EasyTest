@@ -1,5 +1,7 @@
 import os, time, json, logging
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.http import StreamingHttpResponse
 from base.models import Project, Sign, Environment, Interface, Case, Plan, Report
 from django.contrib.auth.models import User  # django自带user
@@ -11,8 +13,9 @@ from datetime import timedelta, datetime
 from lib.swagger import AnalysisJson
 from django.shortcuts import render_to_response
 # from base.page_cache import page_cache  # redis缓存
-from lib.public import DrawPie, paginator
+from lib.public import DrawPie, paginator, pagination_data
 from lib.error_code import ErrorCode
+from django.views.generic import ListView
 
 log = logging.getLogger('log')  # 初始化log
 logs_path = os.path.join(os.getcwd(), 'logs')  # 拼接删除目录完整路径
@@ -22,24 +25,29 @@ now_time = ''  # 饼图命名区分
 class_name = ''  # 执行测试类
 
 
-# 项目首页
-# @login_required
+# 项目列表
 # @page_cache(5)
-def project_index(request):
-    user_id = request.session.get('user_id', '')  # 从session中获取user_id
-    if get_user(user_id):
-        prj_list = Project.objects.all()  # 按照user_id查询项目
-        page = request.GET.get('page')
-        contacts = paginator(prj_list, page)
-        info = {"prj_list": prj_list, 'contacts': contacts}
-        return render(request, "base/project/index.html", info)
-    else:
-        request.session['login_from'] = '/base/project/'
-        return render(request, 'user/login_action.html')
+@method_decorator(login_required, name='dispatch')
+class ProjectIndex(ListView):
+    model = Project
+    template_name = 'base/project/index.html'
+    context_object_name = 'object_list'
+    paginate_by = 10
+
+    def dispatch(self, *args, **kwargs):
+        return super(ProjectIndex, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = context.get('paginator')
+        page = context.get('page_obj')
+        is_paginated = context.get('is_paginated')
+        data = pagination_data(paginator, page, is_paginated)
+        context.update(data)
+        return context
 
 
 # 增加项目
-# @login_required
 def project_add(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -70,7 +78,6 @@ def project_add(request):
 
 
 # 项目编辑
-# @login_required
 def project_update(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -106,7 +113,6 @@ def project_update(request):
 
 
 # 删除项目
-# @login_required
 def project_delete(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -120,24 +126,29 @@ def project_delete(request):
             return HttpResponseRedirect("base/project/")
 
 
-# 签名首页
-# @login_required
+# 签名列表
 # @page_cache(5)
-def sign_index(request):
-    user_id = request.session.get('user_id', '')
-    if not get_user(user_id):
-        request.session['login_from'] = '/base/sign/'
-        return render(request, 'user/login_action.html')
-    else:
-        if request.method == 'GET':
-            sign_list = Sign.objects.all()
-            page = request.GET.get('page')
-            contacts = paginator(sign_list, page)
-            return render(request, "system/sign/sign_index.html", {"sign_list": contacts})
+@method_decorator(login_required, name='dispatch')
+class SignIndex(ListView):
+    model = Sign
+    template_name = 'system/sign/sign_index.html'
+    context_object_name = 'object_list'
+    paginate_by = 10
+
+    def dispatch(self, *args, **kwargs):
+        return super(SignIndex, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = context.get('paginator')
+        page = context.get('page_obj')
+        is_paginated = context.get('is_paginated')
+        data = pagination_data(paginator, page, is_paginated)
+        context.update(data)
+        return context
 
 
 # 添加签名
-# @login_required
 def sign_add(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -161,7 +172,6 @@ def sign_add(request):
 
 
 # 更新签名
-# @login_required
 def sign_update(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -191,7 +201,6 @@ def sign_update(request):
 
 
 # 删除签名
-# @login_required
 def sign_delete(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -205,23 +214,29 @@ def sign_delete(request):
             return HttpResponseRedirect("base/sign/")
 
 
-# 测试环境首页
-# @login_required
+# 测试环境列表
 # @page_cache(5)
-def env_index(request):
-    user_id = request.session.get('user_id', '')
-    if get_user(user_id):
-        envs = Environment.objects.all()
-        page = request.GET.get('page')
-        contacts = paginator(envs, page)
-        return render(request, "base/env/index.html", {"contacts": contacts})
-    else:
-        request.session['login_from'] = '/base/env/'
-        return render(request, 'user/login_action.html')
+@method_decorator(login_required, name='dispatch')
+class EnvIndex(ListView):
+    model = Environment
+    template_name = 'base/env/index.html'
+    context_object_name = 'object_list'
+    paginate_by = 10
+
+    def dispatch(self, *args, **kwargs):
+        return super(EnvIndex, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = context.get('paginator')
+        page = context.get('page_obj')
+        is_paginated = context.get('is_paginated')
+        data = pagination_data(paginator, page, is_paginated)
+        context.update(data)
+        return context
 
 
 # 设置默认headers
-# @login_required
 def set_headers(request):
     """设置默认headers"""
     user_id = request.session.get('user_id', '')
@@ -257,9 +272,8 @@ def set_headers(request):
             return HttpResponseRedirect("/base/env/")
 
 
-# @login_required
 def set_mock(request):
-    """设置默认headers"""
+    """设置默认mock"""
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/env/'
@@ -294,7 +308,6 @@ def set_mock(request):
 
 
 # 添加环境
-# @login_required
 def env_add(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -333,7 +346,6 @@ def env_add(request):
 
 
 # 测试环境更新
-# @login_required
 def env_update(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -381,7 +393,6 @@ def env_update(request):
 
 
 # 删除测试环境
-# @login_required
 def env_delete(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -395,23 +406,28 @@ def env_delete(request):
             return HttpResponseRedirect("base/env/")
 
 
-# 接口首页
-# @login_required
-# @page_cache(5)
-def interface_index(request):
-    user_id = request.session.get('user_id', '')
-    if get_user(user_id):
-        interface = Interface.objects.all()
-        page = request.GET.get('page')
-        contacts = paginator(interface, page)
-        return render(request, "base/interface/index.html", {"contacts": contacts})
-    else:
-        request.session['login_from'] = '/base/interface/'
-        return render(request, 'user/login_action.html')
+# 接口列表
+@method_decorator(login_required, name='dispatch')
+class InterfaceIndex(ListView):
+    model = Interface
+    template_name = 'base/interface/index.html'
+    context_object_name = 'object_list'
+    paginate_by = 10
+
+    def dispatch(self, *args, **kwargs):
+        return super(InterfaceIndex, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = context.get('paginator')
+        page = context.get('page_obj')
+        is_paginated = context.get('is_paginated')
+        data = pagination_data(paginator, page, is_paginated)
+        context.update(data)
+        return context
 
 
 # 接口搜索功能
-# @login_required
 def interface_search(request):
     if request.method == 'POST':
         user_id = request.session.get('user_id', '')
@@ -451,7 +467,6 @@ def interface_search(request):
 
 
 # 添加接口
-# @login_required
 def interface_add(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -501,7 +516,6 @@ def interface_add(request):
 
 
 # 接口编辑
-# @login_required
 def interface_update(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -668,7 +682,6 @@ def interface_format_params(params_list):
 
 
 # 接口删除
-# @login_required
 def interface_delete(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -729,7 +742,6 @@ def batch_import_interface(interface_params, interface, request):
 
 
 # 批量导入
-# @login_required
 def batch_index(request):
     """批量导入"""
     user_id = request.session.get('user_id', '')
@@ -754,22 +766,27 @@ def batch_index(request):
 
 
 # 用例首页
-# @login_required
-# @page_cache(5)
-def case_index(request):
-    user_id = request.session.get('user_id', '')
-    if get_user(user_id):
-        cases = Case.objects.all().order_by('-case_id')
-        page = request.GET.get('page')
-        contacts = paginator(cases, page)
-        return render(request, "base/case/index.html", {"contacts": contacts})
-    else:
-        request.session['login_from'] = '/base/case/'
-        return render(request, 'user/login_action.html')
+@method_decorator(login_required, name='dispatch')
+class CaseIndex(ListView):
+    model = Case
+    template_name = 'base/case/index.html'
+    context_object_name = 'object_list'
+    paginate_by = 10
+
+    def dispatch(self, *args, **kwargs):
+        return super(CaseIndex, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = context.get('paginator')
+        page = context.get('page_obj')
+        is_paginated = context.get('is_paginated')
+        data = pagination_data(paginator, page, is_paginated)
+        context.update(data)
+        return context
 
 
 # 添加用例
-# @login_required
 def case_add(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -801,7 +818,6 @@ def case_add(request):
 
 
 # 编辑用例
-# @login_required
 def case_update(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -851,7 +867,6 @@ def case_update(request):
             return render_to_response('base/case/update.html', info)
 
 
-# @login_required
 def case_copy(request):
     """复制case"""
     user_id = request.session.get('user_id', '')
@@ -875,7 +890,6 @@ def case_copy(request):
             return HttpResponseRedirect("base/case/")
 
 
-# @login_required
 def case_logs(request):
     """单个用例运行日志"""
     user_id = request.session.get('user_id', '')
@@ -918,7 +932,6 @@ def case_logs(request):
 
 
 # 删除用例
-# @login_required
 def case_delete(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -933,7 +946,6 @@ def case_delete(request):
 
 
 # 运行用例
-# @login_required
 def case_run(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -950,23 +962,32 @@ def case_run(request):
             return JsonResponse(case_result)
 
 
-# 测试计划首页
-# @login_required
+# 测试计划列表
 # @page_cache(5)
-def plan_index(request):
-    user_id = request.session.get('user_id', '')
-    if get_user(user_id):
-        plans = Plan.objects.all().order_by('-plan_id')
-        page = request.GET.get('page')
-        contacts = paginator(plans, page)
-        return render(request, "base/plan/index.html", {"contacts": contacts})
-    else:
-        request.session['login_from'] = '/base/plan/'
-        return render(request, 'user/login_action.html')
+@method_decorator(login_required, name='dispatch')
+class PlanIndex(ListView):
+    model = Plan
+    template_name = 'base/plan/index.html'
+    context_object_name = 'object_list'
+    paginate_by = 10
+
+    def dispatch(self, *args, **kwargs):
+        return super(PlanIndex, self).dispatch(*args, **kwargs)
+
+    def get_queryset(self):
+        return Plan.objects.all().order_by('-plan_id')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = context.get('paginator')
+        page = context.get('page_obj')
+        is_paginated = context.get('is_paginated')
+        data = pagination_data(paginator, page, is_paginated)
+        context.update(data)
+        return context
 
 
 # 测试计划添加
-# @login_required
 def plan_add(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -1009,7 +1030,6 @@ def plan_add(request):
 
 
 # 测试计划编辑
-# @login_required
 def plan_update(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -1079,7 +1099,6 @@ def plan_update(request):
 
 
 # 删除测试计划
-# @login_required
 def plan_delete(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -1094,7 +1113,6 @@ def plan_delete(request):
 
 
 # 运行测试计划
-# @login_required
 def plan_run(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -1154,7 +1172,6 @@ def plan_run(request):
 
 
 # 定时任务
-# @login_required
 # @page_cache(5)
 def timing_task(request):
     user_id = request.session.get('user_id', '')
@@ -1171,7 +1188,6 @@ def timing_task(request):
         return render(request, 'user/login_action.html')
 
 
-# @login_required
 def task_logs(request):
     """定时任务运行日志"""
     user_id = request.session.get('user_id', '')
@@ -1193,29 +1209,37 @@ def task_logs(request):
             return render(request, 'system/task/log.html', {'data': data_list, 'make': True, 'log_file': task_log_path})
 
 
-# 查看报告页面
-# @login_required
+# 报告列表
 # @page_cache(5)
-def report_page(request):
-    if request.method == 'GET':
-        user_id = request.session.get('user_id', '')
-        if get_user(user_id):
-            plan_id = request.GET.get('plan_id', '')
-            if plan_id:
-                report_list = Report.objects.filter(plan_id=plan_id).order_by('-report_id')
-            else:
-                report_list = Report.objects.all().order_by('-report_id')
-            page = request.GET.get('page')
-            contacts = paginator(report_list, page)
-            return render(request, "base/report_page/report_page.html",
-                          {"contacts": contacts, 'plan_id': plan_id})
+@method_decorator(login_required, name='dispatch')
+class ReportPage(ListView):
+    model = Report
+    template_name = 'base/report_page/report_page.html'
+    context_object_name = 'object_list'
+    paginate_by = 10
+
+    def dispatch(self, *args, **kwargs):
+        return super(ReportPage, self).dispatch(*args, **kwargs)
+
+    def get_queryset(self):
+        self.plan_id = self.request.GET.dict().get('plan_id', '')
+        if self.plan_id:
+            return Report.objects.filter(plan_id=self.plan_id).order_by('-report_id')
         else:
-            request.session['login_from'] = '/base/report_page/'
-            return render(request, 'user/login_action.html')
+            return Report.objects.all().order_by('-report_id')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.update({'plan_id': self.plan_id})
+        paginator = context.get('paginator')
+        page = context.get('page_obj')
+        is_paginated = context.get('is_paginated')
+        data = pagination_data(paginator, page, is_paginated)
+        context.update(data)
+        return context
 
 
 # 显示日志信息
-# @login_required
 def report_logs(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -1267,7 +1291,6 @@ def report_logs(request):
 
 
 # 展示报告
-# @login_required
 def report_index(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -1303,7 +1326,6 @@ def report_index(request):
                            'img_name': str(now_time) + 'pie.png', 'class_name': class_name})
 
 
-# @login_required
 def report_search(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -1333,7 +1355,6 @@ def report_search(request):
 
 
 # 删除报告
-# @login_required
 def report_delete(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -1348,7 +1369,6 @@ def report_delete(request):
 
 
 # 下载unittest报告
-# @login_required
 def file_download(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
@@ -1389,7 +1409,6 @@ def file_download(request):
 
 
 # locust页面
-# @login_required
 # @page_cache(5)
 def performance_index(request):
     if request.method == 'GET':
@@ -1402,19 +1421,25 @@ def performance_index(request):
 
 
 # 添加用户
-# @login_required
 # @page_cache(5)
-def user_index(request):
-    user_id = request.session.get('user_id', '')
-    if get_user(user_id):
-        user = User.objects.all()
-        page = request.GET.get('page')
-        contacts = paginator(user, page)
-        return render(request, 'system/user/user_index.html', {"contacts": contacts})
+@method_decorator(login_required, name='dispatch')
+class UserIndex(ListView):
+    model = User
+    template_name = 'system/user/user_index.html'
+    context_object_name = 'object_list'
+    paginate_by = 10
 
-    else:
-        request.session['login_from'] = '/base/user/'
-        return render(request, 'user/login_action.html')
+    def dispatch(self, *args, **kwargs):
+        return super(UserIndex, self).dispatch(*args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = context.get('paginator')
+        page = context.get('page_obj')
+        is_paginated = context.get('is_paginated')
+        data = pagination_data(paginator, page, is_paginated)
+        context.update(data)
+        return context
 
 
 # 关于我们

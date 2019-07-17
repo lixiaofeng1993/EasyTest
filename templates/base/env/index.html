@@ -74,7 +74,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for env in contacts %}
+                        {% for env in object_list %}
                             {#                            {% for env in env_ %}#}
                             <tr>
                                 <td id="cen">{{ env.env_id }}</td>
@@ -103,33 +103,36 @@
                         </tbody>
                     </table>
                 </div>
-                <ul class="pagination">
-                    {# topics.paginator.page_range 这个函数返回包含一个所有页码数的 range 对象 #}
-                    {# 即 range(1, topics.paginator.num_pages + 1) #}
-                    {% if contacts.has_previous %}
-                        <li class="page"><a
-                                href="/base/env/?page={{ contacts.previous_page_number }}">上一页 </a>
-                        </li>
-                    {% endif %}
-                    {#                    <span class="current">#}
-                    {#                            Page {{ contacts.number }} of {{ contacts.paginator.num_pages }}.#}
-                    {#                                            </span>#}
-                    {% for page_number in contacts.paginator.page_range %}
-                        {% ifequal page_number  contacts.number %}
-                            <li class="page"><a href="javascript:void(0)" class="active"> {{ page_number }}</a></li>
-                        {% else %}
+                {% if is_paginated %}
+                    <ul class="pagination">
+                        {% if first %}
+                            <li class="page"><a href="?page=1">1</a></li>
+                        {% endif %}
+                        {% if left %}
+                            {% if left_has_more %}
+                                <li class="page"><a href="javascript:void(0)">...</a></li>
+                            {% endif %}
+                            {% for i in left %}
+                                <li class="page"><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endfor %}
+                        {% endif %}
+                        <li class="page"><a href="javascript:void(0)" class="active"> {{ page_obj.number }}</a></li>
+                        {% if right %}
+                            {% for i in right %}
+                                <li class="page"><a href="?page={{ i }}">{{ i }}</a></li>
+                            {% endfor %}
+                            {% if right_has_more %}
+                                <li class="page"><a href="javascript:void(0)">...</a></li>
+                            {% endif %}
+                        {% endif %}
+                        {% if last %}
                             <li class="page"><a
-                                    href="/base/env/?page={{ page_number }}">{{ page_number }} </a>
+                                    href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a>
                             </li>
-                        {% endifequal %}
+                        {% endif %}
 
-                    {% endfor %}
-                    {% if contacts.has_next %}
-                        <li class="page"><a
-                                href="/base/env/?page={{ contacts.next_page_number }}">下一页</a>
-                        </li>
-                    {% endif %}
-                </ul>
+                    </ul>
+                {% endif %}
             </div>
         </div>
     </div>
