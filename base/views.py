@@ -1196,46 +1196,22 @@ def task_logs(request):
 # 查看报告页面
 # @login_required
 # @page_cache(5)
-# def report_page(request):
-#     if request.method == 'GET':
-#         user_id = request.session.get('user_id', '')
-#         if get_user(user_id):
-#             plan_id = request.GET.get('plan_id', '')
-#             if plan_id:
-#                 report_list = Report.objects.filter(plan_id=plan_id).order_by('-report_id')
-#             else:
-#                 report_list = Report.objects.all().order_by('-report_id')
-#             page = request.GET.get('page')
-#             contacts = paginator(report_list, page)
-#             return render(request, "base/report_page/report_page.html",
-#                           {"contacts": contacts, 'plan_id': plan_id})
-#         else:
-#             request.session['login_from'] = '/base/report_page/'
-#             return render(request, 'user/login_action.html')
-
-
-from django.views.generic import ListView
-from base.models import Report
-from lib.public import pagination_data
-
-
-class ReportPage(ListView):
-    model = Report
-    template_name = 'base/report_page/report_page1.html'
-    context_object_name = 'object_list'
-    paginate_by = 10
-
-    def get_queryset(self):
-        return Report.objects.filter(**self.request.GET.dict())
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        paginator = context.get('paginator')
-        page = context.get('page_obj')
-        is_paginated = context.get('is_paginated')
-        data = pagination_data(paginator, page, is_paginated)
-        context.update(data)
-        return context
+def report_page(request):
+    if request.method == 'GET':
+        user_id = request.session.get('user_id', '')
+        if get_user(user_id):
+            plan_id = request.GET.get('plan_id', '')
+            if plan_id:
+                report_list = Report.objects.filter(plan_id=plan_id).order_by('-report_id')
+            else:
+                report_list = Report.objects.all().order_by('-report_id')
+            page = request.GET.get('page')
+            contacts = paginator(report_list, page)
+            return render(request, "base/report_page/report_page.html",
+                          {"contacts": contacts, 'plan_id': plan_id})
+        else:
+            request.session['login_from'] = '/base/report_page/'
+            return render(request, 'user/login_action.html')
 
 
 # 显示日志信息
