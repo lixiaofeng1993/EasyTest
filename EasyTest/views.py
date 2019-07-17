@@ -13,6 +13,8 @@ from django.http import StreamingHttpResponse
 from lib.public import gr_code, getACodeImage
 from lib.execute import get_user, get_total_values
 from lib.send_email import send_email
+from lib.error_code import ErrorCode
+import re
 
 log = logging.getLogger('log')  # 初始化log
 num_list = []
@@ -112,13 +114,21 @@ def register(request):
         password = request.POST.get('password', '')
         pswd_again = request.POST.get('pswd-again', '')
         email = request.POST.get('email', '')
+
         if username == '' or password == '' or pswd_again == '':
-            return render(request, 'user/register.html', {'error': 'username or password cannot be empty!'})
+            return render(request, 'user/register.html', {'error': ErrorCode.empty_error})
+        elif len(username) > 50 or len(password) > 50 or len(email) > 50:
+            return render(request, 'user/register.html', {'error': ErrorCode.fields_too_long_error})
+        elif 6 > len(username) or 6 > len(password):
+            return render(request, 'user/register.html', {'error': ErrorCode.not_enough_error})
         elif password != pswd_again:
-            return render(request, 'user/register.html', {'error': 'two passwords are different!'})
+            return render(request, 'user/register.html', {'error': ErrorCode.different_error})
+        if email:
+            if not re.match('.+@.+.com$', email):
+                return render(request, 'user/register.html', {'error': ErrorCode.format_error})
         try:
             User.objects.get(username=username)
-            return render(request, 'user/register.html', {'error': 'registered username already exists!'})
+            return render(request, 'user/register.html', {'error': ErrorCode.already_exists_error})
         except User.DoesNotExist:
             User.objects.create_user(username=username, password=password, email=email)
             user = auth.authenticate(username=username, password=password)

@@ -24,3 +24,15 @@ class ErrorCode:
     requests_error = '接口请求异常，检查请求接口代码是否正确！'
 
     mock_fail = '模拟接口返回值进行断言，实际未请求！'
+
+    empty_error = 'username or password cannot be empty!'
+
+    fields_too_long_error = 'username, password, or e-mail fields are too long!'
+
+    not_enough_error = 'not enough username or password  fields!'
+
+    different_error = 'two passwords are different!'
+
+    format_error = 'error in mailbox format!'
+
+    already_exists_error = 'registered username already exists!'

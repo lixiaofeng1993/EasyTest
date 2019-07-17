@@ -80,6 +80,7 @@
         input {
             border-radius: 20%;
         }
+
     </style>
 </head>
 <body class="bg">
@@ -91,27 +92,27 @@
                 {% csrf_token %}
                 <div id="navbar" class="navbar-collapse collapse">
                     <div class="simpleui-input-inline" align="center">
-                        <span><i class="fa fa-user-o"></i>&nbsp;账 户：</span>
+                        <label><i class="fa fa-user-o"></i>&nbsp;账 户：</label>
                         <input id="user" type="text" placeholder="username" name="username"
-                               class="form-control"><br>
+                               class="form-control"><span style="color:red;margin-left: 1%">*</span>
                     </div>
                     <br>
                     <div class="simpleui-input-inline" align="center">
-                        <span><i class="fa fa-envelope-o fa-fw"></i>&nbsp;邮 箱：</span>
+                        <label><i class="fa fa-envelope-o fa-fw"></i>&nbsp;邮 箱：</label>
                         <input id="email" type="text" placeholder="email" name="email"
-                               class="form-control"><br>
+                               class="form-control"><span style="color: #f3f6fb;margin-left: 1%;">.</span>
                     </div>
                     <br>
                     <div class="simpleui-input-inline" align="center">
-                        <span><i class="fa fa-key"></i>&nbsp;密 码：</span>
+                        <label><i class="fa fa-key"></i>&nbsp;密 码：</label>
                         <input id="pswd" type="password" placeholder="password" name="password"
-                               class="form-control">
+                               class="form-control"><span style="color:red;margin-left: 1%">*</span>
                     </div>
                     <br>
                     <div class="simpleui-input-inline" align="center">
-                        <span><i class="fa fa-key"></i>&nbsp;确 认：</span>
+                        <label><i class="fa fa-key"></i>&nbsp;确 认：</label>
                         <input id="pswd-again" type="password" placeholder="the password again" name="pswd-again"
-                               class="form-control">
+                               class="form-control"><span style="color:red;margin-left: 1%">*</span>
                     </div>
                     <p class="errors" style="color: red; font-size: 12px"> {{ error }} </p>
                     <button type="submit" class="btn-success" id="btn">注册并登录</button>
