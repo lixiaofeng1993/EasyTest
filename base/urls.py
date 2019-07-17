@@ -55,7 +55,8 @@ urlpatterns = [
     url(r'timing_task/', view=views.timing_task, name='timing_task'),
     url(r'task_logs/', view=views.task_logs, name='task_logs'),
     # 报告页面展示
-    url(r'report_page/', view=views.report_page, name='report'),
+    # url(r'report_page/', view=views.report_page, name='report'),
+    url(r'report_page/', view=views.ReportPage.as_view(), name='report'),
     url(r'report_logs/', view=views.report_logs, name='report_logs'),  # 日志
     url(r'report_delete/', view=views.report_delete, name='report_delete'),
     # locust
