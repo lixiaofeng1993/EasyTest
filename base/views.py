@@ -287,10 +287,11 @@ def set_mock(request):
             now_time = datetime.now()
             username = request.session.get('user', '')
             Interface.objects.filter(if_id=if_id).update(set_mock=content, update_time=now_time,
-                                                             update_user=username)
+                                                         update_user=username)
             log.info(
                 'interface {} set mock success. mock info: {} '.format(if_id, content))
             return HttpResponseRedirect("/base/interface/")
+
 
 # 添加环境
 # @login_required
@@ -1147,7 +1148,8 @@ def plan_run(request):
                                     pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
                                     totalTime=totalTime, startTime=start_time, update_user=username)
                     report.save()
-                    Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now(), update_user=username)
+                    Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now(),
+                                                                update_user=username)
             return HttpResponse(plan.plan_name + " 执行成功！")
 
 
@@ -1412,6 +1414,17 @@ def user_index(request):
 
     else:
         request.session['login_from'] = '/base/user/'
+        return render(request, 'user/login_action.html')
+
+
+# 关于我们
+def about_index(request):
+    user_id = request.session.get('user_id', '')
+    if get_user(user_id):
+        return render(request, 'system/about/about_us.html')
+
+    else:
+        request.session['login_from'] = '/base/about/'
         return render(request, 'user/login_action.html')
 
 

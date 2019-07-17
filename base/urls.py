@@ -64,4 +64,6 @@ urlpatterns = [
     url(r'file_download/', view=views.file_download, name='file_download'),
     # 添加用户
     url(r'user/', view=views.user_index, name='user_index'),
+    # 关于我们
+    url(r'about/', view=views.about_index, name='about_index'),
 ]

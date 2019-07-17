@@ -1,0 +1,71 @@
+{% extends "../../base.html" %}
+
+{% block css %}
+    <style>
+        .panel-body {
+            margin-left: 5%;
+        }
+
+        a:hover {
+            color: red;
+        }
+
+    </style>
+{% endblock %}
+
+{% block crumbs %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/index">主页</a>
+                </li>
+                <li class="active">
+                    <a class="this">系统设置</a>
+                </li>
+                <li class="active">
+                    <a class="this-page">关于我们</a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-body">
+                    <br><br>
+                    <h5><span>EasyTest平台简介地址：</span> <a href="https://www.cnblogs.com/changqing8023/p/9873923.html">https://www.cnblogs.com/changqing8023/p/9873923.html</a></h5>
+                    <br>
+                    <h5><span>GitHub地址：</span> <a href="https://github.com/lixiaofeng1993/EasyTest">https://github.com/lixiaofeng1993/EasyTest</a></h5>
+                    <br>
+                    <h5><span>联系我们：</span><span><i class="fa fa-qq"></i>&nbsp;&nbsp;954274592</span></h5>
+                    <br>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+
+        //删除
+        function delete_btn() {
+            if (window.confirm("你确定要删除吗？")) {
+                return true;//确定返回真
+            }
+            else {
+                return false;//取消返回假
+            }
+        }
+
+
+    </script>
+{% endblock %}
