@@ -94,7 +94,7 @@ def get_whether(request):
         now = str(datetime.datetime.now())[:10]
         item = result_dict.get('weatherinfo')  # 取字典的值用get方法
         item['now'] = now
-        return HttpResponse(item)
+        return JsonResponse(item)
 
 
 # 登录
