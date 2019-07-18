@@ -183,6 +183,8 @@ def get_whether(request):
         sys.exit()
     url = "http://www.weather.com.cn/data/cityinfo/" + "101100101" + ".html"
     res = requests.get(url)
+    log.info('res==================> {}'.format(res))
+    log.info('res.content==================> {}'.format(res.content))
     content = res.content
     result_dict = json.loads(content)  # 从网页爬取的json转化成字典
     now = str(datetime.datetime.now())[:10]
