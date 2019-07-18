@@ -96,12 +96,12 @@
                             <div style="text-align: center"><a href="/base/user/">{{ user_num }}</a></div>
                         </div>
                     </div>
-                                        <div class="whether" onclick="whether()">
-                                        </div>
-{#                    <iframe class="whether" name="weather_inc" src="http://i.tianqi.com/index.php?c=code&id=112"#}
-{#                            width="110" height="150" frameborder="0" marginwidth="0" marginheight="0"#}
-{#                            allowtransparency="true"#}
-{#                            scrolling="no"></iframe>#}
+                    <div class="whether" onclick="whether()">
+                    </div>
+                    {#                    <iframe class="whether" name="weather_inc" src="http://i.tianqi.com/index.php?c=code&id=112"#}
+                    {#                            width="110" height="150" frameborder="0" marginwidth="0" marginheight="0"#}
+                    {#                            allowtransparency="true"#}
+                    {#                            scrolling="no"></iframe>#}
                 </div>
                 <div class="panel-body">
                     <h5>用例执行统计</h5><br>
@@ -350,8 +350,14 @@
                 type: 'get',
                 url: "/get_whether/",
                 success: function (data) {
-                    html = '<p> 城市：' + data.city + '</p><p> 时间：' + data.now + '</p><p> 天气：' + data.weather + '</p><p> 气温：' + data.temp1 + '/' + data.temp2 + '</p>';
-                    $('.whether').append(html);
+                    if (data == '0') {
+                        alert('请求天气接口发生错误！')
+                    } else {
+                        html = '<p> 城市：' + data.city + '</p><p> 时间：' + data.now + '</p><p> 天气：' + data.weather + '</p><p> 气温：' + data.temp1 + '/' + data.temp2 + '</p>';
+                        $('.whether').append(html);
+                    }
+                }, error: function () {
+                    alert("获取天气信息失败！");
                 }
             })
         };

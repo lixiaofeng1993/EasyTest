@@ -86,7 +86,11 @@ def get_whether(request):
             log.error("input is not number!")
             sys.exit()
         url = "http://www.weather.com.cn/data/cityinfo/" + postal_code + ".html"
-        res = requests.get(url)
+        try:
+            res = requests.get(url)
+        except requests.RequestException as e:
+            log.error('请求天气接口失败： {}'.format(e))
+            return HttpResponse('0')
         content = res.content
         if isinstance(content, bytes):
             content = str(content, encoding='utf-8')
@@ -94,6 +98,7 @@ def get_whether(request):
         now = str(datetime.datetime.now())[:10]
         item = result_dict.get('weatherinfo')  # 取字典的值用get方法
         item['now'] = now
+        log.info('获取北京天气信息==============> {} '.format(item))
         return JsonResponse(item)
 
 
