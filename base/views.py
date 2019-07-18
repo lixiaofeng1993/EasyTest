@@ -776,6 +776,9 @@ class CaseIndex(ListView):
     def dispatch(self, *args, **kwargs):
         return super(CaseIndex, self).dispatch(*args, **kwargs)
 
+    def get_queryset(self):
+        return Case.objects.all().order_by('-case_id')
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         paginator = context.get('paginator')
