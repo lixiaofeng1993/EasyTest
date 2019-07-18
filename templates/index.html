@@ -350,7 +350,6 @@
                 type: 'post',
                 url: "/get_whether/",
                 success: function (data) {
-                    console.log(data, 1111111111111);
                     html = '<p> 城市：' + data.city + '</p><p> 时间：' + data.now + '</p><p> 天气：' + data.weather + '</p><p> 气温：' + data.temp1 + '/' + data.temp2 + '</p>';
                     $('.whether').append(html);
                 }

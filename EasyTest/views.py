@@ -74,6 +74,29 @@ def index(request):
         return render(request, "index.html", info)
 
 
+# 天气
+def get_whether(request):
+    if request.method == 'GET':
+        city_code_dict = {
+            '北京': '101010100', '上海': '101020100',
+            '天津': '101030100', '重庆': '101040100',
+        }
+        postal_code = city_code_dict['北京']
+        if postal_code.isdigit() == False:
+            log.error("input is not number!")
+            sys.exit()
+        url = "http://www.weather.com.cn/data/cityinfo/" + postal_code + ".html"
+        res = requests.get(url)
+        content = res.content
+        if isinstance(content, bytes):
+            content = str(content, encoding='utf-8')
+        result_dict = json.loads(content)  # 从网页爬取的json转化成字典
+        now = str(datetime.datetime.now())[:10]
+        item = result_dict.get('weatherinfo')  # 取字典的值用get方法
+        item['now'] = now
+        return JsonResponse(item)
+
+
 # 登录
 def login_action(request):
     if request.method == 'GET':
@@ -170,30 +193,6 @@ def img_download(request):
     else:
         request.session['login_from'] = '/index/'
         return render(request, 'user/login_action.html')
-
-
-def get_whether(request):
-    city_code_dict = {
-        '北京': '101010100', '上海': '101020100',
-        '天津': '101030100', '重庆': '101040100',
-    }
-    postal_code = city_code_dict['北京']
-    if postal_code.isdigit() == False:
-        log.error("input is not number!")
-        sys.exit()
-    url = "http://www.weather.com.cn/data/cityinfo/" + postal_code + ".html"
-    res = requests.get(url)
-    log.info('res==================> {}'.format(res))
-    log.info('res.content==================> {}'.format(res.text))
-    content = res.content
-    if isinstance(content, bytes):
-        content = str(content, encoding='utf-8')
-    result_dict = json.loads(content)  # 从网页爬取的json转化成字典
-    now = str(datetime.datetime.now())[:10]
-    item = result_dict.get('weatherinfo')  # 取字典的值用get方法
-    item['now'] = now
-    log.info('item==================> {}'.format(item))
-    return JsonResponse(item)
 
 
 # 退出
