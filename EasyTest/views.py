@@ -14,7 +14,7 @@ from lib.public import gr_code, getACodeImage
 from lib.execute import get_user, get_total_values
 from lib.send_email import send_email
 from lib.error_code import ErrorCode
-import re
+import sys, json, requests, re, datetime
 
 log = logging.getLogger('log')  # 初始化log
 num_list = []
@@ -170,6 +170,25 @@ def img_download(request):
     else:
         request.session['login_from'] = '/index/'
         return render(request, 'user/login_action.html')
+
+
+def get_whether(request):
+    city_code_dict = {
+        '北京': '101010100', '上海': '101020100',
+        '天津': '101030100', '重庆': '101040100',
+    }
+    postal_code = city_code_dict['北京']
+    if postal_code.isdigit() == False:
+        log.error("input is not number!")
+        sys.exit()
+    url = "http://www.weather.com.cn/data/cityinfo/" + postal_code + ".html"
+    res = requests.get(url)
+    content = res.content
+    result_dict = json.loads(content)  # 从网页爬取的json转化成字典
+    now = str(datetime.datetime.now())[:10]
+    item = result_dict.get('weatherinfo')  # 取字典的值用get方法
+    item['now'] = now
+    return JsonResponse(item)
 
 
 # 退出
