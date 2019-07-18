@@ -181,11 +181,13 @@ def get_whether(request):
     if postal_code.isdigit() == False:
         log.error("input is not number!")
         sys.exit()
-    url = "http://www.weather.com.cn/data/cityinfo/" + "101100101" + ".html"
+    url = "http://www.weather.com.cn/data/cityinfo/" + postal_code + ".html"
     res = requests.get(url)
     log.info('res==================> {}'.format(res))
     log.info('res.content==================> {}'.format(res.text))
-    content = res.text
+    content = res.content
+    if isinstance(content, bytes):
+        content = str(content, encoding='utf-8')
     result_dict = json.loads(content)  # 从网页爬取的json转化成字典
     now = str(datetime.datetime.now())[:10]
     item = result_dict.get('weatherinfo')  # 取字典的值用get方法
