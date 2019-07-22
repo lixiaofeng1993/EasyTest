@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-# from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.contrib import auth  # django认证系统
 from djcelery.models import PeriodicTask, CrontabSchedule
@@ -24,6 +24,7 @@ num_list = []
 # appsecret = 'e0e5d5ed1d507103f73d6667eef00d7a' pages/index/detail/index?id=365&campId=12&index=1
 
 # 首页
+@login_required
 def index(request):
     user_id = request.session.get('user_id', '')  # 从session中获取user_id
     if request.method == 'POST':
