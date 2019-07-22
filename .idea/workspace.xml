@@ -2,11 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="98d80e0a-cc1d-4d2c-bf8a-e34888d74db0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EasyTest/settings.py" afterPath="$PROJECT_DIR$/EasyTest/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EasyTest/views.py" afterPath="$PROJECT_DIR$/EasyTest/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/views.py" afterPath="$PROJECT_DIR$/base/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/execute.py" afterPath="$PROJECT_DIR$/lib/execute.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/system/task/log.html" afterPath="$PROJECT_DIR$/templates/system/task/log.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -51,13 +48,35 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="291">
-              <caret line="443" column="54" lean-forward="false" selection-start-line="443" selection-start-column="40" selection-end-line="443" selection-end-column="54" />
+            <state relative-caret-position="665">
+              <caret line="1267" column="52" lean-forward="true" selection-start-line="1267" selection-start-column="52" selection-end-line="1267" selection-end-column="52" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="log.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base/case/log.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="412">
+              <caret line="107" column="28" lean-forward="false" selection-start-line="107" selection-start-column="23" selection-end-line="107" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="log.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/system/task/log.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="280">
+              <caret line="114" column="63" lean-forward="false" selection-start-line="114" selection-start-column="55" selection-end-line="114" selection-end-column="63" />
+              <folding>
+                <element signature="e#2865#2886#0#HTML" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -97,8 +116,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>plan_index</find>
-      <find>sign_in</find>
       <find>user_in</find>
       <find># @login_required</find>
       <find>login_required</find>
@@ -109,7 +126,6 @@
       <find>baseinfo</find>
       <find>collapsed</find>
       <find>data_list</find>
-      <find>data</find>
       <find>case_log</find>
       <find>get_log</find>
       <find>report_log</find>
@@ -127,6 +143,9 @@
       <find>method_decorator</find>
       <find>prj_list</find>
       <find>project_id__in</find>
+      <find>case_lo</find>
+      <find>data</find>
+      <find>task_lo</find>
     </findStrings>
     <replaceStrings>
       <replace>log</replace>
@@ -139,7 +158,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/base/send_email.py" />
         <option value="$PROJECT_DIR$/lib/test.py" />
         <option value="$PROJECT_DIR$/flowerconfig.py" />
         <option value="$PROJECT_DIR$/templates/base/interface/add.html" />
@@ -190,6 +208,7 @@
         <option value="$PROJECT_DIR$/EasyTest/views.py" />
         <option value="$PROJECT_DIR$/lib/execute.py" />
         <option value="$PROJECT_DIR$/base/views.py" />
+        <option value="$PROJECT_DIR$/templates/system/task/log.html" />
       </list>
     </option>
   </component>
@@ -1005,7 +1024,7 @@
     </history-entry>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19509594" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1015,7 +1034,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32939914" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30916846" sideWeight="0.4978678" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30916846" sideWeight="0.4978678" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1068,13 +1087,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/base/interface/update.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="178" column="61" lean-forward="false" selection-start-line="178" selection-start-column="51" selection-end-line="178" selection-end-column="61" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
@@ -1372,17 +1384,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/case/log.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="588">
-          <caret line="124" column="23" lean-forward="true" selection-start-line="124" selection-start-column="23" selection-end-line="124" selection-end-column="23" />
-          <folding>
-            <element signature="e#2492#2498#0#HTML" expanded="true" />
-            <element signature="e#2962#2980#0#HTML" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/report_page/log.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-236">
@@ -1425,12 +1426,30 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/case/log.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="412">
+          <caret line="107" column="28" lean-forward="false" selection-start-line="107" selection-start-column="23" selection-end-line="107" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/base/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="291">
-          <caret line="443" column="54" lean-forward="false" selection-start-line="443" selection-start-column="40" selection-end-line="443" selection-end-column="54" />
+        <state relative-caret-position="665">
+          <caret line="1267" column="52" lean-forward="true" selection-start-line="1267" selection-start-column="52" selection-end-line="1267" selection-end-column="52" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/system/task/log.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="280">
+          <caret line="114" column="63" lean-forward="false" selection-start-line="114" selection-start-column="55" selection-end-line="114" selection-end-column="63" />
+          <folding>
+            <element signature="e#2865#2886#0#HTML" expanded="true" />
           </folding>
         </state>
       </provider>

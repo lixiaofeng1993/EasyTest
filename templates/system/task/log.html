@@ -99,20 +99,25 @@
                 </div>
             {% else %}
                 <div style="margin: 1% 1%">
-                    <a href="/base/file_download?log_file={{ log_file }}" class="btn btn-primary"><i
-                            class="fa fa-cloud-download"></i>&nbsp;下载运行任务日志</a>
-                    <button onclick="get_task_log()" class="btn btn-primary"><i
-                            class="fa fa-code-fork"></i>&nbsp;格式化日志
-                    </button>
+                    {% if log_file %}
+                        <a href="/base/file_download?log_file={{ log_file }}" class="btn btn-primary"><i
+                                class="fa fa-cloud-download"></i>&nbsp;下载运行任务日志</a>
+                        <button onclick="get_task_log()" class="btn btn-primary"><i
+                                class="fa fa-code-fork"></i>&nbsp;格式化日志
+                        </button>
+                    {% endif %}
                 </div>
                 <div class="spinner"></div>
                 {% if make %}
 
                     <div id="log" style="margin: 1% 1%">
-                        {% for foo in data %}
-                            {{ foo }}<br>
-                        {% endfor %}
-
+                        {% ifequal data '0' %}
+                            <p style="color: red">没有权限！请联系管理员获取.</p>
+                        {% else %}
+                            {% for foo in data %}
+                                {{ foo }}<br>
+                            {% endfor %}
+                        {% endifequal %}
                     </div>
                 {% endif %}
             {% endif %}

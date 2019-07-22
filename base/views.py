@@ -1249,18 +1249,23 @@ def task_logs(request):
         request.session['login_from'] = '/base/case/'
         return render(request, 'user/login_action.html')
     else:
-        task_log_path = '/var/celery_logs/celery_worker_err.log'
-        data_list = []
-        with open(task_log_path, 'rb') as f:
-            off = -1024 * 1024
-            if f.tell() < -off:
-                data = f.readlines()
-            else:
-                f.seek(off, 2)
-                data = f.readlines()
-            for line in data:
-                data_list.append(line.decode())
-            return render(request, 'system/task/log.html', {'data': data_list, 'make': True, 'log_file': task_log_path})
+        is_superuser = User.objects.get(id=user_id).is_superuser
+        if is_superuser:
+            task_log_path = '/var/celery_logs/celery_worker_err.log'
+            data_list = []
+            with open(task_log_path, 'rb') as f:
+                off = -1024 * 1024
+                if f.tell() < -off:
+                    data = f.readlines()
+                else:
+                    f.seek(off, 2)
+                    data = f.readlines()
+                for line in data:
+                    data_list.append(line.decode())
+                return render(request, 'system/task/log.html',
+                              {'data': data_list, 'make': True, 'log_file': task_log_path})
+        else:
+            return render(request, 'system/task/log.html', {'data': '0', 'make': True, 'log_file': ''})
 
 
 # 报告列表
