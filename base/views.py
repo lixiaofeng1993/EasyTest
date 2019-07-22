@@ -121,7 +121,7 @@ def project_update(request):
             prj = Project.objects.get(prj_id=prj_id)
             return render(request, "base/project/update.html", {"prj": prj, "sign_list": sign_list})
         else:
-            return render(request, "base/project/update.html", {'error': '没有权限！请联系管理员获取.'})
+            return render(request, "base/project/update.html", {'error': '非本人创建项目，不可以修改！'})
 
 
 # 删除项目
@@ -939,8 +939,8 @@ def case_logs(request):
         request.session['login_from'] = '/base/case/'
         return render(request, 'user/login_action.html')
     else:
-        is_superuser = User.objects.get(id=user_id).is_superuser
-        if is_superuser:
+        superuser = User.objects.get(id=user_id).is_superuser
+        if superuser:
             log_file_list = os.listdir(logs_path)
             data_list = []
             file_list = []
@@ -1249,8 +1249,8 @@ def task_logs(request):
         request.session['login_from'] = '/base/case/'
         return render(request, 'user/login_action.html')
     else:
-        is_superuser = User.objects.get(id=user_id).is_superuser
-        if is_superuser:
+        superuser = User.objects.get(id=user_id).is_superuser
+        if superuser:
             task_log_path = '/var/celery_logs/celery_worker_err.log'
             data_list = []
             with open(task_log_path, 'rb') as f:
@@ -1350,11 +1350,11 @@ def report_logs(request):
                 for case in report_content:
                     global class_name
                     class_name = case['class_name']
-                is_superuser = User.objects.get(id=user_id).is_superuser
-                if is_superuser:
+                superuser = User.objects.get(id=user_id).is_superuser
+                if superuser:
                     return render(request, "base/report_page/log.html",
                                   {"report": report, 'plan_id': plan_id, "report_content": report_content,
-                                   'class_name': class_name, 'is_superuser': is_superuser})
+                                   'class_name': class_name, 'is_superuser': superuser})
                 else:
                     return render(request, "base/report_page/log.html",
                                   {"report": report, 'plan_id': plan_id, "report_content": report_content,

@@ -57,7 +57,11 @@ def index(request):
         plan = Plan.objects.filter(project_id__in=prj_list)
         for plan_ in plan:
             plan_list.append(plan_.plan_id)
-        project_num = Project.objects.filter(user_id=user_id).aggregate(Count('prj_id'))['prj_id__count']
+        superuser = User.objects.get(id=user_id).is_superuser
+        if superuser:
+            project_num = Project.objects.aggregate(Count('prj_id'))['prj_id__count']
+        else:
+            project_num = Project.objects.filter(user_id=user_id).aggregate(Count('prj_id'))['prj_id__count']
         env_num = Environment.objects.filter(project_id__in=prj_list).aggregate(Count('env_id'))['env_id__count']
         interface_num = Interface.objects.filter(project_id__in=prj_list).aggregate(Count('if_id'))['if_id__count']
         case_num = Case.objects.filter(project_id__in=prj_list).aggregate(Count('case_id'))['case_id__count']

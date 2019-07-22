@@ -251,8 +251,8 @@ def get_user(user_id):
 
 
 def is_superuser(user_id, type='list'):
-    is_superuser = User.objects.get(id=user_id).is_superuser
-    if is_superuser:
+    superuser = User.objects.get(id=user_id).is_superuser
+    if superuser:
         prj_list = Project.objects.all()
     else:
         prj_list = Project.objects.filter(user_id=user_id)
