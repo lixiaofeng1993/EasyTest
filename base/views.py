@@ -7,7 +7,7 @@ from base.models import Project, Sign, Environment, Interface, Case, Plan, Repor
 from django.contrib.auth.models import User  # django自带user
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.db.models import Q  # 与或非 查询
-from lib.execute import Test_execute, get_user  # 执行接口
+from lib.execute import Test_execute, get_user, is_superuser  # 执行接口
 from djcelery.models import PeriodicTask, CrontabSchedule, IntervalSchedule
 from datetime import timedelta, datetime
 from lib.swagger import AnalysisJson
@@ -36,6 +36,14 @@ class ProjectIndex(ListView):
 
     def dispatch(self, *args, **kwargs):
         return super(ProjectIndex, self).dispatch(*args, **kwargs)
+
+    def get_queryset(self):
+        user_id = self.request.session.get('user_id', '')
+        is_superuser = User.objects.get(id=user_id).is_superuser
+        if is_superuser:
+            return Project.objects.all()
+        else:
+            return Project.objects.filter(user_id=user_id)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -108,8 +116,12 @@ def project_update(request):
                     log.info('edit project   {}  success. project info: {} // {} '.format(prj_name, description, sign))
                     return HttpResponseRedirect("/base/project/")
         prj_id = request.GET['prj_id']
-        prj = Project.objects.get(prj_id=prj_id)
-        return render(request, "base/project/update.html", {"prj": prj, "sign_list": sign_list})
+        user_id_belong = Project.objects.get(prj_id=prj_id).user_id
+        if user_id == user_id_belong:
+            prj = Project.objects.get(prj_id=prj_id)
+            return render(request, "base/project/update.html", {"prj": prj, "sign_list": sign_list})
+        else:
+            return render(request, "base/project/update.html", {'error': '非本人创建项目，不得修改！'})
 
 
 # 删除项目
@@ -226,6 +238,18 @@ class EnvIndex(ListView):
     def dispatch(self, *args, **kwargs):
         return super(EnvIndex, self).dispatch(*args, **kwargs)
 
+    def get_queryset(self):
+        user_id = self.request.session.get('user_id', '')
+        is_superuser = User.objects.get(id=user_id).is_superuser
+        if is_superuser:
+            return Environment.objects.all()
+        else:
+            prj_list = []
+            project = Project.objects.filter(user_id=user_id)
+            for prj in project:
+                prj_list.append(prj.prj_id)
+            return Environment.objects.filter(project_id__in=prj_list)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         paginator = context.get('paginator')
@@ -314,8 +338,8 @@ def env_add(request):
         request.session['login_from'] = '/base/env/'
         return render(request, 'user/login_action.html')
     else:
-        prj_list = Project.objects.all()
         if request.method == 'POST':
+            prj_list = Project.objects.all()
             env_name = request.POST['env_name'].strip()
             if env_name == '':
                 return render(request, 'base/env/add.html', {'name_error': '环境名称不能为空！', "prj_list": prj_list})
@@ -342,7 +366,9 @@ def env_add(request):
                                                                                        private_key,
                                                                                        description, is_swagger))
             return HttpResponseRedirect("/base/env/")
-        return render(request, "base/env/add.html", {"prj_list": prj_list})
+        else:
+            prj_list = is_superuser(user_id)
+            return render(request, "base/env/add.html", {"prj_list": prj_list})
 
 
 # 测试环境更新
@@ -352,8 +378,8 @@ def env_update(request):
         request.session['login_from'] = '/base/env/'
         return render(request, 'user/login_action.html')
     else:
-        prj_list = Project.objects.all()
         if request.method == 'POST':
+            prj_list = Project.objects.all()
             env_id = request.POST['env_id']
             env_name = request.POST['env_name'].strip()
             if env_name == '':
@@ -387,9 +413,11 @@ def env_update(request):
                                                                                        private_key,
                                                                                        description, is_swagger))
             return HttpResponseRedirect("/base/env/")
-        env_id = request.GET['env_id']
-        env = Environment.objects.get(env_id=env_id)
-        return render(request, "base/env/update.html", {"env": env, "prj_list": prj_list})
+        else:
+            prj_list = is_superuser(user_id)
+            env_id = request.GET['env_id']
+            env = Environment.objects.get(env_id=env_id)
+            return render(request, "base/env/update.html", {"env": env, "prj_list": prj_list})
 
 
 # 删除测试环境
@@ -417,6 +445,18 @@ class InterfaceIndex(ListView):
     def dispatch(self, *args, **kwargs):
         return super(InterfaceIndex, self).dispatch(*args, **kwargs)
 
+    def get_queryset(self):
+        user_id = self.request.session.get('user_id', '')
+        is_superuser = User.objects.get(id=user_id).is_superuser
+        if is_superuser:
+            return Interface.objects.all()
+        else:
+            prj_list = []
+            project = Project.objects.filter(user_id=user_id)
+            for prj in project:
+                prj_list.append(prj.prj_id)
+            return Interface.objects.filter(project_id__in=prj_list)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         paginator = context.get('paginator')
@@ -437,19 +477,27 @@ def interface_search(request):
             if not search:
                 return HttpResponse('0')
             else:
+                prj_list = []
+                project = Project.objects.filter(user_id=user_id)
+                for prj in project:
+                    prj_list.append(prj.prj_id)
                 if search in ['get', 'post', 'delete', 'put']:  # 请求方式查询
-                    interface_list = Interface.objects.filter(method__contains=search)
+                    interface_list = Interface.objects.filter(method__contains=search).filter(project_id__in=prj_list)
                 elif search in ['data', 'json']:  # 数据传输类型查询
-                    interface_list = Interface.objects.filter(data_type__contains=search)
+                    interface_list = Interface.objects.filter(data_type__contains=search).filter(
+                        project_id__in=prj_list)
                 else:
                     try:
                         if isinstance(int(search), int):  # ID查询
-                            interface_list = Interface.objects.filter(if_id__exact=search)
+                            interface_list = Interface.objects.filter(if_id__exact=search).filter(
+                                project_id__in=prj_list)
                             if not interface_list:
-                                interface_list = Interface.objects.filter(if_name__contains=search)
+                                interface_list = Interface.objects.filter(if_name__contains=search).filter(
+                                    project_id__in=prj_list)
                     except ValueError:
                         interface_list = Interface.objects.filter(
-                            Q(if_name__contains=search) | Q(project__prj_name__contains=search))  # 接口名称、项目名称查询
+                            Q(if_name__contains=search) | Q(project__prj_name__contains=search)).filter(
+                            project_id__in=prj_list)  # 接口名称、项目名称查询
                 if not interface_list:  # 查询为空
                     return HttpResponse('1')
                 else:
@@ -473,7 +521,6 @@ def interface_add(request):
         request.session['login_from'] = '/base/interface/'
         return render(request, 'user/login_action.html')
     else:
-        prj_list = Project.objects.all()
         if request.method == 'POST':
             if_name = request.POST['if_name']
             if if_name.strip() == '':
@@ -512,7 +559,9 @@ def interface_add(request):
                     if_name, project, url, method, data_type, is_sign, description, request_header_data,
                     request_body_data, response_header_data, response_body_data, is_header=is_headers))
             return HttpResponseRedirect("/base/interface/")
-        return render(request, "base/interface/add.html", {"prj_list": prj_list})
+        else:
+            prj_list = is_superuser(user_id)
+            return render(request, "base/interface/add.html", {"prj_list": prj_list})
 
 
 # 接口编辑
@@ -522,8 +571,8 @@ def interface_update(request):
         request.session['login_from'] = '/base/interface/'
         return render(request, 'user/login_action.html')
     else:
-        prj_list = Project.objects.all()
         if request.method == 'POST':
+            prj_list = Project.objects.all()
             if_id = request.POST['if_id']
             interface = Interface.objects.get(if_id=if_id)
             request_header_param_list = interface_get_params(interface.request_header_param)
@@ -621,40 +670,42 @@ def interface_update(request):
                     request_body_data,
                     response_header_data, response_body_data, is_headers))
             return HttpResponseRedirect("/base/interface/")
-        if_id = request.GET['if_id']
-        interface = Interface.objects.get(if_id=if_id)
-        request_header_param_list = interface_get_params(interface.request_header_param)
-        request_body_param_list = interface_get_params(interface.request_body_param)
-        response_header_param_list = interface_get_params(interface.response_header_param)
-        response_body_param_list = interface_get_params(interface.response_body_param)
-        if interface.method == 'get':
-            method = 0
-        elif interface.method == 'post':
-            method = 1
-        elif interface.method == 'delete':
-            method = 2
-        elif interface.method == 'put':
-            method = 3
         else:
-            method = ''
-        if interface.is_sign == 0:
-            is_sign = 0
-        elif interface.is_sign == 1:
-            is_sign = 1
-        else:
-            is_sign = ''
-        if interface.is_header == 0:
-            is_headers = 0
-        elif interface.is_header == 1:
-            is_headers = 1
-        else:
-            is_headers = ''
-        return render(request, "base/interface/update.html",
-                      {"interface": interface, 'request_header_param_list': request_header_param_list,
-                       'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                       'response_header_param_list': response_header_param_list,
-                       'response_body_param_list': response_body_param_list, 'is_headers': is_headers,
-                       "prj_list": prj_list})
+            prj_list = is_superuser(user_id)
+            if_id = request.GET['if_id']
+            interface = Interface.objects.get(if_id=if_id)
+            request_header_param_list = interface_get_params(interface.request_header_param)
+            request_body_param_list = interface_get_params(interface.request_body_param)
+            response_header_param_list = interface_get_params(interface.response_header_param)
+            response_body_param_list = interface_get_params(interface.response_body_param)
+            if interface.method == 'get':
+                method = 0
+            elif interface.method == 'post':
+                method = 1
+            elif interface.method == 'delete':
+                method = 2
+            elif interface.method == 'put':
+                method = 3
+            else:
+                method = ''
+            if interface.is_sign == 0:
+                is_sign = 0
+            elif interface.is_sign == 1:
+                is_sign = 1
+            else:
+                is_sign = ''
+            if interface.is_header == 0:
+                is_headers = 0
+            elif interface.is_header == 1:
+                is_headers = 1
+            else:
+                is_headers = ''
+            return render(request, "base/interface/update.html",
+                          {"interface": interface, 'request_header_param_list': request_header_param_list,
+                           'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
+                           'response_header_param_list': response_header_param_list,
+                           'response_body_param_list': response_body_param_list, 'is_headers': is_headers,
+                           "prj_list": prj_list})
 
 
 # 解析数据库中格式化前的参数
@@ -696,11 +747,15 @@ def interface_delete(request):
 
 
 # 批量导入接口
-def batch_import_interface(interface_params, interface, request):
+def batch_import_interface(interface_params, interface, request, user_id):
     for interface_ in interface:
         if_name = interface_.get('name', '')
         method = interface_.get('method', '')
-        name = Interface.objects.filter(if_name=if_name).filter(method=method)
+        prj_list = []
+        project = Project.objects.filter(user_id=user_id)
+        for prj in project:
+            prj_list.append(prj.prj_id)
+        name = Interface.objects.filter(if_name=if_name).filter(method=method).filter(project_id__in=prj_list)
         if name:
             log.warning('接口名称已存在. ==> {}'.format(if_name))
             continue
@@ -759,7 +814,7 @@ def batch_index(request):
                 prj_id = env.project_id
                 interface_params, interface = AnalysisJson(prj_id, env_url).retrieve_data()
                 log.info('项目 {} 开始批量导入...'.format(prj_id))
-                batch_import_interface(interface_params, interface, request)
+                batch_import_interface(interface_params, interface, request, user_id)
                 return HttpResponse('批量导入成功！ ==> {}'.format(prj_id))
             except Environment.DoesNotExist:
                 return HttpResponse('测试环境中未设置从swagger导入！')
@@ -777,7 +832,16 @@ class CaseIndex(ListView):
         return super(CaseIndex, self).dispatch(*args, **kwargs)
 
     def get_queryset(self):
-        return Case.objects.all().order_by('-case_id')
+        user_id = self.request.session.get('user_id', '')
+        is_superuser = User.objects.get(id=user_id).is_superuser
+        if is_superuser:
+            return Case.objects.all().order_by('-case_id')
+        else:
+            prj_list = []
+            project = Project.objects.filter(user_id=user_id)
+            for prj in project:
+                prj_list.append(prj.prj_id)
+            return Case.objects.filter(project_id__in=prj_list).order_by('-case_id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -816,8 +880,9 @@ def case_add(request):
             log.info(
                 'add case   {}  success. case info: {} // {} // {}'.format(case_name, project, description, content))
             return HttpResponseRedirect("/base/case/")
-        prj_list = Project.objects.all()
-        return render(request, "base/case/add.html", {"prj_list": prj_list})
+        else:
+            prj_list = is_superuser(user_id)
+            return render(request, "base/case/add.html", {"prj_list": prj_list})
 
 
 # 编辑用例
@@ -849,7 +914,7 @@ def case_update(request):
                 'edit case   {}  success. case info: {} // {} // {}'.format(case_name, project, description, content))
             return HttpResponseRedirect("/base/case/")
         elif request.method == 'GET':
-            prj_list = Project.objects.all()
+            prj_list = is_superuser(user_id)
             case_id = request.GET['case_id']
             case = Case.objects.get(case_id=case_id)
             interface = Interface.objects.filter(project_id=case.project_id).all().values()
@@ -900,38 +965,43 @@ def case_logs(request):
         request.session['login_from'] = '/base/case/'
         return render(request, 'user/login_action.html')
     else:
-        log_file_list = os.listdir(logs_path)
-        data_list = []
-        file_list = []
-        now = time.strftime('%Y-%m-%d')
-        for file in log_file_list:
-            if 'all' in file and now in file:
-                file_list.append(file)
-        if not file_list:
-            yesterday = datetime.today() + timedelta(-1)
-            yesterday_format = yesterday.strftime('%Y-%m-%d')
+        is_superuser = User.objects.get(id=user_id).is_superuser
+        if is_superuser:
+            log_file_list = os.listdir(logs_path)
+            data_list = []
+            file_list = []
+            now = time.strftime('%Y-%m-%d')
             for file in log_file_list:
-                if 'all' in file and yesterday_format in file:
+                if 'all' in file and now in file:
                     file_list.append(file)
-        try:
-            file_list.sort()
-            log_file = os.path.join(logs_path, file_list[0])
-        except IndexError:
-            for file in log_file_list:
-                if 'all' in file:
-                    file_list.append(file)
-            file_list.sort()
-            log_file = os.path.join(logs_path, file_list[-1])
-        with open(log_file, 'rb') as f:
-            off = -1024 * 1024
-            if f.tell() < -off:
-                data = f.readlines()
-            else:
-                f.seek(off, 2)
-                data = f.readlines()
-            for line in data:
-                data_list.append(line.decode())
-            return render(request, 'base/case/log.html', {'data': data_list, 'make': True, 'log_file': log_file})
+            if not file_list:
+                yesterday = datetime.today() + timedelta(-1)
+                yesterday_format = yesterday.strftime('%Y-%m-%d')
+                for file in log_file_list:
+                    if 'all' in file and yesterday_format in file:
+                        file_list.append(file)
+            try:
+                file_list.sort()
+                log_file = os.path.join(logs_path, file_list[0])
+            except IndexError:
+                for file in log_file_list:
+                    if 'all' in file:
+                        file_list.append(file)
+                file_list.sort()
+                log_file = os.path.join(logs_path, file_list[-1])
+            with open(log_file, 'rb') as f:
+                off = -1024 * 1024
+                if f.tell() < -off:
+                    data = f.readlines()
+                else:
+                    f.seek(off, 2)
+                    data = f.readlines()
+                for line in data:
+                    data_list.append(line.decode())
+
+                return render(request, 'base/case/log.html', {'data': data_list, 'make': True, 'log_file': log_file})
+        else:
+            return render(request, 'base/case/log.html', {'data': '0', 'make': True, 'log_file': ''})
 
 
 # 删除用例
@@ -978,7 +1048,16 @@ class PlanIndex(ListView):
         return super(PlanIndex, self).dispatch(*args, **kwargs)
 
     def get_queryset(self):
-        return Plan.objects.all().order_by('-plan_id')
+        user_id = self.request.session.get('user_id', '')
+        is_superuser = User.objects.get(id=user_id).is_superuser
+        if is_superuser:
+            return Plan.objects.all().order_by('-plan_id')
+        else:
+            prj_list = []
+            project = Project.objects.filter(user_id=user_id)
+            for prj in project:
+                prj_list.append(prj.prj_id)
+            return Plan.objects.filter(project_id__in=prj_list).order_by('-plan_id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -997,8 +1076,8 @@ def plan_add(request):
         request.session['login_from'] = '/base/plan/'
         return render(request, 'user/login_action.html')
     else:
-        prj_list = Project.objects.all()
         if request.method == 'POST':
+            prj_list = Project.objects.all()
             plan_name = request.POST['plan_name'].strip()
             if plan_name == '':
                 return render(request, 'base/plan/add.html',
@@ -1029,7 +1108,9 @@ def plan_add(request):
             log.info('add plan   {}  success. plan info: {} // {} // {} // {} //{} //{}'.
                      format(plan_name, project, environment, description, content, is_locust, is_task))
             return HttpResponseRedirect("/base/plan/")
-        return render(request, "base/plan/add.html", {"prj_list": prj_list})
+        else:
+            prj_list = is_superuser(user_id)
+            return render(request, "base/plan/add.html", {"prj_list": prj_list})
 
 
 # 测试计划编辑
@@ -1039,8 +1120,8 @@ def plan_update(request):
         request.session['login_from'] = '/base/plan/'
         return render(request, 'user/login_action.html')
     else:
-        prj_list = Project.objects.all()
         if request.method == 'POST':
+            prj_list = Project.objects.all()
             plan_id = request.POST['plan_id']
             plan = Plan.objects.get(plan_id=plan_id)
             environments = Environment.objects.filter(project_id=plan.project_id).all().values()
@@ -1082,23 +1163,26 @@ def plan_update(request):
             log.info('edit plan   {}  success. plan info: {} // {} // {} // {}'.format(plan_name, project, environment,
                                                                                        description, content))
             return HttpResponseRedirect("/base/plan/")
-        plan_id = request.GET['plan_id']
-        plan = Plan.objects.get(plan_id=plan_id)
-        environments = Environment.objects.filter(project_id=plan.project_id).all().values()
-        case_list = []
-        for case_id in eval(plan.content):
-            try:
-                case = Case.objects.get(case_id=case_id)
-                case_list.append(case)
-            except Case.DoesNotExist as e:
-                log.error('计划 {} 中的 用例 {} 已被删除！！！'.format(plan.plan_name, case_id))
-                plans = Plan.objects.all().order_by('-plan_id')
-                page = request.GET.get('page')
-                contacts = paginator(plans, page)
-                return render(request, "base/plan/index.html",
-                              {"contacts": contacts, 'error': '计划 {} 中的 用例 {} 已被删除！！！'.format(plan.plan_name, case_id)})
-        return render(request, "base/plan/update.html",
-                      {"prj_list": prj_list, 'plan': plan, 'case_list': case_list, 'environments': environments})
+        else:
+            prj_list = is_superuser(user_id)
+            plan_id = request.GET['plan_id']
+            plan = Plan.objects.get(plan_id=plan_id)
+            environments = Environment.objects.filter(project_id=plan.project_id).all().values()
+            case_list = []
+            for case_id in eval(plan.content):
+                try:
+                    case = Case.objects.get(case_id=case_id)
+                    case_list.append(case)
+                except Case.DoesNotExist as e:
+                    log.error('计划 {} 中的 用例 {} 已被删除！！！'.format(plan.plan_name, case_id))
+                    plans = Plan.objects.all().order_by('-plan_id')
+                    page = request.GET.get('page')
+                    contacts = paginator(plans, page)
+                    return render(request, "base/plan/index.html",
+                                  {"contacts": contacts,
+                                   'error': '计划 {} 中的 用例 {} 已被删除！！！'.format(plan.plan_name, case_id)})
+            return render(request, "base/plan/update.html",
+                          {"prj_list": prj_list, 'plan': plan, 'case_list': case_list, 'environments': environments})
 
 
 # 删除测试计划
@@ -1226,10 +1310,22 @@ class ReportPage(ListView):
 
     def get_queryset(self):
         self.plan_id = self.request.GET.dict().get('plan_id', '')
+        user_id = self.request.session.get('user_id', '')
+        is_superuser = User.objects.get(id=user_id).is_superuser
         if self.plan_id:
             return Report.objects.filter(plan_id=self.plan_id).order_by('-report_id')
-        else:
+        elif is_superuser:
             return Report.objects.all().order_by('-report_id')
+        else:
+            prj_list = []
+            plan_list = []
+            project = Project.objects.filter(user_id=user_id)
+            for prj in project:
+                prj_list.append(prj.prj_id)
+            plan = Plan.objects.filter(project_id__in=prj_list)
+            for plan_ in plan:
+                plan_list.append(plan_.plan_id)
+            return Report.objects.filter(plan_id__in=plan_list).order_by('-report_id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1288,9 +1384,15 @@ def report_logs(request):
                 for case in report_content:
                     global class_name
                     class_name = case['class_name']
-                return render(request, "base/report_page/log.html",
-                              {"report": report, 'plan_id': plan_id, "report_content": report_content,
-                               'class_name': class_name})
+                is_superuser = User.objects.get(id=user_id).is_superuser
+                if is_superuser:
+                    return render(request, "base/report_page/log.html",
+                                  {"report": report, 'plan_id': plan_id, "report_content": report_content,
+                                   'class_name': class_name, 'is_superuser': is_superuser})
+                else:
+                    return render(request, "base/report_page/log.html",
+                                  {"report": report, 'plan_id': plan_id, "report_content": report_content,
+                                   'class_name': class_name, 'is_superuser': ''})
 
 
 # 展示报告

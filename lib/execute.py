@@ -250,6 +250,15 @@ def get_user(user_id):
             return False
 
 
+def is_superuser(user_id):
+    is_superuser = User.objects.get(id=user_id).is_superuser
+    if is_superuser:
+        prj_list = Project.objects.all()
+    else:
+        prj_list = Project.objects.filter(user_id=user_id)
+    return prj_list
+
+
 def get_total_values():
     total = {
         'pass': [],
