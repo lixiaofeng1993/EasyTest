@@ -1283,11 +1283,8 @@ class ReportPage(ListView):
     def get_queryset(self):
         self.plan_id = self.request.GET.dict().get('plan_id', '')
         user_id = self.request.session.get('user_id', '')
-        is_superuser = User.objects.get(id=user_id).is_superuser
         if self.plan_id:
             return Report.objects.filter(plan_id=self.plan_id).order_by('-report_id')
-        elif is_superuser:
-            return Report.objects.all().order_by('-report_id')
         else:
             plan_list = []
             prj_list = is_superuser(user_id, type='list')
