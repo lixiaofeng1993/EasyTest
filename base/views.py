@@ -39,8 +39,8 @@ class ProjectIndex(ListView):
 
     def get_queryset(self):
         user_id = self.request.session.get('user_id', '')
-        is_superuser = User.objects.get(id=user_id).is_superuser
-        if is_superuser:
+        superuser = User.objects.get(id=user_id).is_superuser
+        if superuser:
             return Project.objects.all()
         else:
             return Project.objects.filter(user_id=user_id)
