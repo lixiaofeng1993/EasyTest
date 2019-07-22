@@ -121,7 +121,7 @@ def project_update(request):
             prj = Project.objects.get(prj_id=prj_id)
             return render(request, "base/project/update.html", {"prj": prj, "sign_list": sign_list})
         else:
-            return render(request, "base/project/update.html", {'error': '非本人创建项目，不得修改！'})
+            return render(request, "base/project/update.html", {'error': '没有权限！请联系管理员获取.'})
 
 
 # 删除项目
@@ -240,15 +240,8 @@ class EnvIndex(ListView):
 
     def get_queryset(self):
         user_id = self.request.session.get('user_id', '')
-        is_superuser = User.objects.get(id=user_id).is_superuser
-        if is_superuser:
-            return Environment.objects.all()
-        else:
-            prj_list = []
-            project = Project.objects.filter(user_id=user_id)
-            for prj in project:
-                prj_list.append(prj.prj_id)
-            return Environment.objects.filter(project_id__in=prj_list)
+        prj_list = is_superuser(user_id, type='list')
+        return Environment.objects.filter(project_id__in=prj_list)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -447,15 +440,8 @@ class InterfaceIndex(ListView):
 
     def get_queryset(self):
         user_id = self.request.session.get('user_id', '')
-        is_superuser = User.objects.get(id=user_id).is_superuser
-        if is_superuser:
-            return Interface.objects.all()
-        else:
-            prj_list = []
-            project = Project.objects.filter(user_id=user_id)
-            for prj in project:
-                prj_list.append(prj.prj_id)
-            return Interface.objects.filter(project_id__in=prj_list)
+        prj_list = is_superuser(user_id, type='list')
+        return Interface.objects.filter(project_id__in=prj_list)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -477,10 +463,7 @@ def interface_search(request):
             if not search:
                 return HttpResponse('0')
             else:
-                prj_list = []
-                project = Project.objects.filter(user_id=user_id)
-                for prj in project:
-                    prj_list.append(prj.prj_id)
+                prj_list = is_superuser(user_id, type='list')
                 if search in ['get', 'post', 'delete', 'put']:  # 请求方式查询
                     interface_list = Interface.objects.filter(method__contains=search).filter(project_id__in=prj_list)
                 elif search in ['data', 'json']:  # 数据传输类型查询
@@ -751,10 +734,7 @@ def batch_import_interface(interface_params, interface, request, user_id):
     for interface_ in interface:
         if_name = interface_.get('name', '')
         method = interface_.get('method', '')
-        prj_list = []
-        project = Project.objects.filter(user_id=user_id)
-        for prj in project:
-            prj_list.append(prj.prj_id)
+        prj_list = is_superuser(user_id, type='list')
         name = Interface.objects.filter(if_name=if_name).filter(method=method).filter(project_id__in=prj_list)
         if name:
             log.warning('接口名称已存在. ==> {}'.format(if_name))
@@ -809,7 +789,8 @@ def batch_index(request):
             # Plan.objects.all().delete()  # 清空计划表
             # Report.objects.all().delete()  # 清空报告表
             try:
-                env = Environment.objects.get(is_swagger=1)
+                prj_list = is_superuser(user_id, type='list')
+                env = Environment.objects.filter(project_id__in=prj_list).get(is_swagger=1)
                 env_url = env.url
                 prj_id = env.project_id
                 interface_params, interface = AnalysisJson(prj_id, env_url).retrieve_data()
@@ -833,15 +814,8 @@ class CaseIndex(ListView):
 
     def get_queryset(self):
         user_id = self.request.session.get('user_id', '')
-        is_superuser = User.objects.get(id=user_id).is_superuser
-        if is_superuser:
-            return Case.objects.all().order_by('-case_id')
-        else:
-            prj_list = []
-            project = Project.objects.filter(user_id=user_id)
-            for prj in project:
-                prj_list.append(prj.prj_id)
-            return Case.objects.filter(project_id__in=prj_list).order_by('-case_id')
+        prj_list = is_superuser(user_id, type='list')
+        return Case.objects.filter(project_id__in=prj_list).order_by('-case_id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1049,15 +1023,8 @@ class PlanIndex(ListView):
 
     def get_queryset(self):
         user_id = self.request.session.get('user_id', '')
-        is_superuser = User.objects.get(id=user_id).is_superuser
-        if is_superuser:
-            return Plan.objects.all().order_by('-plan_id')
-        else:
-            prj_list = []
-            project = Project.objects.filter(user_id=user_id)
-            for prj in project:
-                prj_list.append(prj.prj_id)
-            return Plan.objects.filter(project_id__in=prj_list).order_by('-plan_id')
+        prj_list = is_superuser(user_id, type='list')
+        return Plan.objects.filter(project_id__in=prj_list).order_by('-plan_id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1317,11 +1284,8 @@ class ReportPage(ListView):
         elif is_superuser:
             return Report.objects.all().order_by('-report_id')
         else:
-            prj_list = []
             plan_list = []
-            project = Project.objects.filter(user_id=user_id)
-            for prj in project:
-                prj_list.append(prj.prj_id)
+            prj_list = is_superuser(user_id, type='list')
             plan = Plan.objects.filter(project_id__in=prj_list)
             for plan_ in plan:
                 plan_list.append(plan_.plan_id)

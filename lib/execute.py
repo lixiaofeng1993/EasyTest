@@ -250,16 +250,22 @@ def get_user(user_id):
             return False
 
 
-def is_superuser(user_id):
+def is_superuser(user_id, type='list'):
     is_superuser = User.objects.get(id=user_id).is_superuser
     if is_superuser:
         prj_list = Project.objects.all()
     else:
         prj_list = Project.objects.filter(user_id=user_id)
-    return prj_list
+    if type == 'list':
+        project_list = []
+        for prj in prj_list:
+            project_list.append(prj.prj_id)
+        return project_list
+    else:
+        return prj_list
 
 
-def get_total_values():
+def get_total_values(user_id):
     total = {
         'pass': [],
         'fail': [],
@@ -267,16 +273,20 @@ def get_total_values():
         'percent': []
     }
     today = datetime.date.today()
+    plan_list = []
+    prj_list = is_superuser(user_id, type='list')
+    plan = Plan.objects.filter(project_id__in=prj_list)
+    for plan_ in plan:
+        plan_list.append(plan_.plan_id)
     for i in range(-11, 1):
         begin = today + datetime.timedelta(days=i)
         end = begin + datetime.timedelta(days=1)
-
-        total_pass = Report.objects.filter(update_time__range=(begin, end)).aggregate(pass_num=Sum('pass_num'))[
-            'pass_num']
-        total_fail = Report.objects.filter(update_time__range=(begin, end)).aggregate(fail_num=Sum('fail_num'))[
-            'fail_num']
-        total_error = Report.objects.filter(update_time__range=(begin, end)).aggregate(error_num=Sum('error_num'))[
-            'error_num']
+        total_pass = Report.objects.filter(plan_id__in=plan_list).filter(update_time__range=(begin, end)).aggregate(
+            pass_num=Sum('pass_num'))['pass_num']
+        total_fail = Report.objects.filter(plan_id__in=plan_list).filter(update_time__range=(begin, end)).aggregate(
+            fail_num=Sum('fail_num'))['fail_num']
+        total_error = Report.objects.filter(plan_id__in=plan_list).filter(update_time__range=(begin, end)).aggregate(
+            error_num=Sum('error_num'))['error_num']
         if not total_pass:
             total_pass = 0
         if not total_fail:

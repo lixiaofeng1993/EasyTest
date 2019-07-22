@@ -11,7 +11,7 @@ from base.models import Project, Sign, Environment, Interface, Case, Plan, Repor
 import logging, os
 from django.http import StreamingHttpResponse
 from lib.public import gr_code, getACodeImage
-from lib.execute import get_user, get_total_values
+from lib.execute import get_user, get_total_values, is_superuser
 from lib.send_email import send_email
 from lib.error_code import ErrorCode
 import sys, json, requests, re, datetime
@@ -25,8 +25,8 @@ num_list = []
 
 # 首页
 def index(request):
+    user_id = request.session.get('user_id', '')  # 从session中获取user_id
     if request.method == 'POST':
-        user_id = request.session.get('user_id', '')  # 从session中获取user_id
         if get_user(user_id):
             url = request.POST.get('url', '')
             path = request.POST.get('path', '')
@@ -52,18 +52,23 @@ def index(request):
         else:
             return HttpResponse('0')
     else:
-        project_num = Project.objects.aggregate(Count('prj_id'))['prj_id__count']
-        env_num = Environment.objects.aggregate(Count('env_id'))['env_id__count']
-        interface_num = Interface.objects.aggregate(Count('if_id'))['if_id__count']
-        case_num = Case.objects.aggregate(Count('case_id'))['case_id__count']
-        plan_num = Plan.objects.aggregate(Count('plan_id'))['plan_id__count']
+        plan_list = []
+        prj_list = is_superuser(user_id, type='list')
+        plan = Plan.objects.filter(project_id__in=prj_list)
+        for plan_ in plan:
+            plan_list.append(plan_.plan_id)
+        project_num = Project.objects.filter(user_id=user_id).aggregate(Count('prj_id'))['prj_id__count']
+        env_num = Environment.objects.filter(project_id__in=prj_list).aggregate(Count('env_id'))['env_id__count']
+        interface_num = Interface.objects.filter(project_id__in=prj_list).aggregate(Count('if_id'))['if_id__count']
+        case_num = Case.objects.filter(project_id__in=prj_list).aggregate(Count('case_id'))['case_id__count']
+        plan_num = Plan.objects.filter(project_id__in=prj_list).aggregate(Count('plan_id'))['plan_id__count']
         sign_num = Sign.objects.aggregate(Count('sign_id'))['sign_id__count']
-        report_num = Report.objects.aggregate(Count('report_id'))['report_id__count']
+        report_num = Report.objects.filter(plan_id__in=plan_list).aggregate(Count('report_id'))['report_id__count']
         periodic_num = PeriodicTask.objects.aggregate(Count('id'))['id__count']
         crontabSchedule_num = CrontabSchedule.objects.aggregate(Count('id'))['id__count']
         user_num = User.objects.aggregate(Count('id'))['id__count']
 
-        total = get_total_values()
+        total = get_total_values(user_id)
 
         info = {'project_num': project_num,
                 'env_num': env_num, 'interface_num': interface_num, 'case_num': case_num,
