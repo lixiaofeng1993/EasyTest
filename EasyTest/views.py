@@ -27,6 +27,8 @@ num_list = []
 @login_required
 def index(request):
     user_id = request.session.get('user_id', '')  # 从session中获取user_id
+    if not user_id:
+        return render(request, 'user/login_action.html')
     if request.method == 'POST':
         if get_user(user_id):
             url = request.POST.get('url', '')
