@@ -4,7 +4,7 @@ from django.db.utils import IntegrityError  # 完整性错误
 from django.db.models import Q  # 与或非 查询
 import time
 import logging
-from guest.models import Event, Guest
+from base.models import Event, Guest
 
 log = logging.getLogger('log')
 

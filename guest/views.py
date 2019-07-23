@@ -4,7 +4,7 @@ from django.contrib import auth  # django认证系统
 from django.contrib.auth.decorators import login_required  # 验证用户是否登录的装饰器
 from django.db.models import Q  # 与或非 查询
 from lib.public import paginator  # 分页封装，每页显示10条
-from guest.models import Event, Guest
+from base.models import Event, Guest
 
 
 def index(request):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from guest.models import Event, Guest
+from base.models import Event, Guest
 
 
 class EventAdmin(admin.ModelAdmin):

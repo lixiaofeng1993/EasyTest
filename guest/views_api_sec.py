@@ -4,7 +4,7 @@ import base64
 import hashlib
 from Crypto.Cipher import AES  # AES加密
 from django.http import JsonResponse, HttpResponse
-from guest.models import Event, Guest
+from base.models import Event, Guest
 from django.core.exceptions import ValidationError, ObjectDoesNotExist  # 验证错误
 from django.db.utils import IntegrityError  # 完整性错误
 from django.db.models import Q  # 与或非 查询

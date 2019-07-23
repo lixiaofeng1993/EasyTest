@@ -93,21 +93,7 @@ DATABASES = {
         'USER': "root",
         'PASSWORD': "123456",
         'PORT': "3306",
-    },
-    'mysql02': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': "127.0.0.1",
-        'NAME': "guest",
-        'USER': "root",
-        'PASSWORD': "123456",
-        'PORT': "3306",
     }
-}
-
-DATABASE_ROUTERS = ['EasyTest.database_router.DatabaseAppsRouter']
-DATABASE_APPS_MAPPING = {
-    'base': 'default',
-    'guest': 'mysql02',
 }
 
 # Password validation
