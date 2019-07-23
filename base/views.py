@@ -361,7 +361,6 @@ def env_add(request):
             return HttpResponseRedirect("/base/env/")
         else:
             prj_list = is_superuser(user_id)
-            print(prj_list, 11111111111111111111111111111111)
             return render(request, "base/env/add.html", {"prj_list": prj_list})
 
 
