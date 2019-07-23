@@ -143,6 +143,24 @@ def login_action(request):
             return render(request, 'user/login_action.html', {'error': 'username or password error!'})
 
 
+# 修改密码
+def change_password(request):
+    if request.method == 'POST':
+        new_password = request.POST.get('new_password', '')
+        if not new_password:
+            return JsonResponse({'msg': ErrorCode.empty_error})
+        elif len(new_password) < 6:
+            return JsonResponse({'msg': ErrorCode.not_enough_error})
+        elif len(new_password) > 50:
+            return JsonResponse({'msg': ErrorCode.fields_too_long_error})
+        else:
+            user_id = request.session.get('user_id', '')
+            user = User.objects.get(id=user_id)
+            user.set_password(new_password)
+            user.save()
+            return JsonResponse({'msg': 'success'})
+
+
 # 注册
 def register(request):
     if request.method == 'GET':

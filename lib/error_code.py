@@ -25,11 +25,11 @@ class ErrorCode:
 
     mock_fail = '模拟接口返回值进行断言，实际未请求！'
 
-    empty_error = 'username or password cannot be empty!'
+    empty_error = 'cannot be empty!'
 
-    fields_too_long_error = 'username, password, or e-mail fields are too long!'
+    fields_too_long_error = 'fields are too long!'
 
-    not_enough_error = 'not enough username or password  fields!'
+    not_enough_error = 'not enough fields!'
 
     different_error = 'two passwords are different!'
 

@@ -32,6 +32,7 @@ urlpatterns = [
     url(r'^$', view=views.index),
     url(r'index/', view=views.index),
     url(r'^login_action/', view=views.login_action, name='login_action'),
+    url(r'^change_password/', view=views.change_password, name='change_password'),
     url(r'^register/', view=views.register, name='register'),
     url(r'^logout/', view=views.logout, name='logout'),  # 退出
     url(r'^img_download/', view=views.img_download, name='img_download'),  # 下载图片
