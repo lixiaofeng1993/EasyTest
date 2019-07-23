@@ -17,7 +17,7 @@ class Project(models.Model):
     prj_id = models.AutoField(primary_key=True, null=False)
     prj_name = models.CharField(max_length=100)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default='')
-    sign = models.ForeignKey('Sign', on_delete=models.CASCADE, default='')
+    sign = models.ForeignKey(Sign, on_delete=models.CASCADE, default='')
     description = models.CharField(max_length=200)
     update_time = models.DateTimeField('更新时间', auto_now=True)
 
@@ -28,7 +28,7 @@ class Project(models.Model):
 class Environment(models.Model):
     env_id = models.AutoField(primary_key=True, null=False)
     env_name = models.CharField(max_length=100)
-    project = models.ForeignKey('Project', on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     description = models.CharField(max_length=200)
     url = models.CharField(max_length=100)
     is_swagger = models.IntegerField(default='')  # 导入swagger
@@ -47,7 +47,7 @@ class Interface(models.Model):
     url = models.CharField(max_length=100)
     method = models.CharField(max_length=10)
     data_type = models.CharField(max_length=10)
-    project = models.ForeignKey('Project', on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     is_sign = models.IntegerField()
     is_header = models.IntegerField(default='')  # 标记设置header接口
     set_mock = models.TextField(default='')  # 设置mock
@@ -66,7 +66,7 @@ class Interface(models.Model):
 class Case(models.Model):
     case_id = models.AutoField(primary_key=True, null=False)
     case_name = models.CharField(max_length=100)
-    project = models.ForeignKey('Project', on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     description = models.CharField(max_length=200)
     content = models.TextField()
     update_time = models.DateTimeField('更新时间', auto_now=True)
@@ -79,8 +79,8 @@ class Case(models.Model):
 class Plan(models.Model):
     plan_id = models.AutoField(primary_key=True, null=False)
     plan_name = models.CharField(max_length=100)
-    project = models.ForeignKey('Project', on_delete=models.CASCADE)
-    environment = models.ForeignKey('Environment', on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    environment = models.ForeignKey(Environment, on_delete=models.CASCADE)
     description = models.CharField(max_length=200)
     content = models.TextField()
     report_name = models.CharField(max_length=255, default="")
@@ -100,7 +100,7 @@ class Report(models.Model):
     pic_name = models.CharField(max_length=255, default='')
     totalTime = models.CharField(max_length=50, default='')
     startTime = models.CharField(max_length=50, default='')
-    plan = models.ForeignKey('Plan', on_delete=models.CASCADE)
+    plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
     content = models.TextField()
     case_num = models.IntegerField(null=True)
     pass_num = models.IntegerField(null=True)
