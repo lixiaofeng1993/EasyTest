@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <!-- 加载bootstrap3的应用、CSS。JavaScript文件-->
+    {% load bootstrap3 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <title>登录</title>
+</head>
+<body>
+<!-- 导航栏 -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <a class="navbar-brand" href="/index/">返回测试平台</a>
+    </div>
+</nav>
+<div class="page-header" style="padding-top: 80px;margin-left: 20%">
+
+    <form class="navbar-form" method="post" action="/api/login_action_guest/">
+        {% csrf_token %}
+        <div id="navbar" class="navbar-collapse collapse">
+            <div class="ui-spinner-input">
+                <span>账户：</span>
+                <input name="username" type="text" placeholder="username" class="form-control" required="required">
+            </div>
+            <br>
+            <div class="ui-spinner-input">
+                <span>密码：</span>
+                <input name="password" type="password" placeholder="password" class="form-control" required="required">
+            </div>
+            <p class="errors" style="color: red"> {{ error }} </p>
+            <button type="submit" class="btn btn-success">登录</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>

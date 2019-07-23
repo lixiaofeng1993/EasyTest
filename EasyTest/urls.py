@@ -30,15 +30,16 @@ urlpatterns = [
 
     url(r'admin/', admin.site.urls),
     url(r'^$', view=views.index),
-    url(r'index/', view=views.index),
-    url(r'^login_action/', view=views.login_action, name='login_action'),
-    url(r'^change_password/', view=views.change_password, name='change_password'),
-    url(r'^register/', view=views.register, name='register'),
-    url(r'^logout/', view=views.logout, name='logout'),  # 退出
+    url(r'index/$', view=views.index),
+    url(r'^login_action/$', view=views.login_action, name='login_action'),
+    url(r'^change_password/$', view=views.change_password, name='change_password'),
+    url(r'^register/$', view=views.register, name='register'),
+    url(r'^logout/$', view=views.logout, name='logout'),  # 退出
     url(r'^img_download/', view=views.img_download, name='img_download'),  # 下载图片
     url(r'^get_whether/', view=views.get_whether, name='get_whether'),  # 下载图片
 
     url(r'^base/', include("base.urls")),
+    url(r'^api/', include('guest.urls')),  # api
 
     url(r'^favicon.ico$', RedirectView.as_view(url=r'/static/img/E_fa.png')),
 ]
@@ -48,4 +49,3 @@ handler400 = views.bad_request
 handler403 = views.permission_denied
 handler404 = views.page_not_found
 handler500 = views.server_error
-

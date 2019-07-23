@@ -133,6 +133,8 @@ def login_action(request):
             try:
                 if request.session['login_from'] == '//':
                     request.session['login_from'] = '/index/'
+                elif 'api' in request.session['login_from']:
+                    request.session['login_from'] = '/index/'
             except KeyError as e:
                 request.session['login_from'] = '/index/'
             log.info('---------地址来源-------------> {}'.format(request.session['login_from']))
@@ -157,6 +159,8 @@ def change_password(request):
             return JsonResponse({'msg': ErrorCode.fields_too_long_error})
         else:
             user_id = request.session.get('user_id', '')
+            if not user_id:
+                return render(request, 'user/login_action.html')
             user = User.objects.get(id=user_id)
             user.set_password(new_password)
             user.save()
