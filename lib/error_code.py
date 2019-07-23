@@ -25,14 +25,14 @@ class ErrorCode:
 
     mock_fail = '模拟接口返回值进行断言，实际未请求！'
 
-    empty_error = 'cannot be empty!'
+    empty_error = '字段不能为空！'
 
-    fields_too_long_error = 'fields are too long!'
+    fields_too_long_error = '输入字段过长！'
 
-    not_enough_error = 'not enough fields!'
+    not_enough_error = '输入字段长度不够！'
 
-    different_error = 'two passwords are different!'
+    different_error = '两次输入的密码不一致！'
 
-    format_error = 'error in mailbox format!'
+    format_error = 'email格式错误！'
 
-    already_exists_error = 'registered username already exists!'
+    already_exists_error = '注册用户已经存在！'
