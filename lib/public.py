@@ -125,6 +125,7 @@ def format_url(url, body):
     # url_params = re.findall('({\w+})', url)
     url_params = re.findall('{(\w+)}', url)  # 格式化utl<带有 {} 的情况
     if url_params:
+        log.info('===================url=====body============{} {}'.format(url, body))
         url = url.replace(url_params[0], '')
         for k, v in body.items():
             if k == url_params[0]:
