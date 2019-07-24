@@ -90,6 +90,7 @@ def add_guest(request):
     realname = request.POST.get('realname', '')  # 姓名
     phone = request.POST.get('phone', '')  # 手机号
     email = request.POST.get('email', '')  # 邮箱
+
     if eid == '' or realname == '' or phone == '':
         log.info('add_guest，参数错误，不能为空.')
         return JsonResponse({'status': 10021, 'message': 'parameter error'})
