@@ -8,6 +8,15 @@ from base.models import Event, Guest
 
 log = logging.getLogger('log')
 
+# from rest_framework.schemas import get_schema_view
+#
+# from rest_framework.renderers import CoreJSONRenderer
+#
+# schema_view = get_schema_view(
+#     title='A Different API',
+#     renderer_classes=[CoreJSONRenderer]
+# )
+
 
 # 添加发布会接口
 def add_event(request):

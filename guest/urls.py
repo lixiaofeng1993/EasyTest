@@ -10,6 +10,47 @@
 from django.conf.urls import url
 from . import views_api, views_api_sec, views
 
+from django.contrib.auth.models import User
+from base.models import Event
+from rest_framework import routers, serializers, viewsets
+from django.conf.urls import include
+
+from rest_framework.schemas import get_schema_view
+from rest_framework_swagger.renderers import SwaggerUIRenderer, OpenAPIRenderer
+
+
+# Serializers define the API representation.
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        fields = ('url', 'username', 'email', 'is_staff')
+
+
+# ViewSets define the view behavior.
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class EventSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Event
+        fields = ('id', 'name', 'limit', 'status', 'address', 'start_time')
+
+
+# ViewSets define the view behavior.
+class EventViewSet(viewsets.ModelViewSet):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+
+# Routers provide an easy way of automatically determining the URL conf.
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'events', EventViewSet)
+
+schema_view = get_schema_view(title='EasyTest 测试接口', renderer_classes=[OpenAPIRenderer, SwaggerUIRenderer])
+
 urlpatterns = [
     # web
     url(r'^index_guest/$', view=views.index, name='index_guest'),  # 登录页面
@@ -35,4 +76,7 @@ urlpatterns = [
     url(r'^sec_get_event_list/', view=views_api_sec.sec_get_event_list, name='sec_get_event_list'),  # 查询发布会加密接口
     url(r'^sec_get_guest_list/', view=views_api_sec.sec_get_guest_list, name='sec_get_guest_list'),  # 查询嘉宾接口
 
+    url(r'^docs/$', schema_view, name='docs'),
+    url(r'^', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
