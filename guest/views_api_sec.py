@@ -110,10 +110,11 @@ def sec_get_guest_list(request):
     dict_data = aes_encryption(request)
     if dict_data == 'error':
         return JsonResponse({'status': 10011, 'message': 'request error'})
+    elif dict_data == 'decode error':
+        return JsonResponse({'status': 10033, 'message': 'AES key error'})
 
     # 取出对应的发布会id和嘉宾手机号
     name = dict_data['name']
-
     if name == '':
         datas = []
         results = Guest.objects.all()
@@ -215,7 +216,7 @@ def user_sign_api(request):
     server_sign = md5.hexdigest()
 
     if server_sign != client_sign:
-        return 'fail'
+        return 'sign fail'
     else:
         return 'sign success'
 
@@ -237,8 +238,12 @@ def decryptAES(src, key):
     src = decryptBase64(src)  # 将Base64() 加密字符串解密为AES加密字符串
     iv = b'1172311105789011'
     cryptor = AES.new(key, AES.MODE_CBC, iv)
-    text = cryptor.decrypt(src).decode()  # decrypt() 对AES加密字符串进行解密
-    return unpad(text)
+
+    try:
+        text = cryptor.decrypt(src).decode()  # decrypt() 对AES加密字符串进行解密
+        return unpad(text)
+    except UnicodeDecodeError as e:
+        return False
 
 
 def aes_encryption(request):
@@ -251,6 +256,8 @@ def aes_encryption(request):
 
     # 解密
     decode = decryptAES(data, app_key.encode('utf-8'))  # 调用decryptAES()函数解密
+    if not decode:
+        return 'decode error'
     # 转化为字典
     dict_data = json.loads(decode)
     return dict_data

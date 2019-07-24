@@ -100,8 +100,8 @@ class Test_execute():
                         if var_name in extract_dict.keys():
                             var_value = extract_dict[var_name]
                 step_content = json.loads(replace_var(step_content, var_name, var_value))
-        if_dict = {"url": interface.url, "header": step_content["header"], "body": step_content["body"]}
-
+        if_dict = {"url": interface.url, "header": step_content["header"], "body": step_content["body"],
+                   'if_name': step_content["if_name"]}
         set_headers = Environment.objects.get(env_id=self.env_id).set_headers
         if set_headers:  # 把设置的header赋值到if_dict中
             make = False
@@ -125,8 +125,15 @@ class Test_execute():
             elif self.sign_type == 3:  # 用户认证
                 pass
             elif self.sign_type == 4:  # AES算法加密
-                if_dict["body"] = encryptAES(json.dumps(if_dict['body']).encode('utf-8'),
-                                             self.private_key.encode('utf-8')).decode('utf-8')
+                if len(self.private_key) in [16, 24, 32]:
+                    if_dict["body"] = encryptAES(json.dumps(if_dict['body']).encode('utf-8'),
+                                                 self.private_key.encode('utf-8')).decode('utf-8')
+                else:
+                    if_dict['error'] = ErrorCode.AES_key_length_error
+                    if_dict["result"] = "error"
+                    if_dict["checkpoint"] = ''
+                    if_dict["res_content"] = '还未请求接口 ^-^'
+                    return if_dict
         else:
             if 'true' in step_content['body']:
                 if_dict["body"] = True
@@ -142,7 +149,6 @@ class Test_execute():
         if_dict["url"] = self.env_url + interface.url
         if_dict["url"], if_dict["body"] = format_url(if_dict["url"], if_dict["body"])
         if_dict["if_id"] = if_id
-        if_dict["if_name"] = step_content["if_name"]
         if_dict["method"] = interface.method
         if_dict["data_type"] = interface.data_type
 
