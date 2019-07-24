@@ -182,7 +182,7 @@ def step(step_content, sign_type, private_key, env_url, begin_time=0, locust=Fal
         # if_dict["res_content"] = res.text
         if_dict["res_content"] = eval(
             res.text.replace('false', 'False').replace('null', 'None').replace('true', 'True'))  # 查看报告时转码错误的问题
-        if if_dict['res_content']['response_code'] == 1:  # 接口返回错误码
+        if '系统异常' in if_dict['res_content'].values():
             if_dict['error'] = ErrorCode.interface_error
         if interface['is_header']:  # 补充默认headers中的变量
             if headers:
