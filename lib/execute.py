@@ -153,6 +153,9 @@ class Test_execute():
                     if self.sign_type == 4:
                         res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
                                              {'data': if_dict["body"]}, if_dict["data_type"])
+                    else:
+                        res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
+                                             if_dict["body"], if_dict["data_type"])
                 else:
                     res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
                                          if_dict["body"], if_dict["data_type"])

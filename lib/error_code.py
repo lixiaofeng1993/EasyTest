@@ -36,3 +36,5 @@ class ErrorCode:
     format_error = 'email格式错误！'
 
     already_exists_error = '注册用户已经存在！'
+
+    AES_key_length_error = 'app_key长度必须是16、24或者32位！'
