@@ -119,13 +119,14 @@ def step(step_content, sign_type, private_key, env_url, begin_time=0, locust=Fal
             step_content = json.loads(replace_var(step_content, var_name, var_value))
     else:
         extract = step_content['extract']
-    if_dict['header'], if_dict['body'] = step_content["header"], step_content["body"]
+        if_dict['header'], if_dict['body'], if_dict['if_name'] = step_content["header"], step_content["body"], \
+                                                                 step_content['if_name']
     set_headers = sql.execute_sql(
         'select be.set_headers from base_environment as be where be.env_id="{}";'.format(env_id),
         dict_type=True, num=1)
     headers = set_headers['set_headers']
     make = False
-    if set_headers:
+    if headers:
         for k, v in eval(headers)['header'].items():
             if k and v:
                 if '$' not in v:
@@ -161,7 +162,6 @@ def step(step_content, sign_type, private_key, env_url, begin_time=0, locust=Fal
         if_dict["url"] = interface['url']
     if_dict["if_id"] = if_id
     if_dict["url"], if_dict["body"] = format_url(if_dict["url"], if_dict["body"])
-    if_dict["if_name"] = step_content["if_name"]
     if_dict["method"] = interface['method']
     if_dict["data_type"] = interface['data_type']
     if_dict["is_sign"] = interface['is_sign']
@@ -182,7 +182,7 @@ def step(step_content, sign_type, private_key, env_url, begin_time=0, locust=Fal
         # if_dict["res_content"] = res.text
         if_dict["res_content"] = eval(
             res.text.replace('false', 'False').replace('null', 'None').replace('true', 'True'))  # 查看报告时转码错误的问题
-        if '系统异常' in if_dict['res_content'].values():
+        if if_dict['res_content']['response_code'] == 1:  # 接口返回错误码
             if_dict['error'] = ErrorCode.interface_error
         if interface['is_header']:  # 补充默认headers中的变量
             if headers:
