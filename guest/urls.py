@@ -11,7 +11,7 @@ from django.conf.urls import url
 from . import views_api, views_api_sec, views
 
 from django.contrib.auth.models import User
-from base.models import Event
+from base.models import Event, Guest
 from rest_framework import routers, serializers, viewsets
 from django.conf.urls import include
 
@@ -28,6 +28,25 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 
 # ViewSets define the view behavior.
 class UserViewSet(viewsets.ModelViewSet):
+    '''
+           retrieve:
+               Return a user instance.
+
+           list:
+               Return all users,ordered by most recent joined.
+
+           create:
+               Create a new user.
+
+           delete:
+               Remove a existing user.
+
+           partial_update:
+               Update one or more fields on a existing user.
+
+           update:
+               Update a user.
+       '''
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
@@ -35,19 +54,53 @@ class UserViewSet(viewsets.ModelViewSet):
 class EventSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Event
-        fields = ('id', 'name', 'limit', 'status', 'address', 'start_time')
+        fields = '__all__'
 
 
 # ViewSets define the view behavior.
 class EventViewSet(viewsets.ModelViewSet):
+    '''
+       retrieve:
+           Return a user instance.
+
+       list:
+           Return all users,ordered by most recent joined.
+
+       create:
+           Create a new user.
+
+       delete:
+           Remove a existing user.
+
+       partial_update:
+           Update one or more fields on a existing user.
+
+       update:
+           Update a user.
+   '''
     queryset = Event.objects.all()
     serializer_class = EventSerializer
+
+
+class GuestSerializer(serializers.HyperlinkedModelSerializer):
+    event = EventSerializer(many=True)
+
+    class Meta:
+        model = Guest
+        fields = '__all__'
+
+
+# ViewSets define the view behavior.
+class GuestViewSet(viewsets.ModelViewSet):
+    queryset = Guest.objects.all()
+    serializer_class = GuestSerializer
 
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
 router.register(r'events', EventViewSet)
+router.register(r'guests', GuestViewSet)
 
 schema_view = get_schema_view(title='EasyTest 测试接口', renderer_classes=[OpenAPIRenderer, SwaggerUIRenderer])
 
