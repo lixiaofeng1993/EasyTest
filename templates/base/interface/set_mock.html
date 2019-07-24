@@ -33,7 +33,7 @@
                     <a class="this">基础信息</a>
                 </li>
                 <li class="active">
-                    <a class="this-page" href="/base/case/">接口管理</a>
+                    <a class="this-page" href="/base/interface/">接口管理</a>
                 </li>
                 <li class="active">
                     <a class="">设置接口mock</a>
@@ -49,14 +49,14 @@
         <div class="col-md-12">
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
-                    <h3 class="panel-title" value="{{ if_id }}" id="env_name">设置mock ==> {{ if_name }}</h3>
+                    <h3 class="panel-title" value="{{ if_id }}" id="env_name" style="margin-left: 2%">{{ if_name }}</h3>
                 </div>
                 <div class="ibox-content">
 
                     <div class="form-group">
-                        <button onclick="get_mock()" class="btn btn-primary" style="margin-top: 1%"><i
-                                class="fa fa-get-pocket"></i>&nbsp;获取mock
-                        </button>
+{#                        <button onclick="get_mock()" class="btn btn-primary" style="margin-top: 1%"><i#}
+                        {#                                class="fa fa-get-pocket"></i>&nbsp;获取mock#}
+                        {#                        </button>#}
                     </div>
                     <div class="form-horizontal" style="margin-top: 1%">
                         <div class="panel">
@@ -116,7 +116,7 @@
             tbody.removeChild(tr);
         }
 
-        function get_mock() {
+        window.onload = function get_mock() {
             var if_id = $('#env_name').attr('value');
             $.ajax({
                 url: "/base/set_mock/",
