@@ -21,3 +21,5 @@ requests==2.22.0
 uwsgi==2.0.18
 supervisor==4.0.3
 django-simpleui
+django-rest-swagger==2.1.2
+djangorestframework==3.7.7

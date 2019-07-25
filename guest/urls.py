@@ -20,38 +20,40 @@ from rest_framework_swagger.renderers import SwaggerUIRenderer, OpenAPIRenderer
 
 
 # Serializers define the API representation.
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ('url', 'username', 'email', 'is_staff')
+# class UserSerializer(serializers.HyperlinkedModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ('url', 'username', 'email', 'is_staff')
 
 
 # ViewSets define the view behavior.
-class UserViewSet(viewsets.ModelViewSet):
-    '''
-           retrieve:
-               Return a user instance.
+# class UserViewSet(viewsets.ModelViewSet):
+#     '''
+#            retrieve:
+#                Return a user instance.
+#
+#            list:
+#                Return all users,ordered by most recent joined.
+#
+#            create:
+#                Create a new user.
+#
+#            delete:
+#                Remove a existing user.
+#
+#            partial_update:
+#                Update one or more fields on a existing user.
+#
+#            update:
+#                Update a user.
+#        '''
+    # queryset = User.objects.all()
+    # serializer_class = UserSerializer
 
-           list:
-               Return all users,ordered by most recent joined.
 
-           create:
-               Create a new user.
+class EventSerializer(serializers.ModelSerializer):
+    # guests = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
-           delete:
-               Remove a existing user.
-
-           partial_update:
-               Update one or more fields on a existing user.
-
-           update:
-               Update a user.
-       '''
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-
-
-class EventSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Event
         fields = '__all__'
@@ -59,35 +61,19 @@ class EventSerializer(serializers.HyperlinkedModelSerializer):
 
 # ViewSets define the view behavior.
 class EventViewSet(viewsets.ModelViewSet):
-    '''
-       retrieve:
-           Return a user instance.
-
-       list:
-           Return all users,ordered by most recent joined.
-
-       create:
-           Create a new user.
-
-       delete:
-           Remove a existing user.
-
-       partial_update:
-           Update one or more fields on a existing user.
-
-       update:
-           Update a user.
-   '''
     queryset = Event.objects.all()
     serializer_class = EventSerializer
 
 
-class GuestSerializer(serializers.HyperlinkedModelSerializer):
-    event = EventSerializer(many=True)
+class GuestSerializer(serializers.ModelSerializer):
+    event = EventSerializer(many=False, read_only=True)
+
+    # event = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
 
     class Meta:
         model = Guest
         fields = '__all__'
+        exclude = []
 
 
 # ViewSets define the view behavior.
@@ -98,7 +84,7 @@ class GuestViewSet(viewsets.ModelViewSet):
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
-router.register(r'users', UserViewSet)
+# router.register(r'users', UserViewSet)
 router.register(r'events', EventViewSet)
 router.register(r'guests', GuestViewSet)
 
