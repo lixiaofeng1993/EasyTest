@@ -88,7 +88,7 @@ router = routers.DefaultRouter()
 router.register(r'events', EventViewSet)
 router.register(r'guests', GuestViewSet)
 
-schema_view = get_schema_view(title='EasyTest 测试接口', renderer_classes=[OpenAPIRenderer, SwaggerUIRenderer])
+schema_view = get_schema_view(title='EasyTest 测试接口', renderer_classes=[OpenAPIRenderer, SwaggerUIRenderer], url='http://www.easytest.xyz')
 
 urlpatterns = [
     # web
