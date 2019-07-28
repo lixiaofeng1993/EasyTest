@@ -2,6 +2,8 @@ import hashlib
 import time
 from Crypto.Cipher import AES
 import base64
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password, check_password
 
 
 # 用户签名+时间戳   md5加密
@@ -36,3 +38,8 @@ def encryptAES(data, private_key):
     ciphertext = cryptor.encrypt(
         pad(data.decode('utf-8')).encode('utf-8'))  # encrypt()方法要求被加密的字符串长度必须是16、24或者32位。否则：ValueError
     return encryptBase64(ciphertext)
+
+
+def auth_user():
+    user_auth = ('lixiaofeng', 'fengzi802300')
+    return user_auth

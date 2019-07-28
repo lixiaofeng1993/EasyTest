@@ -11,7 +11,7 @@ import requests
 import re, os, datetime
 from django.db.models import Sum
 import json
-from lib.signtype import user_sign_api, encryptAES
+from lib.signtype import user_sign_api, encryptAES, auth_user
 import logging
 import time
 from lib.public import validators_result, get_extract, get_param, replace_var, \
@@ -38,6 +38,8 @@ class Test_execute():
         self.extract_list = []
         self.glo_var = {}
         self.step_json = []
+        self.user_auth = ''  # 用户认证
+        self.make = False  # 未设置默认header的情况
         # self.sql = SqL(job=True)
 
     def __del__(self):
@@ -102,15 +104,14 @@ class Test_execute():
                 step_content = json.loads(replace_var(step_content, var_name, var_value))
         if_dict = {"url": interface.url, "header": step_content["header"], "body": step_content["body"],
                    'if_name': step_content["if_name"]}
+
         set_headers = Environment.objects.get(env_id=self.env_id).set_headers
         if set_headers:  # 把设置的header赋值到if_dict中
-            make = False
             headers = eval(set_headers)['header']
             for k, v in headers.items():
-                if k and v:
-                    if '$' not in v:
-                        make = True
-            if make:
+                if '$' not in v:
+                    self.make = True
+            if self.make:
                 if_dict['header'] = headers
         if interface.data_type == 'sql':
             for k, v in if_dict['body'].items():
@@ -123,7 +124,7 @@ class Test_execute():
             elif self.sign_type == 2:  # 不签名
                 pass
             elif self.sign_type == 3:  # 用户认证
-                pass
+                self.user_auth = auth_user()
             elif self.sign_type == 4:  # AES算法加密
                 if len(self.private_key) in [16, 24, 32]:
                     if_dict["body"] = encryptAES(json.dumps(if_dict['body']).encode('utf-8'),
@@ -161,7 +162,7 @@ class Test_execute():
                                              {'data': if_dict["body"]}, if_dict["data_type"])
                     else:
                         res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
-                                             if_dict["body"], if_dict["data_type"])
+                                             if_dict["body"], if_dict["data_type"], self.user_auth)
                 else:
                     res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
                                          if_dict["body"], if_dict["data_type"])
@@ -185,7 +186,7 @@ class Test_execute():
             if_dict["result"] = "fail"
             if_dict['fail'] = ErrorCode.mock_fail
 
-        if interface.is_header:  # 补充默认headers中的变量
+        if interface.is_header and self.make:  # 补充默认headers中的变量
             set_headers = Environment.objects.get(env_id=self.env_id).set_headers
             headers = eval(set_headers)['header']
             if headers:

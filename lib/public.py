@@ -364,7 +364,7 @@ def get_param_response(param_name, dict_data, num=0, default=None):
 
 
 # 发送请求
-def call_interface(s, method, url, header, data, content_type='json'):
+def call_interface(s, method, url, header, data, content_type='json', user_auth=''):
     # log.info('========interface params==============> {} {} {} {}'.format(url, header, data, content_type))
     if method in ["post", "put"]:
         if content_type in ["json", 'sql']:
@@ -379,7 +379,10 @@ def call_interface(s, method, url, header, data, content_type='json'):
         if content_type == 'json':
             res = s.request(method=method, url=url, json=data, headers=header, verify=False)
         else:
-            res = s.request(method=method, url=url, params=data, headers=header, verify=False)
+            if user_auth:
+                res = s.request(method=method, url=url, params=data, headers=header, auth=user_auth)
+            else:
+                res = s.request(method=method, url=url, params=data, headers=header, verify=False)
     if content_type == 'file':
         # res = s.request(method=method, url=url, params=data, headers=header, verify=False)
         res = s.request(method=method, url=url, files=data, headers=header, verify=False)
