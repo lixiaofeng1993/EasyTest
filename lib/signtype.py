@@ -2,8 +2,6 @@ import hashlib
 import time
 from Crypto.Cipher import AES
 import base64
-from django.contrib.auth.models import User
-from django.contrib.auth.hashers import make_password, check_password
 
 
 # 用户签名+时间戳   md5加密
