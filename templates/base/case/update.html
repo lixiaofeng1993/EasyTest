@@ -376,7 +376,11 @@
                                             var header = header_table + "</tbody></table>";
                                         } else {
                                             for (var he in eval(header_json)) {
-                                                var tr_he = "<tr><td>#</td><td name='var_name' contenteditable='true'>" + he + "</td><td contenteditable='true' name='var_value'>" + header_json[he].split(',')[0] + "</td><td name='var_remark'>" + header_json[he].split(',')[1] + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
+                                                var value = header_json[he].split(',')[0];
+                                                if (typeof(value) == 'undefined') {
+                                                    value = ' '
+                                                }
+                                                var tr_he = "<tr><td>#</td><td name='var_name' contenteditable='true'>" + he + "</td><td contenteditable='true' name='var_value'>" + header_json[he].split(',')[0] + "</td><td name='var_remark'>" + value + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
                                                 header_table = header_table + tr_he;
                                                 var header = header_table + "</tbody></table>";
                                             }

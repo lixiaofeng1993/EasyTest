@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="778b3f5c-ebac-48de-a7cd-7bbe971dd892" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EasyTest/settings.py" afterPath="$PROJECT_DIR$/EasyTest/settings.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/views.py" afterPath="$PROJECT_DIR$/base/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/case/add.html" afterPath="$PROJECT_DIR$/templates/base/case/add.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/case/update.html" afterPath="$PROJECT_DIR$/templates/base/case/update.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/interface/add.html" afterPath="$PROJECT_DIR$/templates/base/interface/add.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/interface/update.html" afterPath="$PROJECT_DIR$/templates/base/interface/update.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -27,11 +22,11 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="441">
-              <caret line="26" column="12" lean-forward="false" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
+              <caret line="26" column="13" lean-forward="false" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -60,8 +55,8 @@
       <file leaf-file-name="update.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base/case/update.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-468">
-              <caret line="395" column="62" lean-forward="false" selection-start-line="395" selection-start-column="62" selection-end-line="395" selection-end-column="62" />
+            <state relative-caret-position="368">
+              <caret line="382" column="250" lean-forward="false" selection-start-line="382" selection-start-column="250" selection-end-line="382" selection-end-column="250" />
               <folding />
             </state>
           </provider>
@@ -70,8 +65,8 @@
       <file leaf-file-name="add.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base/case/add.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="610">
-              <caret line="444" column="24" lean-forward="false" selection-start-line="444" selection-start-column="24" selection-end-line="445" selection-end-column="60" />
+            <state relative-caret-position="-314">
+              <caret line="312" column="29" lean-forward="false" selection-start-line="312" selection-start-column="16" selection-end-line="312" selection-end-column="29" />
               <folding />
             </state>
           </provider>
@@ -87,10 +82,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="update.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="update.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base/interface/update.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="696">
+            <state relative-caret-position="1950">
               <caret line="528" column="0" lean-forward="true" selection-start-line="528" selection-start-column="0" selection-end-line="528" selection-end-column="0" />
               <folding>
                 <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
@@ -177,12 +172,12 @@
       <find>sumbit</find>
       <find>request_body_data</find>
       <find>response_header_data</find>
-      <find>response_body</find>
-      <find>add_interface</find>
       <find>添加header参数</find>
       <find>interface_u</find>
       <find>add_header_row</find>
       <find>add_body_row</find>
+      <find>response_body</find>
+      <find>add_interface</find>
       <find>var_remark</find>
     </findStrings>
   </component>
@@ -206,12 +201,12 @@
         <option value="$PROJECT_DIR$/templates/base/interface/set_mock.html" />
         <option value="$PROJECT_DIR$/lib/sql_parameter.py" />
         <option value="$PROJECT_DIR$/base/performance.py" />
-        <option value="$PROJECT_DIR$/EasyTest/settings.py" />
         <option value="$PROJECT_DIR$/templates/base/interface/add.html" />
         <option value="$PROJECT_DIR$/base/views.py" />
         <option value="$PROJECT_DIR$/templates/base/case/add.html" />
-        <option value="$PROJECT_DIR$/templates/base/case/update.html" />
         <option value="$PROJECT_DIR$/templates/base/interface/update.html" />
+        <option value="$PROJECT_DIR$/templates/base/case/update.html" />
+        <option value="$PROJECT_DIR$/EasyTest/settings.py" />
       </list>
     </option>
   </component>
@@ -751,7 +746,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1066" extended-state="0" />
+    <frame x="-8" y="-8" width="1936" height="1066" extended-state="1" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18230277" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -1150,14 +1145,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="26" column="12" lean-forward="false" selection-start-line="26" selection-start-column="12" selection-end-line="26" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/interface/add.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="288">
@@ -1174,25 +1161,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/case/add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="610">
-          <caret line="444" column="24" lean-forward="false" selection-start-line="444" selection-start-column="24" selection-end-line="445" selection-end-column="60" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/case/update.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-468">
-          <caret line="395" column="62" lean-forward="false" selection-start-line="395" selection-start-column="62" selection-end-line="395" selection-end-column="62" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/interface/update.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="696">
+        <state relative-caret-position="1950">
           <caret line="528" column="0" lean-forward="true" selection-start-line="528" selection-start-column="0" selection-end-line="528" selection-end-column="0" />
           <folding>
             <element signature="n#style#0;n#span#0;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#div#1;n#!!top" expanded="true" />
@@ -1211,6 +1182,30 @@
             <element signature="e#21368#21374#0#HTML" expanded="true" />
             <element signature="e#21606#21612#0#HTML" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/case/add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-314">
+          <caret line="312" column="29" lean-forward="false" selection-start-line="312" selection-start-column="16" selection-end-line="312" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/case/update.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="368">
+          <caret line="382" column="250" lean-forward="false" selection-start-line="382" selection-start-column="250" selection-end-line="382" selection-end-column="250" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="441">
+          <caret line="26" column="13" lean-forward="false" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
