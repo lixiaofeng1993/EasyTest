@@ -212,7 +212,7 @@
         function add_header_row(obj) {
             var panel = $(obj).parent().parent();
             var tbody = $(panel).find("table[name='header']").children('tbody');
-            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td> <td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td> <td name='var_remark' contenteditable='true'></td><td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
             $(tbody).append(newRow);
         }
 
@@ -220,7 +220,7 @@
         function add_body_row(obj) {
             var panel = $(obj).parent().parent();
             var tbody = $(panel).find("table[name='body']").children('tbody');
-            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td> <td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td><td name='var_remark' contenteditable='true'></td> <td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
             $(tbody).append(newRow);
         }
 
@@ -326,14 +326,14 @@
                         },
                         success: function (data) {
                             var listdata = eval(data);
-
                             $(listdata).each(function (i, item) {
                                 var header_json = item.request_header_param;
                                 var header_table = "<table name='header' class='table'><thead><tr><th>#</th> <th>参数名</th>" +
                                     "<th>值</th>" +
+                                    "<th>备注</th>" +
                                     "<th></th> </tr> </thead><tbody>";
                                 $.each(JSON.parse(header_json), function (i, item) {
-                                    var tr = "<tr><td>#</td><td name='var_name'>" + item.var_name + "</td><td contenteditable='true' name='var_value'></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
+                                    var tr = "<tr><td>#</td><td name='var_name' contenteditable='true'>" + item.var_name + "</td><td contenteditable='true' name='var_value'></td><td name='var_remark' contenteditable='true'>" + item.var_remark + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
                                     header_table = header_table + tr;
                                 });
                                 var header = header_table + "</tbody></table>";
@@ -341,9 +341,10 @@
                                 var body_json = item.request_body_param;
                                 var body_table = "<table name='body' class='table'><thead><tr><th>#</th> <th>参数名</th>" +
                                     "<th>值</th>" +
+                                    "<th>备注</th>" +
                                     "<th></th> </tr> </thead><tbody>";
                                 $.each(JSON.parse(body_json), function (i, item) {
-                                    var tr = "<tr><td>#</td><td name='var_name'>" + item.var_name + "</td><td contenteditable='true' name='var_value'></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
+                                    var tr = "<tr><td>#</td><td name='var_name' contenteditable='true'>" + item.var_name + "</td><td contenteditable='true' name='var_value'></td><td name='var_remark' contenteditable='true'>" + item.var_remark + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
                                     body_table = body_table + tr
                                 });
                                 var body = body_table + "</tbody></table>";
@@ -441,7 +442,8 @@
                         if (i == 0) return true;
                         var name = $(this).find("td[name='var_name']").text();
                         var value = $(this).find("td[name='var_value']").text();
-                        header[name] = value;
+                        var remark = $(this).find("td[name='var_remark']").text();
+                        header[name] = value + ',' + remark;
                     });
 
                     var body_table = $(this).find("table[name='body']");
@@ -450,7 +452,8 @@
                         if (i == 0) return true;
                         var name = $(this).find("td[name='var_name']").text();
                         var value = $(this).find("td[name='var_value']").text();
-                        body[name] = value;
+                        var remark = $(this).find("td[name='var_remark']").text();
+                        body[name] = value + ',' + remark;
                     });
 
                     var extract_table = $(this).find("table[name='extract']");

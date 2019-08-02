@@ -628,13 +628,13 @@ def interface_update(request):
                                'response_body_param_list': response_body_param_list,
                                "prj_list": prj_list})
             description = request.POST['description']
-            request_header_data_list = request.POST.getlist('request_header_data', [])
+            request_header_data_list = request.POST.get('request_header_data', [])
             request_header_data = interface_format_params(request_header_data_list)
-            request_body_data_list = request.POST.getlist('request_body_data', [])
+            request_body_data_list = request.POST.get('request_body_data', [])
             request_body_data = interface_format_params(request_body_data_list)
-            response_header_data_list = request.POST.getlist('response_header_data', [])
+            response_header_data_list = request.POST.get('response_header_data', [])
             response_header_data = interface_format_params(response_header_data_list)
-            response_body_data_list = request.POST.getlist('response_body_data', [])
+            response_body_data_list = request.POST.get('response_body_data', [])
             response_body_data = interface_format_params(response_body_data_list)
             username = request.session.get('user', '')
             if is_headers == '1':
@@ -693,11 +693,12 @@ def interface_update(request):
 
 # 解析数据库中格式化前的参数
 def interface_get_params(params):
-    if params:
+    if params and params != '[]':
         param_list = []
         for i in range(len(eval(params))):
-            request_header_param = eval(params)[i]['var_name']
-            param_list.append(request_header_param)
+            param_list.append({"var_name": "", "var_remark": ""})
+            param_list[i]['var_name'] = eval(params)[i]['var_name']
+            param_list[i]['var_remark'] = eval(params)[i]['var_remark']
         return param_list
     else:
         return []
@@ -707,9 +708,11 @@ def interface_get_params(params):
 def interface_format_params(params_list):
     if params_list:
         var = []
+        params_list =eval(params_list)
         for i in range(len(params_list)):
             var.append({"var_name": "", "var_remark": ""})
-            var[i]['var_name'] = params_list[i]
+            var[i]['var_name'] = params_list[i]['var_name']
+            var[i]['var_remark'] = params_list[i]['var_remark']
         return json.dumps(var)
     else:
         return []

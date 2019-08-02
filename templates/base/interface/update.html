@@ -56,8 +56,8 @@
                     <h3 class="panel-title">编辑接口</h3>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" action="/base/interface_update/" method="post">
-                        <input name="if_id" value={{ interface.if_id }} hidden>
+{#                    <form class="form-horizontal" action="/base/interface_update/" method="post">#}
+                        <input name="if_id" id="if_id" value={{ interface.if_id }} hidden>
                         <div class="form-horizontal">
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">接口名称</label>
@@ -177,7 +177,8 @@
                                 <div class="col-sm-1 control-label">
                                     <label class="fancy-radio">
                                         {% ifequal is_headers 1 %}
-                                            <input name="is_headers" value="1" type="radio" checked><span><i></i>设置</span>
+                                            <input name="is_headers" value="1" type="radio" checked>
+                                            <span><i></i>设置</span>
                                         {% else %}
                                             <input name="is_headers" value="1" type="radio"><span><i></i>设置</span>
                                         {% endifequal %}
@@ -189,7 +190,8 @@
                                 <div class="col-sm-2 control-label">
                                     <label class="fancy-radio">
                                         {% ifequal is_headers 0 %}
-                                            <input name="is_headers" value="0" type="radio" checked><span><i></i>不设置</span>
+                                            <input name="is_headers" value="0" type="radio" checked>
+                                            <span><i></i>不设置</span>
                                         {% else %}
                                             <input name="is_headers" value="0" type="radio"><span><i></i>不设置</span>
                                         {% endifequal %}
@@ -215,15 +217,17 @@
                                         <thead>
                                         <tr>
                                             <th>头部标签</th>
+                                            <th>备注</th>
                                             <th></th>
                                         </tr>
 
                                         {% if request_header_param_list %}
                                             {% for request_header_param in request_header_param_list %}
                                                 <tr>
-                                                    <td contentEditable="true"><input name="request_header_data"
-                                                                                      value="{{ request_header_param }}">
-                                                    </td>
+                                                    <td name='var_name'
+                                                        contenteditable='true'>{{ request_header_param.var_name }}</td>
+                                                    <td name='var_remark'
+                                                        contenteditable='true'>{{ request_header_param.var_remark }}</td>
                                                     <td>
                                                         <button class='btn btn-danger' onclick='del_step(this)'><i
                                                                 class='fa fa-close'></i>&nbsp;删除行
@@ -252,14 +256,16 @@
                                         <thead>
                                         <tr>
                                             <th>参数名</th>
+                                            <th>备注</th>
                                             <th></th>
                                         </tr>
                                         {% if request_body_param_list %}
                                             {% for request_body_param in request_body_param_list %}
                                                 <tr>
-                                                    <td contentEditable="true"><input name="request_body_data"
-                                                                                      value="{{ request_body_param }}">
-                                                    </td>
+                                                    <td name='var_name'
+                                                        contenteditable='true'>{{ request_body_param.var_name }}</td>
+                                                    <td name='var_remark'
+                                                        contenteditable='true'>{{ request_body_param.var_remark }}</td>
                                                     <td>
                                                         <button class='btn btn-danger' onclick='del_step(this)'><i
                                                                 class='fa fa-close'></i>&nbsp;删除行
@@ -288,14 +294,16 @@
                                         <thead>
                                         <tr>
                                             <th>头部标签</th>
+                                            <th>备注</th>
                                             <th></th>
                                         </tr>
                                         {% if response_header_param_list %}
                                             {% for response_header_param in response_header_param_list %}
                                                 <tr>
-                                                    <td contentEditable="true"><input name="response_header_data"
-                                                                                      value="{{ response_header_param }}">
-                                                    </td>
+                                                    <td name='var_name'
+                                                        contenteditable='true'>{{ response_header_param.var_name }}</td>
+                                                    <td name='var_remark'
+                                                        contenteditable='true'>{{ response_header_param.var_remark }}</td>
                                                     <td>
                                                         <button class='btn btn-danger' onclick='del_step(this)'><i
                                                                 class='fa fa-close'></i>&nbsp;删除行
@@ -323,14 +331,16 @@
                                         <thead>
                                         <tr>
                                             <th>参数名</th>
+                                            <th>备注</th>
                                             <th></th>
                                         </tr>
                                         {% if response_body_param_list %}
                                             {% for response_body_param in response_body_param_list %}
                                                 <tr>
-                                                    <td contentEditable="true"><input name="response_body_data"
-                                                                                      value="{{ response_body_param }}">
-                                                    </td>
+                                                    <td name='var_name'
+                                                        contenteditable='true'>{{ response_body_param.var_name }}</td>
+                                                    <td name='var_remark'
+                                                        contenteditable='true'>{{ response_body_param.var_remark }}</td>
                                                     <td>
                                                         <button class='btn btn-danger' onclick='del_step(this)'><i
                                                                 class='fa fa-close'></i>&nbsp;删除行
@@ -358,7 +368,7 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+{#                    </form>#}
                 </div>
             </div>
         </div>
@@ -381,22 +391,22 @@
         $(document).ready(function () {
             //添加请求头参数行      <input name="response_body_data">
             $("#add_request_header").click(function () {
-                var newRow = "<tr> <td name='var_name' contenteditable='true'><input name='request_header_data'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+                var newRow = "<tr> <td name='var_name' contenteditable='true'></td><td name='var_remark' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
                 $("#request_header tr:last").after(newRow);
             });
 
             $("#add_request_body").click(function () {
-                var newRow = "<tr> <td name='var_name' contenteditable='true'><input name='request_body_data'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+                var newRow = "<tr> <td name='var_name' contenteditable='true'></td><td name='var_remark' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
                 $("#request_body tr:last").after(newRow);
             });
 
             $("#add_response_header").click(function () {
-                var newRow = "<tr> <td name='var_name' contenteditable='true'><input name='response_header_data'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+                var newRow = "<tr> <td name='var_name' contenteditable='true'></td><td name='var_remark' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
                 $("#response_header tr:last").after(newRow);
             });
 
             $("#add_response_body").click(function () {
-                var newRow = "<tr> <td name='var_name' contenteditable='true'><input name='response_body_data'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+                var newRow = "<tr> <td name='var_name' contenteditable='true'></td><td name='var_remark' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
                 $("#response_body tr:last").after(newRow);
             });
 
@@ -420,9 +430,10 @@
             alert(send_data);
         });
 
-        $('#sumbit').click(function () {
+        $('#submit').click(function () {
 
             var if_name = $("#if_name").val();
+            var if_id = $("#if_id").val();
             var prj_id = $("#prj_id").val();
             var url = $("#url").val();
             var method = $("input[name='method']:checked").val();
@@ -461,7 +472,7 @@
             request_body_data = JSON.stringify(args);
 
             var args = [];
-            $('#request_header tr').each(function (i) {                   // 遍历 tr
+            $('#response_header tr').each(function (i) {                   // 遍历 tr
                 if (i == 0) return true;
                 var data = new Object();
                 $(this).find("td[name]").each(function () {
@@ -473,7 +484,7 @@
             response_header_data = JSON.stringify(args);
 
             var args = [];
-            $('#request_header tr').each(function (i) {                   // 遍历 tr
+            $('#response_body tr').each(function (i) {                   // 遍历 tr
                 if (i == 0) return true;
                 var data = new Object();
                 $(this).find("td[name]").each(function () {
@@ -485,10 +496,11 @@
             response_body_data = JSON.stringify(args);
 
             $.ajax({
-                url: "/base/interface_add/",
+                url: "/base/interface_update/",
                 type: "post",
                 data: {
                     "if_name": if_name,
+                    "if_id": if_id,
                     "prj_id": prj_id,
                     "url": url,
                     "method": method,

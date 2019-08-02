@@ -232,7 +232,7 @@
         function add_header_row(obj) {
             var panel = $(obj).parent().parent();
             var tbody = $(panel).find("table[name='header']").children('tbody');
-            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td> <td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td><td name='var_remark'></td> <td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
             $(tbody).append(newRow);
         }
 
@@ -240,7 +240,7 @@
         function add_body_row(obj) {
             var panel = $(obj).parent().parent();
             var tbody = $(panel).find("table[name='body']").children('tbody');
-            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td> <td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td><td name='var_remark'></td> <td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
             $(tbody).append(newRow);
         }
 
@@ -359,9 +359,11 @@
                                     for (content in eval(item.content)) {
                                         var header_table = "<table name='header' class='table'><thead><tr><th>#</th> <th>参数名</th>" +
                                             "<th>值</th>" +
+                                            "<th>备注</th>" +
                                             "<th></th> </tr> </thead><tbody>";
                                         var body_table = "<table name='body' class='table'><thead><tr><th>#</th> <th>参数名</th>" +
                                             "<th>值</th>" +
+                                            "<th>备注</th>" +
                                             "<th></th> </tr> </thead><tbody>";
                                         var extract_table = "<table name='extract' class='table'> <thead> <tr> <th>#</th><th>参数名</th></tr></thead><tbody>";
                                         var validators_table = "<table name='validators' class='table'><thead><tr><th>#</th><th>参数名</th><th>期望值</th><th>断言方式</th></tr></thead><tbody>";
@@ -374,7 +376,7 @@
                                             var header = header_table + "</tbody></table>";
                                         } else {
                                             for (var he in eval(header_json)) {
-                                                var tr_he = "<tr><td>#</td><td name='var_name' contenteditable='true'>" + he + "</td><td contenteditable='true' name='var_value'>" + header_json[he] + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
+                                                var tr_he = "<tr><td>#</td><td name='var_name' contenteditable='true'>" + he + "</td><td contenteditable='true' name='var_value'>" + header_json[he].split(',')[0] + "</td><td name='var_remark'>" + header_json[he].split(',')[1] + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
                                                 header_table = header_table + tr_he;
                                                 var header = header_table + "</tbody></table>";
                                             }
@@ -389,7 +391,11 @@
                                             var body = body_table + "</tbody></table>";
                                         } else {
                                             for (var bo in eval(body_json)) {
-                                                var tr_bo = "<tr><td>#</td><td name='var_name' contenteditable='true'>" + bo + "</td><td contenteditable='true' name='var_value'>" + body_json[bo] + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
+                                                var value = body_json[bo].split(',')[1];
+                                                if (typeof(value) == 'undefined') {
+                                                    value = ' '
+                                                }
+                                                var tr_bo = "<tr><td>#</td><td name='var_name' contenteditable='true'>" + bo + "</td><td contenteditable='true' name='var_value'>" + body_json[bo].split(',')[0] + "</td><td name='var_remark'>" + value + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
                                                 body_table = body_table + tr_bo;
                                                 var body = body_table + "</tbody></table>";
                                             }
@@ -423,11 +429,11 @@
                                                 {#                                                var tr_va = "<tr> <td>#</td><td name='var_name' contenteditable='true'>" + check + "</td><td name='var_value' contenteditable='true'>" + expect + "</td><td name='comparator' contenteditable='true'>" + comparator + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";#}
                                                 if (comparator == 'eq') {
                                                     var tr_va = "<tr> <td>#</td><td name='var_name' contenteditable='true'>" + check + "</td><td name='var_value' contenteditable='true'>" + expect + "</td><td name='comparator' contenteditable='true'><select type='text' id='data_type' class='form-control'><option value='eq' selected>等于</option><option value='neq'>不等于</option><option value='included'>包含</option><option value='not_included'>不包含</option></select></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
-                                                }else if (comparator == 'neq'){
+                                                } else if (comparator == 'neq') {
                                                     var tr_va = "<tr> <td>#</td><td name='var_name' contenteditable='true'>" + check + "</td><td name='var_value' contenteditable='true'>" + expect + "</td><td name='comparator' contenteditable='true'><select type='text' id='data_type' class='form-control'><option value='eq'>等于</option><option value='neq' selected>不等于</option><option value='included'>包含</option><option value='not_included'>不包含</option></select></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
-                                                }else if (comparator == 'included'){
+                                                } else if (comparator == 'included') {
                                                     var tr_va = "<tr> <td>#</td><td name='var_name' contenteditable='true'>" + check + "</td><td name='var_value' contenteditable='true'>" + expect + "</td><td name='comparator' contenteditable='true'><select type='text' id='data_type' class='form-control'><option value='eq'>等于</option><option value='neq'>不等于</option><option value='included' selected>包含</option><option value='not_included'>不包含</option></select></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
-                                                }else if (comparator == 'not_included'){
+                                                } else if (comparator == 'not_included') {
                                                     var tr_va = "<tr> <td>#</td><td name='var_name' contenteditable='true'>" + check + "</td><td name='var_value' contenteditable='true'>" + expect + "</td><td name='comparator' contenteditable='true'><select type='text' id='data_type' class='form-control'><option value='eq'>等于</option><option value='neq' selected>不等于</option><option value='included'>包含</option><option value='not_included' selected>不包含</option></select></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
                                                 }
                                                 else {
@@ -486,7 +492,7 @@
                                         "<th>值</th>" +
                                         "<th></th> </tr> </thead><tbody>";
                                     $.each(JSON.parse(header_json), function (i, item) {
-                                        var tr = "<tr><td>#</td><td name='var_name'>" + item.var_name + "</td><td contenteditable='true' name='var_value'></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
+                                        var tr = "<tr><td>#</td><td name='var_name' contenteditable='true'>" + item.var_name + "</td><td contenteditable='true' name='var_value'></td><td name='var_remark'>" + item.var_remark + "</td> <td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
                                         header_table = header_table + tr;
                                     });
                                     var header = header_table + "</tbody></table>";
@@ -496,7 +502,7 @@
                                         "<th>值</th>" +
                                         "<th></th> </tr> </thead><tbody>";
                                     $.each(JSON.parse(body_json), function (i, item) {
-                                        var tr = "<tr><td>#</td><td name='var_name'>" + item.var_name + "</td><td contenteditable='true' name='var_value'></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
+                                        var tr = "<tr><td>#</td><td name='var_name'>" + item.var_name + "</td><td contenteditable='true' name='var_value'></td><td name='var_remark'>" + item.var_remark + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
                                         body_table = body_table + tr
                                     });
                                     var body = body_table + "</tbody></table>";
