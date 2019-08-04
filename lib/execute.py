@@ -31,8 +31,6 @@ class Test_execute():
         self.env_id = env_id
         self.case_id_list = case_id_list
         self.begin_time = time.clock()
-        self.prj_id, self.env_url, self.private_key = self.get_env(self.env_id)
-        self.sign_type = self.get_sign(self.prj_id)
         self.s = requests.session()
         # self.extract_dict = {}
         self.extract_list = []
@@ -51,6 +49,16 @@ class Test_execute():
         class_name = self.__class__.__name__
         func_name = sys._getframe().f_code.co_name
         method_doc = self.test_case.__doc__
+        if self.get_env(self.env_id):
+            self.prj_id, self.env_url, self.private_key = self.get_env(self.env_id)
+        else:
+            case_run = {}
+            log.error('用例 {} 的测试环境不存在！'.format(self.case_id))
+            case_run['msg'] = '用例 {} 的测试环境不存在！'.format(self.case_id)
+            case_run['error'] = ErrorCode.env_not_exit_error
+            case_run['class_name'] = class_name
+            return case_run
+        self.sign_type = self.get_sign(self.prj_id)
         try:
             case = Case.objects.get(case_id=self.case_id)
         except Case.DoesNotExist as e:
@@ -236,9 +244,12 @@ class Test_execute():
 
     # 获取测试环境
     def get_env(self, env_id):
-        env = Environment.objects.get(env_id=env_id)
-        prj_id = env.project.prj_id
-        return prj_id, env.url, env.private_key
+        try:
+            env = Environment.objects.get(env_id=env_id)
+            prj_id = env.project.prj_id
+            return prj_id, env.url, env.private_key
+        except ValueError:
+            return False
 
     # 获取签名方式
     def get_sign(self, prj_id):

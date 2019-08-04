@@ -17,6 +17,8 @@ class ErrorCode:
 
     case_not_exit_error = '执行用例不存在！'
 
+    env_not_exit_error = '测试环境不存在！'
+
     interface_not_exit_error = '执行接口不存在！'
 
     user_not_logged_in_error = '用户未登录！！！'
