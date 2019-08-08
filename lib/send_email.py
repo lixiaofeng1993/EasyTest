@@ -18,7 +18,14 @@ log = logging.getLogger('log')
 
 
 def send_email(_to, title, report_id='', register=False):
-    """发送邮件"""
+    """
+    发送邮件
+    :param _to:
+    :param title:
+    :param report_id:
+    :param register:
+    :return:
+    """
     smtp_service = 'smtp.qq.com'
     user = '954274592@qq.com'
     pwd = 'hlymvkoqcukvbdif'

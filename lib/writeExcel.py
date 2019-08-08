@@ -5,7 +5,12 @@ from openpyxl.styles import Font, colors
 
 
 def copy_excel(cese_path, report_path):
-    """复制测试用例到report_path"""
+    """
+    复制测试用例到report_path
+    :param cese_path:
+    :param report_path:
+    :return:
+    """
     wb2 = openpyxl.Workbook()
     wb2.save(report_path)  # 在设置的路径下创建一个excel文件
     # 读取数据
@@ -31,7 +36,9 @@ def copy_excel(cese_path, report_path):
 
 
 class Write_excel(object):
-    """修改excel数据"""
+    """
+    修改excel数据
+    """
 
     def __init__(self, filename):
         self.filename = filename

@@ -28,7 +28,10 @@ class AnalysisJson:
             return True
 
     def retrieve_data(self):
-        """主函数"""
+        """
+        主函数
+        :return:
+        """
         global body_name, method
         try:
             r = requests.get(self.url + '/v2/api-docs?group=sign-api').json()
@@ -59,7 +62,13 @@ class AnalysisJson:
         return self.interface_params, self.interface
 
     def retrieve_excel(self, _v, interface, api):
-        """解析参数，拼接为dict--准备完成写入excel的数据"""
+        """
+        解析参数，拼接为dict--准备完成写入excel的数据
+        :param _v:
+        :param interface:
+        :param api:
+        :return:
+        """
         parameters = _v.get('parameters')  # 未解析的参数字典
         if not parameters:  # 确保参数字典存在
             parameters = {}
@@ -89,7 +98,11 @@ class AnalysisJson:
         return self.interface_params, interface
 
     def retrieve_params(self, parameters):
-        """处理参数，转为dict"""
+        """
+        处理参数，转为dict
+        :param parameters:
+        :return:
+        """
         header = ''
         body = ''
         for each in parameters:

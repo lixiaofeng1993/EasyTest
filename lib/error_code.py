@@ -9,6 +9,9 @@
 
 
 class ErrorCode:
+    """
+    处理接口请求返回中的异常情况
+    """
     interface_error = '系统异常，检查接口参数是否正确！'
 
     index_error = 'list索引错误，提取参数设置长度超出！'

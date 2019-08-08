@@ -21,8 +21,6 @@ from .error_code import ErrorCode
 # from common.connectMySql import SqL
 
 log = logging.getLogger('log')
-i = 0
-j = 0
 
 
 class Test_execute():
@@ -39,10 +37,6 @@ class Test_execute():
         self.user_auth = ''  # 用户认证
         self.make = False  # 未设置默认header的情况
         # self.sql = SqL(job=True)
-
-    def __del__(self):
-        global j
-        j = 0
 
     def test_case(self):
         """接口测试用例"""
@@ -93,6 +87,11 @@ class Test_execute():
         return case_run
 
     def step(self, step_content):
+        """
+        处理各种情况的参数，并请求接口
+        :param step_content:
+        :return:
+        """
         if_id = step_content["if_id"]
         try:
             interface = Interface.objects.get(if_id=if_id)
@@ -174,7 +173,6 @@ class Test_execute():
 
         if not interface.set_mock:  # 请求接口或者模拟接口返回值
             try:
-                # if self.sign_type == 4:
                 if interface.is_sign:
                     if self.sign_type == 4:
                         res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
@@ -253,8 +251,12 @@ class Test_execute():
         if_dict['interface_totalTime'] = interface_totalTime
         return if_dict
 
-    # 获取测试环境
     def get_env(self, env_id):
+        """
+        获取测试环境
+        :param env_id:
+        :return:
+        """
         try:
             env = Environment.objects.get(env_id=env_id)
             prj_id = env.project.prj_id
@@ -262,10 +264,11 @@ class Test_execute():
         except ValueError:
             return False
 
-    # 获取签名方式
     def get_sign(self, prj_id):
         """
-        sign_type: 签名方式
+        获取签名方式
+        :param prj_id:
+        :return:
         """
         prj = Project.objects.get(prj_id=prj_id)
         sign_type = prj.sign.sign_id
@@ -273,7 +276,11 @@ class Test_execute():
 
 
 def get_user(user_id):
-    '''判断用户是否存在'''
+    '''
+    判断用户是否存在
+    :param user_id:
+    :return:
+    '''
     if not user_id:
         return False
     else:
@@ -285,6 +292,12 @@ def get_user(user_id):
 
 
 def is_superuser(user_id, type=''):
+    """
+    权限  超级用户和普通用户
+    :param user_id:
+    :param type:
+    :return:
+    """
     superuser = User.objects.get(id=user_id).is_superuser
     if superuser:
         prj_list = Project.objects.all()
@@ -300,6 +313,11 @@ def is_superuser(user_id, type=''):
 
 
 def get_total_values(user_id):
+    """
+    首页统计图显示数据
+    :param user_id:
+    :return:
+    """
     total = {
         'pass': [],
         'fail': [],

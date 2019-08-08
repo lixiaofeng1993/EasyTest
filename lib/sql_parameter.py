@@ -21,18 +21,23 @@ log = logging.getLogger('log')
 sql = SqL()
 
 
-# 获取签名方式
 def get_sign(prj_id):
     """
-    sign_type: 签名方式
+    获取签名方式
+    :param prj_id:
+    :return:
     """
     sign_type = sql.execute_sql('select bp.sign_id from base_project as bp where bp.prj_id = "{}";'.format(prj_id),
                                 num=1)
     return sign_type
 
 
-# 获取测试环境
 def get_env(env_id):
+    """
+    获取测试环境
+    :param env_id:
+    :return:
+    """
     env = sql.execute_sql(
         'select be.project_id, be.url, be.private_key from base_environment as be where be.env_id="{}";'.format(env_id),
         dict_type=True, num=1)
@@ -40,7 +45,18 @@ def get_env(env_id):
 
 
 def test_case(case_id, env_id, case_id_list, sign_type, private_key, env_url, begin_time=0, locust=False):
-    """接口测试用例"""
+    """
+    接口测试用例
+    :param case_id:
+    :param env_id:
+    :param case_id_list:
+    :param sign_type:
+    :param private_key:
+    :param env_url:
+    :param begin_time:
+    :param locust:
+    :return:
+    """
     class_name = '定时任务'
     func_name = sys._getframe().f_code.co_name
     method_doc = ''
@@ -181,8 +197,6 @@ def step(step_content, sign_type, private_key, env_url, begin_time=0, locust=Fal
         # if_dict["res_content"] = res.text
         if_dict["res_content"] = eval(
             res.text.replace('false', 'False').replace('null', 'None').replace('true', 'True'))  # 查看报告时转码错误的问题
-        # if if_dict['res_content']['response_code'] == 1:  # 接口返回错误码
-        #     if_dict['error'] = ErrorCode.interface_error
         if '系统异常' in if_dict['res_content'].values():
             if_dict['error'] = ErrorCode.interface_error
         if interface['is_header'] and make:  # 补充默认headers中的变量

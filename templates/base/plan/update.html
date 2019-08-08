@@ -48,8 +48,8 @@
                                 <input type="text" name="plan_name" lay-verify="title" autocomplete="off"
                                        class="form-control" value={{ plan.plan_name }}>
                             </div>
-                            {% if name_error %}
-                                <span style="color: red; font-size: 10px;">{{ name_error }}</span>
+                            {% if error %}
+                                <span style="color: red; font-size: 10px;">{{ error }}</span>
                             {% endif %}
                         </div>
                         <div class="form-group">
@@ -147,9 +147,6 @@
                                                                           checked>{{ case.case_name }}</label>
                                 {% endfor %}
                             </div>
-                            {% if content_error %}
-                                <span style="color: red; font-size: 10px;">{{ content_error }}</span>
-                            {% endif %}
                         </div>
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-6">

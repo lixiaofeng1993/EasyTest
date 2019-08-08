@@ -4,8 +4,13 @@ from Crypto.Cipher import AES
 import base64
 
 
-# 用户签名+时间戳   md5加密
 def user_sign_api(data, private_key):
+    """
+    用户签名+时间戳   md5加密
+    :param data:
+    :param private_key:
+    :return:
+    """
     api_key = private_key
     # 当前时间
     now_time = time.time()
@@ -27,6 +32,12 @@ def encryptBase64(src):
 
 
 def encryptAES(data, private_key):
+    """
+    AES加密
+    :param data:
+    :param private_key:
+    :return:
+    """
     BS = 16
     pad = lambda s: s + (BS - len(s) % BS) * chr(BS - len(s) % BS)  # 通过 lambda 函数来对字符串进行补足，使其长度变成 16、24、32位
     app_key = private_key  # 接口参数
@@ -39,5 +50,9 @@ def encryptAES(data, private_key):
 
 
 def auth_user():
+    """
+    简单用户认证
+    :return:
+    """
     user_auth = ('lixiaofeng', 'fengzi802300')
     return user_auth

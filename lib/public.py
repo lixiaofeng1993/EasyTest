@@ -12,6 +12,13 @@ log = logging.getLogger('log')  # 初始化log
 
 
 def pagination_data(paginator, page, is_paginated):
+    """
+    牛掰的分页
+    :param paginator:
+    :param page:
+    :param is_paginated:
+    :return:
+    """
     if not is_paginated:
         # 如果没有分页，则无需显示分页导航条，不用任何分页导航条的数据，因此返回一个空的字典
         return {}
@@ -111,6 +118,12 @@ def pagination_data(paginator, page, is_paginated):
 
 
 def paginator(data, page):
+    """
+    普通分页
+    :param data:
+    :param page:
+    :return:
+    """
     paginator = Paginator(data, 10)
     try:
         contacts = paginator.page(page)
@@ -122,7 +135,12 @@ def paginator(data, page):
 
 
 def format_url(url, body):
-    # url_params = re.findall('({\w+})', url)
+    """
+    处理路径中带{}的情况
+    :param url:
+    :param body:
+    :return:
+    """
     url_params = re.findall('{(\w+)}', url)  # 格式化utl<带有 {} 的情况
     if url_params:
         url = url.replace(url_params[0], '')
@@ -135,8 +153,13 @@ def format_url(url, body):
         return url, body
 
 
-# 验证结果
 def validators_result(validators_list, res):
+    """
+    验证结果
+    :param validators_list:
+    :param res:
+    :return:
+    """
     msg = ""
     result = ""
     checkpoint = ''
@@ -192,9 +215,9 @@ def validators_result(validators_list, res):
     return result, msg, checkpoint
 
 
-# 在response中提取参数, 并放到列表中
 def get_extract(extract_dict, res, url=''):
     """
+    在response中提取参数, 并放到列表中
     :param extract_dict: 要提取参数的字典
     :param res: 要提取参数的返回值
     :param url: 要拼接的接口路径
@@ -266,9 +289,9 @@ def splicing_url(url, key):
     return url_key
 
 
-# 替换内容中的变量, 返回字符串型
 def replace_var(content, var_name, var_value):
     """
+    替换内容中的变量
     :param content: 要被提取变量的用例数据
     :param var_name: 提取的参数
     :param var_value: 提取的参数值
@@ -281,9 +304,9 @@ def replace_var(content, var_name, var_value):
     return content
 
 
-# 从内容中提取所有变量名, 变量格式为$variable,返回变量名list
 def extract_variables(content):
     """
+    从内容中提取所有变量名, 变量格式为$variable,返回变量名list
     :param content: 要被提取变量的用例数据
     :return: 要所有提取的变量
     """
@@ -296,9 +319,9 @@ def extract_variables(content):
         return []
 
 
-# 在内容中获取某一参数的值
 def get_param(param, content, num=0):
     """
+    在内容中获取某一参数的值
     :param param: 从接口返回值中要提取的参数
     :param content: 接口返回值
     :param num: 返回值中存在list时，取指定第几个
@@ -306,7 +329,6 @@ def get_param(param, content, num=0):
     """
     param_val = None
     if isinstance(content, str):
-        # content = json.loads(content)
         try:
             content = json.loads(content)
         except:
@@ -383,8 +405,18 @@ def random_params(params):
         return params
 
 
-# 发送请求
 def call_interface(s, method, url, header, data, content_type='json', user_auth=''):
+    """
+    发送请求
+    :param s:
+    :param method:
+    :param url:
+    :param header:
+    :param data:
+    :param content_type:
+    :param user_auth:
+    :return:
+    """
     # log.info('========interface params==============> {} {} {} {}'.format(url, header, data, content_type))
     if method in ["post", "put"]:
         if content_type in ["json", 'sql']:
@@ -411,7 +443,11 @@ def call_interface(s, method, url, header, data, content_type='json', user_auth=
 
 
 def get_new_report_html(report_path_html):
-    """获取最新的测试报告"""
+    """
+    获取最新的测试报告
+    :param report_path_html:
+    :return:
+    """
     lists = os.listdir(report_path_html)
     for file_name in lists:
         if os.path.splitext(file_name)[1] == '.html':
@@ -487,6 +523,11 @@ def DrawPie(pass_num=0, fail=0, error=0):
 
 
 def is_number(s):
+    """
+    判断是否是数字
+    :param s:
+    :return:
+    """
     try:
         int(s)
         return True
@@ -495,7 +536,11 @@ def is_number(s):
 
 
 def gr_code(url):
-    """生成二维码"""
+    """
+    生成二维码
+    :param url:
+    :return:
+    """
     import qrcode
     start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     now_time = int(time.mktime(time.strptime(start_time, '%Y-%m-%d %H:%M:%S')))
@@ -522,8 +567,13 @@ appid = 'wx506830910cbd77e9'
 appsecret = 'e0e5d5ed1d507103f73d6667eef00d7a'
 
 
-# 获取TOKEN
 def getToken(appid, appsecret):
+    """
+    获取TOKEN
+    :param appid:
+    :param appsecret:
+    :return:
+    """
     # 这个是微信获取小程序码的接口
     url = 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid={appid}&secret={appsecret}'.format(
         appid=appid, appsecret=appsecret)
@@ -544,8 +594,14 @@ def getToken(appid, appsecret):
         return None
 
 
-# 获取小程序码
 def getACodeImage(appid, appsecret, values):
+    """
+    获取小程序码
+    :param appid:
+    :param appsecret:
+    :param values:
+    :return:
+    """
     # 这个是微信获取小程序码的接口
     token = getToken(appid, appsecret)
     if not token:
@@ -576,7 +632,11 @@ def getACodeImage(appid, appsecret, values):
 
 
 def remove_logs(path):
-    """到期删除日志文件"""
+    """
+    到期删除日志文件
+    :param path:
+    :return:
+    """
     file_list = os.listdir(path)  # 返回目录下的文件list
     now_time = datetime.now()
     num = 0

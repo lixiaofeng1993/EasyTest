@@ -15,7 +15,8 @@ from django.shortcuts import render_to_response
 # from base.page_cache import page_cache  # redis缓存
 from lib.public import DrawPie, paginator, pagination_data
 from lib.error_code import ErrorCode
-from lib.except_check import project_info_logic, sign_info_logic, env_info_logic, interface_info_logic, format_params
+from lib.except_check import project_info_logic, sign_info_logic, env_info_logic, interface_info_logic, format_params, \
+    case_info_logic, plan_info_logic  # 自定义异常逻辑
 from django.views.generic import ListView
 
 log = logging.getLogger('log')  # 初始化log
@@ -404,7 +405,7 @@ def env_update(request):
             env_id = request.POST['env_id']
             env_name = request.POST['env_name'].strip()
             url = request.POST['url'].strip()
-            
+
             msg = env_info_logic(env_name, url, env_id)
             if msg != 'ok':
                 env = Environment.objects.get(env_id=env_id)
@@ -642,8 +643,12 @@ def interface_update(request):
             return render(request, "base/interface/update.html", info)
 
 
-# 解析数据库中格式化前的参数
 def interface_get_params(params):
+    """
+    解析数据库中格式化前的参数
+    :param params:
+    :return:
+    """
     if params and params != '[]':
         param_list = []
         for i in range(len(eval(params))):
@@ -655,8 +660,12 @@ def interface_get_params(params):
         return []
 
 
-# 格式化存入数据库中的参数
 def interface_format_params(params_list):
+    """
+    格式化存入数据库中的参数
+    :param params_list:
+    :return:
+    """
     if params_list:
         var = []
         params_list = eval(params_list)
@@ -687,10 +696,17 @@ def interface_delete(request):
             return HttpResponseRedirect("base/interface/")
 
 
-# 批量导入接口
 def batch_import_interface(interface_params, interface, request, user_id):
+    """
+    批量导入接口
+    :param interface_params:
+    :param interface:
+    :param request:
+    :param user_id:
+    :return:
+    """
     for interface_ in interface:
-        if_name = interface_.get('name', '')
+        if_name = interface_.get('name', '').strip()
         method = interface_.get('method', '')
         prj_list = is_superuser(user_id, type='list')
         name = Interface.objects.filter(if_name=if_name).filter(method=method).filter(project_id__in=prj_list)
@@ -734,9 +750,12 @@ def batch_import_interface(interface_params, interface, request, user_id):
             interface_tbl.save()
 
 
-# 批量导入
 def batch_index(request):
-    """批量导入"""
+    """
+    批量导入
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         return HttpResponse('用户未登录！')
@@ -785,40 +804,47 @@ class CaseIndex(ListView):
         return context
 
 
-# 添加用例
 def case_add(request):
+    """
+    添加用例
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/case/'
         return render(request, 'user/login_action.html')
     else:
         if request.method == 'POST':
-            case_name = request.POST.get('case_name', '')
-            if case_name == '':
-                return HttpResponse('用例名称不能为空！')
-            name_same = Case.objects.filter(case_name=case_name)
-            if name_same:
-                return HttpResponse('用例：{}， 已存在！'.format(case_name))
-            prj_id = request.POST['prj_id']
-            project = Project.objects.get(prj_id=prj_id)
-            description = request.POST['description']
+            case_name = request.POST.get('case_name', '').strip()
             content = request.POST.get('content')
-            username = request.session.get('user', '')
-            if content == '[]':
-                return HttpResponse('请输入接口参数信息！')
-            case = Case(case_name=case_name, project=project, description=description,
-                        content=content, update_user=username)
-            case.save()
-            log.info(
-                'add case   {}  success. case info: {} // {} // {}'.format(case_name, project, description, content))
-            return HttpResponseRedirect("/base/case/")
-        else:
+
+            msg = case_info_logic(case_name, content)
+            if msg != 'ok':
+                return HttpResponse(msg)
+            else:
+                prj_id = request.POST['prj_id']
+                project = Project.objects.get(prj_id=prj_id)
+                description = request.POST['description']
+                username = request.session.get('user', '')
+                case = Case(case_name=case_name, project=project, description=description,
+                            content=content, update_user=username)
+                case.save()
+                log.info(
+                    'add case   {}  success. case info: {} // {} // {}'.format(case_name, project, description,
+                                                                               content))
+                return HttpResponseRedirect("/base/case/")
+        elif request.method == 'GET':
             prj_list = is_superuser(user_id)
             return render(request, "base/case/add.html", {"prj_list": prj_list})
 
 
-# 编辑用例
 def case_update(request):
+    """
+    编辑用例
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/case/'
@@ -826,25 +852,24 @@ def case_update(request):
     else:
         if request.method == 'POST':
             case_id = request.POST['case_id']
-            case_name = request.POST.get('case_name', '')
-            if case_name == '':
-                return HttpResponse('用例名称不能为空！')
-            name_same = Case.objects.filter(case_name=case_name).exclude(case_id=case_id)
-            if name_same:
-                return HttpResponse('用例：{}， 已存在！'.format(case_name))
-            prj_id = request.POST['prj_id']
-            project = Project.objects.get(prj_id=prj_id)
-            description = request.POST['description']
+            case_name = request.POST.get('case_name', '').strip()
             content = request.POST.get('content')
-            username = request.session.get('user', '')
-            if content == '[]':
-                return HttpResponse('请编辑接口参数信息！')
-            Case.objects.filter(case_id=case_id).update(case_name=case_name, project=project, description=description,
-                                                        content=content, update_time=datetime.now(),
-                                                        update_user=username)
-            log.info(
-                'edit case   {}  success. case info: {} // {} // {}'.format(case_name, project, description, content))
-            return HttpResponseRedirect("/base/case/")
+            msg = case_info_logic(case_name, content, case_id)
+            if msg != 'ok':
+                return HttpResponse(msg)
+            else:
+                prj_id = request.POST['prj_id']
+                project = Project.objects.get(prj_id=prj_id)
+                description = request.POST['description']
+                username = request.session.get('user', '')
+                Case.objects.filter(case_id=case_id).update(case_name=case_name, project=project,
+                                                            description=description,
+                                                            content=content, update_time=datetime.now(),
+                                                            update_user=username)
+                log.info(
+                    'edit case   {}  success. case info: {} // {} // {}'.format(case_name, project, description,
+                                                                                content))
+                return HttpResponseRedirect("/base/case/")
         elif request.method == 'GET':
             prj_list = is_superuser(user_id)
             case_id = request.GET['case_id']
@@ -868,7 +893,11 @@ def case_update(request):
 
 
 def case_copy(request):
-    """复制case"""
+    """
+    复制case
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/case/'
@@ -891,7 +920,11 @@ def case_copy(request):
 
 
 def case_logs(request):
-    """单个用例运行日志"""
+    """
+    单个用例运行日志
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/case/'
@@ -930,14 +963,17 @@ def case_logs(request):
                     data = f.readlines()
                 for line in data:
                     data_list.append(line.decode())
-
                 return render(request, 'base/case/log.html', {'data': data_list, 'make': True, 'log_file': log_file})
         else:
             return render(request, 'base/case/log.html', {'data': '0', 'make': True, 'log_file': ''})
 
 
-# 删除用例
 def case_delete(request):
+    """
+    删除用例
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/case/'
@@ -950,8 +986,12 @@ def case_delete(request):
             return HttpResponseRedirect("base/case/")
 
 
-# 运行用例
 def case_run(request):
+    """
+    运行用例
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         return JsonResponse({'error': ErrorCode.user_not_logged_in_error})
@@ -968,7 +1008,6 @@ def case_run(request):
 
 
 # 测试计划列表
-# @page_cache(5)
 @method_decorator(login_required, name='dispatch')
 class PlanIndex(ListView):
     model = Plan
@@ -994,8 +1033,12 @@ class PlanIndex(ListView):
         return context
 
 
-# 测试计划添加
 def plan_add(request):
+    """
+    测试计划添加
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/plan/'
@@ -1004,42 +1047,41 @@ def plan_add(request):
         if request.method == 'POST':
             prj_list = Project.objects.all()
             plan_name = request.POST['plan_name'].strip()
-            if plan_name == '':
-                return render(request, 'base/plan/add.html',
-                              {'name_error': '计划名称不能为空！', "prj_list": prj_list})
-            name_same = Plan.objects.filter(plan_name=plan_name)
-            if name_same:
-                return render(request, 'base/plan/add.html',
-                              {'name_error': '计划: {}，已存在！'.format(plan_name), "prj_list": prj_list})
-            prj_id = request.POST['prj_id']
-            project = Project.objects.get(prj_id=prj_id)
-            is_locust = request.POST['is_locust']
-            is_task = request.POST['is_task']
-            env_id = request.POST['env_id']
-            environment = Environment.objects.get(env_id=env_id)
-            description = request.POST['description']
             content = request.POST.getlist("case_id")
-            username = request.session.get('user', '')
-            if content == []:
-                return render(request, 'base/plan/add.html',
-                              {'content_error': '请选择用例编号！', 'plan_name': plan_name, "prj_list": prj_list})
-            if is_locust == '1':
-                Plan.objects.filter(is_locust=1).update(is_locust=0)
-            if is_task == '1':
-                Plan.objects.filter(is_task=1).update(is_task=0)
-            plan = Plan(plan_name=plan_name, project=project, environment=environment, description=description,
-                        content=content, is_locust=is_locust, is_task=is_task, update_user=username)
-            plan.save()
-            log.info('add plan   {}  success. plan info: {} // {} // {} // {} //{} //{}'.
-                     format(plan_name, project, environment, description, content, is_locust, is_task))
-            return HttpResponseRedirect("/base/plan/")
-        else:
+
+            msg = plan_info_logic(plan_name, content)
+            if msg != 'ok':
+                return render(request, 'base/plan/add.html', {'error': msg, "prj_list": prj_list})
+            else:
+                prj_id = request.POST['prj_id']
+                project = Project.objects.get(prj_id=prj_id)
+                is_locust = request.POST['is_locust']
+                is_task = request.POST['is_task']
+                env_id = request.POST['env_id']
+                environment = Environment.objects.get(env_id=env_id)
+                description = request.POST['description']
+                username = request.session.get('user', '')
+                if is_locust == '1':
+                    Plan.objects.filter(is_locust=1).update(is_locust=0)
+                if is_task == '1':
+                    Plan.objects.filter(is_task=1).update(is_task=0)
+                plan = Plan(plan_name=plan_name, project=project, environment=environment, description=description,
+                            content=content, is_locust=is_locust, is_task=is_task, update_user=username)
+                plan.save()
+                log.info('add plan   {}  success. plan info: {} // {} // {} // {} //{} //{}'.
+                         format(plan_name, project, environment, description, content, is_locust, is_task))
+                return HttpResponseRedirect("/base/plan/")
+        elif request.method == 'GET':
             prj_list = is_superuser(user_id)
             return render(request, "base/plan/add.html", {"prj_list": prj_list})
 
 
-# 测试计划编辑
 def plan_update(request):
+    """
+    测试计划编辑
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/plan/'
@@ -1048,47 +1090,46 @@ def plan_update(request):
         if request.method == 'POST':
             prj_list = Project.objects.all()
             plan_id = request.POST['plan_id']
+            plan_name = request.POST['plan_name'].strip()
+            content = request.POST.getlist("case_id")
             plan = Plan.objects.get(plan_id=plan_id)
             environments = Environment.objects.filter(project_id=plan.project_id).all().values()
             case_list = []
             for case_id in eval(plan.content):
                 case = Case.objects.get(case_id=case_id)
                 case_list.append(case)
-            plan_name = request.POST['plan_name'].strip()
-            if plan_name == '':
+
+            msg = plan_info_logic(plan_name, content, plan_id)
+            if msg != 'ok':
                 return render(request, 'base/plan/update.html',
-                              {'name_error': '计划名称不能为空！', "prj_list": prj_list, 'plan': plan, 'case_list': case_list,
+                              {'error': msg, "prj_list": prj_list, 'plan': plan, 'case_list': case_list,
                                'environments': environments})
-            name_same = Plan.objects.filter(plan_name=plan_name).exclude(plan_id=plan_id)
-            if name_same:
-                return render(request, 'base/plan/update.html',
-                              {'name_error': '计划: {}，已存在！'.format(plan_name), "prj_list": prj_list, 'plan': plan,
-                               'case_list': case_list, 'environments': environments})
-            prj_id = request.POST['prj_id']
-            project = Project.objects.get(prj_id=prj_id)
-            is_locust = request.POST['is_locust']
-            env_id = request.POST['env_id']
-            is_task = request.POST['is_task']
-            environment = Environment.objects.get(env_id=env_id)
-            description = request.POST['description']
-            content = request.POST.getlist("case_id")
-            username = request.session.get('user', '')
-            if content == []:
-                return render(request, 'base/plan/update.html',
-                              {'content_error': '请选择用例编号！', 'plan': plan, "prj_list": prj_list,
-                               'case_list': case_list, 'environments': environments})
-            if is_locust == '1':
-                Plan.objects.filter(is_locust=1).update(is_locust=0)
-            if is_task == '1':
-                Plan.objects.filter(is_task=1).update(is_task=0)
-            Plan.objects.filter(plan_id=plan_id).update(plan_name=plan_name, project=project, environment=environment,
-                                                        description=description, content=content, is_locust=is_locust,
-                                                        is_task=is_task, update_time=datetime.now(),
-                                                        update_user=username)
-            log.info('edit plan   {}  success. plan info: {} // {} // {} // {}'.format(plan_name, project, environment,
-                                                                                       description, content))
-            return HttpResponseRedirect("/base/plan/")
-        else:
+            else:
+                prj_id = request.POST['prj_id']
+                project = Project.objects.get(prj_id=prj_id)
+                is_locust = request.POST['is_locust']
+                env_id = request.POST['env_id']
+                is_task = request.POST['is_task']
+                environment = Environment.objects.get(env_id=env_id)
+                description = request.POST['description']
+
+                username = request.session.get('user', '')
+
+                if is_locust == '1':
+                    Plan.objects.filter(is_locust=1).update(is_locust=0)
+                if is_task == '1':
+                    Plan.objects.filter(is_task=1).update(is_task=0)
+                Plan.objects.filter(plan_id=plan_id).update(plan_name=plan_name, project=project,
+                                                            environment=environment,
+                                                            description=description, content=content,
+                                                            is_locust=is_locust,
+                                                            is_task=is_task, update_time=datetime.now(),
+                                                            update_user=username)
+                log.info(
+                    'edit plan   {}  success. plan info: {} // {} // {} // {}'.format(plan_name, project, environment,
+                                                                                      description, content))
+                return HttpResponseRedirect("/base/plan/")
+        elif request.method == 'GET':
             prj_list = is_superuser(user_id)
             plan_id = request.GET['plan_id']
             plan = Plan.objects.get(plan_id=plan_id)
@@ -1110,8 +1151,12 @@ def plan_update(request):
                           {"prj_list": prj_list, 'plan': plan, 'case_list': case_list, 'environments': environments})
 
 
-# 删除测试计划
 def plan_delete(request):
+    """
+    删除测试计划
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/plan/'
@@ -1124,8 +1169,12 @@ def plan_delete(request):
             return HttpResponseRedirect("base/plan/")
 
 
-# 运行测试计划
 def plan_run(request):
+    """
+    运行测试计划
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         return JsonResponse({'error': ErrorCode.user_not_logged_in_error})
@@ -1183,9 +1232,12 @@ def plan_run(request):
             return HttpResponse(plan.plan_name + " 执行成功！")
 
 
-# 定时任务
-# @page_cache(5)
 def timing_task(request):
+    """
+    定时任务
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if get_user(user_id):
         task_list = PeriodicTask.objects.all()
@@ -1201,7 +1253,11 @@ def timing_task(request):
 
 
 def task_logs(request):
-    """定时任务运行日志"""
+    """
+    定时任务运行日志
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/case/'
@@ -1227,7 +1283,6 @@ def task_logs(request):
 
 
 # 报告列表
-# @page_cache(5)
 @method_decorator(login_required, name='dispatch')
 class ReportPage(ListView):
     model = Report
@@ -1262,8 +1317,12 @@ class ReportPage(ListView):
         return context
 
 
-# 显示日志信息
 def report_logs(request):
+    """
+    显示日志信息
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/report_page/'
@@ -1297,7 +1356,6 @@ def report_logs(request):
                 return render(request, 'base/report_page/log.html', {'data': data_list, 'make': True})
             except UnicodeDecodeError:
                 return render(request, 'base/report_page/log.html', {'unicode': True})
-
         else:
             try:
                 report = Report.objects.get(report_id=report_id)
@@ -1319,8 +1377,12 @@ def report_logs(request):
                                    'class_name': class_name, 'is_superuser': ''})
 
 
-# 展示报告
 def report_index(request):
+    """
+    展示报告
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/report_page/'
@@ -1356,6 +1418,11 @@ def report_index(request):
 
 
 def report_search(request):
+    """
+    报告搜索
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         return HttpResponse('0')
@@ -1383,8 +1450,12 @@ def report_search(request):
             return HttpResponse(str(report_content))
 
 
-# 删除报告
 def report_delete(request):
+    """
+    删除报告
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/report_page/'
@@ -1397,8 +1468,12 @@ def report_delete(request):
             return HttpResponseRedirect("base/report_page/")
 
 
-# 下载unittest报告
 def file_download(request):
+    """
+    下载unittest报告
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/report_page/'
@@ -1437,9 +1512,12 @@ def file_download(request):
             return response
 
 
-# locust页面
-# @page_cache(5)
 def performance_index(request):
+    """
+    locust页面
+    :param request:
+    :return:
+    """
     if request.method == 'GET':
         user_id = request.session.get('user_id', '')
         if get_user(user_id):
@@ -1450,7 +1528,6 @@ def performance_index(request):
 
 
 # 添加用户
-# @page_cache(5)
 @method_decorator(login_required, name='dispatch')
 class UserIndex(ListView):
     model = User
@@ -1471,8 +1548,12 @@ class UserIndex(ListView):
         return context
 
 
-# 关于我们
 def about_index(request):
+    """
+    关于我们
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if get_user(user_id):
         return render(request, 'system/about/about_us.html')
@@ -1482,8 +1563,12 @@ def about_index(request):
         return render(request, 'user/login_action.html')
 
 
-# 异步请求数据
 def findata(request):
+    """
+    异步请求数据
+    :param request:
+    :return:
+    """
     if request.method == 'GET':
         get_type = request.GET["type"]
         if get_type == "get_all_if_by_prj_id":
@@ -1550,7 +1635,6 @@ def findata(request):
                 else:
                     f.seek(off, 2)
                     data = f.readlines()
-                    # data = f.readlines()
             for i in data:
                 data_list.append(i.replace('True', 'true').replace('False', 'false').replace('None', 'null'))
             return JsonResponse(data_list, safe=False)
@@ -1564,7 +1648,6 @@ def findata(request):
                 else:
                     f.seek(off, 2)
                     data = f.readlines()
-                    # data = f.readlines()
             for i in data:
                 data_list.append(i.replace('True', 'true').replace('False', 'false').replace('None', 'null'))
             return JsonResponse(data_list, safe=False)

@@ -7,7 +7,6 @@
 # @Software: PyCharm
 
 from base.models import Project, Sign, Environment, Interface, Case, Plan, Report
-from django.contrib.auth.models import User  # django自带user
 import logging
 
 log = logging.getLogger('log')  # 初始化log
@@ -53,6 +52,13 @@ def sign_info_logic(sign_name, sign_id=''):
 
 
 def env_info_logic(env_name, url, env_id=''):
+    """
+    环境新增、编辑逻辑
+    :param env_name:
+    :param url:
+    :param env_id:
+    :return:
+    """
     if env_name == '':
         return '环境名称不能为空！'
     if url == '':
@@ -68,6 +74,17 @@ def env_info_logic(env_name, url, env_id=''):
 
 
 def interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, if_id=''):
+    """
+    接口新增、编辑逻辑
+    :param if_name:
+    :param url:
+    :param method:
+    :param is_sign:
+    :param data_type:
+    :param is_headers:
+    :param if_id:
+    :return:
+    """
     if if_name == '':
         return '接口名称不能为空！'
     if url == '':
@@ -119,3 +136,41 @@ def format_params(params):
     else:
         is_headers = ''
     return method, is_sign, is_headers
+
+
+def case_info_logic(case_name, content, case_id=''):
+    """
+    用例新增、编辑逻辑
+    :return:
+    """
+    if case_name == '':
+        return '用例名称不能为空！'
+    if content == '[]':
+        return '请输入接口参数信息！'
+    if not case_id:
+        name_exit = Case.objects.filter(case_name=case_name)
+    else:
+        name_exit = Case.objects.filter(case_name=case_name).exclude(case_id=case_id)
+    if name_exit:
+        return '用例：{}， 已存在！'.format(case_name)
+    else:
+        return 'ok'
+
+
+def plan_info_logic(plan_name, content, plan_id=''):
+    """
+    计划新增、编辑逻辑
+    :return:
+    """
+    if plan_name == '':
+        return '计划名称不能为空！'
+    if content == []:
+        return '请选择用例编号！'
+    if not plan_id:
+        name_exit = Plan.objects.filter(plan_name=plan_name)
+    else:
+        name_exit = Plan.objects.filter(plan_name=plan_name).exclude(plan_id=plan_id)
+    if name_exit:
+        return '计划: {}，已存在！'.format(plan_name)
+    else:
+        return 'ok'
