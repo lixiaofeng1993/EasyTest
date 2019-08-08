@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding:utf-8
-import json, re, os
+import json, re, os, random
 import time
 import logging
 from datetime import datetime
@@ -361,6 +361,26 @@ def get_param_response(param_name, dict_data, num=0, default=None):
                             if ret is not default:
                                 return ret
     return default
+
+
+# random 参数化-生成随机值
+def random_params(params):
+    if isinstance(params, dict):
+        for key, value in params.items():
+            if '__random' in value:
+                regexp = r"\((.+)\)"
+                num = re.findall(regexp, value)
+                str_value = value.split('__random')[0]
+                if num:
+                    try:
+                        k = int(num[0].split(',')[0])
+                        v = int(num[0].split(',')[1])
+                        params[key] = str_value + str(random.randint(k, v))
+                    except ValueError:
+                        return 'error'
+                else:
+                    return 'error'
+        return params
 
 
 # 发送请求

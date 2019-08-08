@@ -40,3 +40,5 @@ class ErrorCode:
     already_exists_error = '注册用户已经存在！'
 
     AES_key_length_error = 'app_key长度必须是16、24或者32位！'
+
+    random_params_error = '参数化设置错误，不符合关键字设置规则！'

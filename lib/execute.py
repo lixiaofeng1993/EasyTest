@@ -15,7 +15,7 @@ from lib.signtype import user_sign_api, encryptAES, auth_user
 import logging
 import time
 from lib.public import validators_result, get_extract, get_param, replace_var, \
-    extract_variables, call_interface, format_url
+    extract_variables, call_interface, format_url, random_params
 from .error_code import ErrorCode
 
 # from common.connectMySql import SqL
@@ -110,8 +110,19 @@ class Test_execute():
                         if var_name in extract_dict.keys():
                             var_value = extract_dict[var_name]
                 step_content = json.loads(replace_var(step_content, var_name, var_value))
+
         if_dict = {"url": interface.url, "header": step_content["header"], "body": step_content["body"],
                    'if_name': step_content["if_name"]}
+
+        if_dict['header'] = random_params(if_dict['header'])  # random参数化
+        if_dict['body'] = random_params(if_dict['body'])
+        if if_dict['header'] == 'error' or if_dict['body'] == 'error':
+            if_dict['error'] = ErrorCode.random_params_error
+            if_dict["method"] = interface.method
+            if_dict["result"] = "error"
+            if_dict["checkpoint"] = ''
+            if_dict["res_content"] = '参数化设置错误，请检查是否符合平台参数化规则！'
+            return if_dict
 
         set_headers = Environment.objects.get(env_id=self.env_id).set_headers
         if set_headers:  # 把设置的header赋值到if_dict中
@@ -141,7 +152,7 @@ class Test_execute():
                     if_dict['error'] = ErrorCode.AES_key_length_error
                     if_dict["result"] = "error"
                     if_dict["checkpoint"] = ''
-                    if_dict["res_content"] = '还未请求接口 ^-^'
+                    if_dict["res_content"] = 'AES算法app_key设置长度错误，请检查'
                     return if_dict
         else:
             if 'true' in step_content['body']:
