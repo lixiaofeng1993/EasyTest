@@ -15,6 +15,7 @@ from django.shortcuts import render_to_response
 # from base.page_cache import page_cache  # redis缓存
 from lib.public import DrawPie, paginator, pagination_data
 from lib.error_code import ErrorCode
+from lib.except_check import project_info_logic, sign_info_logic, env_info_logic, interface_info_logic, format_params
 from django.views.generic import ListView
 
 log = logging.getLogger('log')  # 初始化log
@@ -55,8 +56,12 @@ class ProjectIndex(ListView):
         return context
 
 
-# 增加项目
 def project_add(request):
+    """
+    增加项目
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/project/'
@@ -65,28 +70,29 @@ def project_add(request):
         sign_list = Sign.objects.all()  # 所有签名
         if request.method == 'POST':
             prj_name = request.POST['prj_name'].strip()
-            if prj_name == '':  # 判断输入框
-                return render(request, 'base/project/add.html', {'error': '项目名称不能为空！', "sign_list": sign_list})
 
+            msg = project_info_logic(prj_name)
+            if msg != 'ok':  # 判断输入框
+                return render(request, 'base/project/add.html', {'error': msg, "sign_list": sign_list})
             else:
-                name_same = Project.objects.filter(prj_name=prj_name)
-                if name_same:
-                    return render(request, 'base/project/add.html',
-                                  {'error': '项目: {}，已存在！'.format(prj_name), "sign_list": sign_list})
-                else:
-                    description = request.POST['description']
-                    sign_id = request.POST['sign']
-                    sign = Sign.objects.get(sign_id=sign_id)
-                    user = User.objects.get(id=user_id)
-                    prj = Project(prj_name=prj_name, description=description, sign=sign, user=user)
-                    prj.save()
-                    log.info('add project   {}  success. project info: {} // {} '.format(prj_name, description, sign))
-                    return HttpResponseRedirect("/base/project/")
-        return render(request, "base/project/add.html", {"sign_list": sign_list})
+                description = request.POST['description']
+                sign_id = request.POST['sign']
+                sign = Sign.objects.get(sign_id=sign_id)
+                user = User.objects.get(id=user_id)
+                prj = Project(prj_name=prj_name, description=description, sign=sign, user=user)
+                prj.save()
+                log.info('add project   {}  success. project info: {} // {} '.format(prj_name, description, sign))
+                return HttpResponseRedirect("/base/project/")
+        elif request.method == 'GET':
+            return render(request, "base/project/add.html", {"sign_list": sign_list})
 
 
-# 项目编辑
 def project_update(request):
+    """
+    项目编辑
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/project/'
@@ -96,36 +102,36 @@ def project_update(request):
         if request.method == 'POST':
             prj_id = request.POST['prj_id']
             prj_name = request.POST['prj_name'].strip()
-            if prj_name == '':
+
+            msg = project_info_logic(prj_name, prj_id)
+            if msg != 'ok':
                 prj = Project.objects.get(prj_id=prj_id)
-                return render(request, 'base/project/update.html',
-                              {'error': '项目名称不能为空！', "prj": prj, "sign_list": sign_list})
+                return render(request, 'base/project/update.html', {'error': msg, "prj": prj, "sign_list": sign_list})
             else:
-                name_exit = Project.objects.filter(prj_name=prj_name).exclude(prj_id=prj_id)
-                if name_exit:
-                    prj = Project.objects.get(prj_id=prj_id)
-                    return render(request, 'base/project/update.html',
-                                  {'error': '项目: {}，已存在！'.format(prj_name), "prj": prj, "sign_list": sign_list})
-                else:
-                    description = request.POST['description']
-                    sign_id = request.POST['sign_id']
-                    sign = Sign.objects.get(sign_id=sign_id)
-                    user = User.objects.get(id=user_id)
-                    Project.objects.filter(prj_id=prj_id).update(prj_name=prj_name, description=description, sign=sign,
-                                                                 user=user, update_time=datetime.now())
-                    log.info('edit project   {}  success. project info: {} // {} '.format(prj_name, description, sign))
-                    return HttpResponseRedirect("/base/project/")
-        prj_id = request.GET['prj_id']
-        user_id_belong = Project.objects.get(prj_id=prj_id).user_id
-        if user_id == user_id_belong:
-            prj = Project.objects.get(prj_id=prj_id)
-            return render(request, "base/project/update.html", {"prj": prj, "sign_list": sign_list})
-        else:
-            return render(request, "base/project/update.html", {'error': '非本人创建项目，不可以修改！'})
+                description = request.POST['description']
+                sign_id = request.POST['sign_id']
+                sign = Sign.objects.get(sign_id=sign_id)
+                user = User.objects.get(id=user_id)
+                Project.objects.filter(prj_id=prj_id).update(prj_name=prj_name, description=description, sign=sign,
+                                                             user=user, update_time=datetime.now())
+                log.info('edit project   {}  success. project info: {} // {} '.format(prj_name, description, sign))
+                return HttpResponseRedirect("/base/project/")
+        elif request.method == 'GET':
+            prj_id = request.GET['prj_id']
+            user_id_belong = Project.objects.get(prj_id=prj_id).user_id
+            if user_id == user_id_belong:
+                prj = Project.objects.get(prj_id=prj_id)
+                return render(request, "base/project/update.html", {"prj": prj, "sign_list": sign_list})
+            else:
+                return render(request, "base/project/update.html", {'error': '非本人创建项目，不可以修改！'})
 
 
-# 删除项目
 def project_delete(request):
+    """
+    删除项目
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/project/'
@@ -160,8 +166,12 @@ class SignIndex(ListView):
         return context
 
 
-# 添加签名
 def sign_add(request):
+    """
+    添加签名
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/sign/'
@@ -169,22 +179,27 @@ def sign_add(request):
     else:
         if request.method == 'POST':
             sign_name = request.POST['sign_name'].strip()
-            if sign_name == '':
-                return render(request, 'system/sign/sign_add.html', {'error': '签名名称不能为空！'})
-            name_exit = Sign.objects.filter(sign_name=sign_name)
-            if name_exit:
-                return render(request, 'system/sign/sign_add.html', {'error': '签名: {}，已存在！'.format(sign_name)})
-            description = request.POST['description']
-            username = request.session.get('user', '')
-            sign = Sign(sign_name=sign_name, description=description, update_user=username)
-            sign.save()
-            log.info('add sign   {}  success.  sign info： {} '.format(sign_name, description))
-            return HttpResponseRedirect("/base/sign/")
-        return render(request, "system/sign/sign_add.html")
+
+            msg = sign_info_logic(sign_name)
+            if msg != 'ok':
+                return render(request, 'system/sign/sign_add.html', {'error': msg})
+            else:
+                description = request.POST['description']
+                username = request.session.get('user', '')
+                sign = Sign(sign_name=sign_name, description=description, update_user=username)
+                sign.save()
+                log.info('add sign   {}  success.  sign info： {} '.format(sign_name, description))
+                return HttpResponseRedirect("/base/sign/")
+        elif request.method == 'GET':
+            return render(request, "system/sign/sign_add.html")
 
 
-# 更新签名
 def sign_update(request):
+    """
+    更新签名
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/sign/'
@@ -193,27 +208,30 @@ def sign_update(request):
         if request.method == 'POST':
             sign_id = request.POST['sign_id']
             sign_name = request.POST['sign_name'].strip()
-            if sign_name == '':
+
+            msg = sign_info_logic(sign_name, sign_id)
+            if msg != 'ok':
                 sign = Sign.objects.get(sign_id=sign_id)
-                return render(request, 'system/sign/sign_update.html', {'error': '签名名称不能为空！', "sign": sign})
-            name_exit = Sign.objects.filter(sign_name=sign_name).exclude(sign_id=sign_id)
-            if name_exit:
-                sign = Sign.objects.get(sign_id=sign_id)
-                return render(request, 'system/sign/sign_update.html',
-                              {'error': '签名: {}，已存在！'.format(sign_name), "sign": sign})
-            description = request.POST['description']
-            username = request.session.get('user', '')
-            Sign.objects.filter(sign_id=sign_id).update(sign_name=sign_name, description=description,
-                                                        update_time=datetime.now(), update_user=username)
-            log.info('edit sign   {}  success.  sign info： {} '.format(sign_name, description))
-            return HttpResponseRedirect("/base/sign/")
-        sign_id = request.GET['sign_id']
-        sign = Sign.objects.get(sign_id=sign_id)
-        return render(request, "system/sign/sign_update.html", {"sign": sign})
+                return render(request, 'system/sign/sign_update.html', {'error': msg, "sign": sign})
+            else:
+                description = request.POST['description']
+                username = request.session.get('user', '')
+                Sign.objects.filter(sign_id=sign_id).update(sign_name=sign_name, description=description,
+                                                            update_time=datetime.now(), update_user=username)
+                log.info('edit sign   {}  success.  sign info： {} '.format(sign_name, description))
+                return HttpResponseRedirect("/base/sign/")
+        elif request.method == 'GET':
+            sign_id = request.GET['sign_id']
+            sign = Sign.objects.get(sign_id=sign_id)
+            return render(request, "system/sign/sign_update.html", {"sign": sign})
 
 
-# 删除签名
 def sign_delete(request):
+    """
+    删除签名
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/sign/'
@@ -253,9 +271,12 @@ class EnvIndex(ListView):
         return context
 
 
-# 设置默认headers
 def set_headers(request):
-    """设置默认headers"""
+    """
+    设置默认headers
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/env/'
@@ -276,7 +297,6 @@ def set_headers(request):
             else:
                 return render(request, "base/env/set_headers.html",
                               {'env_id': env_id, 'env_name': env_name, 'env': set_header})
-
         elif request.method == 'POST':
             content = request.POST.get('content', '')
             env_id = request.POST.get('env_id', '')
@@ -290,7 +310,11 @@ def set_headers(request):
 
 
 def set_mock(request):
-    """设置默认mock"""
+    """
+    设置默认mock
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/env/'
@@ -311,7 +335,6 @@ def set_mock(request):
             else:
                 return render(request, "base/interface/set_mock.html",
                               {'if_id': if_id, 'if_name': if_name, 'env': set_mock})
-
         elif request.method == 'POST':
             content = request.POST.get('content', '')
             if_id = request.POST.get('if_id', '')
@@ -324,8 +347,12 @@ def set_mock(request):
             return HttpResponseRedirect("/base/interface/")
 
 
-# 添加环境
 def env_add(request):
+    """
+    添加环境
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/env/'
@@ -334,38 +361,39 @@ def env_add(request):
         if request.method == 'POST':
             prj_list = Project.objects.all()
             env_name = request.POST['env_name'].strip()
-            if env_name == '':
-                return render(request, 'base/env/add.html', {'name_error': '环境名称不能为空！', "prj_list": prj_list})
-            name_exit = Environment.objects.filter(env_name=env_name)
-            if name_exit:
-                return render(request, 'base/env/add.html',
-                              {'name_error': '环境: {}，已存在！'.format(env_name), "prj_list": prj_list})
-            prj_id = request.POST['prj_id']
-            project = Project.objects.get(prj_id=prj_id)
             url = request.POST['url'].strip()
-            if url == '':
-                return render(request, 'base/env/add.html', {'url_error': 'url不能为空！', "prj_list": prj_list})
-            private_key = request.POST['private_key']
-            description = request.POST['description']
-            is_swagger = request.POST['is_swagger']
-            username = request.session.get('user', '')
-            if is_swagger == '1':
-                Environment.objects.filter(is_swagger=1).update(is_swagger=0)
-            env = Environment(env_name=env_name, url=url, project=project, private_key=private_key,
-                              description=description, is_swagger=is_swagger, update_user=username)
-            env.save()
-            log.info(
-                'add env   {}  success.  env info： {} // {} // {} // {} // {} '.format(env_name, project, url,
-                                                                                       private_key,
-                                                                                       description, is_swagger))
-            return HttpResponseRedirect("/base/env/")
+
+            msg = env_info_logic(env_name, url)
+            if msg != 'ok':
+                return render(request, 'base/env/add.html', {'error': msg, "prj_list": prj_list})
+            else:
+                prj_id = request.POST['prj_id']
+                project = Project.objects.get(prj_id=prj_id)
+                private_key = request.POST['private_key']
+                description = request.POST['description']
+                is_swagger = request.POST['is_swagger']
+                username = request.session.get('user', '')
+                if is_swagger == '1':
+                    Environment.objects.filter(is_swagger=1).update(is_swagger=0)
+                env = Environment(env_name=env_name, url=url, project=project, private_key=private_key,
+                                  description=description, is_swagger=is_swagger, update_user=username)
+                env.save()
+                log.info(
+                    'add env   {}  success.  env info： {} // {} // {} // {} // {} '.format(env_name, project, url,
+                                                                                           private_key,
+                                                                                           description, is_swagger))
+                return HttpResponseRedirect("/base/env/")
         else:
             prj_list = is_superuser(user_id)
             return render(request, "base/env/add.html", {"prj_list": prj_list})
 
 
-# 测试环境更新
 def env_update(request):
+    """
+    测试环境更新
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/env/'
@@ -375,46 +403,44 @@ def env_update(request):
             prj_list = Project.objects.all()
             env_id = request.POST['env_id']
             env_name = request.POST['env_name'].strip()
-            if env_name == '':
-                env = Environment.objects.get(env_id=env_id)
-                return render(request, 'base/env/update.html',
-                              {'name_error': '环境名称不能为空！', "env": env, "prj_list": prj_list})
-            name_exit = Environment.objects.filter(env_name=env_name).exclude(env_id=env_id)
-            if name_exit:
-                env = Environment.objects.get(env_id=env_id)
-                return render(request, 'base/env/update.html',
-                              {'name_error': '环境: {}，已存在！'.format(env_name), "env": env, "prj_list": prj_list})
-            prj_id = request.POST['prj_id']
-            project = Project.objects.get(prj_id=prj_id)
             url = request.POST['url'].strip()
-            if url == '':
+            
+            msg = env_info_logic(env_name, url, env_id)
+            if msg != 'ok':
                 env = Environment.objects.get(env_id=env_id)
-                return render(request, 'base/env/update.html',
-                              {'url_error': 'url不能为空！', "env": env, "prj_list": prj_list})
-            private_key = request.POST['private_key']
-            description = request.POST['description']
-            is_swagger = request.POST['is_swagger']
-            username = request.session.get('user', '')
-            if is_swagger == '1':
-                Environment.objects.filter(is_swagger=1).update(is_swagger=0)
-            Environment.objects.filter(env_id=env_id).update(env_name=env_name, url=url, project=project,
-                                                             private_key=private_key, description=description,
-                                                             update_time=datetime.now(), is_swagger=is_swagger,
-                                                             update_user=username)
-            log.info(
-                'edit env   {}  success.  env info： {} // {} // {} // {} // {}'.format(env_name, project, url,
-                                                                                       private_key,
-                                                                                       description, is_swagger))
-            return HttpResponseRedirect("/base/env/")
-        else:
+                return render(request, 'base/env/update.html', {'error': msg, "env": env, "prj_list": prj_list})
+            else:
+                prj_id = request.POST['prj_id']
+                project = Project.objects.get(prj_id=prj_id)
+
+                private_key = request.POST['private_key']
+                description = request.POST['description']
+                is_swagger = request.POST['is_swagger']
+                username = request.session.get('user', '')
+                if is_swagger == '1':
+                    Environment.objects.filter(is_swagger=1).update(is_swagger=0)
+                Environment.objects.filter(env_id=env_id).update(env_name=env_name, url=url, project=project,
+                                                                 private_key=private_key, description=description,
+                                                                 update_time=datetime.now(), is_swagger=is_swagger,
+                                                                 update_user=username)
+                log.info(
+                    'edit env   {}  success.  env info： {} // {} // {} // {} // {}'.format(env_name, project, url,
+                                                                                           private_key,
+                                                                                           description, is_swagger))
+                return HttpResponseRedirect("/base/env/")
+        elif request.method == 'GET':
             prj_list = is_superuser(user_id)
             env_id = request.GET['env_id']
             env = Environment.objects.get(env_id=env_id)
             return render(request, "base/env/update.html", {"env": env, "prj_list": prj_list})
 
 
-# 删除测试环境
 def env_delete(request):
+    """
+    删除测试环境
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/env/'
@@ -453,8 +479,12 @@ class InterfaceIndex(ListView):
         return context
 
 
-# 接口搜索功能
 def interface_search(request):
+    """
+    接口搜索功能
+    :param request:
+    :return:
+    """
     if request.method == 'POST':
         user_id = request.session.get('user_id', '')
         if get_user(user_id):
@@ -497,33 +527,29 @@ def interface_search(request):
             return HttpResponse('2')
 
 
-# 添加接口
 def interface_add(request):
+    """
+    添加接口
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/interface/'
         return render(request, 'user/login_action.html')
     else:
         if request.method == 'POST':
-            if_name = request.POST['if_name']
-            if if_name.strip() == '':
-                return HttpResponse('接口名称不能为空！')
-            name_same = Interface.objects.filter(if_name=if_name)
-            if name_same:
-                return HttpResponse('接口: {}，已存在！'.format(if_name))
+            if_name = request.POST['if_name'].strip()
             prj_id = request.POST['prj_id']
-            project = Project.objects.get(prj_id=prj_id)
-            url = request.POST['url']
-            if url.strip() == '':
-                return HttpResponse('url不能为空！')
+            url = request.POST['url'].strip()
             method = request.POST.get('method', '')
-            if method == '':
-                return HttpResponse('请选择接口的请求方式！')
             data_type = request.POST['data_type']
             is_sign = request.POST.get('is_sign', '')
             is_headers = request.POST.get('is_headers', '')
-            if is_sign == '':
-                return HttpResponse('请设置接口是否需要签名！')
+
+            msg = interface_info_logic(if_name, url, method, is_sign, data_type, is_headers)
+            if msg != 'ok':
+                return HttpResponse(msg)
             description = request.POST['description']
             request_header_data = request.POST['request_header_data']
             request_body_data = request.POST['request_body_data']
@@ -532,6 +558,7 @@ def interface_add(request):
             username = request.session.get('user', '')
             if is_headers == '1':
                 Interface.objects.filter(project_id=prj_id).filter(is_header=1).update(is_header=0)
+            project = Project.objects.get(prj_id=prj_id)
             interface = Interface(if_name=if_name, url=url, project=project, method=method, data_type=data_type,
                                   is_sign=is_sign, description=description, request_header_param=request_header_data,
                                   request_body_param=request_body_data, response_header_param=response_header_data,
@@ -542,118 +569,63 @@ def interface_add(request):
                     if_name, project, url, method, data_type, is_sign, description, request_header_data,
                     request_body_data, response_header_data, response_body_data, is_header=is_headers))
             return HttpResponseRedirect("/base/interface/")
-        else:
+        elif request.method == 'GET':
             prj_list = is_superuser(user_id)
             return render(request, "base/interface/add.html", {"prj_list": prj_list})
 
 
-# 接口编辑
 def interface_update(request):
+    """
+    接口编辑
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/interface/'
         return render(request, 'user/login_action.html')
     else:
         if request.method == 'POST':
-            prj_list = Project.objects.all()
             if_id = request.POST['if_id']
-            interface = Interface.objects.get(if_id=if_id)
-            request_header_param_list = interface_get_params(interface.request_header_param)
-            request_body_param_list = interface_get_params(interface.request_body_param)
-            response_header_param_list = interface_get_params(interface.response_header_param)
-            response_body_param_list = interface_get_params(interface.response_body_param)
-            if interface.method == 'get':
-                method = 0
-            elif interface.method == 'post':
-                method = 1
-            elif interface.method == 'delete':
-                method = 2
-            elif interface.method == 'put':
-                method = 3
-            else:
-                method = ''
-            if interface.is_sign == 0:
-                is_sign = 0
-            elif interface.is_sign == 1:
-                is_sign = 1
-            else:
-                is_sign = ''
             if_name = request.POST['if_name'].strip()
-            if if_name == '':
-                info = {'name_error': '接口名称不能为空！', "interface": interface,
-                        'request_header_param_list': request_header_param_list,
-                        'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                        'response_header_param_list': response_header_param_list,
-                        'response_body_param_list': response_body_param_list,
-                        "prj_list": prj_list}
-                return render_to_response('base/interface/update.html', info)
-            name_same = Interface.objects.filter(if_name=if_name).exclude(if_id=if_id)
-            if name_same:
-                return render(request, 'base/interface/update.html',
-                              {'name_error': '接口：{}，已存在！'.format(if_name), "interface": interface,
-                               'request_header_param_list': request_header_param_list,
-                               'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                               'response_header_param_list': response_header_param_list,
-                               'response_body_param_list': response_body_param_list,
-                               "prj_list": prj_list})
             prj_id = request.POST['prj_id']
-            project = Project.objects.get(prj_id=prj_id)
             url = request.POST['url'].strip()
-            if url == '':
-                return render(request, 'base/interface/update.html',
-                              {'url_error': '接口url不能为空！', "interface": interface,
-                               'request_header_param_list': request_header_param_list,
-                               'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                               'response_header_param_list': response_header_param_list,
-                               'response_body_param_list': response_body_param_list,
-                               "prj_list": prj_list})
             method = request.POST.get('method', '')
-            if method == '':
-                return render(request, 'base/interface/update.html',
-                              {'method_error': '请选择接口请求方式！', "interface": interface,
-                               'request_header_param_list': request_header_param_list,
-                               'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                               'response_header_param_list': response_header_param_list,
-                               'response_body_param_list': response_body_param_list,
-                               "prj_list": prj_list})
             data_type = request.POST['data_type']
             is_sign = request.POST.get('is_sign', '')
             is_headers = request.POST.get('is_headers', '')
-            if is_sign == '':
-                return render(request, 'base/interface/update.html',
-                              {'sign_error': '请选择接口是否需要签名！', "interface": interface,
-                               'request_header_param_list': request_header_param_list,
-                               'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                               'response_header_param_list': response_header_param_list,
-                               'response_body_param_list': response_body_param_list,
-                               "prj_list": prj_list})
-            description = request.POST['description']
-            request_header_data_list = request.POST.get('request_header_data', [])
-            request_header_data = interface_format_params(request_header_data_list)
-            request_body_data_list = request.POST.get('request_body_data', [])
-            request_body_data = interface_format_params(request_body_data_list)
-            response_header_data_list = request.POST.get('response_header_data', [])
-            response_header_data = interface_format_params(response_header_data_list)
-            response_body_data_list = request.POST.get('response_body_data', [])
-            response_body_data = interface_format_params(response_body_data_list)
-            username = request.session.get('user', '')
-            if is_headers == '1':
-                Interface.objects.filter(project_id=prj_id).filter(is_header=1).update(is_header=0)
-            Interface.objects.filter(if_id=if_id).update(if_name=if_name, url=url, project=project, method=method,
-                                                         data_type=data_type, is_header=is_headers,
-                                                         is_sign=is_sign, description=description,
-                                                         request_header_param=request_header_data,
-                                                         request_body_param=request_body_data,
-                                                         response_header_param=response_header_data,
-                                                         response_body_param=response_body_data,
-                                                         update_time=datetime.now(), update_user=username)
-            log.info(
-                'edit interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} // {}// {} '.format(
-                    if_name, project, url, method, data_type, is_sign, description, request_header_data,
-                    request_body_data,
-                    response_header_data, response_body_data, is_headers))
-            return HttpResponseRedirect("/base/interface/")
-        else:
+
+            msg = interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, if_id)
+            if msg != 'ok':
+                return HttpResponse(msg)
+            else:
+                description = request.POST['description']
+                request_header_data_list = request.POST.get('request_header_data', [])
+                request_header_data = interface_format_params(request_header_data_list)
+                request_body_data_list = request.POST.get('request_body_data', [])
+                request_body_data = interface_format_params(request_body_data_list)
+                response_header_data_list = request.POST.get('response_header_data', [])
+                response_header_data = interface_format_params(response_header_data_list)
+                response_body_data_list = request.POST.get('response_body_data', [])
+                response_body_data = interface_format_params(response_body_data_list)
+                username = request.session.get('user', '')
+                if is_headers == '1':
+                    Interface.objects.filter(project_id=prj_id).filter(is_header=1).update(is_header=0)
+                project = Project.objects.get(prj_id=prj_id)
+                Interface.objects.filter(if_id=if_id).update(if_name=if_name, url=url, project=project, method=method,
+                                                             data_type=data_type, is_header=is_headers,
+                                                             is_sign=is_sign, description=description,
+                                                             request_header_param=request_header_data,
+                                                             request_body_param=request_body_data,
+                                                             response_header_param=response_header_data,
+                                                             response_body_param=response_body_data,
+                                                             update_time=datetime.now(), update_user=username)
+                log.info(
+                    'edit interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} // {}// {} '.format(
+                        if_name, project, url, method, data_type, is_sign, description, request_header_data,
+                        request_body_data, response_header_data, response_body_data, is_headers))
+                return HttpResponseRedirect("/base/interface/")
+        elif request.method == 'GET':
             prj_list = is_superuser(user_id)
             if_id = request.GET['if_id']
             interface = Interface.objects.get(if_id=if_id)
@@ -661,34 +633,13 @@ def interface_update(request):
             request_body_param_list = interface_get_params(interface.request_body_param)
             response_header_param_list = interface_get_params(interface.response_header_param)
             response_body_param_list = interface_get_params(interface.response_body_param)
-            if interface.method == 'get':
-                method = 0
-            elif interface.method == 'post':
-                method = 1
-            elif interface.method == 'delete':
-                method = 2
-            elif interface.method == 'put':
-                method = 3
-            else:
-                method = ''
-            if interface.is_sign == 0:
-                is_sign = 0
-            elif interface.is_sign == 1:
-                is_sign = 1
-            else:
-                is_sign = ''
-            if interface.is_header == 0:
-                is_headers = 0
-            elif interface.is_header == 1:
-                is_headers = 1
-            else:
-                is_headers = ''
-            return render(request, "base/interface/update.html",
-                          {"interface": interface, 'request_header_param_list': request_header_param_list,
-                           'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                           'response_header_param_list': response_header_param_list,
-                           'response_body_param_list': response_body_param_list, 'is_headers': is_headers,
-                           "prj_list": prj_list})
+            method, is_sign, is_headers = format_params(interface)
+            info = {"interface": interface, 'request_header_param_list': request_header_param_list,
+                    'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
+                    'response_header_param_list': response_header_param_list,
+                    'response_body_param_list': response_body_param_list, 'is_headers': is_headers,
+                    "prj_list": prj_list}
+            return render(request, "base/interface/update.html", info)
 
 
 # 解析数据库中格式化前的参数
@@ -708,7 +659,7 @@ def interface_get_params(params):
 def interface_format_params(params_list):
     if params_list:
         var = []
-        params_list =eval(params_list)
+        params_list = eval(params_list)
         for i in range(len(params_list)):
             var.append({"var_name": "", "var_remark": ""})
             var[i]['var_name'] = params_list[i]['var_name']
@@ -718,8 +669,12 @@ def interface_format_params(params_list):
         return []
 
 
-# 接口删除
 def interface_delete(request):
+    """
+    接口删除
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/interface/'

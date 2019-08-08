@@ -308,7 +308,7 @@
         function check(att) {
             strValue = att.replace(/\n/g, '');
             if (javaTrim(strValue) == "") {
-                alert('输入有误，请检查！');
+                alert('接口名称和url不能为空！');
                 return false;
             }
         }
@@ -411,11 +411,7 @@
                     "response_header_data": response_header_data,
                     "response_body_data": response_body_data
                 },
-                // dataType: "json",
-
                 success: function (data) {
-                    console.log(typeof data);
-                    console.log(data);
                     if (data.indexOf('<') == -1) {
                         alert(data);
                     } else {
