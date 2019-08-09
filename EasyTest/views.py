@@ -13,7 +13,7 @@ from django.http import StreamingHttpResponse
 from lib.public import gr_code, getACodeImage
 from lib.execute import get_user, get_total_values, is_superuser
 from lib.send_email import send_email
-from lib.error_code import ErrorCode
+from lib.except_check import register_info_logic, change_info_logic
 import sys, json, requests, re, datetime
 
 log = logging.getLogger('log')  # 初始化log
@@ -54,7 +54,7 @@ def index(request):
                 return HttpResponse('1')
         else:
             return HttpResponse('0')
-    else:
+    elif request.method == 'GET':
         plan_list = []
         prj_list = is_superuser(user_id, type='list')
         plan = Plan.objects.filter(project_id__in=prj_list)
@@ -151,12 +151,10 @@ def login_action(request):
 def change_password(request):
     if request.method == 'POST':
         new_password = request.POST.get('new_password', '')
-        if not new_password:
-            return JsonResponse({'msg': ErrorCode.empty_error})
-        elif len(new_password) < 6:
-            return JsonResponse({'msg': ErrorCode.not_enough_error})
-        elif len(new_password) > 50:
-            return JsonResponse({'msg': ErrorCode.fields_too_long_error})
+
+        msg = change_info_logic(new_password)
+        if msg != 'ok':
+            return JsonResponse({'msg': msg})
         else:
             user_id = request.session.get('user_id', '')
             if not user_id:
@@ -176,22 +174,10 @@ def register(request):
         password = request.POST.get('password', '')
         pswd_again = request.POST.get('pswd-again', '')
         email = request.POST.get('email', '')
-
-        if username == '' or password == '' or pswd_again == '':
-            return render(request, 'user/register.html', {'error': ErrorCode.empty_error})
-        elif len(username) > 50 or len(password) > 50 or len(email) > 50:
-            return render(request, 'user/register.html', {'error': ErrorCode.fields_too_long_error})
-        elif 6 > len(username) or 6 > len(password):
-            return render(request, 'user/register.html', {'error': ErrorCode.not_enough_error})
-        elif password != pswd_again:
-            return render(request, 'user/register.html', {'error': ErrorCode.different_error})
-        if email:
-            if not re.match('.+@.+.com$', email):
-                return render(request, 'user/register.html', {'error': ErrorCode.format_error})
-        try:
-            User.objects.get(username=username)
-            return render(request, 'user/register.html', {'error': ErrorCode.already_exists_error})
-        except User.DoesNotExist:
+        msg = register_info_logic(username, password, pswd_again, email)
+        if msg != 'ok':
+            return render(request, 'user/register.html', {'error': msg})
+        else:
             User.objects.create_user(username=username, password=password, email=email)
             user = auth.authenticate(username=username, password=password)
             if user is not None:

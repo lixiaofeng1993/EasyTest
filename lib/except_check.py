@@ -7,9 +7,55 @@
 # @Software: PyCharm
 
 from base.models import Project, Sign, Environment, Interface, Case, Plan, Report
-import logging
+from django.contrib.auth.models import User
+import logging, re
+from lib.error_code import ErrorCode
 
 log = logging.getLogger('log')  # 初始化log
+
+
+def register_info_logic(username, password, pswd_again, email):
+    """
+    注册新用户逻辑
+    :param username:
+    :param password:
+    :param pswd_again:
+    :param email:
+    :return:
+    """
+    if email:
+        if not re.match('.+@.+.com$', email):
+            return ErrorCode.format_error
+    if username == '' or password == '' or pswd_again == '':
+        return ErrorCode.empty_error
+    elif len(username) > 50 or len(password) > 50 or len(email) > 50:
+        return ErrorCode.fields_too_long_error
+    elif 6 > len(username) or 6 > len(password):
+        return ErrorCode.not_enough_error
+    elif password != pswd_again:
+        return ErrorCode.different_error
+    else:
+        try:
+            User.objects.get(username=username)
+            return ErrorCode.already_exists_error
+        except User.DoesNotExist:
+            return 'ok'
+
+
+def change_info_logic(new_password):
+    """
+    修改密码逻辑
+    :param new_password:
+    :return:
+    """
+    if not new_password:
+        return ErrorCode.empty_error
+    elif len(new_password) < 6:
+        return ErrorCode.not_enough_error
+    elif len(new_password) > 50:
+        return ErrorCode.fields_too_long_error
+    else:
+        return 'ok'
 
 
 def project_info_logic(prj_name, prj_id=''):
