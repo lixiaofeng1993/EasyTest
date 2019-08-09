@@ -74,7 +74,8 @@ def project_add(request):
 
             msg = project_info_logic(prj_name)
             if msg != 'ok':  # 判断输入框
-                return render(request, 'base/project/add.html', {'error': msg, "sign_list": sign_list})
+                info = {'error': msg, "sign_list": sign_list}
+                return render(request, 'base/project/add.html', info)
             else:
                 description = request.POST['description']
                 sign_id = request.POST['sign']
@@ -85,7 +86,8 @@ def project_add(request):
                 log.info('add project   {}  success. project info: {} // {} '.format(prj_name, description, sign))
                 return HttpResponseRedirect("/base/project/")
         elif request.method == 'GET':
-            return render(request, "base/project/add.html", {"sign_list": sign_list})
+            info = {"sign_list": sign_list}
+            return render(request, "base/project/add.html", info)
 
 
 def project_update(request):
@@ -107,7 +109,8 @@ def project_update(request):
             msg = project_info_logic(prj_name, prj_id)
             if msg != 'ok':
                 prj = Project.objects.get(prj_id=prj_id)
-                return render(request, 'base/project/update.html', {'error': msg, "prj": prj, "sign_list": sign_list})
+                info = {'error': msg, "prj": prj, "sign_list": sign_list}
+                return render(request, 'base/project/update.html', info)
             else:
                 description = request.POST['description']
                 sign_id = request.POST['sign_id']
@@ -122,7 +125,8 @@ def project_update(request):
             user_id_belong = Project.objects.get(prj_id=prj_id).user_id
             if user_id == user_id_belong:
                 prj = Project.objects.get(prj_id=prj_id)
-                return render(request, "base/project/update.html", {"prj": prj, "sign_list": sign_list})
+                info = {"prj": prj, "sign_list": sign_list}
+                return render(request, "base/project/update.html", info)
             else:
                 return render(request, "base/project/update.html", {'error': '非本人创建项目，不可以修改！'})
 
@@ -183,7 +187,8 @@ def sign_add(request):
 
             msg = sign_info_logic(sign_name)
             if msg != 'ok':
-                return render(request, 'system/sign/sign_add.html', {'error': msg})
+                info = {'error': msg}
+                return render(request, 'system/sign/sign_add.html', info)
             else:
                 description = request.POST['description']
                 username = request.session.get('user', '')
@@ -213,7 +218,8 @@ def sign_update(request):
             msg = sign_info_logic(sign_name, sign_id)
             if msg != 'ok':
                 sign = Sign.objects.get(sign_id=sign_id)
-                return render(request, 'system/sign/sign_update.html', {'error': msg, "sign": sign})
+                info = {'error': msg, "sign": sign}
+                return render(request, 'system/sign/sign_update.html', info)
             else:
                 description = request.POST['description']
                 username = request.session.get('user', '')
@@ -224,7 +230,8 @@ def sign_update(request):
         elif request.method == 'GET':
             sign_id = request.GET['sign_id']
             sign = Sign.objects.get(sign_id=sign_id)
-            return render(request, "system/sign/sign_update.html", {"sign": sign})
+            info = {"sign": sign}
+            return render(request, "system/sign/sign_update.html", info)
 
 
 def sign_delete(request):
@@ -296,8 +303,8 @@ def set_headers(request):
                 else:
                     return JsonResponse('0', safe=False)
             else:
-                return render(request, "base/env/set_headers.html",
-                              {'env_id': env_id, 'env_name': env_name, 'env': set_header})
+                info = {'env_id': env_id, 'env_name': env_name, 'env': set_header}
+                return render(request, "base/env/set_headers.html", info)
         elif request.method == 'POST':
             content = request.POST.get('content', '')
             env_id = request.POST.get('env_id', '')
@@ -305,8 +312,7 @@ def set_headers(request):
             username = request.session.get('user', '')
             Environment.objects.filter(env_id=env_id).update(set_headers=content, update_time=now_time,
                                                              update_user=username)
-            log.info(
-                'env {} set headers success. headers info: {} '.format(env_id, content))
+            log.info('env {} set headers success. headers info: {} '.format(env_id, content))
             return HttpResponseRedirect("/base/env/")
 
 
@@ -334,17 +340,15 @@ def set_mock(request):
                 else:
                     return JsonResponse('0', safe=False)
             else:
-                return render(request, "base/interface/set_mock.html",
-                              {'if_id': if_id, 'if_name': if_name, 'env': set_mock})
+                info = {'if_id': if_id, 'if_name': if_name, 'env': set_mock}
+                return render(request, "base/interface/set_mock.html", info)
         elif request.method == 'POST':
             content = request.POST.get('content', '')
             if_id = request.POST.get('if_id', '')
             now_time = datetime.now()
             username = request.session.get('user', '')
-            Interface.objects.filter(if_id=if_id).update(set_mock=content, update_time=now_time,
-                                                         update_user=username)
-            log.info(
-                'interface {} set mock success. mock info: {} '.format(if_id, content))
+            Interface.objects.filter(if_id=if_id).update(set_mock=content, update_time=now_time, update_user=username)
+            log.info('interface {} set mock success. mock info: {} '.format(if_id, content))
             return HttpResponseRedirect("/base/interface/")
 
 
@@ -366,7 +370,8 @@ def env_add(request):
 
             msg = env_info_logic(env_name, url)
             if msg != 'ok':
-                return render(request, 'base/env/add.html', {'error': msg, "prj_list": prj_list})
+                info = {'error': msg, "prj_list": prj_list}
+                return render(request, 'base/env/add.html', info)
             else:
                 prj_id = request.POST['prj_id']
                 project = Project.objects.get(prj_id=prj_id)
@@ -379,14 +384,13 @@ def env_add(request):
                 env = Environment(env_name=env_name, url=url, project=project, private_key=private_key,
                                   description=description, is_swagger=is_swagger, update_user=username)
                 env.save()
-                log.info(
-                    'add env   {}  success.  env info： {} // {} // {} // {} // {} '.format(env_name, project, url,
-                                                                                           private_key,
-                                                                                           description, is_swagger))
+                log.info('add env   {}  success.  env info： {} // {} // {} // {} // {} '
+                         .format(env_name, project, url, private_key, description, is_swagger))
                 return HttpResponseRedirect("/base/env/")
-        else:
+        elif request.method == 'GET':
             prj_list = is_superuser(user_id)
-            return render(request, "base/env/add.html", {"prj_list": prj_list})
+            info = {"prj_list": prj_list}
+            return render(request, "base/env/add.html", info)
 
 
 def env_update(request):
@@ -409,7 +413,8 @@ def env_update(request):
             msg = env_info_logic(env_name, url, env_id)
             if msg != 'ok':
                 env = Environment.objects.get(env_id=env_id)
-                return render(request, 'base/env/update.html', {'error': msg, "env": env, "prj_list": prj_list})
+                info = {'error': msg, "env": env, "prj_list": prj_list}
+                return render(request, 'base/env/update.html', info)
             else:
                 prj_id = request.POST['prj_id']
                 project = Project.objects.get(prj_id=prj_id)
@@ -424,16 +429,15 @@ def env_update(request):
                                                                  private_key=private_key, description=description,
                                                                  update_time=datetime.now(), is_swagger=is_swagger,
                                                                  update_user=username)
-                log.info(
-                    'edit env   {}  success.  env info： {} // {} // {} // {} // {}'.format(env_name, project, url,
-                                                                                           private_key,
-                                                                                           description, is_swagger))
+                log.info('edit env   {}  success.  env info： {} // {} // {} // {} // {}'
+                         .format(env_name, project, url, private_key, description, is_swagger))
                 return HttpResponseRedirect("/base/env/")
         elif request.method == 'GET':
             prj_list = is_superuser(user_id)
             env_id = request.GET['env_id']
             env = Environment.objects.get(env_id=env_id)
-            return render(request, "base/env/update.html", {"env": env, "prj_list": prj_list})
+            info = {"env": env, "prj_list": prj_list}
+            return render(request, "base/env/update.html", info)
 
 
 def env_delete(request):
@@ -566,13 +570,14 @@ def interface_add(request):
                                   response_body_param=response_body_data, is_header=is_headers, update_user=username)
             interface.save()
             log.info(
-                'add interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} // {} '.format(
-                    if_name, project, url, method, data_type, is_sign, description, request_header_data,
-                    request_body_data, response_header_data, response_body_data, is_header=is_headers))
+                'add interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} // {} '
+                    .format(if_name, project, url, method, data_type, is_sign, description, request_header_data,
+                            request_body_data, response_header_data, response_body_data, is_header=is_headers))
             return HttpResponseRedirect("/base/interface/")
         elif request.method == 'GET':
             prj_list = is_superuser(user_id)
-            return render(request, "base/interface/add.html", {"prj_list": prj_list})
+            info = {"prj_list": prj_list}
+            return render(request, "base/interface/add.html", info)
 
 
 def interface_update(request):
@@ -830,13 +835,13 @@ def case_add(request):
                 case = Case(case_name=case_name, project=project, description=description,
                             content=content, update_user=username)
                 case.save()
-                log.info(
-                    'add case   {}  success. case info: {} // {} // {}'.format(case_name, project, description,
-                                                                               content))
+                log.info('add case   {}  success. case info: {} // {} // {}'.format(case_name, project, description,
+                                                                                    content))
                 return HttpResponseRedirect("/base/case/")
         elif request.method == 'GET':
             prj_list = is_superuser(user_id)
-            return render(request, "base/case/add.html", {"prj_list": prj_list})
+            info = {"prj_list": prj_list}
+            return render(request, "base/case/add.html", info)
 
 
 def case_update(request):
@@ -866,9 +871,8 @@ def case_update(request):
                                                             description=description,
                                                             content=content, update_time=datetime.now(),
                                                             update_user=username)
-                log.info(
-                    'edit case   {}  success. case info: {} // {} // {}'.format(case_name, project, description,
-                                                                                content))
+                log.info('edit case   {}  success. case info: {} // {} // {}'
+                         .format(case_name, project, description, content))
                 return HttpResponseRedirect("/base/case/")
         elif request.method == 'GET':
             prj_list = is_superuser(user_id)
@@ -914,8 +918,7 @@ def case_copy(request):
             case = Case(case_name=case_name, project=project, description=description, update_time=datetime.now(),
                         content=content, update_user=username)
             case.save()
-            log.info(
-                'copy case   {}  success. case info: {} // {} '.format(case_name, project, content))
+            log.info('copy case   {}  success. case info: {} // {} '.format(case_name, project, content))
             return HttpResponseRedirect("base/case/")
 
 
@@ -963,9 +966,11 @@ def case_logs(request):
                     data = f.readlines()
                 for line in data:
                     data_list.append(line.decode())
-                return render(request, 'base/case/log.html', {'data': data_list, 'make': True, 'log_file': log_file})
+                info = {'data': data_list, 'make': True, 'log_file': log_file}
+                return render(request, 'base/case/log.html', info)
         else:
-            return render(request, 'base/case/log.html', {'data': '0', 'make': True, 'log_file': ''})
+            info = {'data': '0', 'make': True, 'log_file': ''}
+            return render(request, 'base/case/log.html', info)
 
 
 def case_delete(request):
@@ -1073,7 +1078,8 @@ def plan_add(request):
                 return HttpResponseRedirect("/base/plan/")
         elif request.method == 'GET':
             prj_list = is_superuser(user_id)
-            return render(request, "base/plan/add.html", {"prj_list": prj_list})
+            info = {"prj_list": prj_list}
+            return render(request, "base/plan/add.html", info)
 
 
 def plan_update(request):
@@ -1147,8 +1153,8 @@ def plan_update(request):
                     return render(request, "base/plan/index.html",
                                   {"contacts": contacts,
                                    'error': '计划 {} 中的 用例 {} 已被删除！！！'.format(plan.plan_name, case_id)})
-            return render(request, "base/plan/update.html",
-                          {"prj_list": prj_list, 'plan': plan, 'case_list': case_list, 'environments': environments})
+            info = {"prj_list": prj_list, 'plan': plan, 'case_list': case_list, 'environments': environments}
+            return render(request, "base/plan/update.html", info)
 
 
 def plan_delete(request):
@@ -1368,13 +1374,13 @@ def report_logs(request):
                     class_name = case['class_name']
                 superuser = User.objects.get(id=user_id).is_superuser
                 if superuser:
-                    return render(request, "base/report_page/log.html",
-                                  {"report": report, 'plan_id': plan_id, "report_content": report_content,
-                                   'class_name': class_name, 'is_superuser': superuser})
+                    info = {"report": report, 'plan_id': plan_id, "report_content": report_content,
+                            'class_name': class_name, 'is_superuser': superuser}
+                    return render(request, "base/report_page/log.html", info)
                 else:
-                    return render(request, "base/report_page/log.html",
-                                  {"report": report, 'plan_id': plan_id, "report_content": report_content,
-                                   'class_name': class_name, 'is_superuser': ''})
+                    info = {"report": report, 'plan_id': plan_id, "report_content": report_content,
+                            'class_name': class_name, 'is_superuser': ''}
+                    return render(request, "base/report_page/log.html", info)
 
 
 def report_index(request):
@@ -1411,10 +1417,10 @@ def report_index(request):
             for case in report_content:
                 global class_name
                 class_name = case['class_name']
-            return render(request, "report.html",
-                          {"report": report, 'plan_id': plan_id, 'case_num': case_num, "error_num": error_num,
-                           'pass_num': pass_num, 'fail_num': fail_num, "report_content": report_content,
-                           'img_name': str(now_time) + 'pie.png', 'class_name': class_name})
+            info = {"report": report, 'plan_id': plan_id, 'case_num': case_num, "error_num": error_num,
+                    'pass_num': pass_num, 'fail_num': fail_num, "report_content": report_content,
+                    'img_name': str(now_time) + 'pie.png', 'class_name': class_name}
+            return render(request, "report.html", info)
 
 
 def report_search(request):

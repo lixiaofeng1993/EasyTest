@@ -300,6 +300,7 @@
                         "env_id": $("#debug_env_id").val()
                     },
                     success: function (res) {
+                        console.log(res);
                         if (res.hasOwnProperty('error')) {
                             html = '<p style="font-family: Consolas;font-size:12px;color:red;margin:5% 10%">' + res['error'] + '</p>';
                             if (res.hasOwnProperty('msg')) {

@@ -377,7 +377,7 @@
                                         } else {
                                             for (var he in eval(header_json)) {
                                                 if (header_json[he].search('$') != -1) {
-                                                    var key = header_json[he];
+                                                    var key = header_json[he].split(',')[0];
                                                     var value = ''
                                                 } else {
                                                     var key = header_json[he].split(',')[0];
@@ -402,7 +402,7 @@
                                         } else {
                                             for (var bo in eval(body_json)) {
                                                 if (body_json[bo].search('$') != -1) {
-                                                    var key = body_json[bo];
+                                                    var key = body_json[bo].split(',')[0];
                                                     var value = ''
                                                 } else {
                                                     var key = body_json[bo].split(',')[0];

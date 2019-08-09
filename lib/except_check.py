@@ -220,3 +220,74 @@ def plan_info_logic(plan_name, content, plan_id=''):
         return '计划: {}，已存在！'.format(plan_name)
     else:
         return 'ok'
+
+
+"""请求接口异常处理"""
+
+
+def env_not_exit(case_run):
+    log.error('用例 {} 未设置运行环境！'.format(case_run['case_id']))
+    case_run['msg'] = '用例 {} 未设置运行环境，请前往【测试环境】页面添加.'.format(case_run['case_id'])
+    case_run['error'] = ErrorCode.env_not_exit_error
+    return case_run
+
+
+def case_is_delete(case_run):
+    log.error('用例 {} 已被删除！'.format(case_run['case_id']))
+    case_run['msg'] = '用例 {} 可能已被删除，请返回【用例管理】页面核实.'.format(case_run['case_id'])
+    case_run['error'] = ErrorCode.case_not_exit_error
+    return case_run
+
+
+def interface_is_delete(case_run, case_name, if_name):
+    log.error('用例 {} 中的接口 {} 已被删除！'.format(case_name, if_name))
+    case_run['msg'] = '用例 {} 中的接口 {} 可能已被删除，请前往【接口管理】页面核实.'.format(case_name, if_name)
+    case_run['error'] = ErrorCode.interface_not_exit_error
+    return case_run
+
+
+def parametric_set_error(if_dict):
+    if_dict['error'] = ErrorCode.random_params_error
+    if_dict["result"] = "error"
+    if_dict["checkpoint"] = ''
+    if_dict["res_content"] = '参数化设置错误，请检查是否符合平台参数化规则！'
+    return if_dict
+
+
+def AES_length_error(if_dict):
+    if_dict['error'] = ErrorCode.AES_key_length_error
+    if_dict["result"] = "error"
+    if_dict["checkpoint"] = ''
+    if_dict["res_content"] = 'AES算法app_key设置长度错误，请前往【测试环境】页面核实 密钥 是否符合规则.'
+    return if_dict
+
+
+def response_value_error(if_dict, e):
+    if_dict['error'] = ErrorCode.analytical_return_value_error
+    if_dict["result"] = "error"
+    if_dict["checkpoint"] = ''
+    if_dict["res_content"] = '解析接口返回值出错，请核实原因.  详细报错信息： {}'.format(e)
+    return if_dict
+
+
+def request_api_error(if_dict, e):
+    if_dict["result"] = "error"
+    if_dict["msg"] = str(e)
+    if_dict["checkpoint"] = ''
+    if_dict['error'] = ErrorCode.requests_error
+    return if_dict
+
+
+def index_error(if_dict):
+    if_dict["result"] = "error"
+    if_dict["checkpoint"] = ''
+    if_dict["error"] = ErrorCode.index_error
+    return if_dict
+
+
+def checkpoint_no_error(if_dict):
+    if_dict["result"] = 'error'
+    if_dict['checkpoint'] = ''
+    if_dict["msg"] = ErrorCode.validators_error
+    if_dict["error"] = ErrorCode.validators_error
+    return if_dict

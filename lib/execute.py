@@ -17,6 +17,8 @@ import time
 from lib.public import validators_result, get_extract, get_param, replace_var, \
     extract_variables, call_interface, format_url
 from lib.random_params import random_params
+from lib.except_check import env_not_exit, case_is_delete, interface_is_delete, parametric_set_error, AES_length_error, \
+    response_value_error, request_api_error, index_error, checkpoint_no_error
 from .error_code import ErrorCode
 
 # from common.connectMySql import SqL
@@ -31,7 +33,6 @@ class Test_execute():
         self.case_id_list = case_id_list
         self.begin_time = time.clock()
         self.s = requests.session()
-        # self.extract_dict = {}
         self.extract_list = []
         self.glo_var = {}
         self.step_json = []
@@ -44,27 +45,19 @@ class Test_execute():
         class_name = self.__class__.__name__
         func_name = sys._getframe().f_code.co_name
         method_doc = self.test_case.__doc__
-        if self.get_env(self.env_id):
+        case_run = {'class_name': class_name, 'func_name': func_name, 'method_doc': method_doc, 'case_id': self.case_id}
+        if self.get_env(self.env_id):  # 获取测试环境数据
             self.prj_id, self.env_url, self.private_key = self.get_env(self.env_id)
         else:
-            case_run = {}
-            log.error('用例 {} 的测试环境不存在！'.format(self.case_id))
-            case_run['msg'] = '用例 {} 的测试环境不存在！'.format(self.case_id)
-            case_run['error'] = ErrorCode.env_not_exit_error
-            case_run['class_name'] = class_name
+            case_run = env_not_exit(case_run)  # 异常情况
             return case_run
-        self.sign_type = self.get_sign(self.prj_id)
+        self.sign_type = self.get_sign(self.prj_id)  # 获取签名数据
         try:
             case = Case.objects.get(case_id=self.case_id)
         except Case.DoesNotExist as e:
-            case_run = {}
-            log.error('用例 {} 已被删除！'.format(self.case_id))
-            case_run['msg'] = '用例 {} 已被删除！'.format(self.case_id)
-            case_run['error'] = ErrorCode.case_not_exit_error
-            case_run['class_name'] = class_name
+            case_run = case_is_delete(case_run)
             return case_run
         self.step_list = eval(case.content)
-        case_run = {"case_id": self.case_id, "case_name": case.case_name}
         case_step_list = []
         for step in self.step_list:
             step_info = self.step(step)
@@ -77,13 +70,9 @@ class Test_execute():
                     case_run["result"] = "error"
                     # break
             else:
-                log.error('用例 {} 中的接口 {} 已被删除！'.format(case.case_name, step["if_name"]))
-                case_run['msg'] = '用例 {} 中的接口 {} 已被删除！'.format(case.case_name, step["if_name"])
-                case_run['error'] = ErrorCode.interface_not_exit_error
-                case_run['class_name'] = class_name
+                case_run = interface_is_delete(case_run, case.case_name, step["if_name"])
                 return case_run
-        case_run["step_list"], case_run['class_name'], case_run[
-            'func_name'], case_run['method_doc'] = case_step_list, class_name, func_name, method_doc
+        case_run['case_name'], case_run["step_list"] = case.case_name, case_step_list
         log.info('interface response data: {}'.format(case_run))
         return case_run
 
@@ -97,9 +86,8 @@ class Test_execute():
         try:
             interface = Interface.objects.get(if_id=if_id)
         except Interface.DoesNotExist as e:
-            return
+            return  # 接口不存在
         var_list = extract_variables(step_content)
-
         if var_list:  # 检查是否存在变量
             for var_name in var_list:
                 var_value = get_param(var_name, step_content)
@@ -111,17 +99,13 @@ class Test_execute():
                             var_value = extract_dict[var_name]
                 step_content = json.loads(replace_var(step_content, var_name, var_value))
 
-        if_dict = {"url": interface.url, "header": step_content["header"], "body": step_content["body"],
-                   'if_name': step_content["if_name"]}
+        if_dict = {"url": interface.url, "header": step_content["header"], "body": step_content["body"], "if_id": if_id,
+                   "if_name": step_content["if_name"], "method": interface.method, "data_type": interface.data_type}
 
         if_dict['header'] = random_params(if_dict['header'])  # random参数化
         if_dict['body'] = random_params(if_dict['body'])
-        if if_dict['header'] == 'error' or if_dict['body'] == 'error':
-            if_dict['error'] = ErrorCode.random_params_error
-            if_dict["method"] = interface.method
-            if_dict["result"] = "error"
-            if_dict["checkpoint"] = ''
-            if_dict["res_content"] = '参数化设置错误，请检查是否符合平台参数化规则！'
+        if if_dict['header'] == 'error' or if_dict['body'] == 'error':  # 参数化异常
+            if_dict = parametric_set_error(if_dict)
             return if_dict
 
         set_headers = Environment.objects.get(env_id=self.env_id).set_headers
@@ -149,10 +133,7 @@ class Test_execute():
                     if_dict["body"] = encryptAES(json.dumps(if_dict['body']).encode('utf-8'),
                                                  self.private_key.encode('utf-8')).decode('utf-8')
                 else:
-                    if_dict['error'] = ErrorCode.AES_key_length_error
-                    if_dict["result"] = "error"
-                    if_dict["checkpoint"] = ''
-                    if_dict["res_content"] = 'AES算法app_key设置长度错误，请检查'
+                    if_dict = AES_length_error(if_dict)  # AES密钥设置异常
                     return if_dict
         else:
             if 'true' in step_content['body']:
@@ -168,9 +149,6 @@ class Test_execute():
 
         if_dict["url"] = self.env_url + interface.url
         if_dict["url"], if_dict["body"] = format_url(if_dict["url"], if_dict["body"])
-        if_dict["if_id"] = if_id
-        if_dict["method"] = interface.method
-        if_dict["data_type"] = interface.data_type
 
         if not interface.set_mock:  # 请求接口或者模拟接口返回值
             try:
@@ -185,22 +163,22 @@ class Test_execute():
                     res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
                                          if_dict["body"], if_dict["data_type"])
                 if_dict["res_status_code"] = res.status_code
-                # if_dict["res_content"] = res.text
-                if_dict["res_content"] = eval(
-                    res.text.replace('false', 'False').replace('null', 'None').replace('true', 'True'))  # 查看报告时转码错误的问题
-                # if if_dict['res_content']['response_code'] == 1:  # 接口返回错误码
-                #     if_dict['error'] = ErrorCode.interface_error
-                if '系统异常' in if_dict['res_content'].values():
-                    if_dict['error'] = ErrorCode.interface_error
+                try:
+                    if_dict["res_content"] = eval(
+                        res.text.replace('false', 'False').replace('null', 'None').replace('true',
+                                                                                           'True'))  # 查看报告时转码错误的问题
+                    if '系统异常' in if_dict['res_content'].values():
+                        if_dict['error'] = ErrorCode.interface_error
+                except SyntaxError as e:
+                    if_dict = response_value_error(if_dict, e)  # 解析返回值异常
+                    return if_dict
             except requests.RequestException as e:
-                if_dict["result"] = "error"
-                if_dict["msg"] = str(e)
-                if_dict['error'] = ErrorCode.requests_error
+                if_dict = request_api_error(if_dict, e)  # 接口请求异常
                 return if_dict
         else:
             if_dict["res_content"] = \
                 eval(interface.set_mock.replace('false', 'False').replace('null', 'None').replace('true', 'True'))[
-                    'mock']
+                    'mock']  # 模拟接口返回值
             if_dict["result"] = "fail"
             if_dict['fail'] = ErrorCode.mock_fail
 
@@ -222,10 +200,7 @@ class Test_execute():
             extract_dict = get_extract(step_content["extract"], if_dict["res_content"],
                                        interface.url)
             if 'error' in extract_dict.keys():
-                if_dict["result"] = "error"
-                if_dict["checkpoint"] = ''
-                if_dict["msg"] = ErrorCode.index_error
-                if_dict["error"] = ErrorCode.index_error
+                if_dict = index_error(if_dict)
                 return if_dict
             else:
                 self.extract_list.append(extract_dict)
@@ -240,10 +215,7 @@ class Test_execute():
             else:
                 if_dict['result'] = 'pass'
         else:
-            if_dict["result"] = 'error'
-            if_dict['checkpoint'] = ''
-            if_dict["msg"] = ErrorCode.validators_error
-            if_dict["error"] = ErrorCode.validators_error
+            if_dict = checkpoint_no_error(if_dict)
 
         if interface.data_type == 'file':
             if_dict["body"] = {'file': '上传图片'}

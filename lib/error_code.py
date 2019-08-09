@@ -18,9 +18,9 @@ class ErrorCode:
 
     validators_error = '接口未设置检查点！'
 
-    case_not_exit_error = '执行用例不存在！'
+    case_not_exit_error = '正在执行的用例不存在！'
 
-    env_not_exit_error = '测试环境不存在！'
+    env_not_exit_error = '用例运行环境不存在！'
 
     interface_not_exit_error = '执行接口不存在！'
 
@@ -45,3 +45,5 @@ class ErrorCode:
     AES_key_length_error = 'app_key长度必须是16、24或者32位！'
 
     random_params_error = '参数化设置错误，不符合关键字设置规则！'
+
+    analytical_return_value_error = '解析返回值错误！'
