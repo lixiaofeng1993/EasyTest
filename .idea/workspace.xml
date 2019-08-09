@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="778b3f5c-ebac-48de-a7cd-7bbe971dd892" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/lib/random_params.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EasyTest/views.py" afterPath="$PROJECT_DIR$/EasyTest/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/except_check.py" afterPath="$PROJECT_DIR$/lib/except_check.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/execute.py" afterPath="$PROJECT_DIR$/lib/execute.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/public.py" afterPath="$PROJECT_DIR$/lib/public.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/system/about/about_us.html" afterPath="$PROJECT_DIR$/templates/system/about/about_us.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,6 +25,16 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="375">
+      <file leaf-file-name="execute.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/execute.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="291">
+              <caret line="119" column="50" lean-forward="true" selection-start-line="119" selection-start-column="50" selection-end-line="119" selection-end-column="50" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/views.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -48,6 +60,74 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="error_code.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/error_code.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="771">
+              <caret line="47" column="0" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="random_params.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/random_params.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="243">
+              <caret line="14" column="17" lean-forward="false" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="17" />
+              <folding>
+                <element signature="e#163#186#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="about_us.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/system/about/about_us.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="814">
+              <caret line="69" column="105" lean-forward="false" selection-start-line="69" selection-start-column="105" selection-end-line="69" selection-end-column="105" />
+              <folding>
+                <element signature="e#912#936#0#HTML" expanded="true" />
+                <element signature="e#968#991#0#HTML" expanded="true" />
+                <element signature="e#992#998#0#HTML" expanded="true" />
+                <element signature="e#998#1004#0#HTML" expanded="true" />
+                <element signature="e#1004#1010#0#HTML" expanded="true" />
+                <element signature="e#1124#1148#0#HTML" expanded="true" />
+                <element signature="e#1169#1192#0#HTML" expanded="true" />
+                <element signature="e#1193#1199#0#HTML" expanded="true" />
+                <element signature="e#1199#1205#0#HTML" expanded="true" />
+                <element signature="e#1205#1211#0#HTML" expanded="true" />
+                <element signature="e#1268#1292#0#HTML" expanded="true" />
+                <element signature="e#1316#1339#0#HTML" expanded="true" />
+                <element signature="e#1340#1346#0#HTML" expanded="true" />
+                <element signature="e#1346#1352#0#HTML" expanded="true" />
+                <element signature="e#1352#1358#0#HTML" expanded="true" />
+                <element signature="e#1415#1439#0#HTML" expanded="true" />
+                <element signature="e#1461#1484#0#HTML" expanded="true" />
+                <element signature="e#1485#1491#0#HTML" expanded="true" />
+                <element signature="e#1491#1497#0#HTML" expanded="true" />
+                <element signature="e#1497#1503#0#HTML" expanded="true" />
+                <element signature="e#1560#1584#0#HTML" expanded="true" />
+                <element signature="e#1610#1633#0#HTML" expanded="true" />
+                <element signature="e#1634#1640#0#HTML" expanded="true" />
+                <element signature="e#1640#1646#0#HTML" expanded="true" />
+                <element signature="e#1646#1652#0#HTML" expanded="true" />
+                <element signature="e#1719#1743#0#HTML" expanded="true" />
+                <element signature="e#1771#1794#0#HTML" expanded="true" />
+                <element signature="e#1795#1801#0#HTML" expanded="true" />
+                <element signature="e#1801#1807#0#HTML" expanded="true" />
+                <element signature="e#1807#1813#0#HTML" expanded="true" />
+                <element signature="e#1897#1921#0#HTML" expanded="true" />
+                <element signature="e#1941#1964#0#HTML" expanded="true" />
+                <element signature="e#1965#1971#0#HTML" expanded="true" />
+                <element signature="e#1971#1977#0#HTML" expanded="true" />
+                <element signature="e#1977#1983#0#HTML" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="except_check.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/except_check.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -56,28 +136,6 @@
               <folding>
                 <element signature="e#163#244#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="connectMySql.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/connectMySql.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="13" column="0" lean-forward="false" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-              <folding>
-                <marker date="1565316880844" expanded="true" signature="3783:3857" ph="select bs.ca... base_case" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="cfg.ini" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/lib/config/cfg.ini">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -92,12 +150,24 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
+            <state relative-caret-position="396">
               <caret line="26" column="13" lean-forward="false" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="public.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/lib/public.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="433">
+              <caret line="282" column="11" lean-forward="true" selection-start-line="282" selection-start-column="11" selection-end-line="282" selection-end-column="11" />
+              <folding>
+                <element signature="e#37#56#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -122,7 +192,6 @@
       <find>case_update</find>
       <find>add_interface</find>
       <find>body</find>
-      <find>random_params</find>
       <find>case_run</find>
       <find>Test_execute</find>
       <find>post</find>
@@ -143,6 +212,7 @@
       <find>doc</find>
       <find>file</find>
       <find>class_name</find>
+      <find>random_params</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -179,8 +249,6 @@
         <option value="$PROJECT_DIR$/templates/base/plan/add.html" />
         <option value="$PROJECT_DIR$/templates/base/plan/update.html" />
         <option value="$PROJECT_DIR$/base/views.py" />
-        <option value="$PROJECT_DIR$/lib/execute.py" />
-        <option value="$PROJECT_DIR$/lib/public.py" />
         <option value="$PROJECT_DIR$/lib/processingJson.py" />
         <option value="$PROJECT_DIR$/lib/send_email.py" />
         <option value="$PROJECT_DIR$/lib/signtype.py" />
@@ -190,6 +258,10 @@
         <option value="$PROJECT_DIR$/lib/error_code.py" />
         <option value="$PROJECT_DIR$/lib/except_check.py" />
         <option value="$PROJECT_DIR$/EasyTest/views.py" />
+        <option value="$PROJECT_DIR$/templates/system/about/about_us.html" />
+        <option value="$PROJECT_DIR$/lib/random_params.py" />
+        <option value="$PROJECT_DIR$/lib/public.py" />
+        <option value="$PROJECT_DIR$/lib/execute.py" />
         <option value="$PROJECT_DIR$/EasyTest/settings.py" />
       </list>
     </option>
@@ -494,24 +566,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EasyTest" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EasyTest" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="config" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -874,13 +928,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/templates/base/env/set_headers.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1144">
-          <caret line="52" column="144" lean-forward="false" selection-start-line="52" selection-start-column="63" selection-end-line="52" selection-end-column="144" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/interface/set_mock.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1232">
@@ -941,13 +988,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="484">
           <caret line="22" column="8" lean-forward="true" selection-start-line="22" selection-start-column="8" selection-end-line="24" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/system/about/about_us.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -1092,13 +1132,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/public.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1002">
-          <caret line="653" column="0" lean-forward="true" selection-start-line="653" selection-start-column="0" selection-end-line="653" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/processingJson.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="814">
@@ -1124,14 +1157,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="892">
           <caret line="53" column="10" lean-forward="false" selection-start-line="53" selection-start-column="10" selection-end-line="53" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/lib/execute.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3564">
-          <caret line="162" column="39" lean-forward="false" selection-start-line="162" selection-start-column="39" selection-end-line="162" selection-end-column="39" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1179,14 +1204,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/error_code.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="16" column="0" lean-forward="false" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/connectMySql.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
@@ -1223,16 +1240,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/EasyTest/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3497">
-          <caret line="56" column="33" lean-forward="false" selection-start-line="56" selection-start-column="33" selection-end-line="56" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#45#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/base/views.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-6798">
@@ -1244,11 +1251,101 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/EasyTest/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3497">
+          <caret line="56" column="33" lean-forward="false" selection-start-line="56" selection-start-column="33" selection-end-line="56" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#45#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/random_params.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="243">
+          <caret line="14" column="17" lean-forward="false" selection-start-line="14" selection-start-column="4" selection-end-line="14" selection-end-column="17" />
+          <folding>
+            <element signature="e#163#186#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/public.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="433">
+          <caret line="282" column="11" lean-forward="true" selection-start-line="282" selection-start-column="11" selection-end-line="282" selection-end-column="11" />
+          <folding>
+            <element signature="e#37#56#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/execute.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="291">
+          <caret line="119" column="50" lean-forward="true" selection-start-line="119" selection-start-column="50" selection-end-line="119" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/error_code.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="771">
+          <caret line="47" column="0" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
+        <state relative-caret-position="396">
           <caret line="26" column="13" lean-forward="false" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/system/about/about_us.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="814">
+          <caret line="69" column="105" lean-forward="false" selection-start-line="69" selection-start-column="105" selection-end-line="69" selection-end-column="105" />
+          <folding>
+            <element signature="e#912#936#0#HTML" expanded="true" />
+            <element signature="e#968#991#0#HTML" expanded="true" />
+            <element signature="e#992#998#0#HTML" expanded="true" />
+            <element signature="e#998#1004#0#HTML" expanded="true" />
+            <element signature="e#1004#1010#0#HTML" expanded="true" />
+            <element signature="e#1124#1148#0#HTML" expanded="true" />
+            <element signature="e#1169#1192#0#HTML" expanded="true" />
+            <element signature="e#1193#1199#0#HTML" expanded="true" />
+            <element signature="e#1199#1205#0#HTML" expanded="true" />
+            <element signature="e#1205#1211#0#HTML" expanded="true" />
+            <element signature="e#1268#1292#0#HTML" expanded="true" />
+            <element signature="e#1316#1339#0#HTML" expanded="true" />
+            <element signature="e#1340#1346#0#HTML" expanded="true" />
+            <element signature="e#1346#1352#0#HTML" expanded="true" />
+            <element signature="e#1352#1358#0#HTML" expanded="true" />
+            <element signature="e#1415#1439#0#HTML" expanded="true" />
+            <element signature="e#1461#1484#0#HTML" expanded="true" />
+            <element signature="e#1485#1491#0#HTML" expanded="true" />
+            <element signature="e#1491#1497#0#HTML" expanded="true" />
+            <element signature="e#1497#1503#0#HTML" expanded="true" />
+            <element signature="e#1560#1584#0#HTML" expanded="true" />
+            <element signature="e#1610#1633#0#HTML" expanded="true" />
+            <element signature="e#1634#1640#0#HTML" expanded="true" />
+            <element signature="e#1640#1646#0#HTML" expanded="true" />
+            <element signature="e#1646#1652#0#HTML" expanded="true" />
+            <element signature="e#1719#1743#0#HTML" expanded="true" />
+            <element signature="e#1771#1794#0#HTML" expanded="true" />
+            <element signature="e#1795#1801#0#HTML" expanded="true" />
+            <element signature="e#1801#1807#0#HTML" expanded="true" />
+            <element signature="e#1807#1813#0#HTML" expanded="true" />
+            <element signature="e#1897#1921#0#HTML" expanded="true" />
+            <element signature="e#1941#1964#0#HTML" expanded="true" />
+            <element signature="e#1965#1971#0#HTML" expanded="true" />
+            <element signature="e#1971#1977#0#HTML" expanded="true" />
+            <element signature="e#1977#1983#0#HTML" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

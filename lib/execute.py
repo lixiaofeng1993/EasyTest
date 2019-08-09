@@ -15,7 +15,8 @@ from lib.signtype import user_sign_api, encryptAES, auth_user
 import logging
 import time
 from lib.public import validators_result, get_extract, get_param, replace_var, \
-    extract_variables, call_interface, format_url, random_params
+    extract_variables, call_interface, format_url
+from lib.random_params import random_params
 from .error_code import ErrorCode
 
 # from common.connectMySql import SqL

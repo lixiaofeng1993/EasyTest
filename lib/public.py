@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding:utf-8
-import json, re, os, random
+import json, re, os
 import time
 import logging
 from datetime import datetime
@@ -281,9 +281,8 @@ def splicing_url(url, key):
     :return: 拼接后的key
     """
     if url:
-        if isinstance(url, str):
-            url = url.strip('/').replace('/', '_')
-            url_key = url + '_' + key  # 拼接接口路径和参数
+        url = url.strip('/').replace('/', '_')
+        url_key = url + '_' + key  # 拼接接口路径和参数
     else:
         url_key = key
     return url_key
@@ -383,26 +382,6 @@ def get_param_response(param_name, dict_data, num=0, default=None):
                             if ret is not default:
                                 return ret
     return default
-
-
-# random 参数化-生成随机值
-def random_params(params):
-    if isinstance(params, dict):
-        for key, value in params.items():
-            if '__random' in value:
-                regexp = r"\((.+)\)"
-                num = re.findall(regexp, value)
-                str_value = value.split('__random')[0]
-                if num:
-                    try:
-                        k = int(num[0].split(',')[0])
-                        v = int(num[0].split(',')[1])
-                        params[key] = str_value + str(random.randint(k, v))
-                    except ValueError:
-                        return 'error'
-                else:
-                    return 'error'
-        return params
 
 
 def call_interface(s, method, url, header, data, content_type='json', user_auth=''):
