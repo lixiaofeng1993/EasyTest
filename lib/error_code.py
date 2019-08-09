@@ -12,19 +12,19 @@ class ErrorCode:
     """
     处理接口请求返回中的异常情况
     """
-    interface_error = '系统异常，检查接口参数是否正确！'
+    interface_error = '系统异常！请前往【用例管理】页面，检查接口参数是否正确！'
 
-    index_error = 'list索引错误，提取参数设置长度超出！'
+    index_error = 'list索引错误！提取参数设置长度超出，请前往【用例管理】页面修改！'
 
-    validators_error = '接口未设置检查点！'
+    validators_error = '接口未设置检查点，请前往【用例管理】页面添加！'
 
-    case_not_exit_error = '正在执行的用例不存在！'
+    case_not_exit_error = '正在执行的用例不存在！请前往【用例管理】页面核实！'
 
-    env_not_exit_error = '用例运行环境不存在！'
+    env_not_exit_error = '用例运行环境不存在！请前往【测试环境】页面核实！'
 
-    interface_not_exit_error = '执行接口不存在！'
+    interface_not_exit_error = '执行接口不存在！请前往【接口管理】页面核实！'
 
-    user_not_logged_in_error = '用户未登录！！！'
+    user_not_logged_in_error = '用户未登录！请重新登录后再进行相关操作！'
 
     requests_error = '接口请求异常，检查请求接口代码是否正确！'
 
@@ -42,8 +42,8 @@ class ErrorCode:
 
     already_exists_error = '注册用户已经存在！'
 
-    AES_key_length_error = 'app_key长度必须是16、24或者32位！'
+    AES_key_length_error = 'app_key长度必须是16、24或者32位！请前往【测试环境】页面修改密钥！'
 
-    random_params_error = '参数化设置错误，不符合关键字设置规则！'
+    random_params_error = '参数化设置错误，不符合关键字设置规则！请前往【用例管理】页面检查相关参数化配置！'
 
-    analytical_return_value_error = '解析返回值错误！'
+    analytical_return_value_error = '解析返回值错误！请前往【用例管理】页面检查相关参数配置！'

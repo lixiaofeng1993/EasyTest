@@ -635,6 +635,7 @@ def interface_update(request):
             prj_list = is_superuser(user_id)
             if_id = request.GET['if_id']
             interface = Interface.objects.get(if_id=if_id)
+            print(interface.request_header_param, 1111111111111111111111111)
             request_header_param_list = interface_get_params(interface.request_header_param)
             request_body_param_list = interface_get_params(interface.request_body_param)
             response_header_param_list = interface_get_params(interface.response_header_param)
@@ -659,7 +660,6 @@ def interface_get_params(params):
         for i in range(len(eval(params))):
             param_list.append({"var_name": "", "var_remark": ""})
             param_list[i]['var_name'] = eval(params)[i]['var_name']
-            param_list[i]['var_remark'] = eval(params)[i]['var_remark']
         return param_list
     else:
         return []
@@ -677,7 +677,6 @@ def interface_format_params(params_list):
         for i in range(len(params_list)):
             var.append({"var_name": "", "var_remark": ""})
             var[i]['var_name'] = params_list[i]['var_name']
-            var[i]['var_remark'] = params_list[i]['var_remark']
         return json.dumps(var)
     else:
         return []

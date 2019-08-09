@@ -201,7 +201,7 @@
                                     <thead>
                                     <tr>
                                         <th>头部标签</th>
-                                        <th>备注</th>
+                                        {#                                        <th>备注</th>#}
                                         <th></th>
                                     </tr>
 
@@ -210,8 +210,8 @@
                                             <tr>
                                                 <td name='var_name'
                                                     contenteditable='true'>{{ request_header_param.var_name }}</td>
-                                                <td name='var_remark'
-                                                    contenteditable='true'>{{ request_header_param.var_remark }}</td>
+                                                {#                                                <td name='var_remark'#}
+                                                {#                                                    contenteditable='true'>{{ request_header_param.var_remark }}</td>#}
                                                 <td>
                                                     <button class='btn btn-danger' onclick='del_step(this)'><i
                                                             class='fa fa-close'></i>&nbsp;删除行
@@ -240,7 +240,6 @@
                                     <thead>
                                     <tr>
                                         <th>参数名</th>
-                                        <th>备注</th>
                                         <th></th>
                                     </tr>
                                     {% if request_body_param_list %}
@@ -248,8 +247,6 @@
                                             <tr>
                                                 <td name='var_name'
                                                     contenteditable='true'>{{ request_body_param.var_name }}</td>
-                                                <td name='var_remark'
-                                                    contenteditable='true'>{{ request_body_param.var_remark }}</td>
                                                 <td>
                                                     <button class='btn btn-danger' onclick='del_step(this)'><i
                                                             class='fa fa-close'></i>&nbsp;删除行
@@ -278,7 +275,6 @@
                                     <thead>
                                     <tr>
                                         <th>头部标签</th>
-                                        <th>备注</th>
                                         <th></th>
                                     </tr>
                                     {% if response_header_param_list %}
@@ -286,8 +282,6 @@
                                             <tr>
                                                 <td name='var_name'
                                                     contenteditable='true'>{{ response_header_param.var_name }}</td>
-                                                <td name='var_remark'
-                                                    contenteditable='true'>{{ response_header_param.var_remark }}</td>
                                                 <td>
                                                     <button class='btn btn-danger' onclick='del_step(this)'><i
                                                             class='fa fa-close'></i>&nbsp;删除行
@@ -315,7 +309,6 @@
                                     <thead>
                                     <tr>
                                         <th>参数名</th>
-                                        <th>备注</th>
                                         <th></th>
                                     </tr>
                                     {% if response_body_param_list %}
@@ -323,8 +316,6 @@
                                             <tr>
                                                 <td name='var_name'
                                                     contenteditable='true'>{{ response_body_param.var_name }}</td>
-                                                <td name='var_remark'
-                                                    contenteditable='true'>{{ response_body_param.var_remark }}</td>
                                                 <td>
                                                     <button class='btn btn-danger' onclick='del_step(this)'><i
                                                             class='fa fa-close'></i>&nbsp;删除行
@@ -372,24 +363,24 @@
         }
 
         $(document).ready(function () {
-            //添加请求头参数行      <input name="response_body_data">
+            //添加请求头参数行      <td name='var_remark' contenteditable='true'></td>
             $("#add_request_header").click(function () {
-                var newRow = "<tr> <td name='var_name' contenteditable='true'></td><td name='var_remark' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+                var newRow = "<tr> <td name='var_name' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
                 $("#request_header tr:last").after(newRow);
             });
 
             $("#add_request_body").click(function () {
-                var newRow = "<tr> <td name='var_name' contenteditable='true'></td><td name='var_remark' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+                var newRow = "<tr> <td name='var_name' contenteditable='true'></td><td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
                 $("#request_body tr:last").after(newRow);
             });
 
             $("#add_response_header").click(function () {
-                var newRow = "<tr> <td name='var_name' contenteditable='true'></td><td name='var_remark' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+                var newRow = "<tr> <td name='var_name' contenteditable='true'></td><td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
                 $("#response_header tr:last").after(newRow);
             });
 
             $("#add_response_body").click(function () {
-                var newRow = "<tr> <td name='var_name' contenteditable='true'></td><td name='var_remark' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+                var newRow = "<tr> <td name='var_name' contenteditable='true'></td><td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
                 $("#response_body tr:last").after(newRow);
             });
 

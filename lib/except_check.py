@@ -247,34 +247,37 @@ def interface_is_delete(case_run, case_name, if_name):
 
 
 def parametric_set_error(if_dict):
-    if_dict['error'] = ErrorCode.random_params_error
     if_dict["result"] = "error"
     if_dict["checkpoint"] = ''
     if_dict["res_content"] = '参数化设置错误，请检查是否符合平台参数化规则！'
+    if_dict['error'] = ErrorCode.random_params_error
+    if_dict['msg'] = ErrorCode.random_params_error
     return if_dict
 
 
 def AES_length_error(if_dict):
-    if_dict['error'] = ErrorCode.AES_key_length_error
     if_dict["result"] = "error"
     if_dict["checkpoint"] = ''
     if_dict["res_content"] = 'AES算法app_key设置长度错误，请前往【测试环境】页面核实 密钥 是否符合规则.'
+    if_dict['error'] = ErrorCode.AES_key_length_error
+    if_dict['msg'] = ErrorCode.AES_key_length_error
     return if_dict
 
 
 def response_value_error(if_dict, e):
-    if_dict['error'] = ErrorCode.analytical_return_value_error
     if_dict["result"] = "error"
     if_dict["checkpoint"] = ''
     if_dict["res_content"] = '解析接口返回值出错，请核实原因.  详细报错信息： {}'.format(e)
+    if_dict['error'] = ErrorCode.analytical_return_value_error
+    if_dict['msg'] = ErrorCode.analytical_return_value_error
     return if_dict
 
 
 def request_api_error(if_dict, e):
     if_dict["result"] = "error"
-    if_dict["msg"] = str(e)
     if_dict["checkpoint"] = ''
     if_dict['error'] = ErrorCode.requests_error
+    if_dict["msg"] = ErrorCode.requests_error
     return if_dict
 
 
@@ -282,11 +285,12 @@ def index_error(if_dict):
     if_dict["result"] = "error"
     if_dict["checkpoint"] = ''
     if_dict["error"] = ErrorCode.index_error
+    if_dict["msg"] = ErrorCode.index_error
     return if_dict
 
 
 def checkpoint_no_error(if_dict):
-    if_dict["result"] = 'error'
+    if_dict["result"] = 'fail'
     if_dict['checkpoint'] = ''
     if_dict["msg"] = ErrorCode.validators_error
     if_dict["error"] = ErrorCode.validators_error
