@@ -635,7 +635,6 @@ def interface_update(request):
             prj_list = is_superuser(user_id)
             if_id = request.GET['if_id']
             interface = Interface.objects.get(if_id=if_id)
-            print(interface.request_header_param, 1111111111111111111111111)
             request_header_param_list = interface_get_params(interface.request_header_param)
             request_body_param_list = interface_get_params(interface.request_body_param)
             response_header_param_list = interface_get_params(interface.response_header_param)

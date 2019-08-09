@@ -135,6 +135,10 @@ def interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, i
         return '接口名称不能为空！'
     if url == '':
         return 'url不能为空！'
+    att = re.compile('^[\w\{\}\/]+$', re.A)
+    math = att.findall(url)
+    if not math:
+        return 'url不符合规则【^[\w\{\}\/]+$】，请重新输入！'
     if method == '':
         return '请选择接口的请求方式！'
     if is_sign == '':
@@ -193,6 +197,17 @@ def case_info_logic(case_name, content, case_id=''):
         return '用例名称不能为空！'
     if content == '[]':
         return '请输入接口参数信息！'
+    contents = eval(content)
+    att = re.compile('^\w+$', re.A)
+    for param in contents:
+        for key in param['header']:
+            math = att.findall(key)
+            if not math:
+                return '请求头中有参数不符合规则【^\w+$】，请重新输入！'
+        for key in param['body']:
+            math = att.findall(key)
+            if not math:
+                return 'body中有参数不符合规则【^\w+$】，请重新输入！'
     if not case_id:
         name_exit = Case.objects.filter(case_name=case_name)
     else:
