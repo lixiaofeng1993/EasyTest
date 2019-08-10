@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="778b3f5c-ebac-48de-a7cd-7bbe971dd892" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EasyTest/settings.py" afterPath="$PROJECT_DIR$/EasyTest/settings.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/views.py" afterPath="$PROJECT_DIR$/base/views.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/except_check.py" afterPath="$PROJECT_DIR$/lib/except_check.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/interface/add.html" afterPath="$PROJECT_DIR$/templates/base/interface/add.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/interface/update.html" afterPath="$PROJECT_DIR$/templates/base/interface/update.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -28,8 +29,8 @@
       <file leaf-file-name="execute.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/execute.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
-              <caret line="151" column="0" lean-forward="false" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
+            <state relative-caret-position="418">
+              <caret line="175" column="35" lean-forward="false" selection-start-line="175" selection-start-column="35" selection-end-line="175" selection-end-column="35" />
               <folding />
             </state>
           </provider>
@@ -38,8 +39,8 @@
       <file leaf-file-name="error_code.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/error_code.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="17" lean-forward="false" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
+            <state relative-caret-position="503">
+              <caret line="28" column="11" lean-forward="true" selection-start-line="28" selection-start-column="11" selection-end-line="28" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -48,11 +49,31 @@
       <file leaf-file-name="except_check.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/except_check.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="27">
-              <caret line="280" column="0" lean-forward="true" selection-start-line="280" selection-start-column="0" selection-end-line="280" selection-end-column="0" />
+            <state relative-caret-position="562">
+              <caret line="327" column="34" lean-forward="false" selection-start-line="327" selection-start-column="34" selection-end-line="327" selection-end-column="34" />
               <folding>
                 <element signature="e#163#244#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="add.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base/interface/add.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="392">
+              <caret line="307" column="32" lean-forward="false" selection-start-line="307" selection-start-column="32" selection-end-line="307" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="update.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/base/interface/update.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-4096">
+              <caret line="79" column="70" lean-forward="false" selection-start-line="79" selection-start-column="70" selection-end-line="79" selection-end-column="70" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -70,8 +91,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="377" column="19" lean-forward="false" selection-start-line="377" selection-start-column="19" selection-end-line="377" selection-end-column="19" />
+            <state relative-caret-position="884">
+              <caret line="612" column="34" lean-forward="false" selection-start-line="612" selection-start-column="34" selection-end-line="612" selection-end-column="34" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -90,10 +111,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>func_name</find>
-      <find>method_doc</find>
-      <find>method</find>
-      <find>checkpoint</find>
       <find>AES_length_error</find>
       <find>res_content</find>
       <find>extract_list</find>
@@ -112,7 +129,6 @@
       <find>interface_add</find>
       <find>request_header_data</find>
       <find>备注</find>
-      <find>var_remark</find>
       <find>remark</find>
       <find>case_add</find>
       <find>解析接口返回值出错，请核实原因</find>
@@ -120,6 +136,11 @@
       <find>p</find>
       <find>rin</find>
       <find>print</find>
+      <find>var_remark</find>
+      <find>url不符合规则【^[\w\{\}\/]+$】，请重新输入！</find>
+      <find>接口名称和url不能为空！</find>
+      <find>url</find>
+      <find>接口请求异常，检查请求接口代码是否正确</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -161,14 +182,14 @@
         <option value="$PROJECT_DIR$/lib/random_params.py" />
         <option value="$PROJECT_DIR$/lib/public.py" />
         <option value="$PROJECT_DIR$/templates/base/case/index.html" />
-        <option value="$PROJECT_DIR$/templates/base/interface/add.html" />
-        <option value="$PROJECT_DIR$/templates/base/interface/update.html" />
         <option value="$PROJECT_DIR$/templates/base/case/add.html" />
         <option value="$PROJECT_DIR$/templates/base/case/update.html" />
         <option value="$PROJECT_DIR$/lib/execute.py" />
-        <option value="$PROJECT_DIR$/lib/except_check.py" />
         <option value="$PROJECT_DIR$/lib/error_code.py" />
         <option value="$PROJECT_DIR$/base/views.py" />
+        <option value="$PROJECT_DIR$/templates/base/interface/update.html" />
+        <option value="$PROJECT_DIR$/templates/base/interface/add.html" />
+        <option value="$PROJECT_DIR$/lib/except_check.py" />
         <option value="$PROJECT_DIR$/EasyTest/settings.py" />
       </list>
     </option>
@@ -180,10 +201,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-9" />
+    <option name="x" value="2391" />
     <option name="y" value="-9" />
-    <option name="width" value="1938" />
-    <option name="height" value="1060" />
+    <option name="width" value="2418" />
+    <option name="height" value="1331" />
   </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
@@ -200,7 +221,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -546,6 +566,7 @@
         </subPane>
       </pane>
       <pane id="Scratches" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -859,27 +880,27 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1060" extended-state="6" />
+    <frame x="2391" y="-9" width="2418" height="1331" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18776824" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15145051" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31620112" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.35729614" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35708192" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31620112" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1154,22 +1175,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/interface/add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="165" column="88" lean-forward="false" selection-start-line="165" selection-start-column="86" selection-end-line="165" selection-end-column="88" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/interface/update.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4664">
-          <caret line="212" column="118" lean-forward="false" selection-start-line="212" selection-start-column="108" selection-end-line="212" selection-end-column="118" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/case/add.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6842">
@@ -1190,7 +1195,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="594">
           <caret line="27" column="9" lean-forward="false" selection-start-line="27" selection-start-column="9" selection-end-line="27" selection-end-column="9" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1210,10 +1214,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/interface/update.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4096">
+          <caret line="79" column="70" lean-forward="false" selection-start-line="79" selection-start-column="70" selection-end-line="79" selection-end-column="70" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base/interface/add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="307" column="32" lean-forward="false" selection-start-line="307" selection-start-column="32" selection-end-line="307" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/base/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="377" column="19" lean-forward="false" selection-start-line="377" selection-start-column="19" selection-end-line="377" selection-end-column="19" />
+        <state relative-caret-position="884">
+          <caret line="612" column="34" lean-forward="false" selection-start-line="612" selection-start-column="34" selection-end-line="612" selection-end-column="34" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
@@ -1222,24 +1242,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/error_code.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="17" lean-forward="false" selection-start-line="0" selection-start-column="17" selection-end-line="0" selection-end-column="17" />
+        <state relative-caret-position="503">
+          <caret line="28" column="11" lean-forward="true" selection-start-line="28" selection-start-column="11" selection-end-line="28" selection-end-column="11" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/execute.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="151" column="0" lean-forward="false" selection-start-line="151" selection-start-column="0" selection-end-line="151" selection-end-column="0" />
+        <state relative-caret-position="418">
+          <caret line="175" column="35" lean-forward="false" selection-start-line="175" selection-start-column="35" selection-end-line="175" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/except_check.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="27">
-          <caret line="280" column="0" lean-forward="true" selection-start-line="280" selection-start-column="0" selection-end-line="280" selection-end-column="0" />
+        <state relative-caret-position="562">
+          <caret line="327" column="34" lean-forward="false" selection-start-line="327" selection-start-column="34" selection-end-line="327" selection-end-column="34" />
           <folding>
             <element signature="e#163#244#0" expanded="true" />
           </folding>

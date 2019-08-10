@@ -551,15 +551,16 @@ def interface_add(request):
             data_type = request.POST['data_type']
             is_sign = request.POST.get('is_sign', '')
             is_headers = request.POST.get('is_headers', '')
-
-            msg = interface_info_logic(if_name, url, method, is_sign, data_type, is_headers)
-            if msg != 'ok':
-                return HttpResponse(msg)
-            description = request.POST['description']
             request_header_data = request.POST['request_header_data']
             request_body_data = request.POST['request_body_data']
             response_header_data = request.POST['response_header_data']
             response_body_data = request.POST['response_body_data']
+
+            msg = interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, request_header_data,
+                                       request_body_data, response_header_data, response_body_data)
+            if msg != 'ok':
+                return HttpResponse(msg)
+            description = request.POST['description']
             username = request.session.get('user', '')
             if is_headers == '1':
                 Interface.objects.filter(project_id=prj_id).filter(is_header=1).update(is_header=0)
@@ -600,20 +601,21 @@ def interface_update(request):
             data_type = request.POST['data_type']
             is_sign = request.POST.get('is_sign', '')
             is_headers = request.POST.get('is_headers', '')
+            request_header_data_list = request.POST.get('request_header_data', [])
+            request_header_data = interface_format_params(request_header_data_list)
+            request_body_data_list = request.POST.get('request_body_data', [])
+            request_body_data = interface_format_params(request_body_data_list)
+            response_header_data_list = request.POST.get('response_header_data', [])
+            response_header_data = interface_format_params(response_header_data_list)
+            response_body_data_list = request.POST.get('response_body_data', [])
+            response_body_data = interface_format_params(response_body_data_list)
 
-            msg = interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, if_id)
+            msg = interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, request_header_data,
+                                       request_body_data, response_header_data, response_body_data, if_id)
             if msg != 'ok':
                 return HttpResponse(msg)
             else:
                 description = request.POST['description']
-                request_header_data_list = request.POST.get('request_header_data', [])
-                request_header_data = interface_format_params(request_header_data_list)
-                request_body_data_list = request.POST.get('request_body_data', [])
-                request_body_data = interface_format_params(request_body_data_list)
-                response_header_data_list = request.POST.get('response_header_data', [])
-                response_header_data = interface_format_params(response_header_data_list)
-                response_body_data_list = request.POST.get('response_body_data', [])
-                response_body_data = interface_format_params(response_body_data_list)
                 username = request.session.get('user', '')
                 if is_headers == '1':
                     Interface.objects.filter(project_id=prj_id).filter(is_header=1).update(is_header=0)

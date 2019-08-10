@@ -109,6 +109,10 @@ def env_info_logic(env_name, url, env_id=''):
         return '环境名称不能为空！'
     if url == '':
         return 'url不能为空！'
+    att = re.compile('^[\w]{3,5}:\/\/.+')
+    math = att.findall(url)
+    if not math:
+        return 'url不符合规则【^[\w]{3,5}:\/\/.+】，请重新输入！'
     if not env_id:
         name_exit = Environment.objects.filter(env_name=env_name)
     else:
@@ -119,7 +123,8 @@ def env_info_logic(env_name, url, env_id=''):
         return 'ok'
 
 
-def interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, if_id=''):
+def interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, request_header_data,
+                         request_body_data, response_header_data, response_body_data, if_id=''):
     """
     接口新增、编辑逻辑
     :param if_name:
@@ -128,17 +133,21 @@ def interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, i
     :param is_sign:
     :param data_type:
     :param is_headers:
+    :param request_header_data:
+    :param request_body_data:
+    :param response_header_data:
+    :param response_body_data:
     :param if_id:
     :return:
     """
     if if_name == '':
         return '接口名称不能为空！'
     if url == '':
-        return 'url不能为空！'
+        return '接口路径不能为空！'
     att = re.compile('^[\w\{\}\/]+$', re.A)
     math = att.findall(url)
     if not math:
-        return 'url不符合规则【^[\w\{\}\/]+$】，请重新输入！'
+        return '接口路径不符合规则【^[\w\{\}\/]+$】，请重新输入！'
     if method == '':
         return '请选择接口的请求方式！'
     if is_sign == '':
@@ -147,6 +156,31 @@ def interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, i
         return '请选择接口的请求数据类型！'
     if is_headers == '':
         return '请设置接口是否需要设置请求头！'
+    att = re.compile('^\w+$', re.A)
+    if request_header_data:
+        request_header_data = eval(request_header_data)
+        for data in request_header_data:
+            math = att.findall(data['var_name'])
+            if not math:
+                return '请求头中有参数不符合规则【^\w+$】，请重新输入！'
+    if request_body_data:
+        request_body_data = eval(request_body_data)
+        for data in request_body_data:
+            math = att.findall(data['var_name'])
+            if not math:
+                return 'body中有参数不符合规则【^\w+$】，请重新输入！'
+    if response_header_data:
+        response_header_data = eval(response_header_data)
+        for data in response_header_data:
+            math = att.findall(data['var_name'])
+            if not math:
+                return '返回头中有参数不符合规则【^\w+$】，请重新输入！'
+    if response_body_data:
+        response_body_data = eval(response_body_data)
+        for data in response_body_data:
+            math = att.findall(data['var_name'])
+            if not math:
+                return '返回body参数中有参数不符合规则【^\w+$】，请重新输入！'
     if not if_id:
         name_exit = Interface.objects.filter(if_name=if_name)
     else:
@@ -291,6 +325,7 @@ def response_value_error(if_dict, e):
 def request_api_error(if_dict, e):
     if_dict["result"] = "error"
     if_dict["checkpoint"] = ''
+    if_dict["res_content"] = '接口请求出错，请核实原因.  详细报错信息： {}'.format(e)
     if_dict['error'] = ErrorCode.requests_error
     if_dict["msg"] = ErrorCode.requests_error
     return if_dict
