@@ -46,17 +46,20 @@ class Test_execute():
         func_name = sys._getframe().f_code.co_name
         method_doc = self.test_case.__doc__
         case_run = {'class_name': class_name, 'func_name': func_name, 'method_doc': method_doc, 'case_id': self.case_id}
+
         if self.get_env(self.env_id):  # 获取测试环境数据
             self.prj_id, self.env_url, self.private_key = self.get_env(self.env_id)
         else:
             case_run = env_not_exit(case_run)  # 异常情况
             return case_run
         self.sign_type = self.get_sign(self.prj_id)  # 获取签名数据
+
         try:
             case = Case.objects.get(case_id=self.case_id)
         except Case.DoesNotExist as e:
-            case_run = case_is_delete(case_run)
+            case_run = case_is_delete(case_run, e)
             return case_run
+
         self.step_list = eval(case.content)
         case_step_list = []
         for step in self.step_list:
@@ -65,12 +68,10 @@ class Test_execute():
                 case_step_list.append(step_info)
                 if step_info["result"] == "fail":
                     case_run["result"] = "fail"
-                    # break
                 if step_info["result"] == "error":
                     case_run["result"] = "error"
-                    # break
             else:
-                case_run = interface_is_delete(case_run, case.case_name, step["if_name"])
+                case_run = interface_is_delete(case_run, case.case_name, step["if_name"], step_info)
                 return case_run
         case_run['case_name'], case_run["step_list"] = case.case_name, case_step_list
         log.info('interface response data: {}'.format(case_run))
@@ -86,7 +87,8 @@ class Test_execute():
         try:
             interface = Interface.objects.get(if_id=if_id)
         except Interface.DoesNotExist as e:
-            return  # 接口不存在
+            return e  # 接口不存在
+
         var_list = extract_variables(step_content)
         if var_list:  # 检查是否存在变量
             for var_name in var_list:
@@ -121,7 +123,7 @@ class Test_execute():
                 if 'select' in v:
                     if_dict['body'][k] = self.sql.execute_sql(v)
 
-        if interface.is_sign:  # 存在签名时，处理参数
+        if interface.is_sign:  # 接口存在签名时，处理参数
             if self.sign_type == 1:  # md5加密
                 if_dict["body"] = user_sign_api(if_dict["body"], self.private_key)
             elif self.sign_type == 2:  # 不签名
@@ -168,9 +170,10 @@ class Test_execute():
                         res.text.replace('false', 'False').replace('null', 'None').replace('true',
                                                                                            'True'))  # 查看报告时转码错误的问题
                     if '系统异常' in if_dict['res_content'].values():
-                        if_dict['error'] = ErrorCode.interface_error
+                        if_dict = response_value_error(if_dict, make=True)
+                        return if_dict
                 except SyntaxError as e:
-                    if_dict = response_value_error(if_dict, e)  # 解析返回值异常
+                    if_dict = response_value_error(if_dict, )  # 解析返回值异常
                     return if_dict
             except requests.RequestException as e:
                 if_dict = request_api_error(if_dict, e)  # 接口请求异常

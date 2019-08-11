@@ -16,7 +16,7 @@ from django.shortcuts import render_to_response
 from lib.public import DrawPie, paginator, pagination_data
 from lib.error_code import ErrorCode
 from lib.except_check import project_info_logic, sign_info_logic, env_info_logic, interface_info_logic, format_params, \
-    case_info_logic, plan_info_logic  # 自定义异常逻辑
+    case_info_logic, plan_info_logic, header_value_error  # 自定义异常逻辑
 from django.views.generic import ListView
 
 log = logging.getLogger('log')  # 初始化log
@@ -307,13 +307,18 @@ def set_headers(request):
                 return render(request, "base/env/set_headers.html", info)
         elif request.method == 'POST':
             content = request.POST.get('content', '')
-            env_id = request.POST.get('env_id', '')
-            now_time = datetime.now()
-            username = request.session.get('user', '')
-            Environment.objects.filter(env_id=env_id).update(set_headers=content, update_time=now_time,
-                                                             update_user=username)
-            log.info('env {} set headers success. headers info: {} '.format(env_id, content))
-            return HttpResponseRedirect("/base/env/")
+
+            msg = header_value_error(content)
+            if msg != 'ok':
+                return HttpResponse(msg)
+            else:
+                env_id = request.POST.get('env_id', '')
+                now_time = datetime.now()
+                username = request.session.get('user', '')
+                Environment.objects.filter(env_id=env_id).update(set_headers=content, update_time=now_time,
+                                                                 update_user=username)
+                log.info('env {} set headers success. headers info: {} '.format(env_id, content))
+                return HttpResponseRedirect("/base/env/")
 
 
 def set_mock(request):

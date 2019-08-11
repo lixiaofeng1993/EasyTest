@@ -50,7 +50,8 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-title">
                     <h3 class="panel-title" value="{{ env_id }}" id="env_name"
-                        style="margin-left: 2%">{{ env_name }} <span style="font-size: 12px;margin-left: 5%">设置默认headers后，不用再单独设置接口header</span></h3>
+                        style="margin-left: 2%">{{ env_name }} <span style="font-size: 12px;margin-left: 5%">设置默认headers后，不用再单独设置接口header</span>
+                    </h3>
                 </div>
                 <div class="ibox-content">
                     <div class="form-group">
@@ -170,9 +171,13 @@
                 type: "post",
                 data: {"content": content_json, "env_id": env_id},
                 success: function (data) {
-                    alert('保存成功！');
-                    window.location.replace("/base/env/");
+                    if (data.indexOf('<') == -1) {
+                        alert(data);
+                    } else {
+                        alert('保存成功！');
+                        window.location.replace("/base/env/");
 
+                    }
                 },
                 error: function () {
                     alert("error!");

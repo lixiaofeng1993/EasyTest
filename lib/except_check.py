@@ -271,6 +271,26 @@ def plan_info_logic(plan_name, content, plan_id=''):
         return 'ok'
 
 
+def header_value_error(content):
+    if content:
+        content = eval(content)['header']
+        att = re.compile('^\w*$', re.A)
+        make = True
+        for k, v in content.items():
+            math = att.findall(k)
+            if not math:
+                make = False
+                return '请求头中有参数不符合规则【^\w*$】，请重新输入！'
+            math = att.findall(v)
+            if not math:
+                make = False
+                return '请求头中有参数 值 不符合规则【^\w*$】，请重新输入！'
+        if make:
+            return 'ok'
+    else:
+        return 'ok'
+
+
 """请求接口异常处理"""
 
 
@@ -281,16 +301,16 @@ def env_not_exit(case_run):
     return case_run
 
 
-def case_is_delete(case_run):
+def case_is_delete(case_run, e):
     log.error('用例 {} 已被删除！'.format(case_run['case_id']))
-    case_run['msg'] = '用例 {} 可能已被删除，请返回【用例管理】页面核实.'.format(case_run['case_id'])
+    case_run['msg'] = '用例 {} 可能已被删除，请返回【用例管理】页面核实.    详细报错信息：{}'.format(case_run['case_id'], e)
     case_run['error'] = ErrorCode.case_not_exit_error
     return case_run
 
 
-def interface_is_delete(case_run, case_name, if_name):
+def interface_is_delete(case_run, case_name, if_name, e):
     log.error('用例 {} 中的接口 {} 已被删除！'.format(case_name, if_name))
-    case_run['msg'] = '用例 {} 中的接口 {} 可能已被删除，请前往【接口管理】页面核实.'.format(case_name, if_name)
+    case_run['msg'] = '用例 {} 中的接口 {} 可能已被删除，请前往【接口管理】页面核实.    详细报错信息：{}'.format(case_name, if_name, e)
     case_run['error'] = ErrorCode.interface_not_exit_error
     return case_run
 
@@ -313,12 +333,18 @@ def AES_length_error(if_dict):
     return if_dict
 
 
-def response_value_error(if_dict, e):
-    if_dict["result"] = "error"
-    if_dict["checkpoint"] = ''
-    if_dict["res_content"] = '解析接口返回值出错，请核实原因.  详细报错信息： {}'.format(e)
-    if_dict['error'] = ErrorCode.analytical_return_value_error
-    if_dict['msg'] = ErrorCode.analytical_return_value_error
+def response_value_error(if_dict, e='', make=False):
+    if make:
+        if_dict["result"] = "error"
+        if_dict["checkpoint"] = ''
+        if_dict['error'] = ErrorCode.interface_error
+        if_dict['msg'] = ErrorCode.interface_error
+    else:
+        if_dict["result"] = "error"
+        if_dict["checkpoint"] = ''
+        if_dict["res_content"] = '解析接口返回值出错，请核实原因.  详细报错信息： {}'.format(e)
+        if_dict['error'] = ErrorCode.analytical_return_value_error
+        if_dict['msg'] = ErrorCode.analytical_return_value_error
     return if_dict
 
 
