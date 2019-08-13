@@ -1538,7 +1538,7 @@ def performance_index(request):
             return render(request, 'user/login_action.html')
 
 
-# 添加用户
+# 用户列表
 @method_decorator(login_required, name='dispatch')
 class UserIndex(ListView):
     model = User
