@@ -55,9 +55,14 @@
 {% block body %}
     <div class="row">
         <div class="col-md-12">
+            <p><span>首页数据控制</span>
+                <a href="javascript:void(0)" class="index_data sure-btn"><i
+                        class="fa fa-toggle-off fa-1x">&nbsp;&nbsp;</i></a></p>
+
             <div class="panel" style="height: 100%">
                 <div class="panel-body">
                     <div class="panel-tbody-index">
+                        <br>
                         <h5>快捷入口</h5>
                         <div class="panel-tbody">
                             <p><i class="fa fa-product-hunt"></i>&nbsp;项目</p>
@@ -295,6 +300,38 @@
         }
     </script>
     <script type="text/javascript">
+        $('.index_data').click(function () {
+            var index = $('.index_data').find('i');
+            var i = index.attr("class");
+            if (i.indexOf('off') == -1) {
+                index.removeClass();
+                index.addClass('fa fa-toggle-off fa-1x');
+                var off = 0;
+            } else {
+                index.removeClass();
+                index.addClass('fa fa-toggle-on fa-1x');
+                var off = 1;
+            }
+            $.ajax({
+                type: 'get',
+                url: "/index_data/",
+                data: {
+                    "off": off
+                },
+                success: function (data) {
+                    $('.panel-tbody-index').empty();
+                    html = '<div class="panel-tbody-index"><br><h5>快捷入口</h5><div class="panel-tbody"><p><i class="fa fa-product-hunt"></i>&nbsp;项目</p><div style="text-align: center"><a href="/base/project/">' + data.project_num + '</a></div></div>' +
+                        '<div class="panel-tbody"><p><i class="fa fa-envira"></i>&nbsp;环境</p><div style="text-align: center"><a href="/base/env/">' + data.env_num + '</a></div></div><div class="panel-tbody"><p><i class="fa fa-pinterest-square"></i>&nbsp;接口</p>' +
+                        '<div style="text-align: center"><a href="/base/interface/">' + data.interface_num + '</a></div></div><div class="panel-tbody"><p><i class="fa fa-suitcase"></i>&nbsp;用例</p><div style="text-align: center"><a href="/base/case/">' + data.case_num + '</a></div>' +
+                        '</div><div class="panel-tbody"><p><i class="fa fa-paper-plane"></i>&nbsp;计划</p><div style="text-align: center"><a href="/base/plan/">' + data.plan_num + '</a></div></div><div class="panel-tbody"><p><i class="fa fa-pencil"></i>&nbsp;签名</p><div style="text-align: center"><a href="/base/sign/">' + data.sign_num + '</a></div></div>' +
+                        '<div class="panel-tbody"><p><i class="fa fa-bar-chart"></i>&nbsp;报告</p><div style="text-align: center"><a href="/base/report_page/">' + data.report_num + '</a></div></div><div class="panel-tbody"><p><i class="fa fa-tasks"></i>&nbsp;任务</p>' +
+                        '<div style="text-align: center"><a href="/base/timing_task/">' + data.task_num + '</a></div></div><div class="panel-tbody"><p><i class="fa fa-user-secret"></i>&nbsp;用户</p><div style="text-align: center"><a href="/base/user/">' + data.user_num + '</a></div>' +
+                        '</div></div>' + '</div>';
+                    $('.panel-tbody-index').append(html)
+                }
+            })
+        });
+
         $('#submit').click(function () {
             var url = $("#qcode").val();
             var path = $("#small-qcode").val();
@@ -337,7 +374,6 @@
                 $("#appsecret").val("");
             }
         });
-
         // 回车提交搜索
         $(document).keyup(function (event) {
             if (event.keyCode == 13) {

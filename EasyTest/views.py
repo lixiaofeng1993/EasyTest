@@ -86,6 +86,39 @@ def index(request):
         return render(request, "index.html", info)
 
 
+@login_required
+def index_data(request):
+    user_id = request.session.get('user_id', '')  # 从session中获取user_id
+    if not user_id:
+        return render(request, 'user/login_action.html')
+    elif request.method == 'GET':
+        off = request.GET.get('off', '')
+        plan_list = []
+        prj_list = is_superuser(user_id, type='list', off=off)
+        plan = Plan.objects.filter(project_id__in=prj_list)
+        for plan_ in plan:
+            plan_list.append(plan_.plan_id)
+        if off == '1':
+            project_num = Project.objects.aggregate(Count('prj_id'))['prj_id__count']
+        else:
+            project_num = Project.objects.filter(user_id=user_id).aggregate(Count('prj_id'))['prj_id__count']
+        env_num = Environment.objects.filter(project_id__in=prj_list).aggregate(Count('env_id'))['env_id__count']
+        interface_num = Interface.objects.filter(project_id__in=prj_list).aggregate(Count('if_id'))['if_id__count']
+        case_num = Case.objects.filter(project_id__in=prj_list).aggregate(Count('case_id'))['case_id__count']
+        plan_num = Plan.objects.filter(project_id__in=prj_list).aggregate(Count('plan_id'))['plan_id__count']
+        sign_num = Sign.objects.aggregate(Count('sign_id'))['sign_id__count']
+        report_num = Report.objects.filter(plan_id__in=plan_list).aggregate(Count('report_id'))['report_id__count']
+        periodic_num = PeriodicTask.objects.aggregate(Count('id'))['id__count']
+        crontabSchedule_num = CrontabSchedule.objects.aggregate(Count('id'))['id__count']
+        user_num = User.objects.aggregate(Count('id'))['id__count']
+
+        info = {'project_num': project_num, 'env_num': env_num, 'interface_num': interface_num, 'case_num': case_num,
+                'plan_num': plan_num, 'sign_num': sign_num, 'report_num': report_num,
+                'task_num': periodic_num + crontabSchedule_num, 'user_num': user_num}
+
+        return JsonResponse(info)
+
+
 # 天气
 def get_whether(request):
     if request.method == 'GET':

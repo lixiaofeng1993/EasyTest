@@ -267,7 +267,7 @@ def get_user(user_id):
             return False
 
 
-def is_superuser(user_id, type=''):
+def is_superuser(user_id, type='', off=''):
     """
     权限  超级用户和普通用户
     :param user_id:
@@ -275,7 +275,7 @@ def is_superuser(user_id, type=''):
     :return:
     """
     superuser = User.objects.get(id=user_id).is_superuser
-    if superuser:
+    if superuser or off == '1':
         prj_list = Project.objects.all()
     else:
         prj_list = Project.objects.filter(user_id=user_id)
@@ -302,7 +302,7 @@ def get_total_values(user_id):
     }
     today = datetime.date.today()
     plan_list = []
-    prj_list = is_superuser(user_id, type='list')
+    prj_list = is_superuser(user_id, type='list', off='1')
     plan = Plan.objects.filter(project_id__in=prj_list)
     for plan_ in plan:
         plan_list.append(plan_.plan_id)

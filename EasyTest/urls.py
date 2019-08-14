@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'admin/', admin.site.urls),
     url(r'^$', view=views.index),
     url(r'index/$', view=views.index),
+    url(r'index_data/$', view=views.index_data),
     url(r'^login_action/$', view=views.login_action, name='login_action'),
     url(r'^change_password/$', view=views.change_password, name='change_password'),
     url(r'^register/$', view=views.register, name='register'),
