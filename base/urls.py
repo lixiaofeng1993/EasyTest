@@ -29,6 +29,7 @@ urlpatterns = [
     url(r'interface_update/', view=views.interface_update, name='interface_update'),
     url(r'interface_delete/', view=views.interface_delete, name='interface_delete'),
     url(r'interface_search/', view=views.interface_search, name='interface_search'),
+    url(r'interface_copy/', view=views.interface_copy, name='interface_copy'),
     url(r'set_mock/', view=views.set_mock, name='set_mock'),
     # 用例
     url(r'case/', view=views.CaseIndex.as_view(), name='case'),
@@ -38,6 +39,7 @@ urlpatterns = [
     url(r'case_run/', view=views.case_run, name='case_run'),
     url(r'case_logs/', view=views.case_logs, name='case_logs'),
     url(r'case_copy/', view=views.case_copy, name='case_copy'),
+    url(r'case_search/', view=views.case_search, name='case_search'),
     # 测试计划
     url(r'plan/', view=views.PlanIndex.as_view(), name='plan'),
     url(r'plan_add/', view=views.plan_add, name='plan_add'),

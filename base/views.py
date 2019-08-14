@@ -45,7 +45,7 @@ class ProjectIndex(ListView):
         if superuser:
             return Project.objects.all()
         else:
-            return Project.objects.filter(user_id=user_id)
+            return Project.objects.filter(user_id=user_id).order_by('-prj_id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -267,7 +267,7 @@ class EnvIndex(ListView):
     def get_queryset(self):
         user_id = self.request.session.get('user_id', '')
         prj_list = is_superuser(user_id, type='list')
-        return Environment.objects.filter(project_id__in=prj_list)
+        return Environment.objects.filter(project_id__in=prj_list).order_by('-env_id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -477,7 +477,7 @@ class InterfaceIndex(ListView):
     def get_queryset(self):
         user_id = self.request.session.get('user_id', '')
         prj_list = is_superuser(user_id, type='list')
-        return Interface.objects.filter(project_id__in=prj_list)
+        return Interface.objects.filter(project_id__in=prj_list).order_by('-if_id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -487,6 +487,45 @@ class InterfaceIndex(ListView):
         data = pagination_data(paginator, page, is_paginated)
         context.update(data)
         return context
+
+
+def interface_copy(request):
+    """
+    复制interface
+    :param request:
+    :return:
+    """
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/case/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            if_id = request.GET.get('if_id', '')
+            interface_ = Interface.objects.get(if_id=if_id)
+            if_name = interface_.if_name + 'copy'
+            url = interface_.url
+            method = interface_.method
+            data_type = interface_.data_type
+            is_sign = interface_.is_sign
+            is_header = interface_.is_header
+            description = interface_.description
+            request_header_param = interface_.request_header_param
+            request_body_param = interface_.request_body_param
+            response_header_param = interface_.response_header_param
+            response_body_param = interface_.response_body_param
+            project = interface_.project
+            username = request.session.get('user', '')
+            interface = Interface(if_name=if_name, url=url, project=project, method=method, data_type=data_type,
+                                  is_sign=is_sign, description=description, request_header_param=request_header_param,
+                                  request_body_param=request_body_param, response_header_param=response_header_param,
+                                  response_body_param=response_body_param, is_header=is_header, update_user=username)
+            interface.save()
+            log.info(
+                'add interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} // {} '
+                    .format(if_name, project, url, method, data_type, is_sign, description, request_header_param,
+                            request_body_param, response_header_param, response_body_param, is_header))
+            return HttpResponseRedirect("base/interface/")
 
 
 def interface_search(request):
@@ -578,7 +617,7 @@ def interface_add(request):
             log.info(
                 'add interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} // {} '
                     .format(if_name, project, url, method, data_type, is_sign, description, request_header_data,
-                            request_body_data, response_header_data, response_body_data, is_header=is_headers))
+                            request_body_data, response_header_data, response_body_data, is_headers))
             return HttpResponseRedirect("/base/interface/")
         elif request.method == 'GET':
             prj_list = is_superuser(user_id)
@@ -915,7 +954,7 @@ def case_copy(request):
         if request.method == 'GET':
             case_id = request.GET.get('case_id', '')
             case_ = Case.objects.get(case_id=case_id)
-            case_name = case_.case_name
+            case_name = case_.case_name + 'copy'
             content = case_.content
             project = case_.project
             description = case_.description
@@ -925,6 +964,36 @@ def case_copy(request):
             case.save()
             log.info('copy case   {}  success. case info: {} // {} '.format(case_name, project, content))
             return HttpResponseRedirect("base/case/")
+
+
+def case_search(request):
+    """
+    用例搜索功能
+    :param request:
+    :return:
+    """
+    if request.method == 'POST':
+        user_id = request.session.get('user_id', '')
+        if get_user(user_id):
+            search = request.POST.get('search', '').strip()
+            case_list = []
+            if not search:
+                return HttpResponse('0')
+            else:
+                case = Case.objects.filter(case_name__contains=search)
+
+                if not case:  # 查询为空
+                    return HttpResponse('1')
+                else:
+                    for case_ in case:
+                        case_dict = {'case_id': str(case_.case_id), 'case_name': case_.case_name,
+                                     'project': case_.project.prj_name, 'description': case_.description,
+                                     'update_time': str(case_.update_time).split('.')[0],
+                                     'update_user': case_.update_user,'prj_id': case_.project.prj_id}
+                        case_list.append(case_dict)
+                    return HttpResponse(str(case_list))
+        else:
+            return HttpResponse('2')
 
 
 def case_logs(request):

@@ -178,6 +178,9 @@
                                     <a href="/base/set_mock?if_id={{ if.if_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs"><i class="fa fa-etsy"></i>&nbsp;&nbsp;&nbsp;
                                     </a>
+                                    <a href="/base/interface_copy?if_id={{ if.if_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs"
+                                       onclick="return copy_btn()"><i class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;</a>
                                     <a href="/base/interface_delete?if_id={{ if.if_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"
                                        onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;
@@ -283,6 +286,16 @@
             })
         }
 
+        //copy
+        function copy_btn() {
+            if (window.confirm("你确定要复制这个接口吗？")) {
+                return true;//确定返回真
+            }
+            else {
+                return false;//取消返回假
+            }
+        }
+
         // 搜索功能
         function search() {
             var search = $("#search-input").val();
@@ -291,7 +304,7 @@
                 type: "post",
                 data: {"search": search},
                 success: function (data) {
-                    {#                    console.log('-------------------->', data);#}
+                    console.log('-------------------->', data);
                     if (data == '1') {
                         alert('查询结果为空！');
                         $('#search-input').focus()

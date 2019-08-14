@@ -80,6 +80,37 @@
             white-space: normal;
             overflow: auto;
         }
+
+        /* 搜索按钮*/
+        #search {
+            display: inline;
+            margin-left: 10%;
+        }
+
+        #search input {
+            border: 2px solid #20B2AA;
+            border-radius: 20px;
+            background: transparent;
+            top: 0;
+            right: 0;
+        }
+
+        #search-btn {
+            border-color: #1dc5a3;
+            background-color: #1dc5a3;
+            border-radius: 2px;
+            border: none;
+            color: white;
+            padding: 7px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        #search-btn:hover {
+            color: red;
+        }
     </style>
 {% endblock %}
 
@@ -110,9 +141,14 @@
                 <div class="panel-heading">
                     <a href="/base/case_add/" class="btn btn-primary"><i class="fa fa-plus-circle"></i>&nbsp;添加用例</a>&nbsp;&nbsp;&nbsp;
                     <a href="/base/case_logs/" class="btn btn-primary"><i class="fa fa-file-text-o"></i>&nbsp;用例运行日志</a>
+                    <div id="search">
+                        <input type="search" id="search-input" name="search" placeholder="用例名称">
+                        <button id="search-btn" class="search-btn" onclick="search()"><i class="fa fa-search"></i>&nbsp;查询
+                        </button>
+                    </div>
                 </div>
                 <div class="panel-body">
-                    <table class="table table-bordered">
+                    <table class="table table-bordered" id="table-search">
                         <thead>
                         <tr>
                             <th id="cen">ID</th>
@@ -250,7 +286,7 @@
                 return false;//取消返回假
             }
         }
-        //删除
+        //copy
         function copy_btn() {
             if (window.confirm("你确定要复制这条用例吗？")) {
                 return true;//确定返回真
@@ -264,6 +300,7 @@
             var case_id = obj.parentNode.parentNode.children[0].innerText;
             var case_name = obj.parentNode.parentNode.children[1].innerText;
             var prj_id = obj.parentNode.parentNode.children[2].getAttribute("prj_id");
+            console.log(case_id, case_name, prj_id, 1111111111);
             $("#debug_case_id").val(case_id);
             $("#cancel_run").html("取消");
             $("#cancel_run").attr("class", "btn btn-default");
@@ -351,6 +388,63 @@
         $(document).keyup(function (event) {
             if (event.keyCode == 13) {
                 $("#debug").trigger("click");
+            }
+        });
+        // 搜索功能
+        function search() {
+            var search = $("#search-input").val();
+            $.ajax({
+                url: "/base/case_search/",
+                type: "post",
+                data: {"search": search},
+                success: function (data) {
+                    console.log('-------------------->', data);
+                    if (data == '1') {
+                        alert('查询结果为空！');
+                        $('#search-input').focus()
+                    }
+                    else if (data == '0') {
+                        location.reload();
+                    }
+                    else if (data == '2') {
+                        alert('用户未登录！');
+                        location.reload()
+                    }
+                    else {
+                        $('#table-search').empty();
+                        var datas = eval(data);
+                        for (i in datas) {
+                            if (datas[i].is_sign == 0) {
+                                is_sign = '不签名'
+                            } else {
+                                is_sign = '签名'
+                            }
+                            if (i == 0) {
+                                html = '<thead> <tr> <th id="cen">ID</th> <th id="cen">用例名称</th> <th id="cen">所属项目</th> <th id="cen">描述</th> <th id="cen">更新时间</th> <th id="cen">更新用户</th> <th id="cen">操作</th> </tr> </thead> ' +
+                                    '<tbody> <tr> <td id="cen">' + datas[i].case_id + '</td> <td id="case_name"><a href="/base/case_update?case_id=' + datas[i].case_id + '" class="">' + datas[i].case_name + '</a></td> <td id="cen" prj_id="' + datas[i].prj_id + '">' + datas[i].project + '</td> <td>' + datas[i].description + '</td> <td id="cen">' + datas[i].update_time + '</td> <td id="cen">' + datas[i].update_user + '</td> <td id="cen"> <a href="#" class="layui-btn layui-btn-danger layui-btn-xs" onclick="debug_button(this);" data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp; </a>' +
+                                    '<a href="/base/case_copy?case_id=' + datas[i].case_id + '" class="layui-btn layui-btn-danger layui-btn-xs" onclick="return copy_btn()"><i class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;</a>' +
+                                    ' <a href="/base/case_delete?case_id=' + datas[i].case_id + '" class="layui-btn layui-btn-danger layui-btn-xs" onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp; </a> </td> </tr> </tbody>';
+                            } else {
+                                html = '<thead style="display: none"> <tr> <th id="cen">ID</th> <th id="cen">用例名称</th> <th id="cen">所属项目</th> <th id="cen">描述</th> <th id="cen">更新时间</th> <th id="cen">更新用户</th> <th id="cen">操作</th> </tr> </thead> ' +
+                                    '<tbody> <tr> <td id="cen">' + datas[i].case_id + '</td> <td id="case_name"><a href="/base/case_update?case_id=' + datas[i].case_id + '" class="">' + datas[i].case_name + '</a></td> <td id="cen" prj_id="' + datas[i].prj_id + '">' + datas[i].project + '</td> <td>' + datas[i].description + '</td> <td id="cen">' + datas[i].update_time + '</td> <td id="cen">' + datas[i].update_user + '</td> <td id="cen"> <a href="#" class="layui-btn layui-btn-danger layui-btn-xs" onclick="debug_button(this);" data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp; </a>' +
+                                    '<a href="/base/case_copy?case_id=' + datas[i].case_id + '" class="layui-btn layui-btn-danger layui-btn-xs" onclick="return copy_btn()"><i class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;</a>' +
+                                    ' <a href="/base/case_delete?case_id=' + datas[i].case_id + '" class="layui-btn layui-btn-danger layui-btn-xs" onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp; </a> </td> </tr> </tbody>';
+                            }
+                            $('.pagination').empty();
+                            $('#table-search').append(html);
+                        }
+                    }
+                },
+                error: function () {
+                    alert('error')
+                }
+            })
+        }
+
+        // 回车提交搜索
+        $(document).keyup(function (event) {
+            if (event.keyCode == 13) {
+                $("#search-btn").trigger("click");
             }
         });
     </script>
