@@ -275,7 +275,9 @@ def is_superuser(user_id, type='', off=''):
     :return:
     """
     superuser = User.objects.get(id=user_id).is_superuser
-    if superuser or off == '1':
+    if superuser and off == '0':
+        prj_list = Project.objects.filter(user_id=user_id)
+    elif superuser or off == '1':
         prj_list = Project.objects.all()
     else:
         prj_list = Project.objects.filter(user_id=user_id)
