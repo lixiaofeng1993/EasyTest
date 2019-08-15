@@ -46,31 +46,32 @@ class UserBehavior(TaskSet):  # 定义用户行为
     def test_request(self):
         session = HttpSession(self.url)
         for interface_ in self.if_dict_list:
-            for interface in interface_:
-                if isinstance(interface['body'], dict):
-                    for k, v in interface['body'].items():
-                        if '$' in str(v):
-                            interface['body'][k] = self.extract_dict[v[1:]]
-                if interface['method'] in ["post", "put"]:
-                    if interface['data_type'] == 'json':
-                        res = session.request(method=interface['method'], url=interface['url'],
-                                              json=interface['body'], headers=interface['header'])
-                    elif interface['data_type'] == 'data':
-                        res = session.request(method=interface['method'], url=interface['url'],
-                                              data=interface['body'], headers=interface['header'])
-                elif interface['method'] in ["get", "delete"]:
-                    if interface['is_sign']:
-                        if interface['sign_type'] == 4:
+            if isinstance(interface_['step_list'], list):
+                for interface in interface_:
+                    if isinstance(interface, dict):
+                        for k, v in interface['body'].items():
+                            if '$' in str(v):
+                                interface['body'][k] = self.extract_dict[v[1:]]
+                    if interface['method'] in ["post", "put"]:
+                        if interface['data_type'] == 'json':
                             res = session.request(method=interface['method'], url=interface['url'],
-                                                  params={'data': interface['body']},
+                                                  json=interface['body'], headers=interface['header'])
+                        elif interface['data_type'] == 'data':
+                            res = session.request(method=interface['method'], url=interface['url'],
+                                                  data=interface['body'], headers=interface['header'])
+                    elif interface['method'] in ["get", "delete"]:
+                        if interface['is_sign']:
+                            if interface['sign_type'] == 4:
+                                res = session.request(method=interface['method'], url=interface['url'],
+                                                      params={'data': interface['body']},
+                                                      headers=interface['header'])
+                        else:
+                            res = session.request(method=interface['method'], url=interface['url'],
+                                                  params=interface['body'],
                                                   headers=interface['header'])
-                    else:
-                        res = session.request(method=interface['method'], url=interface['url'],
-                                              params=interface['body'],
-                                              headers=interface['header'])
-                if interface['extract']:
-                    self.extract_dict = get_extract(interface['extract'], res.text)
-                log.info(res.text)
+                    if interface['extract']:
+                        self.extract_dict = get_extract(interface['extract'], res.text)
+                    log.info(res.text)
 
 
 class WebsiteUser(Locust):  # 设置性能测试;

@@ -158,7 +158,7 @@ def step(step_content, sign_type, private_key, env_url, begin_time=0, env_id='')
     if '[' in json.dumps(if_dict["body"]):  # body参数是list的情况
         for k, v in if_dict['body'].items():
             if_dict["body"][k] = eval(v)
-    if_dict["url"] = env_url + interface['url']
+    if_dict["url"] = interface['url']
 
     if_dict["url"], if_dict["body"] = format_url(if_dict["url"], if_dict["body"])
 
@@ -189,7 +189,6 @@ def get_parameters():
         for case_id in case_id_list:
             if_dict = test_case(case_id, env_id, case_id_list, sign_type, private_key, env_url)
             if_dict_list.append(if_dict)
-        print(if_dict_list, 11111111111111111)
         return if_dict_list, env_url
     else:
         log.error('查询性能测试数据为空！')
