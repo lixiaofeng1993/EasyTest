@@ -118,11 +118,11 @@ def step(step_content, sign_type, private_key, env_url, begin_time=0, env_id='')
     if_dict['header'], if_dict['body'], if_dict['if_name'] = step_content["header"], step_content["body"], \
                                                              step_content['if_name']
 
-    # if_dict['header'] = random_params(if_dict['header'])  # random参数化
-    # if_dict['body'] = random_params(if_dict['body'])
-    # if if_dict['header'] == 'error' or if_dict['body'] == 'error':  # 参数化异常
-    #     if_dict = parametric_set_error(if_dict)
-    #     return if_dict
+    if_dict['header'] = random_params(if_dict['header'])  # random参数化
+    if_dict['body'] = random_params(if_dict['body'])
+    if if_dict['header'] == 'error' or if_dict['body'] == 'error':  # 参数化异常
+        if_dict = parametric_set_error(if_dict)
+        return if_dict
 
     set_headers = sql.execute_sql(
         'select be.set_headers from base_environment as be where be.env_id="{}";'.format(env_id),
@@ -189,7 +189,6 @@ def get_parameters():
         for case_id in case_id_list:
             if_dict = test_case(case_id, env_id, case_id_list, sign_type, private_key, env_url)
             if_dict_list.append(if_dict)
-        print(if_dict_list, 333333333333333)
         return if_dict_list, env_url
     else:
         log.error('查询性能测试数据为空！')
