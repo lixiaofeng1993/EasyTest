@@ -51,30 +51,30 @@ class UserBehavior(TaskSet):  # 定义用户行为
                 for interface in interface_['step_list']:
                     if isinstance(interface, dict):
                         print(interface['body'], 111111111111)
-                        body = random_params(interface['body'])
+                        body_ = interface['body']
+                        body = random_params(body_)
                         print(body, 2222222222)
-                        header = random_params(interface['header'])
-                        if body == 'error' or header == 'error':  # 参数化异常
+                        if body == 'error':  # 参数化异常
                             log.info('参数化异常，结束！')
                             exit()
 
                     if interface['method'] in ["post", "put"]:
                         if interface['data_type'] == 'json':
                             res = session.request(method=interface['method'], url=interface['url'],
-                                                  json=body, headers=header)
+                                                  json=body, headers=interface['header'])
                         elif interface['data_type'] == 'data':
                             res = session.request(method=interface['method'], url=interface['url'],
-                                                  data=body, headers=header)
+                                                  data=body, headers=interface['header'])
                     elif interface['method'] in ["get", "delete"]:
                         if interface['is_sign']:
                             if interface['sign_type'] == 4:
                                 res = session.request(method=interface['method'], url=interface['url'],
                                                       params={'data': body},
-                                                      headers=header)
+                                                      headers=interface['header'])
                         else:
                             res = session.request(method=interface['method'], url=interface['url'],
                                                   params=body,
-                                                  headers=header)
+                                                  headers=interface['header'])
                         log.info(res.text)
 
 
