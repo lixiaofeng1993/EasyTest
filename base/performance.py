@@ -50,16 +50,18 @@ class UserBehavior(TaskSet):  # 定义用户行为
             if isinstance(interface_['step_list'], list):
                 for interface in interface_['step_list']:
                     if isinstance(interface, dict):
-                        for k, v in interface['body'].items():
-                            if '$' in str(v):
-                                interface['body'][k] = self.extract_dict[v[1:]]
-                    body = random_params(interface['body'])
-                    header = random_params(interface['header'])
-                    print(interface['body'], 111111111111)
-                    print(body, 2222222222)
-                    if body == 'error' or header == 'error':  # 参数化异常
-                        log.info('参数化异常，结束！')
-                        exit()
+                        print(interface['body'], 111111111111)
+                        body = random_params(interface['body'])
+                        print(body, 2222222222)
+                        header = random_params(interface['header'])
+                        if body == 'error' or header == 'error':  # 参数化异常
+                            log.info('参数化异常，结束！')
+                            exit()
+                        if isinstance(body, dict):
+                            for k, v in body.items():
+                                if '$' in str(v):
+                                    body[k] = self.extract_dict[v[1:]]
+                    
                     if interface['method'] in ["post", "put"]:
                         if interface['data_type'] == 'json':
                             res = session.request(method=interface['method'], url=interface['url'],
