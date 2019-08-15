@@ -57,11 +57,7 @@ class UserBehavior(TaskSet):  # 定义用户行为
                         if body == 'error' or header == 'error':  # 参数化异常
                             log.info('参数化异常，结束！')
                             exit()
-                        if isinstance(body, dict):
-                            for k, v in body.items():
-                                if '$' in str(v):
-                                    body[k] = self.extract_dict[v[1:]]
-                    
+
                     if interface['method'] in ["post", "put"]:
                         if interface['data_type'] == 'json':
                             res = session.request(method=interface['method'], url=interface['url'],
@@ -79,9 +75,7 @@ class UserBehavior(TaskSet):  # 定义用户行为
                             res = session.request(method=interface['method'], url=interface['url'],
                                                   params=body,
                                                   headers=header)
-                    if interface['extract']:
-                        self.extract_dict = get_extract(interface['extract'], res.text)
-                    log.info(res.text)
+                        log.info(res.text)
 
 
 class WebsiteUser(Locust):  # 设置性能测试;
