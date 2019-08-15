@@ -55,6 +55,7 @@ class UserBehavior(TaskSet):  # 定义用户行为
                                 interface['body'][k] = self.extract_dict[v[1:]]
                     interface['body'] = random_params(interface['body'])
                     interface['header'] = random_params(interface['header'])
+                    print(interface['body'], 111111111111111111111)
                     if interface['header'] == 'error' or interface['body'] == 'error':  # 参数化异常
                         log.info('参数化异常，结束！')
                         exit()
