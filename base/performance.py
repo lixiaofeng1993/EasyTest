@@ -53,29 +53,28 @@ class UserBehavior(TaskSet):  # 定义用户行为
                         for k, v in interface['body'].items():
                             if '$' in str(v):
                                 interface['body'][k] = self.extract_dict[v[1:]]
-                    interface['body'] = random_params(interface['body'])
-                    interface['header'] = random_params(interface['header'])
-                    print(interface['body'], 111111111111111111111)
-                    if interface['header'] == 'error' or interface['body'] == 'error':  # 参数化异常
+                    body = random_params(interface['body'])
+                    header = random_params(interface['header'])
+                    if body == 'error' or header == 'error':  # 参数化异常
                         log.info('参数化异常，结束！')
                         exit()
                     if interface['method'] in ["post", "put"]:
                         if interface['data_type'] == 'json':
                             res = session.request(method=interface['method'], url=interface['url'],
-                                                  json=interface['body'], headers=interface['header'])
+                                                  json=body, headers=header)
                         elif interface['data_type'] == 'data':
                             res = session.request(method=interface['method'], url=interface['url'],
-                                                  data=interface['body'], headers=interface['header'])
+                                                  data=body, headers=header)
                     elif interface['method'] in ["get", "delete"]:
                         if interface['is_sign']:
                             if interface['sign_type'] == 4:
                                 res = session.request(method=interface['method'], url=interface['url'],
-                                                      params={'data': interface['body']},
-                                                      headers=interface['header'])
+                                                      params={'data': body},
+                                                      headers=header)
                         else:
                             res = session.request(method=interface['method'], url=interface['url'],
-                                                  params=interface['body'],
-                                                  headers=interface['header'])
+                                                  params=body,
+                                                  headers=header)
                     if interface['extract']:
                         self.extract_dict = get_extract(interface['extract'], res.text)
                     log.info(res.text)
