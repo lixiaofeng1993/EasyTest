@@ -43,7 +43,7 @@ class ProjectIndex(ListView):
         user_id = self.request.session.get('user_id', '')
         superuser = User.objects.get(id=user_id).is_superuser
         if superuser:
-            return Project.objects.all()
+            return Project.objects.all().order_by('-prj_id')
         else:
             return Project.objects.filter(user_id=user_id).order_by('-prj_id')
 
@@ -74,6 +74,7 @@ def project_add(request):
 
             msg = project_info_logic(prj_name)
             if msg != 'ok':  # 判断输入框
+                log.error('project add error：{}'.format(msg))
                 info = {'error': msg, "sign_list": sign_list}
                 return render(request, 'base/project/add.html', info)
             else:
@@ -108,6 +109,7 @@ def project_update(request):
 
             msg = project_info_logic(prj_name, prj_id)
             if msg != 'ok':
+                log.error('project update error：{}'.format(msg))
                 prj = Project.objects.get(prj_id=prj_id)
                 info = {'error': msg, "prj": prj, "sign_list": sign_list}
                 return render(request, 'base/project/update.html', info)
@@ -187,6 +189,7 @@ def sign_add(request):
 
             msg = sign_info_logic(sign_name)
             if msg != 'ok':
+                log.error('sign add error：{}'.format(msg))
                 info = {'error': msg}
                 return render(request, 'system/sign/sign_add.html', info)
             else:
@@ -217,6 +220,7 @@ def sign_update(request):
 
             msg = sign_info_logic(sign_name, sign_id)
             if msg != 'ok':
+                log.error('sign update error：{}'.format(msg))
                 sign = Sign.objects.get(sign_id=sign_id)
                 info = {'error': msg, "sign": sign}
                 return render(request, 'system/sign/sign_update.html', info)
@@ -310,6 +314,7 @@ def set_headers(request):
 
             msg = header_value_error(content)
             if msg != 'ok':
+                log.error('set headers error：{}'.format(msg))
                 return HttpResponse(msg)
             else:
                 env_id = request.POST.get('env_id', '')
@@ -375,6 +380,7 @@ def env_add(request):
 
             msg = env_info_logic(env_name, url)
             if msg != 'ok':
+                log.error('env add error：{}'.format(msg))
                 info = {'error': msg, "prj_list": prj_list}
                 return render(request, 'base/env/add.html', info)
             else:
@@ -417,6 +423,7 @@ def env_update(request):
 
             msg = env_info_logic(env_name, url, env_id)
             if msg != 'ok':
+                log.error('env update error：{}'.format(msg))
                 env = Environment.objects.get(env_id=env_id)
                 info = {'error': msg, "env": env, "prj_list": prj_list}
                 return render(request, 'base/env/update.html', info)
@@ -550,11 +557,14 @@ def interface_search(request):
                         project_id__in=prj_list)
                 else:
                     try:
-                        if isinstance(int(search), int):  # ID查询
-                            interface_list = Interface.objects.filter(if_id__exact=search).filter(
-                                project_id__in=prj_list)
-                            if not interface_list:
-                                interface_list = Interface.objects.filter(if_name__contains=search).filter(
+                        if isinstance(int(search), int):
+                            if search in ['0', '1']:  # 设置header、签名查询
+                                interface_list = Interface.objects.filter(
+                                    Q(is_header=search) | Q(is_sign=search) | Q(if_id__exact=search) | Q(
+                                        if_name__contains=search)).filter(project_id__in=prj_list)
+                            else:  # ID查询
+                                interface_list = Interface.objects.filter(
+                                    Q(if_id__exact=search) | Q(if_name__contains=search)).filter(
                                     project_id__in=prj_list)
                     except ValueError:
                         interface_list = Interface.objects.filter(
@@ -603,6 +613,7 @@ def interface_add(request):
             msg = interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, request_header_data,
                                        request_body_data, response_header_data, response_body_data)
             if msg != 'ok':
+                log.error('interface add error：{}'.format(msg))
                 return HttpResponse(msg)
             description = request.POST['description']
             username = request.session.get('user', '')
@@ -657,6 +668,7 @@ def interface_update(request):
             msg = interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, request_header_data,
                                        request_body_data, response_header_data, response_body_data, if_id)
             if msg != 'ok':
+                log.error('interface update error：{}'.format(msg))
                 return HttpResponse(msg)
             else:
                 description = request.POST['description']
@@ -870,6 +882,7 @@ def case_add(request):
 
             msg = case_info_logic(case_name, content)
             if msg != 'ok':
+                log.error('case add error：{}'.format(msg))
                 return HttpResponse(msg)
             else:
                 prj_id = request.POST['prj_id']
@@ -905,6 +918,7 @@ def case_update(request):
             content = request.POST.get('content')
             msg = case_info_logic(case_name, content, case_id)
             if msg != 'ok':
+                log.error('case update error：{}'.format(msg))
                 return HttpResponse(msg)
             else:
                 prj_id = request.POST['prj_id']
@@ -989,7 +1003,7 @@ def case_search(request):
                         case_dict = {'case_id': str(case_.case_id), 'case_name': case_.case_name,
                                      'project': case_.project.prj_name, 'description': case_.description,
                                      'update_time': str(case_.update_time).split('.')[0],
-                                     'update_user': case_.update_user,'prj_id': case_.project.prj_id}
+                                     'update_user': case_.update_user, 'prj_id': case_.project.prj_id}
                         case_list.append(case_dict)
                     return HttpResponse(str(case_list))
         else:
@@ -1130,6 +1144,7 @@ def plan_add(request):
 
             msg = plan_info_logic(plan_name, content)
             if msg != 'ok':
+                log.error('plan add error：{}'.format(msg))
                 return render(request, 'base/plan/add.html', {'error': msg, "prj_list": prj_list})
             else:
                 prj_id = request.POST['prj_id']
@@ -1181,6 +1196,7 @@ def plan_update(request):
 
             msg = plan_info_logic(plan_name, content, plan_id)
             if msg != 'ok':
+                log.error('plan update error：{}'.format(msg))
                 return render(request, 'base/plan/update.html',
                               {'error': msg, "prj_list": prj_list, 'plan': plan, 'case_list': case_list,
                                'environments': environments})
@@ -1285,6 +1301,7 @@ def plan_run(request):
             totalTime = str(end_time - begin_time)[:6] + ' s'
             for step in content:
                 if 'error' in step.keys():
+                    log.error('plan run error：{}'.format(step['msg']))
                     return HttpResponse(step['msg'])
                 else:
                     for s in step['step_list']:
@@ -1617,6 +1634,9 @@ class UserIndex(ListView):
 
     def dispatch(self, *args, **kwargs):
         return super(UserIndex, self).dispatch(*args, **kwargs)
+
+    def get_queryset(self):
+        return User.objects.all().order_by('-id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

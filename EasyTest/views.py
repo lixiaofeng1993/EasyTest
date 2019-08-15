@@ -187,6 +187,7 @@ def change_password(request):
 
         msg = change_info_logic(new_password)
         if msg != 'ok':
+            log.error('change password error：{}'.format(msg))
             return JsonResponse({'msg': msg})
         else:
             user_id = request.session.get('user_id', '')
@@ -209,6 +210,7 @@ def register(request):
         email = request.POST.get('email', '')
         msg = register_info_logic(username, password, pswd_again, email)
         if msg != 'ok':
+            log.error('register error：{}'.format(msg))
             return render(request, 'user/register.html', {'error': msg})
         else:
             User.objects.create_user(username=username, password=password, email=email)
