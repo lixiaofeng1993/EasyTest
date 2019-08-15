@@ -10,8 +10,8 @@ import time, logging, sys, json, requests
 from lib.signtype import user_sign_api, encryptAES
 from lib.connectMySql import SqL
 from lib.public import format_url
-from lib.except_check import case_is_delete, interface_is_delete, parametric_set_error
 from lib.random_params import random_params
+from lib.error_code import ErrorCode
 
 s = requests.session()
 extract_list = []
@@ -41,6 +41,29 @@ def get_env(env_id):
         'select be.project_id, be.url, be.private_key from base_environment as be where be.env_id="{}";'.format(env_id),
         dict_type=True, num=1)
     return env['project_id'], env['url'], env['private_key']
+
+
+def interface_is_delete(case_run, case_name, if_name, e):
+    log.error('用例 {} 中的接口 {} 已被删除！'.format(case_name, if_name))
+    case_run['msg'] = '用例 {} 中的接口 {} 可能已被删除，请前往【接口管理】页面核实.    详细报错信息：{}'.format(case_name, if_name, e)
+    case_run['error'] = ErrorCode.interface_not_exit_error
+    return case_run
+
+
+def case_is_delete(case_run, e):
+    log.error('用例 {} 已被删除！'.format(case_run['case_id']))
+    case_run['msg'] = '用例 {} 可能已被删除，请返回【用例管理】页面核实.    详细报错信息：{}'.format(case_run['case_id'], e)
+    case_run['error'] = ErrorCode.case_not_exit_error
+    return case_run
+
+
+def parametric_set_error(if_dict):
+    if_dict["result"] = "error"
+    if_dict["checkpoint"] = ''
+    if_dict["res_content"] = '参数化设置错误，请检查是否符合平台参数化规则！'
+    if_dict['error'] = ErrorCode.random_params_error
+    if_dict['msg'] = ErrorCode.random_params_error
+    return if_dict
 
 
 def test_case(case_id, env_id, case_id_list, sign_type, private_key, env_url, begin_time=0):
