@@ -47,7 +47,7 @@ class UserBehavior(TaskSet):  # 定义用户行为
         session = HttpSession(self.url)
         for interface_ in self.if_dict_list:
             if isinstance(interface_['step_list'], list):
-                for interface in interface_:
+                for interface in interface_['step_list']:
                     if isinstance(interface, dict):
                         for k, v in interface['body'].items():
                             if '$' in str(v):
