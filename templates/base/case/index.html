@@ -300,7 +300,7 @@
             var case_id = obj.parentNode.parentNode.children[0].innerText;
             var case_name = obj.parentNode.parentNode.children[1].innerText;
             var prj_id = obj.parentNode.parentNode.children[2].getAttribute("prj_id");
-            console.log(case_id, case_name, prj_id, 1111111111);
+
             $("#debug_case_id").val(case_id);
             $("#cancel_run").html("取消");
             $("#cancel_run").attr("class", "btn btn-default");
@@ -325,7 +325,7 @@
                 }
             });
         }
-        // 运行plan
+        // 运行case
         function run_button() {
             $('#result').empty();
             $('.spinner1').show();

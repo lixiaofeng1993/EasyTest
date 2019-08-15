@@ -33,19 +33,22 @@ def random_params(params):
                         return 'error'
                 else:
                     return 'error'
-            if '__name' in value:
+            elif '__name' in value:
                 str_value = value.split('__name')[0]
+                str_value1 = value.split('__name')[1]
                 str_name = faker.name()
-                params[key] = str_value + str_name
-            if '__address' in value:
+                params[key] = str_value + str_name + str_value1
+            elif '__address' in value:
                 str_value = value.split('__address')[0]
+                str_value1 = value.split('__address')[1]
                 str_address = faker.address()
-                params[key] = str_value + str_address
-            if '__phone' in value:
+                params[key] = str_value + str_address + str_value1
+            elif '__phone' in value:
                 str_value = value.split('__phone')[0]
+                str_value1 = value.split('__phone')[1]
                 str_phone = faker.phone_number()
-                params[key] = str_value + str_phone
-            if '__text' in value:
+                params[key] = str_value + str_phone + str_value1
+            elif '__text' in value:
                 regexp = r"\((.+)\)"
                 num = re.findall(regexp, value)
                 str_value = value.split('__text')[0]
@@ -57,12 +60,19 @@ def random_params(params):
                         return 'error'
                 else:
                     params[key] = str_value + faker.text()
-            if '__random_time' in value:
+            elif '__random_time' in value:
                 str_value = value.split('__random_time')[0]
+                str_value1 = value.split('__random_time')[1]
                 str_random_time = faker.date_time()
-                params[key] = str_value + str(str_random_time)
-            if '__now' in value:
+                params[key] = str_value + str(str_random_time) + str_value1
+            elif '__now' in value:
                 str_value = value.split('__now')[0]
+                str_value1 = value.split('__now')[1]
                 str_random_time = datetime.now()
-                params[key] = str_value + str(str_random_time)[:-7]
+                params[key] = str_value + str(str_random_time)[:-7] + str_value1
+            elif '__email' in value:
+                str_value = value.split('__email')[0]
+                str_value1 = value.split('__email')[1]
+                str_email = faker.email()
+                params[key] = str_value + str_email + str_value1
         return params
