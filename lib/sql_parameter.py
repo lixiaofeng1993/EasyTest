@@ -187,7 +187,7 @@ def get_parameters():
         sign_type = get_sign(prj_id)
         if_dict_list = []
         for case_id in case_id_list:
-            if_dict, url = test_case(case_id, env_id, case_id_list, sign_type, private_key, env_url)
+            if_dict = test_case(case_id, env_id, case_id_list, sign_type, private_key, env_url)
             if_dict_list.append(if_dict)
         return if_dict_list, env_url
     else:
