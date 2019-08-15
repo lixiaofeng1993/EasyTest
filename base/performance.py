@@ -16,6 +16,7 @@ from locust.clients import HttpSession
 import queue, json, subprocess, os
 from lib.sql_parameter import get_parameters
 from lib.public import get_extract
+from lib.random_params import random_params
 import logging
 
 log = logging.getLogger('log')
@@ -52,6 +53,11 @@ class UserBehavior(TaskSet):  # 定义用户行为
                         for k, v in interface['body'].items():
                             if '$' in str(v):
                                 interface['body'][k] = self.extract_dict[v[1:]]
+                    interface['body'] = random_params(interface['body'])
+                    interface['header'] = random_params(interface['header'])
+                    if interface['header'] == 'error' or interface['body'] == 'error':  # 参数化异常
+                        log.info('参数化异常，结束！')
+                        exit()
                     if interface['method'] in ["post", "put"]:
                         if interface['data_type'] == 'json':
                             res = session.request(method=interface['method'], url=interface['url'],
