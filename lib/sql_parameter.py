@@ -189,6 +189,7 @@ def get_parameters():
         for case_id in case_id_list:
             if_dict = test_case(case_id, env_id, case_id_list, sign_type, private_key, env_url)
             if_dict_list.append(if_dict)
+        print(if_dict_list, 333333333333333)
         return if_dict_list, env_url
     else:
         log.error('查询性能测试数据为空！')
