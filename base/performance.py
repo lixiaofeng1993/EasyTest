@@ -49,37 +49,60 @@ class UserBehavior(TaskSet):  # 定义用户行为
         for interface_ in self.if_dict_list:
             if isinstance(interface_['step_list'], list):
                 for interface in interface_['step_list']:
-                    if isinstance(interface, dict):
-                        print(interface['body'], 111111111111)
-                        body_ = interface['body']
-                        body = random_params(body_)
-                        print(body, 2222222222)
-                        if body == 'error':  # 参数化异常
-                            log.info('参数化异常，结束！')
-                            exit()
+                    try:
+                        # get_nowait() 取不到数据直接崩溃；get() 取不到数据会一直等待
+                        data = self.locust.user_data_queue.get_nowait()  # 取值顺序 'username': 'test0000'、'username': 'test0001'、'username': 'test0002'...
+                    except queue.Empty:  # 取不到数据时，走这里
+                        print('account data run out, test ended.')
+                        exit(0)
 
                     if interface['method'] in ["post", "put"]:
                         if interface['data_type'] == 'json':
                             res = session.request(method=interface['method'], url=interface['url'],
-                                                  json=body, headers=interface['header'])
+                                                  json=data, headers=interface['header'])
                         elif interface['data_type'] == 'data':
                             res = session.request(method=interface['method'], url=interface['url'],
-                                                  data=body, headers=interface['header'])
+                                                  data=data, headers=interface['header'])
                     elif interface['method'] in ["get", "delete"]:
                         if interface['is_sign']:
                             if interface['sign_type'] == 4:
                                 res = session.request(method=interface['method'], url=interface['url'],
-                                                      params={'data': body},
+                                                      params={'data': data},
                                                       headers=interface['header'])
                         else:
                             res = session.request(method=interface['method'], url=interface['url'],
-                                                  params=body,
+                                                  params=data,
                                                   headers=interface['header'])
                         log.info(res.text)
 
 
 class WebsiteUser(Locust):  # 设置性能测试;
     task_set = UserBehavior  # 指向一个定义了的用户行为类;
+    user_data_queue = queue.Queue(maxsize=100)
+    try:
+        if_dict_list, url = get_parameters()
+        for if_dict in if_dict_list:
+            if isinstance(if_dict, dict):
+                if 'error' in if_dict.keys():
+                    exit()
+            elif isinstance(if_dict, list):
+                for _if_dict in if_dict:
+                    if 'error' in _if_dict.keys():
+                        exit()
+        for interface_ in if_dict_list:
+            if isinstance(interface_['step_list'], list):
+                for interface in interface_['step_list']:
+                    if isinstance(interface, dict):
+                        for index in range(100):
+                            body_ = interface['body']
+                            body = random_params(body_)
+                            if body == 'error':  # 参数化异常
+                                log.info('参数化异常，结束！')
+                                exit()
+                            user_data_queue.put_nowait(body)
+    except TypeError:
+        exit()
+
     min_wait = 3000  # 用户执行任务之间等待时间的下界，单位：毫秒;
     max_wait = 6000  # 用户执行任务之间等待时间的上界，单位：毫秒;
 
