@@ -1686,9 +1686,12 @@ def findata(request):
             return JsonResponse(list(if_list), safe=False)
         if get_type == "get_if_by_if_id":
             if_id = request.GET["if_id"]
-            # 查询并将结果转换为json
-            interface = Interface.objects.filter(if_id=if_id).values()
-            return JsonResponse(list(interface), safe=False)
+            try:
+                # 查询并将结果转换为json
+                interface = Interface.objects.filter(if_id=if_id).values()
+                return JsonResponse(list(interface), safe=False)
+            except ValueError:
+                return HttpResponse('no')
         if get_type == "get_env_by_prj_id":
             prj_id = request.GET["prj_id"]
             # 查询并将结果转换为json
