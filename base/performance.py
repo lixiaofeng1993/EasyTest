@@ -66,7 +66,7 @@ class UserBehavior(TaskSet):  # 定义用户行为
                             res = session.request(method=interface['method'], url=interface['url'],
                                                   params=interface['body'],
                                                   headers=interface['header'])
-                        log.info(res.text)
+                    log.info(res.text)
 
 
 class WebsiteUser(Locust):  # 设置性能测试;
