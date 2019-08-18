@@ -193,10 +193,14 @@
                         "type": "get_all_case_by_prj_id"
                     },
                     success: function (data) {
-                        var listdata = eval(data);
-                        $(listdata).each(function (i, item) {
-                            $("#list").append("<label class='checkbox-inline'><input type='checkbox' name='case_id' value=" + item.case_id + ">" + item.case_name + "</label>");
-                        })
+                        if (data == 'no') {
+                            alert('此项目下不存在测试用例，请前往【用例管理】页面添加！')
+                        } else {
+                            var listdata = eval(data);
+                            $(listdata).each(function (i, item) {
+                                $("#list").append("<label class='checkbox-inline'><input type='checkbox' name='case_id' value=" + item.case_id + ">" + item.case_name + "</label>");
+                            })
+                        }
                     },
                     error: function () {
                         alert("获取用例失败");

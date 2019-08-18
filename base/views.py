@@ -374,7 +374,7 @@ def env_add(request):
         return render(request, 'user/login_action.html')
     else:
         if request.method == 'POST':
-            prj_list = Project.objects.all()
+            prj_list = is_superuser(user_id)
             env_name = request.POST['env_name'].strip()
             url = request.POST['url'].strip()
 
@@ -416,7 +416,7 @@ def env_update(request):
         return render(request, 'user/login_action.html')
     else:
         if request.method == 'POST':
-            prj_list = Project.objects.all()
+            prj_list = is_superuser(user_id)
             env_id = request.POST['env_id']
             env_name = request.POST['env_name'].strip()
             url = request.POST['url'].strip()
@@ -1138,7 +1138,7 @@ def plan_add(request):
         return render(request, 'user/login_action.html')
     else:
         if request.method == 'POST':
-            prj_list = Project.objects.all()
+            prj_list = is_superuser(user_id)
             plan_name = request.POST['plan_name'].strip()
             content = request.POST.getlist("case_id")
 
@@ -1183,7 +1183,7 @@ def plan_update(request):
         return render(request, 'user/login_action.html')
     else:
         if request.method == 'POST':
-            prj_list = Project.objects.all()
+            prj_list = is_superuser(user_id)
             plan_id = request.POST['plan_id']
             plan_name = request.POST['plan_name'].strip()
             content = request.POST.getlist("case_id")
@@ -1704,9 +1704,12 @@ def findata(request):
             return JsonResponse(list(case), safe=False)
         if get_type == "get_all_case_by_prj_id":
             prj_id = request.GET["prj_id"]
-            # 查询并将结果转换为json
-            env = Case.objects.filter(project_id=prj_id).values()
-            return JsonResponse(list(env), safe=False)
+            try:
+                # 查询并将结果转换为json
+                case = Case.objects.filter(project_id=prj_id).values()
+                return JsonResponse(list(case), safe=False)
+            except ValueError:
+                return HttpResponse('no')
         if get_type == 'get_log':
             log_path = os.path.abspath(os.path.dirname(os.path.dirname(__file__))) + '/logs'
             log_file_list = os.listdir(log_path)

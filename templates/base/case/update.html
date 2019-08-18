@@ -482,7 +482,7 @@
                             },
                             success: function (data) {
                                 if (data == 'no') {
-                                    alert('接口id不存在！')
+                                    alert('此项目下不存在测试接口，请前往【接口管理】页面添加！！')
                                 } else {
                                     var listdata = eval(data);
                                     $(listdata).each(function (i, item) {
