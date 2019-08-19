@@ -1757,10 +1757,13 @@ def findata(request):
             for i in data:
                 data_list.append(i.replace('True', 'true').replace('False', 'false').replace('None', 'null'))
             return JsonResponse(data_list, safe=False)
+    elif request.method == 'POST':
+        get_type = request.POST.get("type", '')
         if get_type == 'analysis_request_header_json':
-            request_header_json = request.GET.get('request_header_json', '')
+            request_header_json = request.POST.get('request_header_json', '')
             try:
                 data = eval(request_header_json)
                 return JsonResponse(list(data), safe=False)
-            except ValueError:
+            except Exception as e:
+                log.error('解析参数错误. {}'.format(e))
                 return HttpResponse('no')

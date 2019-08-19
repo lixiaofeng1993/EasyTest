@@ -159,7 +159,6 @@ def interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, r
     att = re.compile('^\w+$', re.A)
     if request_header_data:
         request_header_data = eval(request_header_data)
-        print(request_header_data, 11111111111111)
         for data in request_header_data:
             math = att.findall(data['var_name'])
             if not math:
