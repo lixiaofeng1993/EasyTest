@@ -281,7 +281,7 @@
                 },
                 success: function (data) {
                     if (data == 'no') {
-                        alert('解析参数错误，请检查解析的文本是否是json格式！')
+                        alert('请求头解析参数错误，请检查解析的文本是否是json格式！')
                     }
                     else {
                         $("#request_header tr:last").empty();
@@ -308,7 +308,7 @@
                 },
                 success: function (data) {
                     if (data == 'no') {
-                        alert('解析参数错误，请检查解析的文本是否是json格式！')
+                        alert('请求body解析参数错误，请检查解析的文本是否是json格式！')
                     }
                     else {
                         $("#request_body tr:last").empty();
@@ -335,7 +335,7 @@
                 },
                 success: function (data) {
                     if (data == 'no') {
-                        alert('解析参数错误，请检查解析的文本是否是json格式！')
+                        alert('返回头解析参数错误，请检查解析的文本是否是json格式！')
                     }
                     else {
                         $("#response_header tr:last").empty();
@@ -362,7 +362,7 @@
                 },
                 success: function (data) {
                     if (data == 'no') {
-                        alert('解析参数错误，请检查解析的文本是否是json格式！')
+                        alert('返回body解析参数错误，请检查解析的文本是否是json格式！')
                     }
                     else {
                         $("#response_body tr:last").empty();
@@ -386,8 +386,11 @@
             });
             $("#add_request_header_json").click(function () {
                 {#                var newRow = "<tr> <td name='var_name' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";#}
-                var newRow = "<tr><td><textarea  name='add_request_header_json' placeholder='请输入请求头的json参数' class='form-control' rows='3'></textarea></td><td><button class='btn btn-primary' onclick='analysis_request_header(this)'><i class='fa fa-gavel'></i>&nbsp;解析</button> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td></tr>";
-                $("#request_header tr:last").after(newRow);
+                var request_header_json = $("textarea[name='add_request_header_json']").val();
+                if (typeof(request_header_json) == 'undefined') {
+                    var newRow = "<tr><td><textarea  name='add_request_header_json' placeholder='请输入请求头的json参数' class='form-control' rows='3'></textarea></td><td><button class='btn btn-primary' onclick='analysis_request_header(this)'><i class='fa fa-gavel'></i>&nbsp;解析</button> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td></tr>";
+                    $("#request_header tr:last").after(newRow);
+                }
             });
 
             $("#add_request_body").click(function () {
@@ -396,8 +399,11 @@
             });
             $("#add_request_body_json").click(function () {
                 {#                var newRow = "<tr> <td name='var_name' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";#}
-                var newRow = "<tr><td><textarea  name='add_request_body_json' placeholder='请输入请求body的json参数' class='form-control' rows='3'></textarea></td><td><button class='btn btn-primary' onclick='analysis_request_body(this)'><i class='fa fa-gavel'></i>&nbsp;解析</button> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td></tr>";
-                $("#request_body tr:last").after(newRow);
+                var request_body_json = $("textarea[name='add_request_body_json']").val();
+                if (typeof(request_body_json) == 'undefined') {
+                    var newRow = "<tr><td><textarea  name='add_request_body_json' placeholder='请输入请求body的json参数' class='form-control' rows='3'></textarea></td><td><button class='btn btn-primary' onclick='analysis_request_body(this)'><i class='fa fa-gavel'></i>&nbsp;解析</button> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td></tr>";
+                    $("#request_body tr:last").after(newRow);
+                }
             });
 
             $("#add_response_header").click(function () {
@@ -406,8 +412,11 @@
             });
             $("#add_response_header_json").click(function () {
                 {#                var newRow = "<tr> <td name='var_name' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";#}
-                var newRow = "<tr><td><textarea  name='add_response_header_json' placeholder='请输入返回头的json参数' class='form-control' rows='3'></textarea></td><td><button class='btn btn-primary' onclick='analysis_response_header(this)'><i class='fa fa-gavel'></i>&nbsp;解析</button> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td></tr>";
-                $("#response_header tr:last").after(newRow);
+                var response_header_json = $("textarea[name='add_response_header_json']").val();
+                if (typeof(response_header_json) == 'undefined') {
+                    var newRow = "<tr><td><textarea  name='add_response_header_json' placeholder='请输入返回头的json参数' class='form-control' rows='3'></textarea></td><td><button class='btn btn-primary' onclick='analysis_response_header(this)'><i class='fa fa-gavel'></i>&nbsp;解析</button> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td></tr>";
+                    $("#response_header tr:last").after(newRow);
+                }
             });
 
             $("#add_response_body").click(function () {
@@ -416,8 +425,11 @@
             });
             $("#add_response_body_json").click(function () {
                 {#                var newRow = "<tr> <td name='var_name' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";#}
-                var newRow = "<tr><td><textarea  name='add_response_body_json' placeholder='请输入返回body的json参数' class='form-control' rows='3'></textarea></td><td><button class='btn btn-primary' onclick='analysis_response_body(this)'><i class='fa fa-gavel'></i>&nbsp;解析</button> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td></tr>";
-                $("#response_body tr:last").after(newRow);
+                var response_body_json = $("textarea[name='add_response_body_json']").val();
+                if (typeof(response_body_json) == 'undefined') {
+                    var newRow = "<tr><td><textarea  name='add_response_body_json' placeholder='请输入返回body的json参数' class='form-control' rows='3'></textarea></td><td><button class='btn btn-primary' onclick='analysis_response_body(this)'><i class='fa fa-gavel'></i>&nbsp;解析</button> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td></tr>";
+                    $("#response_body tr:last").after(newRow);
+                }
             });
 
             //删除行
