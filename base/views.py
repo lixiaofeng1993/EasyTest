@@ -1762,7 +1762,7 @@ def findata(request):
         if get_type == 'analysis_request_header_json':
             request_header_json = request.POST.get('request_header_json', '')
             try:
-                data = eval(request_header_json)
+                data = eval(request_header_json.replace('false', 'False').replace('null', 'None').replace('true', 'True'))
                 return JsonResponse(list(data), safe=False)
             except Exception as e:
                 log.error('解析参数错误. {}'.format(e))
