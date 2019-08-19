@@ -1757,3 +1757,10 @@ def findata(request):
             for i in data:
                 data_list.append(i.replace('True', 'true').replace('False', 'false').replace('None', 'null'))
             return JsonResponse(data_list, safe=False)
+        if get_type == 'analysis_request_header_json':
+            request_header_json = request.GET.get('request_header_json', '')
+            try:
+                data = eval(request_header_json)
+                return JsonResponse(list(data), safe=False)
+            except ValueError:
+                return HttpResponse('no')

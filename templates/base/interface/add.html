@@ -157,6 +157,9 @@
                                 <button id="add_request_header" class="btn btn-primary" type="button"><i
                                         class="fa fa-plus-square-o"></i>&nbsp;添加行
                                 </button>
+                                <button id="add_request_header_json" class="btn btn-primary" type="button"><i
+                                        class="fa fa-plus-square-o"></i>&nbsp;添加json
+                                </button>
                             </div>
                             <div class="col-sm-offset-2 col-sm-8">
                                 <table id="request_header" class="table col-sm-10" id="request_header_table">
@@ -258,11 +261,43 @@
             var tbody = tr.parentNode;
             tbody.removeChild(tr);
         }
+        function analysis(obj) {
+            var request_header_json = $("textarea[name='add_request_header_json']").val();
+            $.ajax({
+                url: "/base/findata/",
+                type: "get",
+                data: {
+                    "request_header_json": request_header_json,
+                    "type": "analysis_request_header_json"
+                },
+                success: function (data) {
+                    console.log(data, 22222222222222222);
+                    console.log(typeof data, 22222222222222222);
+                    $("#request_header tr:last").empty();
+                    for (var params in data) {
+                        console.log(data[params]);
+                        html = "<tr> <td name='var_name' contenteditable='true'>" + data[params] + "</td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>"
+                        $("#request_header tr:last").after(html);
+                    }
+
+
+                },
+                error: function () {
+                    alert("error!");
+                }
+            });
+        }
 
         $(document).ready(function () {
             //添加请求头参数行  <td name='var_remark' contenteditable='true'></td>
             $("#add_request_header").click(function () {
                 var newRow = "<tr> <td name='var_name' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+                $("#request_header tr:last").after(newRow);
+            });
+
+            $("#add_request_header_json").click(function () {
+                {#                var newRow = "<tr> <td name='var_name' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";#}
+                var newRow = "<tr><td><textarea  name='add_request_header_json' placeholder='请输入请求头的json参数' class='form-control' rows='3'></textarea></td><td><button class='btn btn-danger' onclick='analysis(this)'><i class='fa fa-close'></i>&nbsp;解析</button></td></tr>";
                 $("#request_header tr:last").after(newRow);
             });
 
