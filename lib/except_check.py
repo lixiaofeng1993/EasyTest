@@ -24,14 +24,14 @@ def register_info_logic(username, password, pswd_again, email):
     :return:
     """
     if email:
-        if not re.match('.+@.+.com$', email):
+        if not re.match('.+@.+\..+$', email):
             return ErrorCode.format_error
     if username == '' or password == '' or pswd_again == '':
         return ErrorCode.empty_error
     elif len(username) > 50 or len(password) > 50 or len(email) > 50:
-        return ErrorCode.fields_too_long_error
+        return ErrorCode.fields_too_long_error + '<用户名、密码及邮箱必须小于50位.>'
     elif 6 > len(username) or 6 > len(password):
-        return ErrorCode.not_enough_error
+        return ErrorCode.not_enough_error + '<用户名、密码必须大于6位.>'
     elif password != pswd_again:
         return ErrorCode.different_error
     else:
@@ -51,9 +51,9 @@ def change_info_logic(new_password):
     if not new_password:
         return ErrorCode.empty_error
     elif len(new_password) < 6:
-        return ErrorCode.not_enough_error
+        return ErrorCode.not_enough_error + '<新密码必须大于6位.>'
     elif len(new_password) > 50:
-        return ErrorCode.fields_too_long_error
+        return ErrorCode.fields_too_long_error + '<新密码必须小于50位.>'
     else:
         return 'ok'
 
