@@ -274,17 +274,17 @@ def plan_info_logic(plan_name, content, plan_id=''):
 def header_value_error(content):
     if content:
         content = eval(content)['header']
-        att = re.compile('^\w*$', re.A)
+        att = re.compile('^[&\.,:?*\w;/=-]*$', re.A)
         make = True
         for k, v in content.items():
             math = att.findall(k)
             if not math:
                 make = False
-                return '请求头中有参数不符合规则【^\w*$】，请重新输入！'
+                return '请求头中有参数不符合规则【^[&\.,:?*\w;/=-]*$】，请重新输入！'
             math = att.findall(v)
             if not math:
                 make = False
-                return '请求头中有参数 值 不符合规则【^\w*$】，请重新输入！'
+                return '请求头中有参数 值 不符合规则【^[&\.,:?*\w;/=-]*$】，请重新输入！'
         if make:
             return 'ok'
     else:
