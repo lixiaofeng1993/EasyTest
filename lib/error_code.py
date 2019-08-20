@@ -47,3 +47,5 @@ class ErrorCode:
     random_params_error = '参数化设置错误，不符合关键字设置规则！请前往【用例管理】页面检查相关参数化配置！'
 
     analytical_return_value_error = '解析返回值错误！请前往【用例管理】页面检查相关参数配置！'
+
+    eval_error = 'eval()错误，请前往【用例管理】页面核实相关参数配置！'

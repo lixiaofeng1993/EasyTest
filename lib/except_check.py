@@ -324,6 +324,15 @@ def parametric_set_error(if_dict):
     return if_dict
 
 
+def eval_set_error(if_dict):
+    if_dict["result"] = "error"
+    if_dict["checkpoint"] = ''
+    if_dict["res_content"] = 'eval()错误，请检查是body参数是否支持eval函数操作！'
+    if_dict['error'] = ErrorCode.eval_error
+    if_dict['msg'] = ErrorCode.eval_error
+    return if_dict
+
+
 def AES_length_error(if_dict):
     if_dict["result"] = "error"
     if_dict["checkpoint"] = ''

@@ -13,7 +13,7 @@ from datetime import timedelta, datetime
 from lib.swagger import AnalysisJson
 from django.shortcuts import render_to_response
 # from base.page_cache import page_cache  # redis缓存
-from lib.public import DrawPie, paginator, pagination_data
+from lib.public import DrawPie, paginator, pagination_data, format_json
 from lib.error_code import ErrorCode
 from lib.except_check import project_info_logic, sign_info_logic, env_info_logic, interface_info_logic, format_params, \
     case_info_logic, plan_info_logic, header_value_error  # 自定义异常逻辑
@@ -1762,7 +1762,8 @@ def findata(request):
         if get_type == 'analysis_request_header_json':
             request_header_json = request.POST.get('request_header_json', '')
             try:
-                data = eval(request_header_json.replace('false', 'False').replace('null', 'None').replace('true', 'True'))
+                data = eval(
+                    request_header_json.replace('false', 'False').replace('null', 'None').replace('true', 'True'))
                 return JsonResponse(list(data), safe=False)
             except Exception as e:
                 log.error('解析参数错误. {}'.format(e))

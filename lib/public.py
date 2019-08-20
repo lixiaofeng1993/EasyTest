@@ -384,6 +384,35 @@ def get_param_response(param_name, dict_data, num=0, default=None):
     return default
 
 
+def format_body(body):
+    """
+    处理body参数中存在list或者dict后者本身为list的情况
+    :param body:
+    :return:
+    """
+    if '[' in json.dumps(body):  # body参数中有list的情况
+        for k, v in body.items():
+            if k == 'list':  # 标识body参数为list的情况
+                try:
+                    body = eval(v)
+                except Exception:
+                    return 'error'
+            else:
+                try:
+                    body[k] = eval(v)
+                except Exception:
+                    return 'error'
+    else:
+        if isinstance(body, dict):
+            for key, value in body.items():  # body参数中有dict的情况
+                if '{' in str(value):
+                    try:
+                        body[key] = eval(value)
+                    except Exception:
+                        return 'error'
+    return body
+
+
 def call_interface(s, method, url, header, data, content_type='json', user_auth=''):
     """
     发送请求

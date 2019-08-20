@@ -15,10 +15,10 @@ from lib.signtype import user_sign_api, encryptAES, auth_user
 import logging
 import time
 from lib.public import validators_result, get_extract, get_param, replace_var, \
-    extract_variables, call_interface, format_url
+    extract_variables, call_interface, format_url, format_body
 from lib.random_params import random_params
 from lib.except_check import env_not_exit, case_is_delete, interface_is_delete, parametric_set_error, AES_length_error, \
-    response_value_error, request_api_error, index_error, checkpoint_no_error
+    response_value_error, request_api_error, index_error, checkpoint_no_error, eval_set_error
 from .error_code import ErrorCode
 
 # from common.connectMySql import SqL
@@ -104,6 +104,11 @@ class Test_execute():
         if_dict = {"url": interface.url, "header": step_content["header"], "body": step_content["body"], "if_id": if_id,
                    "if_name": step_content["if_name"], "method": interface.method, "data_type": interface.data_type}
 
+        if_dict['body'] = format_body(if_dict['body'])  # body参数中存在list或者dict，或者dict本身就是list
+        if if_dict['body'] == 'error':
+            if_dict = eval_set_error(if_dict)
+            return if_dict
+
         if_dict['header'] = random_params(if_dict['header'])  # random参数化
         if_dict['body'] = random_params(if_dict['body'])
         if if_dict['header'] == 'error' or if_dict['body'] == 'error':  # 参数化异常
@@ -142,9 +147,7 @@ class Test_execute():
                 if_dict["body"] = True
             elif 'false' in step_content['body']:
                 if_dict['body'] = False
-        if '[' in json.dumps(if_dict["body"]):  # body参数是list的情况
-            for k, v in if_dict['body'].items():
-                if_dict["body"][k] = eval(v)
+
         if interface.data_type == 'file':  # 图片上传类型接口
             if_dict["body"] = {
                 "file": ("login-bg.jpg", open("/var/static/static/img/login-bg.jpg", "rb"), "image/jpeg", {})}
