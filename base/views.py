@@ -13,7 +13,7 @@ from datetime import timedelta, datetime
 from lib.swagger import AnalysisJson
 from django.shortcuts import render_to_response
 # from base.page_cache import page_cache  # redis缓存
-from lib.public import DrawPie, paginator, pagination_data, format_json
+from lib.public import DrawPie, paginator, pagination_data
 from lib.error_code import ErrorCode
 from lib.except_check import project_info_logic, sign_info_logic, env_info_logic, interface_info_logic, format_params, \
     case_info_logic, plan_info_logic, header_value_error  # 自定义异常逻辑
