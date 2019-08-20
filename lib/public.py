@@ -391,24 +391,17 @@ def format_body(body):
     :return:
     """
     if isinstance(body, dict):
-        if '[' in json.dumps(body):  # body参数中有list的情况
-            for k, v in body.items():
-                if k == 'list':  # 标识body参数为list的情况
-                    try:
-                        body = eval(v)
-                    except Exception:
-                        return 'error'
-                else:
-                    try:
-                        body[k] = eval(v)
-                    except Exception:
-                        return 'error'
-        else:
-            for key, value in body.items():  # body参数中有dict的情况
-                if '{' in str(value):
+        for key, value in body.items():
+            if key == 'list':  # 标识body参数为list的情况
+                try:
+                    body = eval(value)
+                except Exception:
+                    return 'error'
+            else:
+                if '[' in value or '{' in value:
                     try:
                         body[key] = eval(value)
-                    except Exception:
+                    except Exception as e:
                         return 'error'
         return body
     else:

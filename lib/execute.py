@@ -154,7 +154,6 @@ class Test_execute():
 
         if_dict["url"] = self.env_url + interface.url
         if_dict["url"], if_dict["body"] = format_url(if_dict["url"], if_dict["body"])
-
         if not interface.set_mock:  # 请求接口或者模拟接口返回值
             try:
                 if interface.is_sign:

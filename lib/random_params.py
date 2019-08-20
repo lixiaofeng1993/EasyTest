@@ -75,4 +75,4 @@ def random_params(params):
                 str_value1 = value.split('__email')[1]
                 str_email = faker.email()
                 params[key] = str_value + str_email + str_value1
-        return params
+    return params
