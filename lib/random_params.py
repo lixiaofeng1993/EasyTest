@@ -12,7 +12,7 @@ import re, random
 faker = Faker('zh_CN')
 
 
-def fake_params(params, value, key=''):
+def fake_params(params, value, key='', i=0):
     if '__random_int' in value:
         regexp = r"\((.+)\)"
         num = re.findall(regexp, value)
@@ -25,7 +25,7 @@ def fake_params(params, value, key=''):
                     params[key] = str_value + str(random.randint(k, v))
                 else:
                     params.remove(value)
-                    params.append(str_value + str(random.randint(k, v)))
+                    params.insert(i, str_value + str(random.randint(k, v)))
             except ValueError:
                 return 'error'
         else:
@@ -38,7 +38,7 @@ def fake_params(params, value, key=''):
             params[key] = str_value + str_name + str_value1
         else:
             params.remove(value)
-            params.append(str_value + str_name + str_value1)
+            params.insert(i, str_value + str_name + str_value1)
     elif '__address' in value:
         str_value = value.split('__address')[0]
         str_value1 = value.split('__address')[1]
@@ -47,7 +47,7 @@ def fake_params(params, value, key=''):
             params[key] = str_value + str_address + str_value1
         else:
             params.remove(value)
-            params.append(str_value + str_address + str_value1)
+            params.insert(i, str_value + str_address + str_value1)
     elif '__phone' in value:
         str_value = value.split('__phone')[0]
         str_value1 = value.split('__phone')[1]
@@ -56,7 +56,7 @@ def fake_params(params, value, key=''):
             params[key] = str_value + str_phone + str_value1
         else:
             params.remove(value)
-            params.append(str_value + str_phone + str_value1)
+            params.insert(i, str_value + str_phone + str_value1)
     elif '__text' in value:
         regexp = r"\((.+)\)"
         num = re.findall(regexp, value)
@@ -66,18 +66,18 @@ def fake_params(params, value, key=''):
             try:
                 number = int(num[0])
                 if key:
-                    params[key] = str_value + faker.text(max_nb_chars=number)
+                    params[key] = str_value + faker.text(max_nb_chars=number).replace('\n', '').replace('\r', '')
                 else:
                     params.remove(value)
-                    params.append(str_value + faker.text(max_nb_chars=number))
+                    params.insert(i, str_value + faker.text(max_nb_chars=number).replace('\n', '').replace('\r', ''))
             except ValueError:
                 return 'error'
         else:
             if key:
-                params[key] = str_value + faker.text() + str_value1
+                params[key] = str_value + faker.text().replace('\n', '').replace('\r', '') + str_value1
             else:
                 params.remove(value)
-                params.append(str_value + faker.text() + str_value1)
+                params.insert(i, str_value + faker.text().replace('\n', '').replace('\r', '') + str_value1)
     elif '__random_time' in value:
         str_value = value.split('__random_time')[0]
         str_value1 = value.split('__random_time')[1]
@@ -86,7 +86,7 @@ def fake_params(params, value, key=''):
             params[key] = str_value + str(str_random_time) + str_value1
         else:
             params.remove(value)
-            params.append(str_value + str(str_random_time) + str_value1)
+            params.insert(i, str_value + str(str_random_time) + str_value1)
     elif '__now' in value:
         str_value = value.split('__now')[0]
         str_value1 = value.split('__now')[1]
@@ -95,7 +95,7 @@ def fake_params(params, value, key=''):
             params[key] = str_value + str(str_random_time)[:-7] + str_value1
         else:
             params.remove(value)
-            params.append(str_value + str(str_random_time)[:-7] + str_value1)
+            params.insert(i, str_value + str(str_random_time)[:-7] + str_value1)
     elif '__email' in value:
         str_value = value.split('__email')[0]
         str_value1 = value.split('__email')[1]
@@ -104,7 +104,8 @@ def fake_params(params, value, key=''):
             params[key] = str_value + str_email + str_value1
         else:
             params.remove(value)
-            params.append(str_value + str_email + str_value1)
+            params.insert(i, str_value + str_email + str_value1)
+
     return params
 
 
@@ -122,8 +123,8 @@ def random_params(params):
                     params[key] = param
             elif isinstance(value, list):
                 value.sort()
-                for v in value:
-                    param = fake_params(value, v)
+                for i in range(len(value)):
+                    param = fake_params(value, value[i], i=i)
                     params[key] = param
             else:
                 params = fake_params(params, value, key)

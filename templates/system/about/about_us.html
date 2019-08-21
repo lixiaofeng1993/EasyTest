@@ -40,6 +40,7 @@
                 <div class="panel-body">
                     <br><br>
                     <h5>关键字参数化：</h5>
+                    <p><span style="font-weight: 600">支持对body中存在的嵌套参数进行参数化；</span></p><p><span style="font-size: 12px">&nbsp;&nbsp;&nbsp; 需要加双引号 例：{"group_id": 15,"text": ["__name名称","地址：__address","__text(100)描述"]}、{"params": {"param1": "当前时间__now","param2": "__random_int(0,1)"},"path": "/pages/index/index","remark": "备注__text(10)"}</span></p>
                     <p><span style="font-weight: 600">__random_int(x,y):</span><span style="font-size: 12px">&nbsp;&nbsp;&nbsp;随机生成一个整数，x、y 生成整数的范围；可进行字符串拼接  例：test __random_int(100,200) 生成的参数为：test 123 ；</span></p>
                     <p><span style="font-weight: 600">__name:</span><span style="font-size: 12px">&nbsp;&nbsp;&nbsp;随机生成一个中文名字，可进行字符串拼接；</span></p>
                     <p><span style="font-weight: 600">__address:</span><span style="font-size: 12px">&nbsp;&nbsp;&nbsp;随机生成一个中文地址，可进行字符串拼接；</span></p>
