@@ -832,6 +832,8 @@ def batch_index(request):
                 env_url = env.url
                 prj_id = env.project_id
                 interface_params, interface = AnalysisJson(prj_id, env_url).retrieve_data()
+                if interface_params == 0:
+                    return HttpResponse('请求swagger url 发生错误，请联系管理员！')
                 log.info('项目 {} 开始批量导入...'.format(prj_id))
                 batch_import_interface(interface_params, interface, request, user_id)
                 return HttpResponse('批量导入成功！ ==> {}'.format(prj_id))

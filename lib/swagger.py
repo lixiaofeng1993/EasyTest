@@ -35,8 +35,11 @@ class AnalysisJson:
         global body_name, method
         try:
             r = requests.get(self.url + '/v2/api-docs?group=sign-api').json()
-        except json.decoder.JSONDecodeError:
-            log.error('swagger地址错误！')
+        # except json.decoder.JSONDecodeError:
+        #     log.error('swagger地址错误！')
+        #     return 0, 0
+        except Exception as e:
+            log.error('请求swagger url 发生错误. 详情原因: {}'.format(e))
             return 0, 0
         if self.check_data(r):
             self.data = r['paths']  # paths中的数据是有用的
