@@ -13,6 +13,14 @@ faker = Faker('zh_CN')
 
 
 def fake_params(params, value, key='', i=0):
+    """
+    支持对body中存在的嵌套参数进行参数化
+    :param params: 参数字典
+    :param value: 包含参数化关键字的值
+    :param key: 字典的key，区分dict、list
+    :param i: list参数包含关键字的位置
+    :return:
+    """
     if '__random_int' in value:
         regexp = r"\((.+)\)"
         num = re.findall(regexp, value)

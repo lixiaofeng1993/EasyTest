@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="778b3f5c-ebac-48de-a7cd-7bbe971dd892" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EasyTest/settings.py" afterPath="$PROJECT_DIR$/EasyTest/settings.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/random_params.py" afterPath="$PROJECT_DIR$/lib/random_params.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/system/about/about_us.html" afterPath="$PROJECT_DIR$/templates/system/about/about_us.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -55,11 +53,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="random_params.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="random_params.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/random_params.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="617">
-              <caret line="76" column="90" lean-forward="false" selection-start-line="76" selection-start-column="90" selection-end-line="76" selection-end-column="90" />
+            <state relative-caret-position="2245">
+              <caret line="128" column="42" lean-forward="true" selection-start-line="128" selection-start-column="42" selection-end-line="128" selection-end-column="42" />
               <folding />
             </state>
           </provider>
@@ -75,7 +73,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="about_us.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="about_us.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/system/about/about_us.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="418">
@@ -197,8 +195,8 @@
         <option value="$PROJECT_DIR$/lib/execute.py" />
         <option value="$PROJECT_DIR$/lib/public.py" />
         <option value="$PROJECT_DIR$/EasyTest/settings.py" />
-        <option value="$PROJECT_DIR$/lib/random_params.py" />
         <option value="$PROJECT_DIR$/templates/system/about/about_us.html" />
+        <option value="$PROJECT_DIR$/lib/random_params.py" />
       </list>
     </option>
   </component>
@@ -1198,14 +1196,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/random_params.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="617">
-          <caret line="76" column="90" lean-forward="false" selection-start-line="76" selection-start-column="90" selection-end-line="76" selection-end-column="90" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/system/about/about_us.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="418">
@@ -1220,6 +1210,14 @@
             <element signature="e#1346#1352#0#HTML" expanded="true" />
             <element signature="e#1352#1358#0#HTML" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/random_params.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2245">
+          <caret line="128" column="42" lean-forward="true" selection-start-line="128" selection-start-column="42" selection-end-line="128" selection-end-column="42" />
+          <folding />
         </state>
       </provider>
     </entry>
