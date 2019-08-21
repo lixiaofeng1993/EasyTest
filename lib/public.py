@@ -358,29 +358,43 @@ def get_param_response(param_name, dict_data, num=0, default=None):
     :param default: 函数异常返回
     :return: 提取的参数值
     """
-    for k, v in dict_data.items():
-        if k == param_name:
-            return v
-        else:
-            if isinstance(v, dict):
-                ret = get_param_response(param_name, v)
-                if ret is not default:
-                    return ret
-            if isinstance(v, list):
-                if num:
+    if isinstance(dict_data, dict):
+        for k, v in dict_data.items():
+            if k == param_name:
+                return v
+            else:
+                if isinstance(v, dict):
+                    ret = get_param_response(param_name, v)
+                    if ret is not default:
+                        return ret
+                if isinstance(v, list):
+                    if num:
+                        try:
+                            if isinstance(v[num], dict):
+                                ret = get_param_response(param_name, v[num])
+                                if ret is not default:
+                                    return ret
+                        except IndexError:
+                            return {'error': ErrorCode.index_error}
+                    else:
+                        for i in v:
+                            if isinstance(i, dict):
+                                ret = get_param_response(param_name, i)
+                                if ret is not default:
+                                    return ret
+                if isinstance(v, str):
                     try:
-                        if isinstance(v[num], dict):
-                            ret = get_param_response(param_name, v[num])
-                            if ret is not default:
-                                return ret
-                    except IndexError:
-                        return {'error': ErrorCode.index_error}
-                else:
-                    for i in v:
-                        if isinstance(i, dict):
-                            ret = get_param_response(param_name, i)
-                            if ret is not default:
-                                return ret
+                        value = eval(v)
+                        ret = get_param_response(param_name, value)
+                        if ret is not default:
+                            return ret
+                    except Exception:
+                        pass
+    elif isinstance(dict_data, list):
+        for content in dict_data:
+            ret = get_param_response(param_name, content)
+            if ret is not default:
+                return ret
     return default
 
 
