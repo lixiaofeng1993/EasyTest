@@ -23,9 +23,13 @@ num_list = []
 # appid = 'wx506830910cbd77e9'
 # appsecret = 'e0e5d5ed1d507103f73d6667eef00d7a' pages/index/detail/index?id=365&campId=12&index=1
 
-# 首页
 @login_required
 def index(request):
+    """
+    首页展示数据
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')  # 从session中获取user_id
     if not user_id:
         return render(request, 'user/login_action.html')
@@ -88,6 +92,11 @@ def index(request):
 
 @login_required
 def index_data(request):
+    """
+    切换首页展示数据
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')  # 从session中获取user_id
     if not user_id:
         return render(request, 'user/login_action.html')
@@ -121,6 +130,11 @@ def index_data(request):
 
 # 天气
 def get_whether(request):
+    """
+    首页展示天气<未使用>
+    :param request:
+    :return:
+    """
     if request.method == 'GET':
         city_code_dict = {
             '北京': '101010100', '上海': '101020100',
@@ -147,8 +161,12 @@ def get_whether(request):
         return JsonResponse(item)
 
 
-# 登录
 def login_action(request):
+    """
+    登录
+    :param request:
+    :return:
+    """
     if request.method == 'GET':
         # 把来源的url保存到session中
         request.session['login_from'] = request.META.get('HTTP_REFERER', '/')
@@ -180,8 +198,12 @@ def login_action(request):
             return render(request, 'user/login_action.html', {'error': 'username or password error!'})
 
 
-# 修改密码
 def change_password(request):
+    """
+    修改密码
+    :param request:
+    :return:
+    """
     if request.method == 'POST':
         new_password = request.POST.get('new_password', '')
 
@@ -199,8 +221,12 @@ def change_password(request):
             return JsonResponse({'msg': 'success'})
 
 
-# 注册
 def register(request):
+    """
+    注册
+    :param request:
+    :return:
+    """
     if request.method == 'GET':
         return render(request, 'user/register.html')
     else:
@@ -227,9 +253,12 @@ def register(request):
                 return response
 
 
-# @login_required
 def img_download(request):
-    # do something...
+    """
+    二维码下载
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')  # 从session中获取user_id
     if get_user(user_id):
         if request.method == 'GET':
@@ -255,8 +284,12 @@ def img_download(request):
         return render(request, 'user/login_action.html')
 
 
-# 退出
 def logout(request):
+    """
+    退出
+    :param request:
+    :return:
+    """
     username = request.session.get('user', '')
     log.info('用户：{},退出登录！'.format(username))
     auth.logout(request)  # 退出登录

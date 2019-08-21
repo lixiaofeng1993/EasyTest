@@ -381,22 +381,22 @@
             }
         });
 
-        window.onload = function whether() {
-            $('.whether').empty();
-            $.ajax({
-                type: 'get',
-                url: "/get_whether/",
-                success: function (data) {
-                    if (data == '0') {
-                        alert('请求天气接口发生错误！')
-                    } else {
-                        html = '<p> 城市：' + data.city + '</p><p> 时间：' + data.now + '</p><p> 天气：' + data.weather + '</p><p> 气温：' + data.temp1 + '/' + data.temp2 + '</p>';
-                        $('.whether').append(html);
-                    }
-                }, error: function () {
-                    alert("获取天气信息失败！");
-                }
-            })
-        };
+        {#        window.onload = function whether() {#}
+        {#            $('.whether').empty();#}
+        {#            $.ajax({#}
+        {#                type: 'get',#}
+        {#                url: "/get_whether/",#}
+        {#                success: function (data) {#}
+        {#                    if (data == '0') {#}
+        {#                        alert('请求天气接口发生错误！')#}
+        {#                    } else {#}
+        {#                        html = '<p> 城市：' + data.city + '</p><p> 时间：' + data.now + '</p><p> 天气：' + data.weather + '</p><p> 气温：' + data.temp1 + '/' + data.temp2 + '</p>';#}
+        {#                        $('.whether').append(html);#}
+        {#                    }#}
+        {#                }, error: function () {#}
+        {#                    alert("获取天气信息失败！");#}
+        {#                }#}
+        {#            })#}
+        {#        };#}
     </script>
 {% endblock %}
