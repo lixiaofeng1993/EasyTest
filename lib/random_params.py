@@ -48,7 +48,6 @@ def fake_params(params, value, key='', i=0):
             else:
                 params.remove(value)
                 params.insert(i, str_value + str_name + str_value1)
-            print(params, 22222222222222222)
         elif '__address' in value:
             str_value = value.split('__address')[0]
             str_value1 = value.split('__address')[1]
