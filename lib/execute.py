@@ -171,9 +171,10 @@ class Test_execute():
                     if_dict["res_content"] = eval(
                         res.text.replace('false', 'False').replace('null', 'None').replace('true',
                                                                                            'True'))  # 查看报告时转码错误的问题
-                    if '系统异常' in if_dict['res_content'].values():
-                        if_dict = response_value_error(if_dict, make=True)
-                        return if_dict
+                    if isinstance(if_dict['res_content'], dict):
+                        if '系统异常' in if_dict['res_content'].values():
+                            if_dict = response_value_error(if_dict, make=True)
+                            return if_dict
                 except SyntaxError as e:
                     if_dict = response_value_error(if_dict, )  # 解析返回值异常
                     return if_dict
