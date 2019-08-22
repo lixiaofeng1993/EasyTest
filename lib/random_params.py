@@ -131,7 +131,7 @@ def random_params(params):
                 for k, v in value.items():
                     fake_params(value, v, k)
             elif isinstance(value, list):
-                value.sort()
+                # value.sort()
                 for i in range(len(value)):
                     fake_params(value, value[i], i=i)
             else:
