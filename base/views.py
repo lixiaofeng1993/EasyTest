@@ -693,15 +693,11 @@ def interface_update(request):
             request_header_param_list = interface_get_params(interface.request_header_param)
             request_body_param_list = interface_get_params(interface.request_body_param)
             # response_header_param_list = interface_get_params(interface.response_header_param)
-            if interface.response_header_param:
-                tags = eval(interface.response_header_param)
-            else:
-                tags = []
             # response_body_param_list = interface_get_params(interface.response_body_param)
             method, is_sign, is_headers = format_params(interface)
             info = {"interface": interface, 'request_header_param_list': request_header_param_list,
                     'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                    'response_header_param_list': tags, 'is_headers': is_headers, "prj_list": prj_list}
+                    'is_headers': is_headers, "prj_list": prj_list}
             return render(request, "base/interface/update.html", info)
 
 

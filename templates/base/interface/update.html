@@ -182,17 +182,13 @@
                                 </label>
                             </div>
                         </div>
-                        {% if response_header_param_list %}
+                        {% if interface.response_header_param %}
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">swagger接口tags</label>
-
-                                {% for response_header_param in response_header_param_list %}
-                                    <div class="col-sm-8">
-                                        <input type="text" id="tags" name="tags" class="form-control"
-                                               value="{{ response_header_param }}" disabled="disabled">
-                                    </div>
-                                {% endfor %}
-
+                                <div class="col-sm-8">
+                                    <input type="text" id="tags" name="tags" class="form-control"
+                                           value="{{ interface.response_header_param }}" disabled="disabled">
+                                </div>
                             </div>
                         {% endif %}
                         <div class="form-group">

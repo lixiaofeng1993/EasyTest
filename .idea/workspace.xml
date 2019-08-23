@@ -4,10 +4,6 @@
     <list default="true" id="778b3f5c-ebac-48de-a7cd-7bbe971dd892" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/views.py" afterPath="$PROJECT_DIR$/base/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/except_check.py" afterPath="$PROJECT_DIR$/lib/except_check.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/swagger.py" afterPath="$PROJECT_DIR$/lib/swagger.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/interface/add.html" afterPath="$PROJECT_DIR$/templates/base/interface/add.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/interface/index.html" afterPath="$PROJECT_DIR$/templates/base/interface/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/interface/update.html" afterPath="$PROJECT_DIR$/templates/base/interface/update.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -43,8 +39,8 @@
       <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/base/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="763" column="36" lean-forward="false" selection-start-line="763" selection-start-column="36" selection-end-line="763" selection-end-column="36" />
+            <state relative-caret-position="600">
+              <caret line="699" column="19" lean-forward="false" selection-start-line="699" selection-start-column="19" selection-end-line="699" selection-end-column="19" />
               <folding>
                 <element signature="e#0#30#0" expanded="true" />
               </folding>
@@ -62,20 +58,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="321">
-              <caret line="26" column="13" lean-forward="false" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
+              <caret line="26" column="13" lean-forward="false" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="13" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="swagger.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="swagger.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/swagger.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="704">
+            <state relative-caret-position="741">
               <caret line="41" column="39" lean-forward="false" selection-start-line="41" selection-start-column="37" selection-end-line="41" selection-end-column="39" />
               <folding>
                 <element signature="e#159#189#0" expanded="true" />
@@ -97,14 +93,14 @@
       <file leaf-file-name="update.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/templates/base/interface/update.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="223">
-              <caret line="184" column="30" lean-forward="true" selection-start-line="184" selection-start-column="30" selection-end-line="184" selection-end-column="51" />
+            <state relative-caret-position="883">
+              <caret line="184" column="61" lean-forward="false" selection-start-line="184" selection-start-column="61" selection-end-line="184" selection-end-column="61" />
               <folding>
-                <marker date="1566573211161" expanded="false" signature="16184:16190" ph=" " />
-                <marker date="1566573211161" expanded="false" signature="17677:17683" ph=" " />
-                <marker date="1566573211161" expanded="false" signature="19041:19047" ph=" " />
-                <marker date="1566573211161" expanded="false" signature="19358:19364" ph=" " />
-                <marker date="1566573211161" expanded="false" signature="20952:20958" ph=" " />
+                <marker date="1566582778395" expanded="false" signature="16042:16048" ph=" " />
+                <marker date="1566582778395" expanded="false" signature="17535:17541" ph=" " />
+                <marker date="1566582778395" expanded="false" signature="18899:18905" ph=" " />
+                <marker date="1566582778395" expanded="false" signature="19216:19222" ph=" " />
+                <marker date="1566582778395" expanded="false" signature="20810:20816" ph=" " />
               </folding>
             </state>
           </provider>
@@ -157,10 +153,10 @@
       <find>var_remark</find>
       <find>&quot;in&quot;: &quot;path&quot;,</find>
       <find>interfacein</find>
-      <find>response_header_data</find>
       <find>header</find>
       <find>bat</find>
       <find>print</find>
+      <find>response_header_data</find>
     </findStrings>
     <replaceStrings>
       <replace>self.interface</replace>
@@ -215,12 +211,12 @@
         <option value="$PROJECT_DIR$/logs/info-2019-08-23.log" />
         <option value="$PROJECT_DIR$/templates/base/interface/add.html" />
         <option value="$PROJECT_DIR$/lib/except_check.py" />
-        <option value="$PROJECT_DIR$/templates/base/interface/update.html" />
         <option value="$PROJECT_DIR$/data.json" />
         <option value="$PROJECT_DIR$/templates/base/case/add.html" />
         <option value="$PROJECT_DIR$/templates/base/interface/index.html" />
         <option value="$PROJECT_DIR$/lib/swagger.py" />
         <option value="$PROJECT_DIR$/base/views.py" />
+        <option value="$PROJECT_DIR$/templates/base/interface/update.html" />
         <option value="$PROJECT_DIR$/EasyTest/settings.py" />
       </list>
     </option>
@@ -804,7 +800,7 @@
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="32" />
+      <option name="time" value="33" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1145,20 +1141,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base/interface/update.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="223">
-          <caret line="184" column="30" lean-forward="true" selection-start-line="184" selection-start-column="30" selection-end-line="184" selection-end-column="51" />
-          <folding>
-            <marker date="1566573211161" expanded="false" signature="16184:16190" ph=" " />
-            <marker date="1566573211161" expanded="false" signature="17677:17683" ph=" " />
-            <marker date="1566573211161" expanded="false" signature="19041:19047" ph=" " />
-            <marker date="1566573211161" expanded="false" signature="19358:19364" ph=" " />
-            <marker date="1566573211161" expanded="false" signature="20952:20958" ph=" " />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/interface/index.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="408">
@@ -1175,31 +1157,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
+    <entry file="file://$PROJECT_DIR$/lib/swagger.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="321">
-          <caret line="26" column="13" lean-forward="false" selection-start-line="26" selection-start-column="13" selection-end-line="26" selection-end-column="13" />
-          <folding />
+        <state relative-caret-position="741">
+          <caret line="41" column="39" lean-forward="false" selection-start-line="41" selection-start-column="37" selection-end-line="41" selection-end-column="39" />
+          <folding>
+            <element signature="e#159#189#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/base/views.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="763" column="36" lean-forward="false" selection-start-line="763" selection-start-column="36" selection-end-line="763" selection-end-column="36" />
+        <state relative-caret-position="600">
+          <caret line="699" column="19" lean-forward="false" selection-start-line="699" selection-start-column="19" selection-end-line="699" selection-end-column="19" />
           <folding>
             <element signature="e#0#30#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/swagger.py">
+    <entry file="file://$PROJECT_DIR$/templates/base/interface/update.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="704">
-          <caret line="41" column="39" lean-forward="false" selection-start-line="41" selection-start-column="37" selection-end-line="41" selection-end-column="39" />
+        <state relative-caret-position="883">
+          <caret line="184" column="61" lean-forward="false" selection-start-line="184" selection-start-column="61" selection-end-line="184" selection-end-column="61" />
           <folding>
-            <element signature="e#159#189#0" expanded="true" />
+            <marker date="1566582778395" expanded="false" signature="16042:16048" ph=" " />
+            <marker date="1566582778395" expanded="false" signature="17535:17541" ph=" " />
+            <marker date="1566582778395" expanded="false" signature="18899:18905" ph=" " />
+            <marker date="1566582778395" expanded="false" signature="19216:19222" ph=" " />
+            <marker date="1566582778395" expanded="false" signature="20810:20816" ph=" " />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="321">
+          <caret line="26" column="13" lean-forward="false" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="13" />
+          <folding />
         </state>
       </provider>
     </entry>
