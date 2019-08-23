@@ -607,11 +607,11 @@ def interface_add(request):
             is_headers = request.POST.get('is_headers', '')
             request_header_data = request.POST['request_header_data']
             request_body_data = request.POST['request_body_data']
-            response_header_data = request.POST['response_header_data']
-            response_body_data = request.POST['response_body_data']
+            # response_header_data = request.POST['response_header_data']
+            # response_body_data = request.POST['response_body_data']
 
             msg = interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, request_header_data,
-                                       request_body_data, response_header_data, response_body_data)
+                                       request_body_data)
             if msg != 'ok':
                 log.error('interface add error：{}'.format(msg))
                 return HttpResponse(msg)
@@ -622,13 +622,12 @@ def interface_add(request):
             project = Project.objects.get(prj_id=prj_id)
             interface = Interface(if_name=if_name, url=url, project=project, method=method, data_type=data_type,
                                   is_sign=is_sign, description=description, request_header_param=request_header_data,
-                                  request_body_param=request_body_data, response_header_param=response_header_data,
-                                  response_body_param=response_body_data, is_header=is_headers, update_user=username)
+                                  request_body_param=request_body_data, is_header=is_headers, update_user=username)
             interface.save()
             log.info(
-                'add interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} // {} '
+                'add interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} //  '
                     .format(if_name, project, url, method, data_type, is_sign, description, request_header_data,
-                            request_body_data, response_header_data, response_body_data, is_headers))
+                            request_body_data, is_headers))
             return HttpResponseRedirect("/base/interface/")
         elif request.method == 'GET':
             prj_list = is_superuser(user_id)
@@ -660,13 +659,13 @@ def interface_update(request):
             request_header_data = interface_format_params(request_header_data_list)
             request_body_data_list = request.POST.get('request_body_data', [])
             request_body_data = interface_format_params(request_body_data_list)
-            response_header_data_list = request.POST.get('response_header_data', [])
-            response_header_data = interface_format_params(response_header_data_list)
-            response_body_data_list = request.POST.get('response_body_data', [])
-            response_body_data = interface_format_params(response_body_data_list)
+            # response_header_data_list = request.POST.get('response_header_data', [])
+            # response_header_data = interface_format_params(response_header_data_list)
+            # response_body_data_list = request.POST.get('response_body_data', [])
+            # response_body_data = interface_format_params(response_body_data_list)
 
             msg = interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, request_header_data,
-                                       request_body_data, response_header_data, response_body_data, if_id)
+                                       request_body_data, if_id)
             if msg != 'ok':
                 log.error('interface update error：{}'.format(msg))
                 return HttpResponse(msg)
@@ -681,13 +680,11 @@ def interface_update(request):
                                                              is_sign=is_sign, description=description,
                                                              request_header_param=request_header_data,
                                                              request_body_param=request_body_data,
-                                                             response_header_param=response_header_data,
-                                                             response_body_param=response_body_data,
                                                              update_time=datetime.now(), update_user=username)
                 log.info(
-                    'edit interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} // {}// {} '.format(
+                    'edit interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} //  '.format(
                         if_name, project, url, method, data_type, is_sign, description, request_header_data,
-                        request_body_data, response_header_data, response_body_data, is_headers))
+                        request_body_data, is_headers))
                 return HttpResponseRedirect("/base/interface/")
         elif request.method == 'GET':
             prj_list = is_superuser(user_id)
@@ -695,14 +692,16 @@ def interface_update(request):
             interface = Interface.objects.get(if_id=if_id)
             request_header_param_list = interface_get_params(interface.request_header_param)
             request_body_param_list = interface_get_params(interface.request_body_param)
-            response_header_param_list = interface_get_params(interface.response_header_param)
-            response_body_param_list = interface_get_params(interface.response_body_param)
+            # response_header_param_list = interface_get_params(interface.response_header_param)
+            if interface.response_header_param:
+                tags = eval(interface.response_header_param)
+            else:
+                tags = []
+            # response_body_param_list = interface_get_params(interface.response_body_param)
             method, is_sign, is_headers = format_params(interface)
             info = {"interface": interface, 'request_header_param_list': request_header_param_list,
                     'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                    'response_header_param_list': response_header_param_list,
-                    'response_body_param_list': response_body_param_list, 'is_headers': is_headers,
-                    "prj_list": prj_list}
+                    'response_header_param_list': tags, 'is_headers': is_headers, "prj_list": prj_list}
             return render(request, "base/interface/update.html", info)
 
 
@@ -757,47 +756,45 @@ def interface_delete(request):
             return HttpResponseRedirect("base/interface/")
 
 
-def batch_import_interface(interface_params, interface, request, user_id):
-    """
-    批量导入接口
-    :param interface_params:
-    :param interface:
-    :param request:
-    :param user_id:
-    :return:
-    """
-    for interface_ in interface:
-        if_name = interface_.get('name', '').strip()
-        method = interface_.get('method', '')
+def batch_import_interface(interface, request, user_id):
+    for key, value in interface.items():
+        if_name = value.get('name', '').strip()
+        method = value.get('method', '')
         prj_list = is_superuser(user_id, type='list')
-        name = Interface.objects.filter(if_name=if_name).filter(method=method).filter(project_id__in=prj_list)
+        tags = value.get('tags', '')
+        name = Interface.objects.filter(if_name=if_name).filter(method=method).filter(project_id__in=prj_list).filter(
+            response_header_param__in=tags)
         if name:
             log.warning('接口名称已存在. ==> {}'.format(if_name))
             continue
         else:
-            url = interface_.get('url', '')
-            method = interface_.get('method', '')
-            data_type = interface_.get('type', '')
-            headers = interface_.get('headers', '')
-            body_ = interface_.get('body', '')
-            if body_:
-                body = interface_params[body_]
-            project_id = interface_.get('prj_id', '')
+            url = value.get('url', '')
+            data_type = value.get('type', '')
+            headers = value.get('headers', '')
+            body = value.get('body', '')
+            project_id = value.get('prj_id', '')
             is_sign = 0
             is_headers = 0
             description = ''
-            if headers[0]:
-                request_header_data = [{"var_name": "", "var_remark": ""}]
-                request_header_data[0]['var_name'] = headers[0]
-            else:
-                request_header_data = []
-            if body[0]:
-                request_body_data = [{"var_name": "", "var_remark": ""}]
-                request_body_data[0]['var_name'] = body[0]
-            else:
-                request_body_data = []
-            response_header_data = []
+            request_header_data = []
+            request_body_data = []
             response_body_data = []
+            if isinstance(headers, dict):
+                for k, v in headers.items():
+                    headers_data = {}
+                    headers_data['var_name'] = k
+                    if isinstance(v, dict):
+                        v = json.dumps(v)
+                    headers_data['var_remark'] = ''
+                    request_header_data.append(headers_data)
+            if isinstance(body, dict):
+                for k, v in body.items():
+                    body_data = {}
+                    body_data['var_name'] = k
+                    if isinstance(v, dict):
+                        v = json.dumps(v)
+                    body_data['var_remark'] = ''
+                    request_body_data.append(body_data)
             project = Project.objects.get(prj_id=int(project_id))
             username = request.session.get('user', '')
             log.info('interface：{} 正在批量导入中...'.format(if_name))
@@ -806,7 +803,7 @@ def batch_import_interface(interface_params, interface, request, user_id):
                                       is_sign=is_sign, description=description,
                                       request_header_param=json.dumps(request_header_data),
                                       request_body_param=json.dumps(request_body_data),
-                                      response_header_param=response_header_data,
+                                      response_header_param=tags,
                                       response_body_param=response_body_data, update_user=username)
             interface_tbl.save()
 
@@ -831,12 +828,13 @@ def batch_index(request):
                 env = Environment.objects.filter(project_id__in=prj_list).get(is_swagger=1)
                 env_url = env.url
                 prj_id = env.project_id
-                interface_params, interface = AnalysisJson(prj_id, env_url).retrieve_data()
-                if interface_params == 0:
+                interface = AnalysisJson(prj_id, env_url).retrieve_data()
+                if interface == 'error':
                     return HttpResponse('请求swagger url 发生错误，请联系管理员！')
-                log.info('项目 {} 开始批量导入...'.format(prj_id))
-                batch_import_interface(interface_params, interface, request, user_id)
-                return HttpResponse('批量导入成功！ ==> {}'.format(prj_id))
+                elif isinstance(interface, dict):
+                    log.info('项目 {} 开始批量导入...'.format(prj_id))
+                    batch_import_interface(interface, request, user_id)
+                    return HttpResponse('批量导入成功！ ==> {}'.format(prj_id))
             except Environment.DoesNotExist:
                 return HttpResponse('测试环境中未设置从swagger导入！')
 

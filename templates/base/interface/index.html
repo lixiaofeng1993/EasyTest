@@ -150,6 +150,7 @@
                             <th id="cen">数据传输方式</th>
                             <th id="cen">是否签名</th>
                             <th id="cen">描述</th>
+                            <th id="cen">tags</th>
                             <th id="cen">更新时间</th>
                             <th id="cen">更新用户</th>
                             <th id="cen">操作</th>
@@ -172,6 +173,7 @@
                                     <td id="cen">签名</td>
                                 {% endifequal %}
                                 <td>{{ if.description }}</td>
+                                <td>{{ if.response_header_param }}</td>
                                 <td id="cen">{{ if.update_time }}</td>
                                 <td id="cen">{{ if.update_user }}</td>
                                 <td id="cen">

@@ -7,6 +7,7 @@
 # @Software: PyCharm
 
 import requests, logging, json
+from lib.processingJson import write_data, get_json
 
 log = logging.getLogger('log')  # 初始化log
 
@@ -17,107 +18,95 @@ class AnalysisJson:
     def __init__(self, prj_id, url):
         self.prj_id = prj_id
         self.url = url
-        self.interface_params = {}
-        self.interface = []
-
-    def check_data(self, r):
-        if not isinstance(r, dict):
-            log.info('swagger return json error.')
-            return False
-        else:
-            return True
+        self.interface = {}
+        self.interface_list = []
 
     def retrieve_data(self):
         """
         主函数
         :return:
         """
-        global body_name, method
         try:
             r = requests.get(self.url + '/v2/api-docs?group=sign-api').json()
-        # except json.decoder.JSONDecodeError:
-        #     log.error('swagger地址错误！')
-        #     return 0, 0
+            # write_data(r, 'data.json')
+            # r = get_json('D:\EasyTest\data.json')
         except Exception as e:
             log.error('请求swagger url 发生错误. 详情原因: {}'.format(e))
-            return 0, 0
-        if self.check_data(r):
-            self.data = r['paths']  # paths中的数据是有用的
-        for k, v in self.data.items():
-            method_list = []
-            for _k, _v in v.items():
-                interface = {}
-                if not _v['deprecated']:  # 接口是否被弃用
-                    method_list.append(_k)
-                    api = k  # api地址
-                    if len(method_list) > 1:  # api地址下的请求方式不止一个的情况
-                        for i in range(len(method_list)):
-                            body_name = api.replace('/', '_') + '_' * i  # json文件对应参数名称，excel中body名称
-                            method = method_list[-1]  # 请求方式 同一个api地址，不同请求方式
+            return 'error'
+        self.data = r['paths']  # 接口数据
+        self.definitions = r['definitions']  # body参数
+        if isinstance(self.data, dict):
+            for key, value in self.data.items():
+                for method in list(value.keys()):
+                    params = value[method]
+                    if not params['deprecated']:  # 接口是否被弃用
+                        params_key = key.replace('/', '_') + '_' + method
+                        interface = self.retrieve_params(params, params_key, method, key)
+                        self.interface[params_key] = interface
                     else:
-                        body_name = api.replace('/', '_')
-                        method = _k
-                    self.interface_params, interface = self.retrieve_excel(_v, interface, api)
-                    self.interface.append(interface)
-                else:
-                    log.info('interface path: {}, case name: {}, is deprecated.'.format(k, _v['description']))
-                    break
-        return self.interface_params, self.interface
+                        log.info('interface path: {}, if name: {}, is deprecated.'.format(key, params['description']))
+                        break
+            return self.interface
 
-    def retrieve_excel(self, _v, interface, api):
+    def retrieve_params(self, params, params_key, method, key):
         """
-        解析参数，拼接为dict--准备完成写入excel的数据
-        :param _v:
-        :param interface:
-        :param api:
+        解析json，把每个接口数据都加入到一个字典中
+        :param params:
+        :param params_key:
+        :param method:
+        :param key:
         :return:
         """
-        parameters = _v.get('parameters')  # 未解析的参数字典
+        interface = {'tags': ''}
+        query_dict = {}
+        path_dict = {}
+        header_dict = {}
+        params_dict = {'header': {}, 'body': {}}
+        params_dict['body'][params_key] = {}
+        parameters = params.get('parameters')  # 未解析的参数字典
         if not parameters:  # 确保参数字典存在
             parameters = {}
-        # case_name = _v['description']  # 接口名称
-        if_name = _v['summary']  # 接口名称
-        header_dict, body_dict = self.retrieve_params(parameters)  # 处理接口参数，拼成dict形式
-        if body_dict[0] and parameters != {}:  # 单个或多个参数
-            interface['name'] = if_name
-            _type = 'json'  # 参数获取方式
-            interface['method'] = method  # 请求方式
-            interface['url'] = api  # 拼接完成接口url
-            interface['headers'] = header_dict  # 是否传header
-            interface['body'] = body_name
-            interface['type'] = _type
-            interface['prj_id'] = self.prj_id
-            self.interface_params[body_name] = body_dict
-        else:  # 不传参数
-            _type = 'data'
-            interface['name'] = if_name
-            interface['method'] = method
-            interface['url'] = api
-            interface['headers'] = header_dict
-            interface['body'] = body_name
-            interface['type'] = _type
-            interface['prj_id'] = self.prj_id
-            self.interface_params[body_name] = body_dict
-        return self.interface_params, interface
-
-    def retrieve_params(self, parameters):
-        """
-        处理参数，转为dict
-        :param parameters:
-        :return:
-        """
-        header = ''
-        body = ''
         for each in parameters:
+            if each.get('in') == 'body':
+                schema = each.get('schema').get('$ref')
+                if schema:
+                    param_key = schema.split('/')[-1]
+                    param = self.definitions[param_key]['properties']
+                    params_dict['body'][params_key] = param
+            if each.get('in') == 'query':
+                name = each.get('name')
+                del each['name'], each['in']
+                query_dict[name] = json.dumps(each).replace('false', 'False').replace('true', 'True')
+        if query_dict:
+            params_dict['body'][params_key] = query_dict
+        for each in parameters:
+            if each.get('in') == 'path':
+                name = each.get('name')
+                del each['name'], each['in']
+                path_dict[name] = json.dumps(each).replace('false', 'False').replace('true', 'True')
+                params_dict['body'][params_key].update(path_dict)
             if each.get('in') == 'header':
-                header += each.get('name')
-            elif each.get('in') == 'body':
-                body += each.get('name') + '\n'
-        header = header.strip('\n')
-        body = body.strip('\n')
-        header_list = header.split('\n')
-        body_list = body.split('\n')
-        return header_list, body_list
+                name = each.get('name')
+                del each['name'], each['in']
+                header_dict[name] = json.dumps(each).replace('false', 'False').replace('true', 'True')
+                params_dict['header'][params_key] = header_dict
+        if isinstance(params['tags'], list):
+            for tag in params['tags']:
+                interface['tags'] += tag
+        interface['name'] = params['summary']
+        interface['method'] = method  # 请求方式
+        interface['url'] = key  # 拼接完成接口url
+        if params_dict['header']:
+            interface['headers'] = params_dict['header'][params_key]  # 是否传header
+        else:
+            interface['headers'] = ''
+        if params_dict['body']:
+            interface['body'] = params_dict['body'][params_key]
+        else:
+            interface['body'] = ''
+        interface['type'] = 'json'
+        interface['prj_id'] = self.prj_id
+        return interface
 
 
 if __name__ == '__main__':

@@ -200,54 +200,54 @@
                             </div>
 
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">返回header</label>
-                            <div class="col-sm-8">
-                                <button id="add_response_header" class="btn btn-outline btn-primary" type="button"><i
-                                        class="fa fa-plus-square-o"></i>&nbsp;添加行
-                                </button>
-                                <button id="add_response_header_json" class="btn btn-primary" type="button"><i
-                                        class="fa fa-plus-square-o"></i>&nbsp;添加json
-                                </button>
-                            </div>
-                            <div class="col-sm-offset-2 col-sm-8">
-                                <table id="response_header" class="table col-sm-10">
-                                    <thead>
-                                    <tr>
-                                        <th>头部标签</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">返回body</label>
-                            <div class="col-sm-8">
-                                <button id="add_response_body" class="btn btn-outline btn-primary" type="button"><i
-                                        class="fa fa-plus-square-o"></i>&nbsp;添加行
-                                </button>
-                                <button id="add_response_body_json" class="btn btn-primary" type="button"><i
-                                        class="fa fa-plus-square-o"></i>&nbsp;添加json
-                                </button>
-                            </div>
-                            <div class="col-sm-offset-2 col-sm-8">
-                                <table id="response_body" class="table col-sm-10">
-                                    <thead>
-                                    <tr>
-                                        <th>参数名</th>
-                                        <th></th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    </tbody>
-                                </table>
-                            </div>
-
-                        </div>
+                        {#                        <div class="form-group">#}
+                        {#                            <label class="col-sm-2 control-label">返回header</label>#}
+                        {#                            <div class="col-sm-8">#}
+                        {#                                <button id="add_response_header" class="btn btn-outline btn-primary" type="button"><i#}
+                        {#                                        class="fa fa-plus-square-o"></i>&nbsp;添加行#}
+                        {#                                </button>#}
+                        {#                                <button id="add_response_header_json" class="btn btn-primary" type="button"><i#}
+                        {#                                        class="fa fa-plus-square-o"></i>&nbsp;添加json#}
+                        {#                                </button>#}
+                        {#                            </div>#}
+                        {#                            <div class="col-sm-offset-2 col-sm-8">#}
+                        {#                                <table id="response_header" class="table col-sm-10">#}
+                        {#                                    <thead>#}
+                        {#                                    <tr>#}
+                        {#                                        <th>头部标签</th>#}
+                        {#                                        <th></th>#}
+                        {#                                    </tr>#}
+                        {#                                    </thead>#}
+                        {#                                    <tbody>#}
+                        {#                                    </tbody>#}
+                        {#                                </table>#}
+                        {#                            </div>#}
+                        {##}
+                        {#                        </div>#}
+                        {#                        <div class="form-group">#}
+                        {#                            <label class="col-sm-2 control-label">返回body</label>#}
+                        {#                            <div class="col-sm-8">#}
+                        {#                                <button id="add_response_body" class="btn btn-outline btn-primary" type="button"><i#}
+                        {#                                        class="fa fa-plus-square-o"></i>&nbsp;添加行#}
+                        {#                                </button>#}
+                        {#                                <button id="add_response_body_json" class="btn btn-primary" type="button"><i#}
+                        {#                                        class="fa fa-plus-square-o"></i>&nbsp;添加json#}
+                        {#                                </button>#}
+                        {#                            </div>#}
+                        {#                            <div class="col-sm-offset-2 col-sm-8">#}
+                        {#                                <table id="response_body" class="table col-sm-10">#}
+                        {#                                    <thead>#}
+                        {#                                    <tr>#}
+                        {#                                        <th>参数名</th>#}
+                        {#                                        <th></th>#}
+                        {#                                    </tr>#}
+                        {#                                    </thead>#}
+                        {#                                    <tbody>#}
+                        {#                                    </tbody>#}
+                        {#                                </table>#}
+                        {#                            </div>#}
+                        {##}
+                        {#                        </div>#}
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-6">
                                 <button id="submit" class="btn btn-primary float-button"><i
@@ -324,59 +324,59 @@
             });
         }
 
-        function analysis_response_header(obj) {
-            var request_header_json = $("textarea[name='add_response_header_json']").val();
-            $.ajax({
-                url: "/base/findata/",
-                type: "post",
-                data: {
-                    "request_header_json": request_header_json,
-                    "type": "analysis_request_header_json"
-                },
-                success: function (data) {
-                    if (data == 'no') {
-                        alert('返回头解析参数错误，请检查解析的文本是否是json格式！')
-                    }
-                    else {
-                        $("#response_header tr:last").empty();
-                        for (var params in data) {
-                            html = "<tr> <td name='var_name' contenteditable='true'>" + data[params] + "</td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
-                            $("#response_header tr:last").after(html);
-                        }
-                    }
-                },
-                error: function () {
-                    alert("error!");
-                }
-            });
-        }
-
-        function analysis_response_body(obj) {
-            var request_header_json = $("textarea[name='add_response_body_json']").val();
-            $.ajax({
-                url: "/base/findata/",
-                type: "post",
-                data: {
-                    "request_header_json": request_header_json,
-                    "type": "analysis_request_header_json"
-                },
-                success: function (data) {
-                    if (data == 'no') {
-                        alert('返回body解析参数错误，请检查解析的文本是否是json格式！')
-                    }
-                    else {
-                        $("#response_body tr:last").empty();
-                        for (var params in data) {
-                            html = "<tr> <td name='var_name' contenteditable='true'>" + data[params] + "</td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
-                            $("#response_body tr:last").after(html);
-                        }
-                    }
-                },
-                error: function () {
-                    alert("error!");
-                }
-            });
-        }
+        {#        function analysis_response_header(obj) {#}
+        {#            var request_header_json = $("textarea[name='add_response_header_json']").val();#}
+        {#            $.ajax({#}
+        {#                url: "/base/findata/",#}
+        {#                type: "post",#}
+        {#                data: {#}
+        {#                    "request_header_json": request_header_json,#}
+        {#                    "type": "analysis_request_header_json"#}
+        {#                },#}
+        {#                success: function (data) {#}
+        {#                    if (data == 'no') {#}
+        {#                        alert('返回头解析参数错误，请检查解析的文本是否是json格式！')#}
+        {#                    }#}
+        {#                    else {#}
+        {#                        $("#response_header tr:last").empty();#}
+        {#                        for (var params in data) {#}
+        {#                            html = "<tr> <td name='var_name' contenteditable='true'>" + data[params] + "</td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";#}
+        {#                            $("#response_header tr:last").after(html);#}
+        {#                        }#}
+        {#                    }#}
+        {#                },#}
+        {#                error: function () {#}
+        {#                    alert("error!");#}
+        {#                }#}
+        {#            });#}
+        {#        }#}
+        {##}
+        {#        function analysis_response_body(obj) {#}
+        {#            var request_header_json = $("textarea[name='add_response_body_json']").val();#}
+        {#            $.ajax({#}
+        {#                url: "/base/findata/",#}
+        {#                type: "post",#}
+        {#                data: {#}
+        {#                    "request_header_json": request_header_json,#}
+        {#                    "type": "analysis_request_header_json"#}
+        {#                },#}
+        {#                success: function (data) {#}
+        {#                    if (data == 'no') {#}
+        {#                        alert('返回body解析参数错误，请检查解析的文本是否是json格式！')#}
+        {#                    }#}
+        {#                    else {#}
+        {#                        $("#response_body tr:last").empty();#}
+        {#                        for (var params in data) {#}
+        {#                            html = "<tr> <td name='var_name' contenteditable='true'>" + data[params] + "</td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";#}
+        {#                            $("#response_body tr:last").after(html);#}
+        {#                        }#}
+        {#                    }#}
+        {#                },#}
+        {#                error: function () {#}
+        {#                    alert("error!");#}
+        {#                }#}
+        {#            });#}
+        {#        }#}
 
         $(document).ready(function () {
             //添加请求头参数行  <td name='var_remark' contenteditable='true'></td>
@@ -406,31 +406,31 @@
                 }
             });
 
-            $("#add_response_header").click(function () {
-                var newRow = "<tr> <td name='var_name' contenteditable='true'></td><td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
-                $("#response_header tr:last").after(newRow);
-            });
-            $("#add_response_header_json").click(function () {
-                {#                var newRow = "<tr> <td name='var_name' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";#}
-                var response_header_json = $("textarea[name='add_response_header_json']").val();
-                if (typeof(response_header_json) == 'undefined') {
-                    var newRow = "<tr><td><textarea  name='add_response_header_json' placeholder='请输入返回头的json参数' class='form-control' rows='3'></textarea></td><td><button class='btn btn-primary' onclick='analysis_response_header(this)'><i class='fa fa-gavel'></i>&nbsp;解析</button> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td></tr>";
-                    $("#response_header tr:last").after(newRow);
-                }
-            });
-
-            $("#add_response_body").click(function () {
-                var newRow = "<tr> <td name='var_name' contenteditable='true'></td><td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
-                $("#response_body tr:last").after(newRow);
-            });
-            $("#add_response_body_json").click(function () {
-                {#                var newRow = "<tr> <td name='var_name' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";#}
-                var response_body_json = $("textarea[name='add_response_body_json']").val();
-                if (typeof(response_body_json) == 'undefined') {
-                    var newRow = "<tr><td><textarea  name='add_response_body_json' placeholder='请输入返回body的json参数' class='form-control' rows='3'></textarea></td><td><button class='btn btn-primary' onclick='analysis_response_body(this)'><i class='fa fa-gavel'></i>&nbsp;解析</button> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td></tr>";
-                    $("#response_body tr:last").after(newRow);
-                }
-            });
+            {#            $("#add_response_header").click(function () {#}
+            {#                var newRow = "<tr> <td name='var_name' contenteditable='true'></td><td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";#}
+            {#                $("#response_header tr:last").after(newRow);#}
+            {#            });#}
+            {#            $("#add_response_header_json").click(function () {#}
+            {#                var newRow = "<tr> <td name='var_name' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";#}
+            {#                var response_header_json = $("textarea[name='add_response_header_json']").val();#}
+            {#                if (typeof(response_header_json) == 'undefined') {#}
+            {#                    var newRow = "<tr><td><textarea  name='add_response_header_json' placeholder='请输入返回头的json参数' class='form-control' rows='3'></textarea></td><td><button class='btn btn-primary' onclick='analysis_response_header(this)'><i class='fa fa-gavel'></i>&nbsp;解析</button> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td></tr>";#}
+            {#                    $("#response_header tr:last").after(newRow);#}
+            {#                }#}
+            {#            });#}
+            {##}
+            {#            $("#add_response_body").click(function () {#}
+            {#                var newRow = "<tr> <td name='var_name' contenteditable='true'></td><td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";#}
+            {#                $("#response_body tr:last").after(newRow);#}
+            {#            });#}
+            {#            $("#add_response_body_json").click(function () {#}
+            {#                var newRow = "<tr> <td name='var_name' contenteditable='true'></td> <td> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";#}
+            {#                var response_body_json = $("textarea[name='add_response_body_json']").val();#}
+            {#                if (typeof(response_body_json) == 'undefined') {#}
+            {#                    var newRow = "<tr><td><textarea  name='add_response_body_json' placeholder='请输入返回body的json参数' class='form-control' rows='3'></textarea></td><td><button class='btn btn-primary' onclick='analysis_response_body(this)'><i class='fa fa-gavel'></i>&nbsp;解析</button> <button class='btn btn-danger' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td></tr>";#}
+            {#                    $("#response_body tr:last").after(newRow);#}
+            {#                }#}
+            {#            });#}
 
             //删除行
         });
@@ -491,8 +491,8 @@
 
             var request_header_data;
             var request_body_data;
-            var response_header_data;
-            var response_body_data;
+            {#            var response_header_data;#}
+            {#            var response_body_data;#}
 
             var request_header_json = $("textarea[name='add_request_header_json']").val();
             if (typeof(request_header_json) == 'undefined') {
@@ -536,45 +536,45 @@
                 return
             }
 
-            var response_header_json = $("textarea[name='add_response_header_json']").val();
-            if (typeof(response_header_json) == 'undefined') {
-                var args = [];
-                $('#response_header tr').each(function (i) {                   // 遍历 tr
-                    if (i == 0) return true;
-                    var data = new Object();
-                    $(this).find("td[name]").each(function () {
-                        var name = $(this).attr("name");
-                        data[name] = $(this).text();
-                    });
-                    if (JSON.stringify(data) != '{}') {
-                        args.push(data);
-                    }
-                });
-                response_header_data = JSON.stringify(args);
-            } else {
-                alert('返回头参数未解析或者为空，不可以保存！');
-                return
-            }
-
-            var response_body_json = $("textarea[name='add_response_body_json']").val();
-            if (typeof(response_body_json) == 'undefined') {
-                var args = [];
-                $('#response_body tr').each(function (i) {                   // 遍历 tr
-                    if (i == 0) return true;
-                    var data = new Object();
-                    $(this).find("td[name]").each(function () {
-                        var name = $(this).attr("name");
-                        data[name] = $(this).text();
-                    });
-                    if (JSON.stringify(data) != '{}') {
-                        args.push(data);
-                    }
-                });
-                response_body_data = JSON.stringify(args);
-            } else {
-                alert('返回body参数未解析或者为空，不可以保存！');
-                return
-            }
+            {#            var response_header_json = $("textarea[name='add_response_header_json']").val();#}
+            {#            if (typeof(response_header_json) == 'undefined') {#}
+            {#                var args = [];#}
+            {#                $('#response_header tr').each(function (i) {                   // 遍历 tr#}
+            {#                    if (i == 0) return true;#}
+            {#                    var data = new Object();#}
+            {#                    $(this).find("td[name]").each(function () {#}
+            {#                        var name = $(this).attr("name");#}
+            {#                        data[name] = $(this).text();#}
+            {#                    });#}
+            {#                    if (JSON.stringify(data) != '{}') {#}
+            {#                        args.push(data);#}
+            {#                    }#}
+            {#                });#}
+            {#                response_header_data = JSON.stringify(args);#}
+            {#            } else {#}
+            {#                alert('返回头参数未解析或者为空，不可以保存！');#}
+            {#                return#}
+            {#            }#}
+            {##}
+            {#            var response_body_json = $("textarea[name='add_response_body_json']").val();#}
+            {#            if (typeof(response_body_json) == 'undefined') {#}
+            {#                var args = [];#}
+            {#                $('#response_body tr').each(function (i) {                   // 遍历 tr#}
+            {#                    if (i == 0) return true;#}
+            {#                    var data = new Object();#}
+            {#                    $(this).find("td[name]").each(function () {#}
+            {#                        var name = $(this).attr("name");#}
+            {#                        data[name] = $(this).text();#}
+            {#                    });#}
+            {#                    if (JSON.stringify(data) != '{}') {#}
+            {#                        args.push(data);#}
+            {#                    }#}
+            {#                });#}
+            {#                response_body_data = JSON.stringify(args);#}
+            {#            } else {#}
+            {#                alert('返回body参数未解析或者为空，不可以保存！');#}
+            {#                return#}
+            {#            }#}
 
             $.ajax({
                 url: "/base/interface_add/",
@@ -590,8 +590,8 @@
                     "description": description,
                     "request_header_data": request_header_data,
                     "request_body_data": request_body_data,
-                    "response_header_data": response_header_data,
-                    "response_body_data": response_body_data
+                    {#                    "response_header_data": response_header_data,#}
+                    {#                    "response_body_data": response_body_data#}
                 },
                 success: function (data) {
                     if (data.indexOf('<') == -1) {

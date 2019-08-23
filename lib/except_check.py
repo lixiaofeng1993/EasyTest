@@ -124,7 +124,7 @@ def env_info_logic(env_name, url, env_id=''):
 
 
 def interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, request_header_data,
-                         request_body_data, response_header_data, response_body_data, if_id=''):
+                         request_body_data, if_id=''):
     """
     接口新增、编辑逻辑
     :param if_name:
@@ -135,8 +135,6 @@ def interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, r
     :param is_headers:
     :param request_header_data:
     :param request_body_data:
-    :param response_header_data:
-    :param response_body_data:
     :param if_id:
     :return:
     """
@@ -169,18 +167,18 @@ def interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, r
             math = att.findall(data['var_name'])
             if not math:
                 return 'body中有参数不符合规则【^\w+$】，请重新输入！'
-    if response_header_data:
-        response_header_data = eval(response_header_data)
-        for data in response_header_data:
-            math = att.findall(data['var_name'])
-            if not math:
-                return '返回头中有参数不符合规则【^\w+$】，请重新输入！'
-    if response_body_data:
-        response_body_data = eval(response_body_data)
-        for data in response_body_data:
-            math = att.findall(data['var_name'])
-            if not math:
-                return '返回body参数中有参数不符合规则【^\w+$】，请重新输入！'
+    # if response_header_data:
+    #     response_header_data = eval(response_header_data)
+    #     for data in response_header_data:
+    #         math = att.findall(data['var_name'])
+    #         if not math:
+    #             return '返回头中有参数不符合规则【^\w+$】，请重新输入！'
+    # if response_body_data:
+    #     response_body_data = eval(response_body_data)
+    #     for data in response_body_data:
+    #         math = att.findall(data['var_name'])
+    #         if not math:
+    #             return '返回body参数中有参数不符合规则【^\w+$】，请重新输入！'
     if not if_id:
         name_exit = Interface.objects.filter(if_name=if_name)
     else:
