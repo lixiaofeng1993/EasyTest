@@ -182,7 +182,7 @@ def interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, r
     if not if_id:
         name_exit = Interface.objects.filter(if_name=if_name)
     else:
-        name_exit = Interface.objects.filter(if_name=if_name).exclude(if_id=if_id)
+        name_exit = Interface.objects.filter(if_name=if_name).filter(url=url).filter(method=method).exclude(if_id=if_id)
     if name_exit:
         return '接口: {}，已存在！'.format(if_name)
     else:
