@@ -106,7 +106,10 @@ class AnalysisJson:
             interface['body'] = params_dict['body'][params_key]
         else:
             interface['body'] = ''
-        interface['type'] = 'json'
+        if method == 'get':
+            interface['type'] = 'data'
+        else:
+            interface['type'] = 'json'
         interface['prj_id'] = self.prj_id
         return interface
 

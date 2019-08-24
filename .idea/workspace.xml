@@ -89,8 +89,8 @@
       <file leaf-file-name="swagger.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/swagger.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="496">
-              <caret line="74" column="25" lean-forward="false" selection-start-line="74" selection-start-column="19" selection-end-line="74" selection-end-column="25" />
+            <state relative-caret-position="914">
+              <caret line="108" column="25" lean-forward="false" selection-start-line="108" selection-start-column="25" selection-end-line="108" selection-end-column="25" />
               <folding>
                 <element signature="e#159#189#0" expanded="true" />
               </folding>
@@ -1195,8 +1195,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/lib/swagger.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="496">
-          <caret line="74" column="25" lean-forward="false" selection-start-line="74" selection-start-column="19" selection-end-line="74" selection-end-column="25" />
+        <state relative-caret-position="914">
+          <caret line="108" column="25" lean-forward="false" selection-start-line="108" selection-start-column="25" selection-end-line="108" selection-end-column="25" />
           <folding>
             <element signature="e#159#189#0" expanded="true" />
           </folding>
