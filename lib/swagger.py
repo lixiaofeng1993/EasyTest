@@ -47,6 +47,9 @@ class AnalysisJson:
                         log.info('interface path: {}, if name: {}, is deprecated.'.format(key, params['description']))
                         break
             return self.interface
+        else:
+            log.error('解析接口数据异常！url 返回值 paths 中不是字典.')
+            return 'error'
 
     def retrieve_params(self, params, params_key, method, key):
         """
@@ -67,28 +70,27 @@ class AnalysisJson:
         if not parameters:  # 确保参数字典存在
             parameters = {}
         for each in parameters:
-            if each.get('in') == 'body':
+            if each.get('in') == 'body':  # body 和 query 不会同时出现
                 schema = each.get('schema').get('$ref')
                 if schema:
                     param_key = schema.split('/')[-1]
                     param = self.definitions[param_key]['properties']
                     params_dict['body'][params_key] = param
-            if each.get('in') == 'query':
+            elif each.get('in') == 'query':
                 name = each.get('name')
                 del each['name'], each['in']
-                query_dict[name] = json.dumps(each).replace('false', 'False').replace('true', 'True')
-        if query_dict:
-            params_dict['body'][params_key] = query_dict
+                query_dict[name] = json.dumps(each).replace('false', 'False').replace('true', 'True').replace('null', 'None')
+                params_dict['body'][params_key] = query_dict
         for each in parameters:
             if each.get('in') == 'path':
                 name = each.get('name')
                 del each['name'], each['in']
-                path_dict[name] = json.dumps(each).replace('false', 'False').replace('true', 'True')
+                path_dict[name] = json.dumps(each).replace('false', 'False').replace('true', 'True').replace('null', 'None')
                 params_dict['body'][params_key].update(path_dict)
             if each.get('in') == 'header':
                 name = each.get('name')
                 del each['name'], each['in']
-                header_dict[name] = json.dumps(each).replace('false', 'False').replace('true', 'True')
+                header_dict[name] = json.dumps(each).replace('false', 'False').replace('true', 'True').replace('null', 'None')
                 params_dict['header'][params_key] = header_dict
         if isinstance(params['tags'], list):
             for tag in params['tags']:
