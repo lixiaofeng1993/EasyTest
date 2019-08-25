@@ -46,6 +46,7 @@ class AnalysisJson:
                     else:
                         log.info('interface path: {}, if name: {}, is deprecated.'.format(key, params['description']))
                         break
+            log.info(self.interface)
             return self.interface
         else:
             log.error('解析接口数据异常！url 返回值 paths 中不是字典.')
