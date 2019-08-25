@@ -89,23 +89,55 @@ def fake_params(params, value, key='', i=0):
                     params.remove(value)
                     params.insert(i, str_value + faker.text().replace('\n', '').replace('\r', '') + str_value1)
         elif '__random_time' in value:
+            regexp = r"\((.+)\)"
+            tag = re.findall(regexp, value)
             str_value = value.split('__random_time')[0]
             str_value1 = value.split('__random_time')[1]
             str_random_time = faker.date_time()
-            if key:
-                params[key] = str_value + str(str_random_time) + str_value1
+            if tag:
+                if tag[0].lower() == 'd':
+                    if key:
+                        params[key] = str_value + str(str_random_time)[:10]
+                    else:
+                        params.remove(value)
+                        params.insert(i, str_value + str(str_random_time)[:10])
+                else:
+                    if key:
+                        params[key] = str_value + str(str_random_time)
+                    else:
+                        params.remove(value)
+                        params.insert(i, str_value + str(str_random_time))
             else:
-                params.remove(value)
-                params.insert(i, str_value + str(str_random_time) + str_value1)
+                if key:
+                    params[key] = str_value + str(str_random_time) + str_value1
+                else:
+                    params.remove(value)
+                    params.insert(i, str_value + str(str_random_time) + str_value1)
         elif '__now' in value:
+            regexp = r"\((.+)\)"
+            tag = re.findall(regexp, value)
             str_value = value.split('__now')[0]
             str_value1 = value.split('__now')[1]
             str_random_time = datetime.now()
-            if key:
-                params[key] = str_value + str(str_random_time)[:-7] + str_value1
+            if tag:
+                if tag[0].lower() == 'd':
+                    if key:
+                        params[key] = str_value + str(str_random_time)[:10]
+                    else:
+                        params.remove(value)
+                        params.insert(i, str_value + str(str_random_time)[:10])
+                else:
+                    if key:
+                        params[key] = str_value + str(str_random_time)[:-7]
+                    else:
+                        params.remove(value)
+                        params.insert(i, str_value + str(str_random_time)[:-7])
             else:
-                params.remove(value)
-                params.insert(i, str_value + str(str_random_time)[:-7] + str_value1)
+                if key:
+                    params[key] = str_value + str(str_random_time)[:-7] + str_value1
+                else:
+                    params.remove(value)
+                    params.insert(i, str_value + str(str_random_time)[:-7] + str_value1)
         elif '__email' in value:
             str_value = value.split('__email')[0]
             str_value1 = value.split('__email')[1]
