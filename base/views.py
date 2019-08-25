@@ -753,68 +753,7 @@ def interface_delete(request):
             return HttpResponseRedirect("base/interface/")
 
 
-def batch_import_interface(interface, request, user_id):
-    for key, value in interface.items():
-        if_name = value.get('name', '').strip()
-        method = value.get('method', '')
-        prj_list = is_superuser(user_id, type='list')
-        tags = value.get('tags', '')
-        url = value.get('url', '')
-        data_type = value.get('type', '')
-        headers = value.get('headers', '')
-        body = value.get('body', '')
-        project_id = value.get('prj_id', '')
-        is_sign = 0
-        is_headers = 0
-        description = ''
-        request_header_data = []
-        request_body_data = []
-        response_body_data = []
-        if isinstance(headers, dict):
-            for k, v in headers.items():
-                headers_data = {}
-                headers_data['var_name'] = k
-                if isinstance(v, dict):
-                    v = json.dumps(v)
-                headers_data['var_remark'] = ''
-                request_header_data.append(headers_data)
-        if isinstance(body, dict):
-            for k, v in body.items():
-                body_data = {}
-                body_data['var_name'] = k
-                if isinstance(v, dict):
-                    v = json.dumps(v)
-                body_data['var_remark'] = ''
-                request_body_data.append(body_data)
-        project = Project.objects.get(prj_id=int(project_id))
-        username = request.session.get('user', '')
-        interface_list = Interface.objects.filter(if_name=if_name).filter(url=url).filter(method=method).filter(
-            project_id__in=prj_list)
-        if interface_list:
-            for name in interface_list:
-                Interface.objects.filter(if_id=name.if_id).update(if_name=if_name, url=url, project=project,
-                                                                  method=method, response_header_param=tags,
-                                                                  data_type=data_type, is_header=is_headers,
-                                                                  is_sign=is_sign, description=description,
-                                                                  request_header_param=json.dumps(request_header_data),
-                                                                  request_body_param=json.dumps(request_body_data),
-                                                                  update_time=datetime.now(), update_user=username)
-            log.warning('接口名称已存在. ==> {}'.format(if_name))
-            Interface.objects.filter()
-            # continue
-        else:
-            log.info('interface：{} 正在批量导入中...'.format(if_name))
-            interface_tbl = Interface(if_name=if_name, url=url, project=project, method=method,
-                                      data_type=data_type, is_header=is_headers,
-                                      is_sign=is_sign, description=description,
-                                      request_header_param=json.dumps(request_header_data),
-                                      request_body_param=json.dumps(request_body_data),
-                                      response_header_param=tags,
-                                      response_body_param=response_body_data, update_user=username)
-            interface_tbl.save()
-
-
-# 执行具体任务的异步线程
+# 执行导入的异步线程
 class BatchInterface(threading.Thread):
     def run(self):
         for key, value in self.interface.items():
@@ -887,6 +826,11 @@ class BatchInterface(threading.Thread):
 
 
 def batch_index(request):
+    """
+    批量导入接口
+    :param request:
+    :return:
+    """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         return HttpResponse('用户未登录！')
