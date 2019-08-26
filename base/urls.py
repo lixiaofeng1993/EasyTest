@@ -62,6 +62,7 @@ urlpatterns = [
     url(r'report_delete/', view=views.report_delete, name='report_delete'),
     # locust
     url(r'performance/', view=views.performance_index, name='performance_index'),
+    url(r'start_locust/', view=views.start_locust, name='start_locust'),
     # 下载
     url(r'file_download/', view=views.file_download, name='file_download'),
     # 添加用户

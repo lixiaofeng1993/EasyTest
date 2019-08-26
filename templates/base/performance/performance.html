@@ -2,6 +2,22 @@
 
 {% block css %}
     <style>
+        #search-btn {
+            border-color: #1dc5a3;
+            background-color: #1dc5a3;
+            border-radius: 2px;
+            border: none;
+            color: white;
+            padding: 7px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        #search-btn:hover {
+            color: red;
+        }
 
     </style>
 {% endblock %}
@@ -19,7 +35,6 @@
                 <li class="active">
                     <a class="this-page">性能测试</a>
                 </li>
-                <span style="color: #999;margin-left: 2px;font-size: 8px">需要单独启动locust服务</span>
             </ol>
 
         </div>
@@ -31,7 +46,18 @@
     <div class="row">
         <div class="col-md-12">
             <div class="panel">
-                <iframe src="http://www.easytest.xyz:8089/" height="750" width="1600" frameborder="0" scrolling="0"></iframe>
+                <div class="panel-heading">
+                    <button id="search-btn" class="start-master" onclick="master()"><i
+                            class="fa fa-try"></i>&nbsp;启动master
+                    </button>
+                    &nbsp;&nbsp;&nbsp;
+                    <button id="search-btn" class="start-slave" onclick="slave()"><i
+                            class="fa fa-try"></i>&nbsp;启动slave
+                    </button>
+                    &nbsp;&nbsp;&nbsp;
+                </div>
+                <iframe src="http://localhost:8089/" height="750" width="1600" frameborder="0"
+                        scrolling="0"></iframe>
             </div>
         </div>
     </div>
@@ -40,5 +66,43 @@
 {% block javascript %}
     <script>
 
+        function master() {
+            $.ajax({
+                url: "/base/start_locust/",
+                type: "get",
+                data: {
+                    "make": 'master'
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data == '启动成功！') {
+                        alert(data);
+                        window.location.reload();
+                    } else {
+                        alert(data);
+                    }
+
+
+                }
+            })
+        }
+        function slave() {
+            $.ajax({
+                url: "/base/start_locust/",
+                type: "get",
+                data: {
+                    "make": 'slave'
+                },
+                success: function (data) {
+                    if (data == '启动成功！') {
+                        alert(data);
+                        window.location.reload();
+                    } else {
+                        alert(data);
+                    }
+                }
+            })
+
+        }
     </script>
 {% endblock %}

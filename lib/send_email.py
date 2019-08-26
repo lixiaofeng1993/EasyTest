@@ -42,7 +42,7 @@ def send_email(_to, title, report_id='', register=False):
             '用户： {} 登录并注册成功！'.format(report_id), 'plain', 'utf-8')
     else:
         body = MIMEText(
-            '{} 执行出现异常，请查看执行详情：http://39.105.136.231/base/report/?report_id={} <测试报告地址>；'.format(title, report_id),
+            '{} 执行出现异常，请查看执行详情：http://www.easytest.xyz/base/report/?report_id={} <测试报告地址>；'.format(title, report_id),
             'plain', 'utf-8')
     msg.attach(body)
     log.info('写入邮件正文')

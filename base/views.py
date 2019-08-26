@@ -757,7 +757,7 @@ def interface_delete(request):
 class BatchInterface(threading.Thread):
     def run(self):
         for key, value in self.interface.items():
-            log.info(datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {}".format(self.getName(), ))
+            log.info(datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== BatchInterface ".format(self.getName(), ))
             if_name = value.get('name', '').strip()
             method = value.get('method', '')
             prj_list = is_superuser(self.user_id, type='list')
@@ -1637,6 +1637,37 @@ def performance_index(request):
         user_id = request.session.get('user_id', '')
         if get_user(user_id):
             return render(request, 'base/performance/performance.html')
+        else:
+            request.session['login_from'] = '/base/performance/'
+            return render(request, 'user/login_action.html')
+
+
+import subprocess
+
+
+class StartLocust(threading.Thread):
+    def __init__(self, make):
+        threading.Thread.__init__(self)
+        self.make = make
+
+    def run(self):
+        log.info(datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ".format(self.getName(), ))
+        if self.make == 'master':
+            subprocess.check_call(
+                '(locust -f D:\EasyTest\\base\performance.py --master &)')
+        elif self.make == 'slave':
+            subprocess.check_call(
+                'locust -f D:\EasyTest\\base/performance.py --slave --master-host=127.0.0.1')
+
+
+def start_locust(request):
+    if request.method == 'GET':
+        user_id = request.session.get('user_id', '')
+        if get_user(user_id):
+            make = request.GET.get('make')
+            locust = StartLocust(make)
+            locust.start()
+            return HttpResponse('启动成功！')
         else:
             request.session['login_from'] = '/base/performance/'
             return render(request, 'user/login_action.html')
