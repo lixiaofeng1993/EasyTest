@@ -23,3 +23,6 @@ supervisor==4.0.3
 django-simpleui
 django-rest-swagger==2.1.2
 djangorestframework==3.7.7
+bootstrap3
+faker
+flower
