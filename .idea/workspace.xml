@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="778b3f5c-ebac-48de-a7cd-7bbe971dd892" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/base/views.py" afterPath="$PROJECT_DIR$/base/views.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/base/performance/performance.html" afterPath="$PROJECT_DIR$/templates/base/performance/performance.html" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -55,7 +55,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="settings.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="settings.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/EasyTest/settings.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="528">
@@ -136,11 +136,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/base/views.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1579">
-              <caret line="1657" column="34" lean-forward="true" selection-start-line="1657" selection-start-column="34" selection-end-line="1657" selection-end-column="34" />
+            <state relative-caret-position="555">
+              <caret line="1665" column="26" lean-forward="true" selection-start-line="1665" selection-start-column="26" selection-end-line="1665" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -247,8 +247,8 @@
         <option value="$PROJECT_DIR$/lib/config/cfg.ini" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/templates/base/performance/performance.html" />
-        <option value="$PROJECT_DIR$/base/views.py" />
         <option value="$PROJECT_DIR$/EasyTest/settings.py" />
+        <option value="$PROJECT_DIR$/base/views.py" />
       </list>
     </option>
   </component>
@@ -1219,14 +1219,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/base/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1579">
-          <caret line="1657" column="34" lean-forward="true" selection-start-line="1657" selection-start-column="34" selection-end-line="1657" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/base/performance/performance.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="520">
@@ -1239,6 +1231,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="528">
           <caret line="26" column="13" lean-forward="false" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/base/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="555">
+          <caret line="1665" column="26" lean-forward="true" selection-start-line="1665" selection-start-column="26" selection-end-line="1665" selection-end-column="26" />
           <folding />
         </state>
       </provider>
