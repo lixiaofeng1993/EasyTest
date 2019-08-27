@@ -1652,7 +1652,8 @@ class StartLocust(threading.Thread):
             datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ========= {}".format(self.getName(),
                                                                                                       self.make))
         if self.make == 'master':
-            os.system('/home/lixiaofeng/./locust_run.sh')
+            p = os.system('/home/lixiaofeng/./locust_run.sh')
+            log.info('====================p================={}'.format(p))
         elif self.make == 'slave':
             os.system('/home/lixiaofeng/./locust_slave_run.sh')
         elif self.make == 'stop':
