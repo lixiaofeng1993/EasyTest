@@ -26,3 +26,4 @@ djangorestframework==3.7.7
 django-bootstrap3
 faker
 flower
+locust

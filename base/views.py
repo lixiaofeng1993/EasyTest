@@ -1652,6 +1652,7 @@ class StartLocust(threading.Thread):
 
     def run(self):
         log.info(datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ".format(self.getName(), ))
+        subprocess.Popen('source /home/lixiaofeng/.virtualenvs/py/bin/activate')
         if self.make == 'master':
             subprocess.check_call(
                 '(locust -f /var/lib/jenkins/workspace/EasyTest/base/performance.py --master &)')
