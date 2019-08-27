@@ -1667,7 +1667,7 @@ def start_locust(request):
             make = request.GET.get('make')
             locust = StartLocust(make)
             locust.start()
-            return HttpResponse('执行成功！')
+            return HttpResponse('ok')
         else:
             request.session['login_from'] = '/base/performance/'
             return render(request, 'user/login_action.html')

@@ -78,11 +78,11 @@
                 },
                 success: function (data) {
                     console.log(data);
-                    if (data == '执行成功！') {
-                        alert(data);
+                    if (data == 'ok') {
+                        alert("执行成功！");
                         window.location.reload();
                     } else {
-                        alert(data);
+                        alert("出现异常，请联系管理员！");
                     }
 
 
@@ -97,11 +97,11 @@
                     "make": 'slave'
                 },
                 success: function (data) {
-                    if (data == '执行成功！') {
-                        alert(data);
+                    if (data == 'ok') {
+                        alert("执行成功！");
                         window.location.reload();
                     } else {
-                        alert(data);
+                        alert("出现异常，请联系管理员！");
                     }
                 }
             })
@@ -115,11 +115,11 @@
                     "make": 'stop'
                 },
                 success: function (data) {
-                    if (data == '执行成功！') {
-                        alert(data);
+                    if (data == 'ok') {
+                        alert("执行成功！");
                         window.location.reload();
                     } else {
-                        alert(data);
+                        alert("出现异常，请联系管理员！");
                     }
                 }
             })
