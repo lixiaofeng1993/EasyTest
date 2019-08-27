@@ -1652,6 +1652,7 @@ class StartLocust(threading.Thread):
 
     def run(self):
         log.info(datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ".format(self.getName(), ))
+        log.info('============master========================={}'.format(self.make))
         if self.make == 'master':
             log.info('============master=========================')
             os.popen('/home/lixiaofeng/./locust_run.sh')
