@@ -1652,7 +1652,7 @@ class StartLocust(threading.Thread):
 
     def run(self):
         log.info(datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ".format(self.getName(), ))
-        p = subprocess.Popen('source /home/lixiaofeng/.virtualenvs/py/bin/activate', shell=True)
+        p = subprocess.call('source /home/lixiaofeng/.virtualenvs/py/bin/activate', shell=True)
         log.info('--------{}=============={}'.format(p, '进入虚拟环境'))
         if self.make == 'master':
             subprocess.check_call(
