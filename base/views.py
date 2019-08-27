@@ -1654,10 +1654,10 @@ class StartLocust(threading.Thread):
         log.info(datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ".format(self.getName(), ))
         if self.make == 'master':
             subprocess.check_call(
-                '(locust -f /home/lixiaofeng/EasyTest/base/performance.py --master &)')
+                '(locust -f /var/lib/jenkins/workspace/EasyTest/base/performance.py --master &)')
         elif self.make == 'slave':
             subprocess.check_call(
-                'locust -f /home/lixiaofeng/EasyTest/base/performance.py --slave --master-host=39.105.136.231')
+                'locust -f /var/lib/jenkins/workspace/EasyTest/base/performance.py --slave --master-host=39.105.136.231')
 
 
 def start_locust(request):
