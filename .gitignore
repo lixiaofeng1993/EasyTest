@@ -12,7 +12,6 @@ logs/
 dist/
 build/
 static/
-media/
 config/
 *.ini
 __pycache__
