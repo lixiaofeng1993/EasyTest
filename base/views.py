@@ -1642,9 +1642,6 @@ def performance_index(request):
             return render(request, 'user/login_action.html')
 
 
-import os
-
-
 class StartLocust(threading.Thread):
     def __init__(self, make):
         threading.Thread.__init__(self)
@@ -1653,10 +1650,9 @@ class StartLocust(threading.Thread):
     def run(self):
         log.info(
             datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ========= {}".format(self.getName(),
-                                                                                                      self.make, ))
+                                                                                                      self.make))
         if self.make == 'master':
-            p = os.system('/home/lixiaofeng/./locust_run.sh')
-            log.info('===========p========={}'.format(p))
+            os.system('/home/lixiaofeng/./locust_run.sh')
         elif self.make == 'slave':
             os.system('/home/lixiaofeng/./locust_slave_run.sh')
         elif self.make == 'stop':
