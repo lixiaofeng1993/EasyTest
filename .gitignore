@@ -10,8 +10,10 @@ logs/
 *.egg
 *.egg-info
 dist/
+media/
 build/
 static/
 __pycache__
 .idea
 migrations/
+config/
