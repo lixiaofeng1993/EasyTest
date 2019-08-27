@@ -12,7 +12,6 @@ logs/
 dist/
 build/
 static/
-config/
 *.ini
 __pycache__
 .idea

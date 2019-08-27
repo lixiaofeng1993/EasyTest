@@ -1655,12 +1655,14 @@ class StartLocust(threading.Thread):
         log.info('============master========================={}'.format(self.make))
         if self.make == 'master':
             log.info('============master=========================')
-            os.popen('/home/lixiaofeng/./locust_run.sh')
-            subprocess.call('/home/lixiaofeng/./locust_run.sh', shell=True)
+            os.system('/home/lixiaofeng/./locust_run.sh')
+            # subprocess.call('/home/lixiaofeng/./locust_run.sh', shell=True)
         elif self.make == 'slave':
-            subprocess.check_call('/home/lixiaofeng/./locust_slave_run.sh', shell=True)
+            os.system('/home/lixiaofeng/./locust_slave_run.sh')
+            # subprocess.check_call('/home/lixiaofeng/./locust_slave_run.sh', shell=True)
         elif self.make == 'stop':
-            subprocess.check_call('/home/lixiaofeng/./locust_stop.sh', shell=True)
+            os.system('/home/lixiaofeng/./locust_stop.sh')
+            # subprocess.check_call('/home/lixiaofeng/./locust_stop.sh', shell=True)
 
 
 def start_locust(request):
