@@ -1652,14 +1652,14 @@ class StartLocust(threading.Thread):
 
     def run(self):
         log.info(datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ".format(self.getName(), ))
-        p = subprocess.Popen('source /home/lixiaofeng/.virtualenvs/py/bin/activate')
+        p = subprocess.Popen('source /home/lixiaofeng/.virtualenvs/py/bin/activate', shell=True, executable='/bin/bash')
         log.info('--------{}=============={}'.format(p, '进入虚拟环境'))
         if self.make == 'master':
             subprocess.check_call(
-                '(locust -f /var/lib/jenkins/workspace/EasyTest/base/performance.py --master &)')
+                '(locust -f /var/lib/jenkins/workspace/EasyTest/base/performance.py --master &)', shell=True)
         elif self.make == 'slave':
             subprocess.check_call(
-                'locust -f /var/lib/jenkins/workspace/EasyTest/base/performance.py --slave --master-host=39.105.136.231')
+                'locust -f /var/lib/jenkins/workspace/EasyTest/base/performance.py --slave --master-host=39.105.136.231', shell=True)
 
 
 def start_locust(request):
