@@ -19,6 +19,10 @@
             color: red;
         }
 
+        .stop-master {
+            border-color: red;
+            background-color: red;
+        }
     </style>
 {% endblock %}
 
@@ -55,6 +59,10 @@
                             class="fa fa-try"></i>&nbsp;启动slave
                     </button>
                     &nbsp;&nbsp;&nbsp;
+                    <button id="search-btn" class="stop-master" onclick="stop()"><i
+                            class="fa fa-try"></i>&nbsp;停止master
+                    </button>
+                    &nbsp;&nbsp;&nbsp;
                 </div>
                 <iframe src="http://www.easytest.xyz:8089/" height="750" width="1600" frameborder="0"
                         scrolling="0"></iframe>
@@ -75,7 +83,7 @@
                 },
                 success: function (data) {
                     console.log(data);
-                    if (data == '启动成功！') {
+                    if (data == '执行成功！') {
                         alert(data);
                         window.location.reload();
                     } else {
@@ -94,7 +102,25 @@
                     "make": 'slave'
                 },
                 success: function (data) {
-                    if (data == '启动成功！') {
+                    if (data == '执行成功！') {
+                        alert(data);
+                        window.location.reload();
+                    } else {
+                        alert(data);
+                    }
+                }
+            })
+
+        }
+        function stop() {
+            $.ajax({
+                url: "/base/start_locust/",
+                type: "get",
+                data: {
+                    "make": 'stop'
+                },
+                success: function (data) {
+                    if (data == '执行成功！') {
                         alert(data);
                         window.location.reload();
                     } else {

@@ -1652,15 +1652,12 @@ class StartLocust(threading.Thread):
 
     def run(self):
         log.info(datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ".format(self.getName(), ))
-        p = subprocess.call('source /home/lixiaofeng/.virtualenvs/py/bin/activate', shell=True)
-        log.info('--------{}=============={}'.format(p, '进入虚拟环境'))
         if self.make == 'master':
-            subprocess.check_call(
-                '(locust -f /var/lib/jenkins/workspace/EasyTest/base/performance.py --master &)', shell=True)
+            subprocess.check_call('/home/lixiaofeng/./locust_run.sh', shell=True)
         elif self.make == 'slave':
-            subprocess.check_call(
-                'locust -f /var/lib/jenkins/workspace/EasyTest/base/performance.py --slave --master-host=39.105.136.231', shell=True)
-
+            subprocess.check_call('/home/lixiaofeng/./locust_slave_run.sh', shell=True)
+        elif self.make == 'stop':
+            subprocess.check_call('/home/lixiaofeng/./locust_stop.sh', shell=True)
 
 def start_locust(request):
     if request.method == 'GET':
@@ -1669,7 +1666,7 @@ def start_locust(request):
             make = request.GET.get('make')
             locust = StartLocust(make)
             locust.start()
-            return HttpResponse('启动成功！')
+            return HttpResponse('执行成功！')
         else:
             request.session['login_from'] = '/base/performance/'
             return render(request, 'user/login_action.html')
