@@ -1642,7 +1642,7 @@ def performance_index(request):
             return render(request, 'user/login_action.html')
 
 
-import subprocess
+import subprocess, os
 
 
 class StartLocust(threading.Thread):
@@ -1653,11 +1653,14 @@ class StartLocust(threading.Thread):
     def run(self):
         log.info(datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ".format(self.getName(), ))
         if self.make == 'master':
-            subprocess.check_call('/home/lixiaofeng/./locust_run.sh', shell=True)
+            log.info('============master=========================')
+            os.popen('/home/lixiaofeng/./locust_run.sh')
+            subprocess.call('/home/lixiaofeng/./locust_run.sh', shell=True)
         elif self.make == 'slave':
             subprocess.check_call('/home/lixiaofeng/./locust_slave_run.sh', shell=True)
         elif self.make == 'stop':
             subprocess.check_call('/home/lixiaofeng/./locust_stop.sh', shell=True)
+
 
 def start_locust(request):
     if request.method == 'GET':
