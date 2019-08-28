@@ -238,11 +238,13 @@
 
                     }
                     else {
-                        alert('没有发现日志！')
+                        alert('没有发现日志！');
+                        $('.spinner').hide();
                     }
                 },
                 error: function () {
                     alert("error");
+                    $('.spinner').hide();
                 }
             });
 
