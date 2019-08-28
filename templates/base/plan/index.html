@@ -191,7 +191,8 @@
                 success: function (data) {
                     if (data.hasOwnProperty('error')) {
                         console.log(data);
-                        alert(data['error'])
+                        alert(data['error']);
+                         $('.spinner').hide();
                     } else {
                         console.log(data);
                         alert(data);
