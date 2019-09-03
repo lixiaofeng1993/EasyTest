@@ -378,3 +378,11 @@ def checkpoint_no_error(if_dict):
     if_dict["msg"] = ErrorCode.validators_error
     if_dict["error"] = ErrorCode.validators_error
     return if_dict
+
+def sql_query_error(if_dict, v):
+    if_dict["result"] = 'error'
+    if_dict['checkpoint'] = ''
+    if_dict["res_content"] = 'sql查询返回数据错误，报错sql：{}'.format(v)
+    if_dict["msg"] = ErrorCode.sql_query_error
+    if_dict["error"] = ErrorCode.sql_query_error
+    return if_dict

@@ -80,10 +80,13 @@ class SqL:
             else:
                 if num == 1:  # 返回一条数据
                     data = cur.fetchone()
-                    if dict_type:
-                        return data
+                    if data:
+                        if dict_type:
+                            return data
+                        else:
+                            return data[0]
                     else:
-                        return data[0]
+                        return None
                 else:  # 返回多条数据
                     data_str = ''
                     data = cur.fetchall()
@@ -109,6 +112,7 @@ class SqL:
 
 
 if __name__ == '__main__':
-    r = SqL()
-    data = r.execute_sql('select bs.case_name, bs.content from base_case as bs where bs.case_id = 15;')
+    r = SqL(job=True)
+    data = r.execute_sql(
+        'select ut.id from user_tbl as ut where ut.nickname like "%沧海难为水%" and LENGTH(ut.unionid) > 15 order by id desc limit 1;', dict_type=True)
     print(data)

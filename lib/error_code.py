@@ -49,3 +49,5 @@ class ErrorCode:
     analytical_return_value_error = '解析返回值错误！请前往【用例管理】页面检查相关参数配置！'
 
     eval_error = 'eval()错误，请前往【用例管理】页面核实相关参数配置！'
+
+    sql_query_error = 'sql查询返回数据错误，请确保sql查询有返回值且是正确的！'

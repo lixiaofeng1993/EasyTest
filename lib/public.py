@@ -445,7 +445,7 @@ def call_interface(s, method, url, header, data, content_type='json', user_auth=
             # res = requests.post(url=url, data=data, headers=header, verify=False)
     if method in ["get", "delete"]:
         # res = requests.get(url=url, params=data, headers=header, verify=False)
-        if content_type == 'json':
+        if content_type in ["json", 'sql']:
             res = s.request(method=method, url=url, json=data, headers=header, verify=False)
         else:
             if user_auth:
