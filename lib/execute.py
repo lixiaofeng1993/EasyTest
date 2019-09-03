@@ -179,7 +179,7 @@ class Test_execute():
                             if_dict = response_value_error(if_dict, make=True)
                             return if_dict
                 except SyntaxError as e:
-                    if_dict = response_value_error(if_dict, )  # 解析返回值异常
+                    if_dict = response_value_error(if_dict, e)  # 解析返回值异常
                     return if_dict
             except requests.RequestException as e:
                 if_dict = request_api_error(if_dict, e)  # 接口请求异常
