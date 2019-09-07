@@ -99,3 +99,11 @@ def delete_logs():
         log.info('remove logs------->没有要删除的文件.<--------------')
     else:
         log.info('remove logs------->删除过期日志文件数量：{}<--------------'.format(total_num))
+
+
+@app.task
+# @shared_task
+def stop_locust():
+    log.info('stop locust------->停止locust服务<--------------')
+    os.system('/home/lixiaofeng/./locust_stop.sh')
+    log.info('remove logs------->停止locust完成.<--------------')
