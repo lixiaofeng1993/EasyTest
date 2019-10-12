@@ -1293,58 +1293,61 @@ def plan_run(request):
     if not get_user(user_id):
         return JsonResponse({'error': ErrorCode.user_not_logged_in_error})
     else:
-        if request.method == 'POST':
-            global totalTime, start_time, now_time
-            begin_time = time.clock()
-            start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-            now_time = int(time.mktime(time.strptime(start_time, '%Y-%m-%d %H:%M:%S')))
-            plan_id = request.POST['plan_id']
-            plan = Plan.objects.get(plan_id=plan_id)
-            env_id = plan.environment.env_id
-            case_id_list = eval(plan.content)
-            case_num = len(case_id_list)
-            content = []
-            pass_num = 0
-            fail_num = 0
-            error_num = 0
-            i = 0
-            for case_id in case_id_list:
-                execute = Test_execute(case_id, env_id, case_id_list)
-                case_result = execute.test_case()
-                if isinstance(case_result, dict):
-                    content.append(case_result)
-                else:
-                    return HttpResponse(case_result)
-            end_time = time.clock()
-            totalTime = str(end_time - begin_time)[:6] + ' s'
-            for step in content:
-                if 'error' in step.keys():
-                    log.error('plan run error：{}'.format(step['msg']))
-                    return HttpResponse(step['msg'])
-                else:
-                    for s in step['step_list']:
-                        if s["result"] == "pass":
-                            pass_num += 1
-                            i += 1
-                            s['id'] = i
-                        if s["result"] == "fail":
-                            fail_num += 1
-                            i += 1
-                            s['id'] = i
-                        if s["result"] == "error":
-                            error_num += 1
-                            i += 1
-                            s['id'] = i
-            pic_name = DrawPie(pass_num, fail_num, error_num)
-            report_name = plan.plan_name + "-" + str(start_time)
-            username = request.session.get('user', '')
-            report = Report(plan=plan, report_name=report_name, content=content, case_num=case_num,
-                            pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
-                            totalTime=totalTime, startTime=start_time, update_user=username)
-            report.save()
-            Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now(),
-                                                        update_user=username)
-            return HttpResponse(plan.plan_name + " 执行成功！")
+        from .tasks import run_plan
+        run_plan.delay()
+        return HttpResponse('用例执行中，请稍后查看报告即可,默认时间戳命名报告')
+        # if request.method == 'POST':
+        #     global totalTime, start_time, now_time
+        #     begin_time = time.clock()
+        #     start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+        #     now_time = int(time.mktime(time.strptime(start_time, '%Y-%m-%d %H:%M:%S')))
+        #     plan_id = request.POST['plan_id']
+        #     plan = Plan.objects.get(plan_id=plan_id)
+        #     env_id = plan.environment.env_id
+        #     case_id_list = eval(plan.content)
+        #     case_num = len(case_id_list)
+        #     content = []
+        #     pass_num = 0
+        #     fail_num = 0
+        #     error_num = 0
+        #     i = 0
+        #     for case_id in case_id_list:
+        #         execute = Test_execute(case_id, env_id, case_id_list)
+        #         case_result = execute.test_case()
+        #         if isinstance(case_result, dict):
+        #             content.append(case_result)
+        #         else:
+        #             return HttpResponse(case_result)
+        #     end_time = time.clock()
+        #     totalTime = str(end_time - begin_time)[:6] + ' s'
+        #     for step in content:
+        #         if 'error' in step.keys():
+        #             log.error('plan run error：{}'.format(step['msg']))
+        #             return HttpResponse(step['msg'])
+        #         else:
+        #             for s in step['step_list']:
+        #                 if s["result"] == "pass":
+        #                     pass_num += 1
+        #                     i += 1
+        #                     s['id'] = i
+        #                 if s["result"] == "fail":
+        #                     fail_num += 1
+        #                     i += 1
+        #                     s['id'] = i
+        #                 if s["result"] == "error":
+        #                     error_num += 1
+        #                     i += 1
+        #                     s['id'] = i
+        #     pic_name = DrawPie(pass_num, fail_num, error_num)
+        #     report_name = plan.plan_name + "-" + str(start_time)
+        #     username = request.session.get('user', '')
+        #     report = Report(plan=plan, report_name=report_name, content=content, case_num=case_num,
+        #                     pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
+        #                     totalTime=totalTime, startTime=start_time, update_user=username)
+        #     report.save()
+        #     Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now(),
+        #                                                 update_user=username)
+        #     return HttpResponse(plan.plan_name + " 执行成功！")
 
 
 def timing_task(request):
