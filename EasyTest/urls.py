@@ -41,6 +41,7 @@ urlpatterns = [
 
     url(r'^base/', include("base.urls")),
     url(r'^api/', include('guest.urls')),  # api
+    url(r'^mocks/', include('mocks.urls')),  # api
 
     url(r'^favicon.ico$', RedirectView.as_view(url=r'/static/img/E_fa.png')),
 ]
