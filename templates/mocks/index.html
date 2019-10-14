@@ -42,7 +42,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
-{#                <button type="button" class="btn btn-primary" onclick="post_project('/projects/')">Save</button>#}
+                <button type="button" class="btn btn-primary" onclick="post_project('/projects/')">Save</button>
             </div>
         </div>
     </div>
@@ -133,16 +133,16 @@
 </nav>
 
 <div class="container" style="margin-top: 100px">
-    {% for foo in p %}
-        <h1 data-toggle="collapse" data-target="#collapse_project_{{ foo.id }}"
-            aria-controls="collapse_project_{{ foo.id }}"
-            style="cursor: pointer">{{ foo.name }}
-            <small>&nbsp;&nbsp;{{ foo.desc }}</small>
+    {% for foo in prj_list %}
+        <h1 data-toggle="collapse" data-target="#collapse_project_{{ foo.prj_id }}"
+            aria-controls="collapse_project_{{ foo.prj_id }}"
+            style="cursor: pointer">{{ foo.prj_name }}
+            <small>&nbsp;&nbsp;{{ foo.description }}</small>
         </h1>
 
-        <div id="collapse_project_{{ foo.id }}">
-        {% for moo in m %}
-            {% if moo.project_id == foo.id %}
+        <div id="collapse_project_{{ foo.prj_id }}">
+        {% for moo in api_info %}
+            {% if moo.project_id == foo.prj_id %}
                 {% if moo.method|lower == 'post' %}
                     <div class="block block_post">
                     <span class="block-method block_method_post block_method_color"
@@ -164,8 +164,8 @@
 
             <span class="block-method block_url">{{ moo.url }}</span>
             <span class="block-summary-description">{{ moo.name }}</span>
-            <button class="btn btn-primary" onclick="put_mock_api('/mocks/{{ moo.id }}/')">Save</button>
-            <button class="btn btn-danger" style="margin-left: 5px" onclick="del_mock_api('/mocks/{{ moo.id }}/')">Del
+            <button class="btn btn-primary" onclick="put_mock_api('/mocks/api/{{ moo.id }}/')">Save</button>
+            <button class="btn btn-danger" style="margin-left: 5px" onclick="del_mock_api('/mocks/api/{{ moo.id }}')">Del
             </button>
             </div>
                 <div class="block_body collapse" id="collapse_api_{{ moo.id }}">
@@ -223,6 +223,7 @@
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 success: function (data) {
+                    console.log(data, 11111111111111);
                     response = JSON.parse(data);
                     if (response.msg === 'success') {
                         window.location.reload();
