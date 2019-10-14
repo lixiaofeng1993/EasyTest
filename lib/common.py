@@ -33,6 +33,13 @@ def insert_mock_data(**kwargs):
             'msg': 'name or url can not be null'
         }
 
+    if Api.objects.filter(project_id=project).filter(name=name):
+        return {
+            'success': False,
+            'code': '0011',
+            'msg': 'api name already exist'
+        }
+
     args = ['GET', 'POST', 'PUT', 'DELETE']
 
     if method.upper() not in args:
@@ -75,7 +82,6 @@ def insert_mock_data(**kwargs):
                 'msg': 'system error',
                 'traceback': traceback.format_exc()
             }
-
 
 # def update_mock_data(index, **kwargs):
 #     name = kwargs.get('name')

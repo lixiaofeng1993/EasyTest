@@ -15,13 +15,14 @@ def mock_api(request):
         if request.method == 'POST':
             data = eval(request.body.decode('utf-8'))
             msg = insert_mock_data(**data)
-            print(msg, 111111111111111111)
-            return JsonResponse(msg)
+            msg = json.dumps(msg)
+            return HttpResponse(msg)
         else:
             prj_list = is_superuser(user_id)
-
+            api_info = Api.objects.all()
             info = {
-                'prj_list': prj_list
+                'prj_list': prj_list,
+                'api_info': api_info
             }
             return render(request, 'mocks/index.html', info)
 
