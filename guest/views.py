@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.contrib import auth  # django认证系统
 from django.contrib.auth.decorators import login_required  # 验证用户是否登录的装饰器
 from django.db.models import Q  # 与或非 查询
@@ -59,7 +59,8 @@ def search_name(request):
         event_list = Event.objects.filter(name__contains=search_name)  # 包含
         page = request.GET.get('page')
         contacts = paginator(event_list, page)
-        return render(request, 'sign/event_manage.html', {'user': username, 'events': contacts, 'search_name': search_name})
+        return render(request, 'sign/event_manage.html',
+                      {'user': username, 'events': contacts, 'search_name': search_name})
 
 
 # 嘉宾管理
@@ -133,7 +134,14 @@ def sign_index_action(request, eid):
             return render(request, 'sign/sign_index.html', {'event': event, 'hint': 'user has sign in.'})
         else:
             Guest.objects.filter(phone=phone, event_id=eid).update(sign='1')
-            return render(request, 'sign/sign_index.html', {'event': event, 'hint': 'sign in success!', 'guest': result})
+            return render(request, 'sign/sign_index.html',
+                          {'event': event, 'hint': 'sign in success!', 'guest': result})
+
+
+def delete_all(request):
+    Event.objects.all().delete()
+    Guest.objects.all().delete()
+    return render(request, 'sign/event_manage.html')
 
 
 # 退出

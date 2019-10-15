@@ -47,8 +47,8 @@ from rest_framework_swagger.renderers import SwaggerUIRenderer, OpenAPIRenderer
 #            update:
 #                Update a user.
 #        '''
-    # queryset = User.objects.all()
-    # serializer_class = UserSerializer
+# queryset = User.objects.all()
+# serializer_class = UserSerializer
 
 
 class EventSerializer(serializers.ModelSerializer):
@@ -102,6 +102,7 @@ urlpatterns = [
     url(r'^sign_index/(?P<eid>\d+)/$', view=views.sign_index, name='sign_index'),  # 签到 eid 作为参数传给视图
     url(r'^sign_index_action/(?P<eid>\d+)/$', view=views.sign_index_action, name='sign_index_action'),  # 处理签到操作
     url(r'^logout_guest/$', view=views.logout, name='logout_guest'),  # 退出
+    url(r'^delete_all/$', view=views.delete_all, name='delete_all'),  # 清空数据
 
     # api
     url(r'^add_event/$', view=views_api.add_event, name='add_event'),  # 添加发布会接口
