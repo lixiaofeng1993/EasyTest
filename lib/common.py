@@ -1,8 +1,5 @@
 import traceback
-
-from flask import json
-from sqlalchemy.exc import IntegrityError
-
+import json
 from mocks.models import Api
 
 
@@ -68,13 +65,6 @@ def insert_mock_data(**kwargs):
                 'code': '0000',
                 'msg': 'success'
             }
-        except IntegrityError:
-            return {
-                'success': False,
-                'code': '0002',
-                'msg': 'the api {url} is exists'.format(url=url),
-            }
-
         except Exception:
             return {
                 'success': False,
@@ -117,6 +107,17 @@ def update_mock_data(index, **kwargs):
             'msg': 'name or url can not be null'
         }
 
+    api = Api.objects.filter(id=index)
+    for i in api:
+        project_id = i.project_id
+        api = Api.objects.filter(project_id=project_id).filter(name=name).exclude(id=index)
+    if api:
+        return {
+            'success': False,
+            'code': '0011',
+            'msg': 'api name already exist'
+        }
+
     args = ['GET', 'POST', 'PUT', 'DELETE']
 
     if method.upper() not in args:
@@ -135,13 +136,6 @@ def update_mock_data(index, **kwargs):
                 'code': '0000',
                 'msg': 'success'
             }
-        except IntegrityError:
-            return {
-                'success': False,
-                'code': '0002',
-                'msg': 'the api {url} is exists'.format(url=url),
-            }
-
         except Exception:
             return {
                 'success': False,

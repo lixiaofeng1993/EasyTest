@@ -62,8 +62,10 @@ def dispatch_request(request):
     """
     m = Api.objects.filter(url=request.path.replace('/mocks', '')).filter(method=request.method)
     if not m:
+        EMPTY['msg'] = EMPTY['msg'].format(url=request.path, method=request.method)
         return HttpResponse(json.dumps(EMPTY))
     if len(m) > 1:
+        NUMBER['msg'] = NUMBER['msg'].format(url=request.path, method=request.method)
         return HttpResponse(json.dumps(NUMBER))
     body = json.loads(m[0].body)
     return HttpResponse(domain_server(request, **body))

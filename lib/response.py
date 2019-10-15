@@ -12,13 +12,13 @@ INVALID = {
 
 EMPTY = {
     'code': '0030',
-    'msg': 'query is empty',
+    'msg': '{url}、{method} query is empty',
     'success': False
 }
 
 NUMBER = {
     'code': '0031',
-    'msg': 'quantity greater than 1',
+    'msg': '{url}、{method} quantity greater than 1',
     'success': False
 }
 
