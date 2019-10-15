@@ -52,7 +52,7 @@ def insert_mock_data(**kwargs):
     else:
         body = {
             "name": name,
-            "url": 'http://www.easytest.xyz/mocks' + url,
+            "url": url,
             "method": method.upper(),
             "data": {},
             "invalid": {},
