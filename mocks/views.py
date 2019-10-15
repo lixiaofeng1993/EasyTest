@@ -6,7 +6,9 @@ from lib.common import insert_mock_data, update_mock_data
 from lib.response import VALID, INVALID, EMPTY, NUMBER
 from lib.validator import domain_server
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-import json, re
+import json, re, logging
+
+log = logging.getLogger('log')  # 初始化log
 
 
 def mock_api(request):
@@ -68,4 +70,5 @@ def dispatch_request(request):
         NUMBER['msg'] = NUMBER['msg'].format(url=request.path, method=request.method)
         return HttpResponse(json.dumps(NUMBER))
     body = json.loads(m[0].body)
+    log.info('请求mock接口：{},{}'.format(request.path, request.method))
     return HttpResponse(domain_server(request, **body))

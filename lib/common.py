@@ -1,6 +1,8 @@
 import traceback
-import json
+import json, logging
 from mocks.models import Api
+
+log = logging.getLogger('log')  # 初始化log
 
 
 def insert_mock_data(**kwargs):
@@ -60,6 +62,7 @@ def insert_mock_data(**kwargs):
         m = Api(name=name, body=body, method=method, url=url, project_id=project)
         try:
             m.save()
+            log.info('新增mock接口：{},{},{},{}, {}'.format(name, project, url, method, body))
             return {
                 'success': True,
                 'code': '0000',
@@ -131,6 +134,7 @@ def update_mock_data(index, **kwargs):
         body = json.dumps(kwargs, ensure_ascii=False, indent=4, separators=(',', ': '))
         try:
             Api.objects.filter(id=index).update(name=name, body=body, method=method, url=url)
+            log.info('修改mock接口：{},{},{},{}'.format(name, url, method, body))
             return {
                 'success': True,
                 'code': '0000',
