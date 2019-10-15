@@ -111,11 +111,11 @@
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
             </button>
-            <a href="/index/" class="navbar-brand" style="color: rosybrown" title="首页">Mock Server</a>
+            <a href="/mocks/api/" class="navbar-brand" style="color: rosybrown" title="首页">Mock Server</a>
         </div>
 
         <div id="navbar" class="navbar-collapse collapse">
-            <form class="navbar-form navbar-left" method="GET" action="/mocks/">
+            <form class="navbar-form navbar-left" method="GET" action="/mocks/api/">
                 <div class="form-group">
                     <input type="text" placeholder="Search Mock API" name="api_name" value="" class="form-control">
                 </div>
@@ -124,8 +124,8 @@
             <ul class="nav navbar-nav">
                 <li><a style="cursor: pointer" data-toggle="modal" data-target="#add_mock_api" title="添加mock接口">+ Mock
                     API</a></li>
-{#                <li><a style="cursor: pointer" data-toggle="modal" data-target="#add_project" title="添加项目">+ Project</a>#}
-{#                </li>#}
+                <li><a style="cursor: pointer" href="http://www.easytest.xyz">返回平台首页</a>
+                </li>
             </ul>
 
         </div>
@@ -165,7 +165,8 @@
             <span class="block-method block_url">{{ moo.url }}</span>
             <span class="block-summary-description">{{ moo.name }}</span>
             <button class="btn btn-primary" onclick="put_mock_api('/mocks/api/{{ moo.id }}/')">Save</button>
-            <button class="btn btn-danger" style="margin-left: 5px" onclick="del_mock_api('/mocks/api/{{ moo.id }}')">Del
+            <button class="btn btn-danger" style="margin-left: 5px" onclick="del_mock_api('/mocks/api/{{ moo.id }}')">
+                Del
             </button>
             </div>
                 <div class="block_body collapse" id="collapse_api_{{ moo.id }}">
@@ -186,7 +187,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js"></script>
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-{#    <script src="{{ url_for('static', filename = 'js/common.js') }}"></script>#}
+    {#    <script src="{{ url_for('static', filename = 'js/common.js') }}"></script>#}
     <script src="/static/scripts/common.js"></script>
 
     <script>
