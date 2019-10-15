@@ -218,6 +218,7 @@ def change_password(request):
             user = User.objects.get(id=user_id)
             user.set_password(new_password)
             user.save()
+            log.info('用户：{} 修改密码为 {}'.format(user_id, new_password))
             return JsonResponse({'msg': 'success'})
 
 
