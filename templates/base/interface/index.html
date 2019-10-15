@@ -177,9 +177,9 @@
                                 <td id="cen">{{ if.update_time }}</td>
                                 <td id="cen">{{ if.update_user }}</td>
                                 <td id="cen">
-                                    <a href="/base/set_mock?if_id={{ if.if_id }}"
-                                       class="layui-btn layui-btn-danger layui-btn-xs"><i class="fa fa-etsy"></i>&nbsp;&nbsp;&nbsp;
-                                    </a>
+{#                                    <a href="/base/set_mock?if_id={{ if.if_id }}"#}
+{#                                       class="layui-btn layui-btn-danger layui-btn-xs"><i class="fa fa-etsy"></i>&nbsp;&nbsp;&nbsp;#}
+{#                                    </a>#}
                                     <a href="/base/interface_copy?if_id={{ if.if_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="return copy_btn()"><i class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;</a>
@@ -332,14 +332,14 @@
                                     '<th id="cen">是否签名</th><th id="cen">描述</th><th id="cen">tags</th><th id="cen">更新时间</th> <th id="cen">更新用户</th><th id="cen">操作</th>   <tbody id="tbody-data"><tr><td id="cen">' + datas[i].if_id + '</td><td id="if_name">' +
                                     '<a href="/base/interface_update?if_id=' + datas[i].if_id + '" class="layui-btn layui-btn-xs" lay-event="edit">' + datas[i].if_name + '</a></td>' +
                                     '<td id="cen">' + datas[i].project + '</td><td id="cen">' + datas[i].method + '</td><td id="cen">' + datas[i].data_type + '</td><td id="cen">' + is_sign + '</td>' +
-                                    '<td id="cen">' + datas[i].description + '</td><td>' + datas[i].response_header_param + '</td><td id="cen">' + datas[i].update_time + '</td><td id="cen">' + datas[i].update_user + '</td><td id="cen"><a href="/base/set_mock?if_id=' + datas[i].if_id + '" class="layui-btn layui-btn-danger layui-btn-xs"><i class="fa fa-etsy"></i>&nbsp;&nbsp;&nbsp;</a><a href="/base/interface_copy?if_id=' + datas[i].if_id + '" class="layui-btn layui-btn-danger layui-btn-xs" onclick="return copy_btn()"><i class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;</a><a href="/base/interface_delete?if_id=' + datas[i].if_id + '" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/></a>' +
+                                    '<td id="cen">' + datas[i].description + '</td><td>' + datas[i].response_header_param + '</td><td id="cen">' + datas[i].update_time + '</td><td id="cen">' + datas[i].update_user + '</td><td id="cen"><a href="/base/interface_copy?if_id=' + datas[i].if_id + '" class="layui-btn layui-btn-danger layui-btn-xs" onclick="return copy_btn()"><i class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;</a><a href="/base/interface_delete?if_id=' + datas[i].if_id + '" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/></a>' +
                                     '</td></tr></tbody>';
                             } else {
                                 html = '<thead style="display: none"><tr><th id="cen">ID</th><th id="cen">接口名称</th><th id="cen">所属项目</th><th id="cen">请求方式</th><th id="cen">数据传输方式</th>' +
                                     '<th id="cen">是否签名</th><th id="cen">描述</th><th id="cen">tags</th><th id="cen">更新时间</th> <th id="cen">更新用户</th><th id="cen">操作</th>   <tbody id="tbody-data"><tr><td id="cen">' + datas[i].if_id + '</td><td id="if_name">' +
                                     '<a href="/base/interface_update?if_id=' + datas[i].if_id + '" class="layui-btn layui-btn-xs" lay-event="edit">' + datas[i].if_name + '</a></td>' +
                                     '<td id="cen">' + datas[i].project + '</td><td id="cen">' + datas[i].method + '</td><td id="cen">' + datas[i].data_type + '</td><td id="cen">' + is_sign + '</td>' +
-                                    '<td id="cen">' + datas[i].description + '</td><td>' + datas[i].response_header_param + '</td><td id="cen">' + datas[i].update_time + '</td><td id="cen">' + datas[i].update_user + '</td><td id="cen"><a href="/base/set_mock?if_id=' + datas[i].if_id + '" class="layui-btn layui-btn-danger layui-btn-xs"><i class="fa fa-etsy"></i>&nbsp;&nbsp;&nbsp;</a><a href="/base/interface_copy?if_id=' + datas[i].if_id + '" class="layui-btn layui-btn-danger layui-btn-xs" onclick="return copy_btn()"><i class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;</a><a href="/base/interface_delete?if_id=' + datas[i].if_id + '" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/></a>' +
+                                    '<td id="cen">' + datas[i].description + '</td><td>' + datas[i].response_header_param + '</td><td id="cen">' + datas[i].update_time + '</td><td id="cen">' + datas[i].update_user + '</td><td id="cen"><a href="/base/interface_copy?if_id=' + datas[i].if_id + '" class="layui-btn layui-btn-danger layui-btn-xs" onclick="return copy_btn()"><i class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;</a><a href="/base/interface_delete?if_id=' + datas[i].if_id + '" class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/></a>' +
                                     '</td></tr></tbody>';
                             }
                             $('.pagination').empty();

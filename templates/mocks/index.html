@@ -133,7 +133,7 @@
 </nav>
 
 <div class="container" style="margin-top: 100px">
-    {% for foo in prj_list %}
+    {% for foo in api_prj_list %}
         <h1 data-toggle="collapse" data-target="#collapse_project_{{ foo.prj_id }}"
             aria-controls="collapse_project_{{ foo.prj_id }}"
             style="cursor: pointer">{{ foo.prj_name }}
@@ -223,7 +223,6 @@
                 data: JSON.stringify(data),
                 contentType: "application/json",
                 success: function (data) {
-                    console.log(data, 11111111111111);
                     response = JSON.parse(data);
                     if (response.msg === 'success') {
                         window.location.reload();

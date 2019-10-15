@@ -14,5 +14,6 @@ from . import views
 urlpatterns = [
     # 项目
     url(r'api/', view=views.mock_api, name='mock_api'),
+    url(r'[\w|\/]+', view=views.dispatch_request, name='dispatch_request'),
 
 ]

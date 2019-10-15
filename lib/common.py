@@ -88,7 +88,7 @@ def update_mock_data(index, **kwargs):
     name = kwargs.get('name')
     url = kwargs.get('url')
     method = kwargs.get("method")
-    print(name, url, method, 11111111111111111)
+
     if name is None:
         return {
             'success': False,
