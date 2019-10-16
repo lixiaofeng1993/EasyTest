@@ -155,41 +155,45 @@ class Test_execute():
             if_dict["body"] = {
                 "file": ("login-bg.jpg", open("/var/static/static/img/login-bg.jpg", "rb"), "image/jpeg", {})}
 
-        if_dict["url"] = self.env_url + interface.url
+        if interface.set_mock:  # 使用mock接口
+            if_dict['url'] = 'http://www.easytest.xyz/mocks' + interface.url
+        else:
+            if_dict["url"] = self.env_url + interface.url
         if_dict["url"], if_dict["body"] = format_url(if_dict["url"], if_dict["body"])
-        if not interface.set_mock:  # 请求接口或者模拟接口返回值
-            try:
-                if interface.is_sign:
-                    if self.sign_type == 4:
-                        res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
-                                             {'data': if_dict["body"]}, if_dict["data_type"])
-                    else:
-                        res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
-                                             if_dict["body"], if_dict["data_type"], self.user_auth)
+
+        # if not interface.set_mock:  # 请求接口或者模拟接口返回值
+        try:
+            if interface.is_sign:
+                if self.sign_type == 4:
+                    res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
+                                         {'data': if_dict["body"]}, if_dict["data_type"])
                 else:
                     res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
-                                         if_dict["body"], if_dict["data_type"])
-                if_dict["res_status_code"] = res.status_code
-                try:
-                    if_dict["res_content"] = eval(
-                        res.text.replace('false', 'False').replace('null', 'None').replace('true',
-                                                                                           'True'))  # 查看报告时转码错误的问题
-                    if isinstance(if_dict['res_content'], dict):
-                        if '系统异常' in if_dict['res_content'].values():
-                            if_dict = response_value_error(if_dict, make=True)
-                            return if_dict
-                except SyntaxError as e:
-                    if_dict = response_value_error(if_dict, e)  # 解析返回值异常
-                    return if_dict
-            except requests.RequestException as e:
-                if_dict = request_api_error(if_dict, e)  # 接口请求异常
+                                         if_dict["body"], if_dict["data_type"], self.user_auth)
+            else:
+                res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
+                                     if_dict["body"], if_dict["data_type"])
+            if_dict["res_status_code"] = res.status_code
+            try:
+                if_dict["res_content"] = eval(
+                    res.text.replace('false', 'False').replace('null', 'None').replace('true',
+                                                                                       'True'))  # 查看报告时转码错误的问题
+                if isinstance(if_dict['res_content'], dict):
+                    if '系统异常' in if_dict['res_content'].values():
+                        if_dict = response_value_error(if_dict, make=True)
+                        return if_dict
+            except SyntaxError as e:
+                if_dict = response_value_error(if_dict, e)  # 解析返回值异常
                 return if_dict
-        else:
-            if_dict["res_content"] = \
-                eval(interface.set_mock.replace('false', 'False').replace('null', 'None').replace('true', 'True'))[
-                    'mock']  # 模拟接口返回值
-            if_dict["result"] = "fail"
-            if_dict['fail'] = ErrorCode.mock_fail
+        except requests.RequestException as e:
+            if_dict = request_api_error(if_dict, e)  # 接口请求异常
+            return if_dict
+        # else:
+        #     if_dict["res_content"] = \
+        #         eval(interface.set_mock.replace('false', 'False').replace('null', 'None').replace('true', 'True'))[
+        #             'mock']  # 模拟接口返回值
+        #     if_dict["result"] = "fail"
+        #     if_dict['fail'] = ErrorCode.mock_fail
 
         if interface.is_header and self.make:  # 补充默认headers中的变量
             set_headers = Environment.objects.get(env_id=self.env_id).set_headers

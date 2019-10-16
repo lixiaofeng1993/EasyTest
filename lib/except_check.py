@@ -153,7 +153,7 @@ def interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, r
     if data_type == '':
         return '请选择接口的请求数据类型！'
     if is_headers == '':
-        return '请设置接口是否需要设置请求头！'
+        return '请选择接口是否需要设置请求头！'
     att = re.compile('^\w+$', re.A)
     if request_header_data:
         request_header_data = eval(request_header_data)
@@ -217,7 +217,13 @@ def format_params(params):
         is_headers = 1
     else:
         is_headers = ''
-    return method, is_sign, is_headers
+    if params.set_mock == '0':
+        mock = '0'
+    elif params.set_mock == '1':
+        mock = '1'
+    else:
+        mock = ''
+    return method, is_sign, is_headers, mock
 
 
 def case_info_logic(case_name, content, case_id=''):

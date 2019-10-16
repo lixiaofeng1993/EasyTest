@@ -19,6 +19,7 @@
         .btn-primary:hover {
             color: red;
         }
+
     </style>
 {% endblock %}
 
@@ -141,6 +142,19 @@
                             <div class="col-sm-2 control-label">
                                 <label class="fancy-radio">
                                     <input name="is_headers" value="0" type="radio" checked><span><i></i>不设置</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">是否Mock</label>
+                            <div class="col-sm-1 control-label">
+                                <label class="fancy-radio">
+                                    <input name="mock" value="1" type="radio"><span class="contact"><i></i>mock</span>
+                                </label>
+                            </div>
+                            <div class="col-sm-2 control-label">
+                                <label class="fancy-radio">
+                                    <input name="mock" value="0" type="radio" checked><span><i></i>no mock</span>
                                 </label>
                             </div>
                         </div>
@@ -487,6 +501,7 @@
             var data_type = $("#data_type").val();
             var is_sign = $("input[name='is_sign']:checked").val();
             var is_headers = $("input[name='is_headers']:checked").val();
+            var mock = $("input[name='mock']:checked").val();
             var description = $("textarea[name='description']").val();
 
             var request_header_data;
@@ -587,6 +602,7 @@
                     "data_type": data_type,
                     "is_sign": is_sign,
                     "is_headers": is_headers,
+                    "mock": mock,
                     "description": description,
                     "request_header_data": request_header_data,
                     "request_body_data": request_body_data,

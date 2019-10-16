@@ -516,6 +516,7 @@ def interface_copy(request):
             data_type = interface_.data_type
             is_sign = interface_.is_sign
             is_header = interface_.is_header
+            mock = interface_.set_mock
             description = interface_.description
             request_header_param = interface_.request_header_param
             request_body_param = interface_.request_body_param
@@ -526,7 +527,8 @@ def interface_copy(request):
             interface = Interface(if_name=if_name, url=url, project=project, method=method, data_type=data_type,
                                   is_sign=is_sign, description=description, request_header_param=request_header_param,
                                   request_body_param=request_body_param, response_header_param=response_header_param,
-                                  response_body_param=response_body_param, is_header=is_header, update_user=username)
+                                  response_body_param=response_body_param, is_header=is_header, update_user=username,
+                                  set_mock=mock)
             interface.save()
             log.info(
                 'add interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} // {} '
@@ -606,6 +608,7 @@ def interface_add(request):
             data_type = request.POST['data_type']
             is_sign = request.POST.get('is_sign', '')
             is_headers = request.POST.get('is_headers', '')
+            mock = request.POST.get('mock', '')
             request_header_data = request.POST['request_header_data']
             request_body_data = request.POST['request_body_data']
             # response_header_data = request.POST['response_header_data']
@@ -623,7 +626,8 @@ def interface_add(request):
             project = Project.objects.get(prj_id=prj_id)
             interface = Interface(if_name=if_name, url=url, project=project, method=method, data_type=data_type,
                                   is_sign=is_sign, description=description, request_header_param=request_header_data,
-                                  request_body_param=request_body_data, is_header=is_headers, update_user=username)
+                                  request_body_param=request_body_data, is_header=is_headers, update_user=username,
+                                  set_mock=mock)
             interface.save()
             log.info(
                 'add interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} //  '
@@ -656,6 +660,7 @@ def interface_update(request):
             data_type = request.POST['data_type']
             is_sign = request.POST.get('is_sign', '')
             is_headers = request.POST.get('is_headers', '')
+            mock = request.POST.get('mock', '')
             request_header_data_list = request.POST.get('request_header_data', [])
             request_header_data = interface_format_params(request_header_data_list)
             request_body_data_list = request.POST.get('request_body_data', [])
@@ -680,7 +685,7 @@ def interface_update(request):
                                                              data_type=data_type, is_header=is_headers,
                                                              is_sign=is_sign, description=description,
                                                              request_header_param=request_header_data,
-                                                             request_body_param=request_body_data,
+                                                             request_body_param=request_body_data, set_mock=mock,
                                                              update_time=datetime.now(), update_user=username)
                 log.info(
                     'edit interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} //  '.format(
@@ -695,10 +700,10 @@ def interface_update(request):
             request_body_param_list = interface_get_params(interface.request_body_param)
             # response_header_param_list = interface_get_params(interface.response_header_param)
             # response_body_param_list = interface_get_params(interface.response_body_param)
-            method, is_sign, is_headers = format_params(interface)
+            method, is_sign, is_headers, mock = format_params(interface)
             info = {"interface": interface, 'request_header_param_list': request_header_param_list,
                     'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                    'is_headers': is_headers, "prj_list": prj_list}
+                    'is_headers': is_headers, 'mock': mock, "prj_list": prj_list}
             return render(request, "base/interface/update.html", info)
 
 
@@ -769,6 +774,7 @@ class BatchInterface(threading.Thread):
             project_id = value.get('prj_id', '')
             is_sign = 0
             is_headers = 0
+            mock = '0'
             description = ''
             request_header_data = []
             request_body_data = []
@@ -800,12 +806,10 @@ class BatchInterface(threading.Thread):
                                                                       data_type=data_type, is_header=is_headers,
                                                                       is_sign=is_sign, description=description,
                                                                       request_header_param=json.dumps(
-                                                                          request_header_data),
+                                                                          request_header_data), set_mock=mock,
                                                                       request_body_param=json.dumps(request_body_data),
                                                                       update_time=datetime.now(), update_user=username)
                 log.warning('接口名称已存在，更新接口参数中... ==> {}'.format(if_name))
-                Interface.objects.filter()
-                # continue
             else:
                 log.info('接口名称：{}， 正在批量导入中...'.format(if_name))
                 interface_tbl = Interface(if_name=if_name, url=url, project=project, method=method,
@@ -813,7 +817,7 @@ class BatchInterface(threading.Thread):
                                           is_sign=is_sign, description=description,
                                           request_header_param=json.dumps(request_header_data),
                                           request_body_param=json.dumps(request_body_data),
-                                          response_header_param=tags,
+                                          response_header_param=tags, set_mock=mock,
                                           response_body_param=response_body_data, update_user=username)
                 interface_tbl.save()
 
