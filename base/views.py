@@ -803,10 +803,9 @@ class BatchInterface(threading.Thread):
                 for name in interface_list:
                     Interface.objects.filter(if_id=name.if_id).update(if_name=if_name, url=url, project=project,
                                                                       method=method, response_header_param=tags,
-                                                                      data_type=data_type, is_header=is_headers,
-                                                                      is_sign=is_sign, description=description,
+                                                                      data_type=data_type, description=description,
                                                                       request_header_param=json.dumps(
-                                                                          request_header_data), set_mock=mock,
+                                                                          request_header_data),
                                                                       request_body_param=json.dumps(request_body_data),
                                                                       update_time=datetime.now(), update_user=username)
                 log.warning('接口名称已存在，更新接口参数中... ==> {}'.format(if_name))
