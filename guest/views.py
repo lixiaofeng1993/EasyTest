@@ -141,7 +141,7 @@ def sign_index_action(request, eid):
 def delete_all(request):
     Event.objects.all().delete()
     Guest.objects.all().delete()
-    return render(request, 'sign/event_manage.html')
+    return HttpResponseRedirect('/api/event_manage/')
 
 
 # 退出
