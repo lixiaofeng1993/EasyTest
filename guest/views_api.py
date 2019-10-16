@@ -71,7 +71,8 @@ def get_event_list(request):
             event['status'] = result.status
             event['address'] = result.address
             event['start_time'] = result.start_time
-            log.info('get_event_list，查询嘉宾成功！')
+            event['id'] = result.id
+            log.info('get_event_list，查询发布会成功！')
             return JsonResponse({'status': 200, 'message': 'success', 'data': event})
 
     if name != '':
@@ -85,6 +86,7 @@ def get_event_list(request):
                 event['status'] = r.status
                 event['address'] = r.address
                 event['start_time'] = r.start_time
+                event['id'] = r.id
                 datas.append(event)
                 log.info('get_event_list，查询发布会成功！')
             return JsonResponse({'status': 200, 'message': 'success', 'data': datas})
@@ -155,6 +157,7 @@ def get_guest_list(request):
                 guest['email'] = r.email
                 guest['sign'] = r.sign
                 guest['event_name'] = event.name
+                guest['id'] = event.id
                 datas.append(guest)
             log.info('get_guest_list，查询嘉宾成功！')
             return JsonResponse({'status': 200, 'message': 'success', 'data': datas})
@@ -170,6 +173,7 @@ def get_guest_list(request):
                 guest['email'] = r.email
                 guest['sign'] = r.sign
                 guest['event_name'] = event.name
+                guest['id'] = r.id
                 datas.append(guest)
             log.info('get_guest_list，查询嘉宾成功！')
             return JsonResponse({'status': 200, 'message': 'success', 'data': datas})
