@@ -2,6 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/img/E_fa.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/static/img/E_fa.png">
     <!-- 加载bootstrap3的应用、CSS。JavaScript文件-->
     {% load bootstrap3 %}
     {% bootstrap_css %}
@@ -23,6 +25,7 @@
                 <li><a href="#">{{ user }}</a></li>
 {#                <li><a href="/api/logout_guest/">退出</a></li>#}
                 <li><a href="/index/">返回测试平台</a></li>
+                <li><a href="/api/delete_all/">清空数据</a></li>
             </ul>
         </div>
     </div>
