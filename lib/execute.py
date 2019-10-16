@@ -155,7 +155,7 @@ class Test_execute():
             if_dict["body"] = {
                 "file": ("login-bg.jpg", open("/var/static/static/img/login-bg.jpg", "rb"), "image/jpeg", {})}
 
-        if interface.set_mock:  # 使用mock接口
+        if interface.set_mock == '1':  # 使用mock接口
             if_dict['url'] = 'http://www.easytest.xyz/mocks' + interface.url
         else:
             if_dict["url"] = self.env_url + interface.url
