@@ -434,7 +434,7 @@ def call_interface(s, method, url, header, data, content_type='json', user_auth=
     :param user_auth:
     :return:
     """
-    # log.info('========interface params==============> {} {} {} {}'.format(url, header, data, content_type))
+    log.info('========interface params==============> {} {} {} {}'.format(url, header, data, content_type))
     if method in ["post", "put"]:
         if content_type in ["json", 'sql']:
             res = s.request(method=method, url=url, json=data, headers=header, verify=False)
@@ -455,7 +455,7 @@ def call_interface(s, method, url, header, data, content_type='json', user_auth=
     if content_type == 'file':
         # res = s.request(method=method, url=url, params=data, headers=header, verify=False)
         res = s.request(method=method, url=url, files=data, headers=header, verify=False)
-    # log.info('========接口返回信息==============> {} {}'.format(res.status_code, res.text))
+    log.info('========接口返回信息==============> {} {}'.format(res.status_code, res.text))
     return res
 
 
