@@ -1358,18 +1358,35 @@ def timing_task(request):
     :return:
     """
     user_id = request.session.get('user_id', '')
-    if get_user(user_id):
-        task_list = PeriodicTask.objects.all()
-        task_count = PeriodicTask.objects.all().count()  # 统计数
-        periodic_list = IntervalSchedule.objects.all()  # 周期任务 （如：每隔1小时执行1次）
-        crontab_list = CrontabSchedule.objects.all()  # 定时任务 （如：某年月日的某时，每天的某时）
-        return render(request, "system/task/task_index.html",
-                      {"tasks": task_list, "taskcounts": task_count, "periodics": periodic_list,
-                       "crontabs": crontab_list})
-    else:
+    if not get_user(user_id):
         request.session['login_from'] = '/base/timing_task/'
         return render(request, 'user/login_action.html')
-
+    else:
+        if request.method == 'GET':
+            task_list = PeriodicTask.objects.all()
+            task_count = PeriodicTask.objects.all().count()  # 统计数
+            periodic_list = IntervalSchedule.objects.all()  # 周期任务 （如：每隔1小时执行1次）
+            crontab_list = CrontabSchedule.objects.all()  # 定时任务 （如：某年月日的某时，每天的某时）
+            return render(request, "system/task/task_index.html",
+                          {"tasks": task_list, "taskcounts": task_count, "periodics": periodic_list,
+                           "crontabs": crontab_list})
+        elif request.method == 'POST':
+            task_id = request.POST.get('id', '')
+            if task_id:
+                task = PeriodicTask.objects.filter(id=task_id)[0].task
+                if 'run_plan' in task:
+                    run_plan.delay()
+                    return HttpResponse('用例执行中，请稍后查看报告即可,默认以 计划名称 + 时间戳命名.')
+                elif 'delete_logs' in task:
+                    delete_logs.delay()
+                    return HttpResponse('用例执行中，稍后可在日志中查看执行记录.')
+                elif 'stop_locust' in task:
+                    stop_locust.delay()
+                    return HttpResponse('用例执行中，稍后可在日志中查看执行记录.')
+                else:
+                    return HttpResponse('未定义该定时任务.{}--{}'.format(task_id, task))
+            else:
+                return HttpResponse('未定义该定时任务.{}'.format(task_id))
 
 def task_logs(request):
     """
@@ -1399,27 +1416,6 @@ def task_logs(request):
                               {'data': data_list, 'make': True, 'log_file': task_log_path})
         else:
             return render(request, 'system/task/log.html', {'data': '0', 'make': True, 'log_file': ''})
-
-
-def delay_run(request):
-    """异步执行计划"""
-    if request.method == 'GET':
-        task_id = request.GET.get('id', '')
-        if task_id:
-            task = PeriodicTask.objects.filter(id=task_id)[0].task
-            if 'run_plan' in task:
-                run_plan.delay()
-                return HttpResponse('用例执行中，请稍后查看报告即可,默认以 计划名称 + 时间戳命名.')
-            elif 'delete_logs' in task:
-                delete_logs.delay()
-                return HttpResponse('用例执行中，稍后可在日志中查看执行记录.')
-            elif 'stop_locust' in task:
-                stop_locust.delay()
-                return HttpResponse('用例执行中，稍后可在日志中查看执行记录.')
-            else:
-                return HttpResponse('未定义该定时任务.{}--{}'.format(task_id, task))
-        else:
-            return HttpResponse('未定义该定时任务.{}'.format(task_id))
 
 
 # 报告列表
