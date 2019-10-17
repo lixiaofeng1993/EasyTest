@@ -82,6 +82,9 @@
                                 <td id="cen">{{ task.date_changed }}</td>
                                 <td id="cen">{{ task.enabled }}</td>
                                 <td id="cen">
+                                <a href="/base/delay_run/?id={{ task.id }}" class="layui-btn layui-btn-danger layui-btn-xs"
+                                       data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;
+                                    </a>
                                 <a href="../admin/djcelery/periodictask/{{ task.id }}/delete/?_to_field=id&_popup=1"
                                    class="layui-btn layui-btn-danger layui-btn-xs"><img
                                         src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>

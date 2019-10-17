@@ -2,6 +2,7 @@ import os, time, json, logging, threading
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+from .tasks import delete_logs, run_plan, stop_locust
 from django.http import StreamingHttpResponse
 from base.models import Project, Sign, Environment, Interface, Case, Plan, Report
 from django.contrib.auth.models import User  # django自带user
@@ -1398,6 +1399,27 @@ def task_logs(request):
                               {'data': data_list, 'make': True, 'log_file': task_log_path})
         else:
             return render(request, 'system/task/log.html', {'data': '0', 'make': True, 'log_file': ''})
+
+
+def delay_run(request):
+    """异步执行计划"""
+    if request.method == 'GET':
+        task_id = request.GET.get('id', '')
+        if task_id:
+            task = PeriodicTask.objects.filter(id=task_id)[0].task
+            if 'run_plan' in task:
+                run_plan.delay()
+                return HttpResponse('用例执行中，请稍后查看报告即可,默认以 计划名称 + 时间戳命名.')
+            elif 'delete_logs' in task:
+                delete_logs.delay()
+                return HttpResponse('用例执行中，稍后可在日志中查看执行记录.')
+            elif 'stop_locust' in task:
+                stop_locust.delay()
+                return HttpResponse('用例执行中，稍后可在日志中查看执行记录.')
+            else:
+                return HttpResponse('未定义该定时任务.{}--{}'.format(task_id, task))
+        else:
+            return HttpResponse('未定义该定时任务.{}'.format(task_id))
 
 
 # 报告列表
