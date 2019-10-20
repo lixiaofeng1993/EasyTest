@@ -1302,7 +1302,8 @@ def plan_run(request):
             begin_time = time.clock()
             start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             now_time = int(time.mktime(time.strptime(start_time, '%Y-%m-%d %H:%M:%S')))
-            plan_id = request.POST['plan_id']
+            plan_id = request.POST.get('plan_id', '')
+            run_mode = request.POST.get('run_mode', '')
             plan = Plan.objects.get(plan_id=plan_id)
             env_id = plan.environment.env_id
             case_id_list = eval(plan.content)
@@ -1313,7 +1314,7 @@ def plan_run(request):
             error_num = 0
             i = 0
             for case_id in case_id_list:
-                execute = Test_execute(case_id, env_id, case_id_list)
+                execute = Test_execute(case_id, env_id, case_id_list, run_mode, plan)
                 case_result = execute.test_case()
                 if isinstance(case_result, dict):
                     content.append(case_result)
@@ -1387,6 +1388,7 @@ def timing_task(request):
                     return HttpResponse('未定义该定时任务.{}--{}'.format(task_id, task))
             else:
                 return HttpResponse('未定义该定时任务.{}'.format(task_id))
+
 
 def task_logs(request):
     """

@@ -98,7 +98,7 @@
                                 <td id="plan-name"><a href="/base/plan_update?plan_id={{ plan.plan_id }}"
                                                       class="layui-btn layui-btn-xs"
                                                       lay-event="edit">{{ plan.plan_name }}</a></td>
-                                <td id="cen">{{ plan.project }}</td>
+                                <td id="cen" prj_id="{{ plan.project.prj_id }}">{{ plan.project }}</td>
                                 <td id="cen">{{ plan.environment }}</td>
                                 <td id="plan-content">{{ plan.content }}</td>
                                 <td id="cen">{{ plan.is_locust }}</td>
@@ -108,9 +108,13 @@
                                 <td id="cen">{{ plan.update_user }}</td>
                                 <td id="cen">
                                     <a href="#" class="layui-btn layui-btn-danger layui-btn-xs"
-                                       onclick="run_button(this);"
+                                       onclick="debug_button(this);"
                                        data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;
                                     </a>
+                                    {#                                    <a href="#" class="layui-btn layui-btn-danger layui-btn-xs"#}
+                                    {#                                       onclick="run_button(this);"#}
+                                    {#                                       data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;#}
+                                    {#                                    </a>#}
                                     <a class="layui-btn layui-btn-danger layui-btn-xs"
                                        href="/base/report_page?plan_id={{ plan.plan_id }}">
                                         <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;
@@ -123,6 +127,64 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    <div class="modal fade" id="runCaseForm" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                            aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title">计划运行</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="form-horizontal" method="post" action="">
+                                        <div class="form-group">
+                                            <input type="hidden" id="debug_case_id" name="case_id">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">计划名称</label>
+                                            <div class="col-sm-8"><span id="case_name_"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">环境选择</label>
+                                            <div class="col-sm-8">
+                                                <select class="form-control m-b" id="debug_env_id" name="env_id">
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label">执行方式</label>
+                                            <div class="col-sm-8">
+                                                <select type="text" id="run_mode" class="form-control">
+                                                    <option value='0'>默认执行方式</option>
+                                                    <option value='1'>HttpRunner执行</option>
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-3 control-label"> 实际返回结果</label>
+                                            <div class="spinner1"></div>
+                                            <div class="col-sm-8" id="result">
+
+                                            </div>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" id="cancel_run" class="btn btn-default"
+                                                    data-dismiss="modal"><i
+                                                    class="fa fa-mail-reply-all"></i>&nbsp;取消
+                                            </button>
+                                            <button type="button" onclick="run_button()" class="btn btn-primary"
+                                                    id="debug"><i
+                                                    class="fa fa-circle-o-notch"></i>&nbsp;执行
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div id="input-timed">
 
                     </div>
@@ -181,26 +243,33 @@
 
         //运行
         function run_button(obj) {
-            alert("开始执行...");
+            {#            alert("开始执行...");#}
+            {#            var plan_id = obj.parentNode.parentNode.children[0].innerText;#}
+            var plan_id = $("#debug_case_id").val();
+            var run_mode = $("#run_mode").val();
             $('.spinner').show();
-            var plan_id = obj.parentNode.parentNode.children[0].innerText;
+            $('#result').empty();
             $.ajax({
                 type: "post",
                 url: "/base/plan_run/",
-                data: {"plan_id": plan_id},
+                async: false,
+                data: {"plan_id": plan_id, "run_mode": run_mode},
                 success: function (data) {
                     if (data.hasOwnProperty('error')) {
                         console.log(data);
-                        alert(data['error']);
-                         $('.spinner').hide();
+                        html = '<p style="font-family: Consolas;font-size:12px;color:red;margin:5% 10%">' + data['error'] + '</p>';
+                        $("#result").append(html);
+                        $('.spinner').hide();
                     } else {
                         console.log(data);
-                        alert(data);
+                        html = '<p style="font-family: Consolas;font-size:12px;color:green;margin:5% 10%">' + data + '</p>';
+                        $("#result").append(html);
                         $('.spinner').hide();
                     }
                 },
                 error: function () {
-                    alert("执行失败");
+                    html = '<p style="font-family: Consolas;font-size:12px;color:red;margin:5% 10%">' + '执行失败!!!' + '</p>';
+                        $("#result").append(html);
                     $('.spinner').hide();
                 }
             });
@@ -226,6 +295,37 @@
                 }
             });
 
+        }
+
+        function debug_button(obj) {
+            $('#result').empty();
+            var case_id = obj.parentNode.parentNode.children[0].innerText;
+            var case_name = obj.parentNode.parentNode.children[1].innerText;
+            var prj_id = obj.parentNode.parentNode.children[2].getAttribute("prj_id");
+
+            $("#debug_case_id").val(case_id);
+            $("#cancel_run").html("取消");
+            $("#cancel_run").attr("class", "btn btn-default");
+            $('#case_name_').empty();
+            $.ajax({
+                type: "get",
+                url: "/base/findata/",
+                data: {
+                    "prj_id": prj_id,
+                    "type": "get_env_by_prj_id"
+                },
+                success: function (data) {
+                    var listdata = eval(data);
+                    $("#debug_env_id").empty();
+                    $('#case_name_').append(case_name);
+                    $(listdata).each(function (i, item) {
+                        $("#debug_env_id").append("<option value=" + item.env_id + ">" + item.env_name + "</option>");
+                    })
+                },
+                error: function () {
+                    alert("获取测试环境失败！");
+                }
+            });
         }
 
     </script>

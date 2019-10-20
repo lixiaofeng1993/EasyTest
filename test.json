@@ -1,0 +1,310 @@
+{
+    "config": {
+        "base_url": "",
+        "name": "宝宝接口测试计划",
+        "output": [],
+        "variables": {}
+    },
+    "testcases": [
+        {
+            "teststeps": [
+                {
+                    "extract": [],
+                    "name": "模拟授权",
+                    "output": [],
+                    "request": {
+                        "headers": {
+                            "Accept": "application/json;charset=UTF-8",
+                            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NzE1ODc3MzA4MDEsImV4cGlyZVRpbWUiOjE1NzI4ODM3MzA4MDEsImlkZW50aWZ5IjoyNDMyMH0.KFvMQkdbZW1k1RG00uV9FZikFcWWTWLEVTH93HasnPg"
+                        },
+                        "json": {
+                            "gender": "1",
+                            "headimg": "https://coursecdn.xxbmm.com/xxbmm-course-image/2019/08/22/16/0e737984-b70d-4bd3-8e87-8b51846acc16.jpg",
+                            "nickname": "道在光明",
+                            "openid": "ocIIn4141-6H2uTABfyz5XlTDBGU",
+                            "source": "APPLET",
+                            "unionid": "oPmunjjIzQtjk2aBI4pfkVLcA9tE"
+                        },
+                        "method": "post",
+                        "params": {},
+                        "url": "https://course.rest.xxbmm.com/ops"
+                    },
+                    "validate": [
+                        {
+                            "eq": [
+                                "content.msg",
+                                "成功"
+                            ]
+                        }
+                    ],
+                    "variables": {}
+                },
+                {
+                    "extract": [],
+                    "name": "宝宝列表",
+                    "output": [],
+                    "request": {
+                        "headers": {
+                            "Accept": "application/json;charset=UTF-8",
+                            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NzE1ODc3MzA4MDEsImV4cGlyZVRpbWUiOjE1NzI4ODM3MzA4MDEsImlkZW50aWZ5IjoyNDMyMH0.KFvMQkdbZW1k1RG00uV9FZikFcWWTWLEVTH93HasnPg"
+                        },
+                        "method": "get",
+                        "params": {},
+                        "url": "https://course.rest.xxbmm.com/babys"
+                    },
+                    "validate": [
+                        {
+                            "eq": [
+                                "content.msg",
+                                "成功"
+                            ]
+                        }
+                    ],
+                    "variables": {}
+                },
+                {
+                    "extract": [
+                        {
+                            "babys_data": "content.data"
+                        }
+                    ],
+                    "name": "创建宝宝",
+                    "output": [],
+                    "request": {
+                        "headers": {
+                            "Accept": "application/json;charset=UTF-8",
+                            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NzE1ODc3MzA4MDEsImV4cGlyZVRpbWUiOjE1NzI4ODM3MzA4MDEsImlkZW50aWZ5IjoyNDMyMH0.KFvMQkdbZW1k1RG00uV9FZikFcWWTWLEVTH93HasnPg"
+                        },
+                        "json": {
+                            "birthday": "2019-10-21",
+                            "gender": "MAN",
+                            "headimg": "https://coursecdn.xxbmm.com/xxbmm-course-image/2019/08/22/16/0e737984-b70d-4bd3-8e87-8b51846acc16.jpg",
+                            "name": "郑刚"
+                        },
+                        "method": "post",
+                        "params": {},
+                        "url": "https://course.rest.xxbmm.com/babys"
+                    },
+                    "validate": [
+                        {
+                            "eq": [
+                                "content.msg",
+                                "成功"
+                            ]
+                        }
+                    ],
+                    "variables": {}
+                },
+                {
+                    "extract": [],
+                    "name": "宝宝是否购买了课程核心课",
+                    "output": [],
+                    "request": {
+                        "headers": {
+                            "Accept": "application/json;charset=UTF-8",
+                            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NzE1ODc3MzA4MDEsImV4cGlyZVRpbWUiOjE1NzI4ODM3MzA4MDEsImlkZW50aWZ5IjoyNDMyMH0.KFvMQkdbZW1k1RG00uV9FZikFcWWTWLEVTH93HasnPg"
+                        },
+                        "method": "get",
+                        "params": {
+                            "baby_id": "$babys_data"
+                        },
+                        "url": "https://course.rest.xxbmm.com/babys/course/buy"
+                    },
+                    "validate": [
+                        {
+                            "eq": [
+                                "content.msg",
+                                "成功"
+                            ]
+                        }
+                    ],
+                    "variables": {}
+                },
+                {
+                    "extract": [],
+                    "name": "获取已领取试听课宝宝ID, 没有宝宝领取过返回0",
+                    "output": [],
+                    "request": {
+                        "headers": {
+                            "Accept": "application/json;charset=UTF-8",
+                            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NzE1ODc3MzA4MDEsImV4cGlyZVRpbWUiOjE1NzI4ODM3MzA4MDEsImlkZW50aWZ5IjoyNDMyMH0.KFvMQkdbZW1k1RG00uV9FZikFcWWTWLEVTH93HasnPg"
+                        },
+                        "method": "get",
+                        "params": {},
+                        "url": "https://course.rest.xxbmm.com/babys/get_push"
+                    },
+                    "validate": [
+                        {
+                            "eq": [
+                                "content.msg",
+                                "成功"
+                            ]
+                        }
+                    ],
+                    "variables": {}
+                },
+                {
+                    "extract": [],
+                    "name": "获取未购买核心课宝宝ID, 没有宝宝领取过返回0",
+                    "output": [],
+                    "request": {
+                        "headers": {
+                            "Accept": "application/json;charset=UTF-8",
+                            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NzE1ODc3MzA4MDEsImV4cGlyZVRpbWUiOjE1NzI4ODM3MzA4MDEsImlkZW50aWZ5IjoyNDMyMH0.KFvMQkdbZW1k1RG00uV9FZikFcWWTWLEVTH93HasnPg"
+                        },
+                        "method": "get",
+                        "params": {},
+                        "url": "https://course.rest.xxbmm.com/babys/none_core"
+                    },
+                    "validate": [
+                        {
+                            "eq": [
+                                "content.msg",
+                                "成功"
+                            ]
+                        }
+                    ],
+                    "variables": {}
+                },
+                {
+                    "extract": [],
+                    "name": "获取未领取试听课宝宝ID, 没有宝宝返回0",
+                    "output": [],
+                    "request": {
+                        "headers": {
+                            "Accept": "application/json;charset=UTF-8",
+                            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NzE1ODc3MzA4MDEsImV4cGlyZVRpbWUiOjE1NzI4ODM3MzA4MDEsImlkZW50aWZ5IjoyNDMyMH0.KFvMQkdbZW1k1RG00uV9FZikFcWWTWLEVTH93HasnPg"
+                        },
+                        "method": "get",
+                        "params": {},
+                        "url": "https://course.rest.xxbmm.com/babys/none_push"
+                    },
+                    "validate": [
+                        {
+                            "eq": [
+                                "content.msg",
+                                "无法多次领取试听课"
+                            ]
+                        }
+                    ],
+                    "variables": {}
+                },
+                {
+                    "extract": [],
+                    "name": "宝宝详情",
+                    "output": [],
+                    "request": {
+                        "headers": {
+                            "Accept": "application/json;charset=UTF-8",
+                            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NzE1ODc3MzA4MDEsImV4cGlyZVRpbWUiOjE1NzI4ODM3MzA4MDEsImlkZW50aWZ5IjoyNDMyMH0.KFvMQkdbZW1k1RG00uV9FZikFcWWTWLEVTH93HasnPg"
+                        },
+                        "method": "get",
+                        "params": {},
+                        "url": "https://course.rest.xxbmm.com/babys/{id}"
+                    },
+                    "validate": [
+                        {
+                            "eq": [
+                                "content.msg",
+                                "成功"
+                            ]
+                        }
+                    ],
+                    "variables": {}
+                },
+                {
+                    "extract": [],
+                    "name": "修改宝宝信息",
+                    "output": [],
+                    "request": {
+                        "headers": {
+                            "Accept": "application/json;charset=UTF-8",
+                            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NzE1ODc3MzA4MDEsImV4cGlyZVRpbWUiOjE1NzI4ODM3MzA4MDEsImlkZW50aWZ5IjoyNDMyMH0.KFvMQkdbZW1k1RG00uV9FZikFcWWTWLEVTH93HasnPg"
+                        },
+                        "method": "put",
+                        "params": {},
+                        "url": "https://course.rest.xxbmm.com/babys/{id}"
+                    },
+                    "validate": [
+                        {
+                            "eq": [
+                                "content.msg",
+                                "成功"
+                            ]
+                        }
+                    ],
+                    "variables": {}
+                },
+                {
+                    "extract": [],
+                    "name": "修改宝宝生日",
+                    "output": [],
+                    "request": {
+                        "headers": {
+                            "Accept": "application/json;charset=UTF-8",
+                            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NzE1ODc3MzA4MDEsImV4cGlyZVRpbWUiOjE1NzI4ODM3MzA4MDEsImlkZW50aWZ5IjoyNDMyMH0.KFvMQkdbZW1k1RG00uV9FZikFcWWTWLEVTH93HasnPg"
+                        },
+                        "method": "put",
+                        "params": {},
+                        "url": "https://course.rest.xxbmm.com/babys/{id}/birthday"
+                    },
+                    "validate": [
+                        {
+                            "eq": [
+                                "content.msg",
+                                "成功"
+                            ]
+                        }
+                    ],
+                    "variables": {}
+                },
+                {
+                    "extract": [],
+                    "name": "宝宝是否领取过试听课, 领取过为true",
+                    "output": [],
+                    "request": {
+                        "headers": {
+                            "Accept": "application/json;charset=UTF-8",
+                            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NzE1ODc3MzA4MDEsImV4cGlyZVRpbWUiOjE1NzI4ODM3MzA4MDEsImlkZW50aWZ5IjoyNDMyMH0.KFvMQkdbZW1k1RG00uV9FZikFcWWTWLEVTH93HasnPg"
+                        },
+                        "method": "get",
+                        "params": {},
+                        "url": "https://course.rest.xxbmm.com/babys/{id}/free"
+                    },
+                    "validate": [
+                        {
+                            "eq": [
+                                "content.msg",
+                                "成功"
+                            ]
+                        }
+                    ],
+                    "variables": {}
+                },
+                {
+                    "extract": [],
+                    "name": "删除宝宝信息",
+                    "output": [],
+                    "request": {
+                        "headers": {
+                            "Accept": "application/json;charset=UTF-8",
+                            "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdGFydFRpbWUiOjE1NzE1ODc3MzA4MDEsImV4cGlyZVRpbWUiOjE1NzI4ODM3MzA4MDEsImlkZW50aWZ5IjoyNDMyMH0.KFvMQkdbZW1k1RG00uV9FZikFcWWTWLEVTH93HasnPg"
+                        },
+                        "method": "delete",
+                        "params": {},
+                        "url": "https://course.rest.xxbmm.com/babys/{id}"
+                    },
+                    "validate": [
+                        {
+                            "eq": [
+                                "content.msg",
+                                "成功"
+                            ]
+                        }
+                    ],
+                    "variables": {}
+                }
+            ]
+        }
+    ]
+}

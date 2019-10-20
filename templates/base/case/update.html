@@ -248,7 +248,8 @@
         function add_extract_row(obj) {
             var panel = $(obj).parent().parent();
             var tbody = $(panel).find("table[name='extract']").children('tbody');
-            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+{#            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";#}
+            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td> <td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
             $(tbody).append(newRow);
         }
 
@@ -357,7 +358,7 @@
                                         var body_table = "<table name='body' class='table'><thead><tr><th>#</th> <th>参数名</th>" +
                                             "<th>值</th>" +
                                             "<th></th> </tr> </thead><tbody>";
-                                        var extract_table = "<table name='extract' class='table'> <thead> <tr> <th>#</th><th>参数名</th></tr></thead><tbody>";
+                                        var extract_table = "<table name='extract' class='table'> <thead> <tr> <th>#</th><th>变量名</th><th>提取参数值路径</th></tr></thead><tbody>";
                                         var validators_table = "<table name='validators' class='table'><thead><tr><th>#</th><th>参数名</th><th>期望值</th><th>断言方式</th></tr></thead><tbody>";
                                         // header <td name='var_remark'>" + value + "</td>
                                         var header_json = eval(item.content)[content].header;
@@ -407,7 +408,7 @@
                                             var extract = extract_table + "</tbody></table>";
                                         } else {
                                             for (var ex in extract_json) {
-                                                var tr_ex = "<tr><td>#</td><td contenteditable='true' name='var_name'>" + ex + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
+                                                var tr_ex = "<tr><td>#</td><td contenteditable='true' name='var_name'>" + ex + "</td><td contenteditable='true' name='var_value'>" + extract_json[ex] + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
                                                 extract_table = extract_table + tr_ex;
                                                 var extract = extract_table + "</tbody></table>";
                                             }
@@ -527,7 +528,8 @@
                                             "<table name='extract' class='table'>" +
                                             "<thead>" +
                                             "<tr> <th>#</th>" +
-                                            "<th>参数名</th>" +
+                                            "<th>变量名</th>" +
+                                            "<th>提取参数值路径</th>" +
                                             "</tr> " +
                                             "</thead>" +
                                             "<tbody> " +
@@ -622,7 +624,8 @@
                     $(extract_table).find("tr").each(function (i) {
                         if (i == 0) return true;
                         var name = $(this).find("td[name='var_name']").text();
-                        extract[name] = "";
+                        var value = $(this).find("td[name='var_value']").text();
+                        extract[name] = value;
                     });
 
                     var validators_table = $(this).find("table[name='validators']");

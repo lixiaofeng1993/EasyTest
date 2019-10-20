@@ -19,15 +19,16 @@ from lib.public import validators_result, get_extract, get_param, replace_var, \
 from lib.random_params import random_params
 from lib.except_check import env_not_exit, case_is_delete, interface_is_delete, parametric_set_error, AES_length_error, \
     response_value_error, request_api_error, index_error, checkpoint_no_error, eval_set_error, sql_query_error
-from .error_code import ErrorCode
+from httprunner.api import HttpRunner
+from lib.httprunner_execute import HttpRunerMain
 
-from lib.connectMySql import SqL
+# from lib.connectMySql import SqL
 
 log = logging.getLogger('log')
 
 
 class Test_execute():
-    def __init__(self, case_id, env_id, case_id_list):
+    def __init__(self, case_id, env_id, case_id_list, run_mode='0', plan=''):
         self.case_id = case_id
         self.env_id = env_id
         self.case_id_list = case_id_list
@@ -35,10 +36,14 @@ class Test_execute():
         self.s = requests.session()
         self.extract_list = []
         self.glo_var = {}
+        self.run_mode = run_mode
+        self.plan = plan
         self.step_json = []
         self.user_auth = ''  # 用户认证
         self.make = False  # 未设置默认header的情况
-        self.sql = SqL(job=True)
+        # self.sql = SqL(job=True)
+        self.http = {"config": {"name": "", "base_url": "", "variables": {}, "output": []},
+                     "testcases": [{"teststeps": []}]}
 
     def test_case(self):
         """接口测试用例"""
@@ -61,20 +66,33 @@ class Test_execute():
             return case_run
 
         self.step_list = eval(case.content)
+
         case_step_list = []
+
         for step in self.step_list:
             step_info = self.step(step)
-            if isinstance(step_info, dict):
-                case_step_list.append(step_info)
-                if step_info["result"] == "fail":
-                    case_run["result"] = "fail"
-                if step_info["result"] == "error":
-                    case_run["result"] = "error"
+            if self.run_mode == '1':
+                self.http['config']['name'] = self.plan.plan_name
+                http = HttpRunerMain(step_info).splicing_api()
+                self.http['testcases'][0]['teststeps'].append(http)
             else:
-                case_run = interface_is_delete(case_run, case.case_name, step["if_name"], step_info)
-                return case_run
+                if isinstance(step_info, dict):
+                    case_step_list.append(step_info)
+                    if step_info["result"] == "fail":
+                        case_run["result"] = "fail"
+                    if step_info["result"] == "error":
+                        case_run["result"] = "error"
+                else:
+                    case_run = interface_is_delete(case_run, case.case_name, step["if_name"], step_info)
+                    return case_run
+        if self.run_mode == '1':
+            from lib.processingJson import write_data
+
+            write_data(self.http, 'D:\EasyTest\\test.json')
+            runner = HttpRunner(failfast=False)
+            runner.run(self.http)
         case_run['case_name'], case_run["step_list"] = case.case_name, case_step_list
-        log.info('interface response data: {}'.format(case_run))
+        # log.info('interface response data: {}'.format(case_run))
         return case_run
 
     def step(self, step_content):
@@ -88,18 +106,18 @@ class Test_execute():
             interface = Interface.objects.get(if_id=if_id)
         except Interface.DoesNotExist as e:
             return e  # 接口不存在
-
-        var_list = extract_variables(step_content)
-        if var_list:  # 检查是否存在变量
-            for var_name in var_list:
-                var_value = get_param(var_name, step_content)
-                if var_value is None:
-                    var_value = get_param(var_name, self.step_json)
-                if var_value is None:
-                    for extract_dict in self.extract_list:  # 把变量替换为提取的参数
-                        if var_name in extract_dict.keys():
-                            var_value = extract_dict[var_name]
-                step_content = json.loads(replace_var(step_content, var_name, var_value))
+        if self.run_mode == '0':
+            var_list = extract_variables(step_content)
+            if var_list:  # 检查是否存在变量
+                for var_name in var_list:
+                    var_value = get_param(var_name, step_content)
+                    if var_value is None:
+                        var_value = get_param(var_name, self.step_json)
+                    if var_value is None:
+                        for extract_dict in self.extract_list:  # 把变量替换为提取的参数
+                            if var_name in extract_dict.keys():
+                                var_value = extract_dict[var_name]
+                    step_content = json.loads(replace_var(step_content, var_name, var_value))
 
         if_dict = {"url": interface.url, "header": step_content["header"], "body": step_content["body"], "if_id": if_id,
                    "if_name": step_content["if_name"], "method": interface.method, "data_type": interface.data_type}
@@ -123,13 +141,13 @@ class Test_execute():
                     self.make = True
             if self.make:
                 if_dict['header'] = headers
-        if interface.data_type == 'sql':
-            for k, v in if_dict['body'].items():
-                if 'select' in v:
-                    if_dict['body'][k] = self.sql.execute_sql(v)
-                    if not if_dict['body'][k]:
-                        if_dict = sql_query_error(if_dict, v)
-                        return if_dict
+        # if interface.data_type == 'sql':
+        #     for k, v in if_dict['body'].items():
+        #         if 'select' in v:
+        #             if_dict['body'][k] = self.sql.execute_sql(v)
+        #             if not if_dict['body'][k]:
+        #                 if_dict = sql_query_error(if_dict, v)
+        #                 return if_dict
 
         if interface.is_sign:  # 接口存在签名时，处理参数
             if self.sign_type == 1:  # md5加密
@@ -154,88 +172,101 @@ class Test_execute():
         if interface.data_type == 'file':  # 图片上传类型接口
             if_dict["body"] = {
                 "file": ("login-bg.jpg", open("/var/static/static/img/login-bg.jpg", "rb"), "image/jpeg", {})}
+        if self.run_mode == '0':
+            if interface.set_mock == '1':  # 使用mock接口
+                if_dict['url'] = 'http://www.easytest.xyz/mocks' + interface.url
+                if_dict['base_url'] = 'http://www.easytest.xyz/mocks'
+            else:
+                if_dict["url"] = self.env_url + interface.url
+        elif self.run_mode == '1':
+            if interface.set_mock == '1':
+                if_dict['base_url'] = 'http://www.easytest.xyz/mocks'
+            else:
+                if_dict['base_url'] = self.env_url
+            if_dict['path'] = interface.url
 
-        if interface.set_mock == '1':  # 使用mock接口
-            if_dict['url'] = 'http://www.easytest.xyz/mocks' + interface.url
-        else:
-            if_dict["url"] = self.env_url + interface.url
         if_dict["url"], if_dict["body"] = format_url(if_dict["url"], if_dict["body"])
 
-        # if not interface.set_mock:  # 请求接口或者模拟接口返回值
-        try:
-            if interface.is_sign:
-                if self.sign_type == 4:
-                    res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
-                                         {'data': if_dict["body"]}, if_dict["data_type"])
+        if self.run_mode == '1':
+            if_dict['extract'] = step_content['extract']
+            if_dict['validators'] = step_content['validators']
+            return if_dict
+        else:
+            # if not interface.set_mock:  # 请求接口或者模拟接口返回值
+            try:
+                if interface.is_sign:
+                    if self.sign_type == 4:
+                        res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
+                                             {'data': if_dict["body"]}, if_dict["data_type"])
+                    else:
+                        res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
+                                             if_dict["body"], if_dict["data_type"], self.user_auth)
                 else:
                     res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
-                                         if_dict["body"], if_dict["data_type"], self.user_auth)
-            else:
-                res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
-                                     if_dict["body"], if_dict["data_type"])
-            if_dict["res_status_code"] = res.status_code
-            try:
-                if_dict["res_content"] = eval(
-                    res.text.replace('false', 'False').replace('null', 'None').replace('true',
-                                                                                       'True'))  # 查看报告时转码错误的问题
-                if isinstance(if_dict['res_content'], dict):
-                    if '系统异常' in if_dict['res_content'].values():
-                        if_dict = response_value_error(if_dict, make=True)
-                        return if_dict
-            except SyntaxError as e:
-                if_dict = response_value_error(if_dict, e)  # 解析返回值异常
+                                         if_dict["body"], if_dict["data_type"])
+                if_dict["res_status_code"] = res.status_code
+                try:
+                    if_dict["res_content"] = eval(
+                        res.text.replace('false', 'False').replace('null', 'None').replace('true',
+                                                                                           'True'))  # 查看报告时转码错误的问题
+                    if isinstance(if_dict['res_content'], dict):
+                        if '系统异常' in if_dict['res_content'].values():
+                            if_dict = response_value_error(if_dict, make=True)
+                            return if_dict
+                except SyntaxError as e:
+                    if_dict = response_value_error(if_dict, e)  # 解析返回值异常
+                    return if_dict
+            except requests.RequestException as e:
+                if_dict = request_api_error(if_dict, e)  # 接口请求异常
                 return if_dict
-        except requests.RequestException as e:
-            if_dict = request_api_error(if_dict, e)  # 接口请求异常
+            # else:
+            #     if_dict["res_content"] = \
+            #         eval(interface.set_mock.replace('false', 'False').replace('null', 'None').replace('true', 'True'))[
+            #             'mock']  # 模拟接口返回值
+            #     if_dict["result"] = "fail"
+            #     if_dict['fail'] = ErrorCode.mock_fail
+
+            if interface.is_header and self.make:  # 补充默认headers中的变量
+                set_headers = Environment.objects.get(env_id=self.env_id).set_headers
+                headers = eval(set_headers)['header']
+                if headers:
+                    for k, v in headers.items():
+                        if k == 'token':
+                            if 'error' in if_dict.keys():
+                                headers[k] = ''
+                            else:
+                                headers[k] = if_dict["res_content"]['data']
+                            now_time = datetime.datetime.now()
+                            Environment.objects.filter(env_id=self.env_id).update(set_headers={'header': headers},
+                                                                                  update_time=now_time)
+
+            if step_content["extract"]:  # 提取接口中的变量
+                extract_dict = get_extract(step_content["extract"], if_dict["res_content"],
+                                           interface.url)
+                if 'error' in extract_dict.keys():
+                    if_dict = index_error(if_dict)
+                    return if_dict
+                else:
+                    self.extract_list.append(extract_dict)
+
+            if step_content["validators"]:  # 判断接口返回值
+                if_dict["result"], if_dict["msg"], if_dict['checkpoint'] = validators_result(step_content["validators"],
+                                                                                             if_dict)
+                if 'error' in if_dict['result']:
+                    if_dict['result'] = 'error'
+                elif 'fail' in if_dict['result']:
+                    if_dict['result'] = 'fail'
+                else:
+                    if_dict['result'] = 'pass'
+            else:
+                if_dict = checkpoint_no_error(if_dict)
+
+            if interface.data_type == 'file':
+                if_dict["body"] = {'file': '上传图片'}
+            end_time = time.clock()
+            interface_totalTime = str(end_time - self.begin_time)[:6] + ' s'  # 接口执行时间
+            if_dict['interface_totalTime'] = interface_totalTime
             return if_dict
-        # else:
-        #     if_dict["res_content"] = \
-        #         eval(interface.set_mock.replace('false', 'False').replace('null', 'None').replace('true', 'True'))[
-        #             'mock']  # 模拟接口返回值
-        #     if_dict["result"] = "fail"
-        #     if_dict['fail'] = ErrorCode.mock_fail
-
-        if interface.is_header and self.make:  # 补充默认headers中的变量
-            set_headers = Environment.objects.get(env_id=self.env_id).set_headers
-            headers = eval(set_headers)['header']
-            if headers:
-                for k, v in headers.items():
-                    if k == 'token':
-                        if 'error' in if_dict.keys():
-                            headers[k] = ''
-                        else:
-                            headers[k] = if_dict["res_content"]['data']
-                        now_time = datetime.datetime.now()
-                        Environment.objects.filter(env_id=self.env_id).update(set_headers={'header': headers},
-                                                                              update_time=now_time)
-
-        if step_content["extract"]:  # 提取接口中的变量
-            extract_dict = get_extract(step_content["extract"], if_dict["res_content"],
-                                       interface.url)
-            if 'error' in extract_dict.keys():
-                if_dict = index_error(if_dict)
-                return if_dict
-            else:
-                self.extract_list.append(extract_dict)
-
-        if step_content["validators"]:  # 判断接口返回值
-            if_dict["result"], if_dict["msg"], if_dict['checkpoint'] = validators_result(step_content["validators"],
-                                                                                         if_dict)
-            if 'error' in if_dict['result']:
-                if_dict['result'] = 'error'
-            elif 'fail' in if_dict['result']:
-                if_dict['result'] = 'fail'
-            else:
-                if_dict['result'] = 'pass'
-        else:
-            if_dict = checkpoint_no_error(if_dict)
-
-        if interface.data_type == 'file':
-            if_dict["body"] = {'file': '上传图片'}
-        end_time = time.clock()
-        interface_totalTime = str(end_time - self.begin_time)[:6] + ' s'  # 接口执行时间
-        if_dict['interface_totalTime'] = interface_totalTime
-        return if_dict
 
     def get_env(self, env_id):
         """
@@ -342,3 +373,32 @@ def get_total_values(user_id):
         total['percent'].append(total_percent)
 
     return total
+
+
+def format_httprunner_case():
+    format = [
+        {
+            "config": {
+                "name": "",
+                "base_url": "",
+                "variables": {},
+                "output": []
+            }
+        },
+        {
+            "test": {
+                "name": "",
+                "output": [],
+                "variables": {},
+                "request": {
+                    "url": "",
+                    "method": "",
+                    "headers": {},
+                    "json": {},
+                    "params": {}
+                },
+                "extract": [],
+                "validate": []
+            }
+        }
+    ]
