@@ -91,10 +91,12 @@ def run_plan():
 def delete_logs():
     log.info('remove logs------->删除过期日志中<--------------')
     logs_path = os.path.join(os.getcwd(), 'logs')
+    report_path = os.path.join(os.getcwd(), 'reports')
     pic_path = os.path.join(settings.MEDIA_ROOT)
     logs_num = remove_logs(logs_path)
     pic_num = remove_logs(pic_path)
-    total_num = logs_num + pic_num
+    report_num = remove_logs(report_path)
+    total_num = logs_num + pic_num + report_num
     if total_num == 0:
         log.info('remove logs------->没有要删除的文件.<--------------')
     else:
