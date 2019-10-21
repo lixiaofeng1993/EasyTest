@@ -69,9 +69,8 @@ def run_plan():
     report_name = plan[0]['plan_name'] + "-" + str(start_time)
     report = Report(plan_id=plan_id, report_name=report_name, content=content, case_num=case_num,
                     pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
-                    totalTime=totalTime, startTime=start_time, update_user='root')
+                    totalTime=totalTime, startTime=start_time, update_user='root', make=0)
     report.save()
-    Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now(), update_user='root')
     if fail_num or error_num:
         _to = []
         user = User.objects.filter(is_superuser=1).filter(is_staff=1).filter(is_active=1).values()
