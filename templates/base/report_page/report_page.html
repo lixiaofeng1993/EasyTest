@@ -74,6 +74,11 @@
                         {% for env in object_list %}
                             <tr>
                                 <td id="cen" class="report_id">{{ env.report_id }}</td>
+                                {% ifequal env.make 1 %}
+                                    <td class="env-name" style="background-color: #FFE153">{{ env.report_name }}</td>
+                                {% else %}
+                                    <td class="env-name">{{ env.report_name }}</td>
+                                {% endifequal %}
                                 <td class="env-name">{{ env.report_name }}</td>
                                 <td id="cen">{{ env.totalTime }}</td>
                                 <td id="cen">{{ env.case_num }}</td>
