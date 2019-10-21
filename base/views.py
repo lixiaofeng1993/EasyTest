@@ -1518,7 +1518,7 @@ def report_logs(request):
         except Report.DoesNotExist:
             return render(request, "base/report_page/log.html")
         else:
-            report_content = eval(report.content)
+            report_content = eval(report.content.replace('Markup', ''))
             for case in report_content:
                 global class_name
                 class_name = case['class_name']
