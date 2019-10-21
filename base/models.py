@@ -108,6 +108,7 @@ class Report(models.Model):
     error_num = models.IntegerField(null=True)
     update_time = models.DateTimeField('更新时间', auto_now=True)
     update_user = models.CharField(max_length=30, default='')
+    make = models.IntegerField(null=True, default='')
 
     def __str__(self):
         return self.report_name

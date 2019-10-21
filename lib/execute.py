@@ -88,9 +88,6 @@ class Test_execute():
                     case_run = interface_is_delete(case_run, case.case_name, step["if_name"], step_info)
                     return case_run
         if self.run_mode == '1':
-            from lib.processingJson import write_data
-
-            write_data(self.http, 'D:\EasyTest\\test.json')
             runner = HttpRunner(failfast=False)
             runner.run(self.http)
             summary = runner.summary

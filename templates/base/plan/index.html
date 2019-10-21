@@ -245,10 +245,10 @@
         function run_button(obj) {
             {#            alert("开始执行...");#}
             {#            var plan_id = obj.parentNode.parentNode.children[0].innerText;#}
+            $('#result').empty();
             var plan_id = $("#debug_case_id").val();
             var run_mode = $("#run_mode").val();
             $('.spinner').show();
-            $('#result').empty();
             $.ajax({
                 type: "post",
                 url: "/base/plan_run/",

@@ -1310,13 +1310,14 @@ def plan_run(request):
             case_id_list = eval(plan.content)
             case_num = len(case_id_list)
             content = []
-            pass_num = 0
-            fail_num = 0
-            error_num = 0
-            i = 0
+            j = 0
             for case_id in case_id_list:
                 execute = Test_execute(case_id, env_id, case_id_list, run_mode, plan)
                 case_result = execute.test_case
+                if run_mode == '1':
+                    for records in case_result['summary']['details'][0]['records']:
+                        j += 1
+                        records['id'] = j
 
                 if isinstance(case_result, dict):
                     content.append(case_result)
@@ -1324,6 +1325,10 @@ def plan_run(request):
                     return HttpResponse(case_result)
             end_time = time.clock()
             totalTime = str(end_time - begin_time)[:6] + ' s'
+            pass_num = 0
+            fail_num = 0
+            error_num = 0
+            i = 0
             for step in content:
                 if 'error' in step.keys():
                     log.error('plan run error：{}'.format(step['msg']))
@@ -1351,18 +1356,16 @@ def plan_run(request):
             pic_name = DrawPie(pass_num, fail_num, error_num)
             report_name = plan.plan_name + "-" + str(start_time).replace(':', '-')
             username = request.session.get('user', '')
-            from lib.processingJson import write_data
-            write_data(content, r'D:\EasyTest\test.json')
-            report = Report(plan=plan, report_name=report_name, content=content, case_num=case_num,
-                            pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
-                            totalTime=totalTime, startTime=start_time, update_user=username)
-            report.save()
             if run_mode == '1':
-                Plan.objects.filter(plan_id=plan_id).update(make=1, update_time=datetime.now(),
-                                                            update_user=username)
+                report = Report(plan=plan, report_name=report_name, content=content, case_num=case_num,
+                                pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
+                                totalTime=totalTime, startTime=start_time, update_user=username, make=1)
             elif run_mode == '0':
-                Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now(),
-                                                            update_user=username)
+                report = Report(plan=plan, report_name=report_name, content=content, case_num=case_num,
+                                pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
+                                totalTime=totalTime, startTime=start_time, update_user=username, make=0)
+            report.save()
+            Plan.objects.filter(plan_id=plan_id).update(update_user=username, update_time=datetime.now())
             return HttpResponse(plan.plan_name + " 执行成功！")
 
 
@@ -1481,52 +1484,53 @@ def report_logs(request):
         return render(request, 'user/login_action.html')
     else:
         report_id = request.GET.get('report_id')
-        plan_id = Report.objects.get(report_id=report_id).plan_id
-        make = Plan.objects.get(plan_id=plan_id).make
-        if make:  # unittest日志
-            file_list = []
-            now = time.strftime('%Y-%m-%d')
-            log_file_list = os.listdir(logs_path)
-            for file in log_file_list:
-                if file[0].isdigit() and now in file:
-                    file_list.append(file)
-            if not file_list:
-                return render(request, 'base/report_page/log.html', {'unicode': True})
-            data_list = []
-            file_list.sort()
-            log_file = os.path.join(logs_path, file_list[0])
-            try:
-                with open(log_file, 'rb') as f:
-                    off = -1024 * 1024
-                    if f.tell() < -off:
-                        data = f.readlines()
-                    else:
-                        f.seek(off, 2)
-                        data = f.readlines()
-                    for line in data:
-                        data_list.append(line.decode())
-                return render(request, 'base/report_page/log.html', {'data': data_list, 'make': True})
-            except UnicodeDecodeError:
-                return render(request, 'base/report_page/log.html', {'unicode': True})
+        # report = Report.objects.get(report_id=report_id)
+        # make = report.make
+        # plan_id = report.plan_id
+        # if make:  # unittest日志
+        #     file_list = []
+        #     now = time.strftime('%Y-%m-%d')
+        #     log_file_list = os.listdir(logs_path)
+        #     for file in log_file_list:
+        #         if file[0].isdigit() and now in file:
+        #             file_list.append(file)
+        #     if not file_list:
+        #         return render(request, 'base/report_page/log.html', {'unicode': True})
+        #     data_list = []
+        #     file_list.sort()
+        #     log_file = os.path.join(logs_path, file_list[0])
+        #     try:
+        #         with open(log_file, 'rb') as f:
+        #             off = -1024 * 1024
+        #             if f.tell() < -off:
+        #                 data = f.readlines()
+        #             else:
+        #                 f.seek(off, 2)
+        #                 data = f.readlines()
+        #             for line in data:
+        #                 data_list.append(line.decode())
+        #         return render(request, 'base/report_page/log.html', {'data': data_list, 'make': True})
+        #     except UnicodeDecodeError:
+        #         return render(request, 'base/report_page/log.html', {'unicode': True})
+        # else:
+        try:
+            report = Report.objects.get(report_id=report_id)
+        except Report.DoesNotExist:
+            return render(request, "base/report_page/log.html")
         else:
-            try:
-                report = Report.objects.get(report_id=report_id)
-            except Report.DoesNotExist:
-                return render(request, "base/report_page/log.html")
+            report_content = eval(report.content)
+            for case in report_content:
+                global class_name
+                class_name = case['class_name']
+            superuser = User.objects.get(id=user_id).is_superuser
+            if superuser:
+                info = {"report": report, 'plan_id': report.plan_id, "report_content": report_content,
+                        'class_name': class_name, 'is_superuser': superuser}
+                return render(request, "base/report_page/log.html", info)
             else:
-                report_content = eval(report.content)
-                for case in report_content:
-                    global class_name
-                    class_name = case['class_name']
-                superuser = User.objects.get(id=user_id).is_superuser
-                if superuser:
-                    info = {"report": report, 'plan_id': plan_id, "report_content": report_content,
-                            'class_name': class_name, 'is_superuser': superuser}
-                    return render(request, "base/report_page/log.html", info)
-                else:
-                    info = {"report": report, 'plan_id': plan_id, "report_content": report_content,
-                            'class_name': class_name, 'is_superuser': ''}
-                    return render(request, "base/report_page/log.html", info)
+                info = {"report": report, 'plan_id': report.plan_id, "report_content": report_content,
+                        'class_name': class_name, 'is_superuser': ''}
+                return render(request, "base/report_page/log.html", info)
 
 
 def report_index(request):
@@ -1545,12 +1549,11 @@ def report_index(request):
             if not report_id:
                 return render(request, "report.html")
             try:
-                Report.objects.get(report_id=report_id)
+                report = Report.objects.get(report_id=report_id)
             except Report.DoesNotExist:
                 return render(request, 'report.html')
-            plan_id = Report.objects.get(report_id=report_id).plan_id
-            make = Plan.objects.get(plan_id=plan_id).make
-            report = Report.objects.get(report_id=report_id)
+            plan_id = report.plan_id
+            make = report.make
             case_num = report.case_num
             pass_num = report.pass_num
             fail_num = report.fail_num
@@ -1621,7 +1624,7 @@ def report_delete(request):
 
 def file_download(request):
     """
-    下载unittest报告
+    下载HttpRunner报告
     :param request:
     :return:
     """
