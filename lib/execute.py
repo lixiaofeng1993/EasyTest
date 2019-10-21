@@ -45,11 +45,13 @@ class Test_execute():
         self.http = {"config": {"name": "", "base_url": "", "variables": {}, "output": []},
                      "testcases": [{"teststeps": []}]}
 
+    @property
     def test_case(self):
         """接口测试用例"""
         class_name = self.__class__.__name__
         func_name = sys._getframe().f_code.co_name
-        method_doc = self.test_case.__doc__
+        # method_doc = self.test_case.__doc__
+        method_doc = "接口测试用例"
         case_run = {'class_name': class_name, 'func_name': func_name, 'method_doc': method_doc, 'case_id': self.case_id}
 
         if self.get_env(self.env_id):  # 获取测试环境数据
@@ -91,8 +93,10 @@ class Test_execute():
             write_data(self.http, 'D:\EasyTest\\test.json')
             runner = HttpRunner(failfast=False)
             runner.run(self.http)
+            summary = runner.summary
+            case_run['summary'] = summary
         case_run['case_name'], case_run["step_list"] = case.case_name, case_step_list
-        # log.info('interface response data: {}'.format(case_run))
+        log.info('interface response data: {}'.format(case_run))
         return case_run
 
     def step(self, step_content):

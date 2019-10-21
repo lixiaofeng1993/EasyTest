@@ -22,6 +22,7 @@ from django.views.generic import ListView
 
 log = logging.getLogger('log')  # 初始化log
 logs_path = os.path.join(os.getcwd(), 'logs')  # 拼接删除目录完整路径
+report_path = os.path.join(os.getcwd(), 'reports')  # 拼接删除目录完整路径
 start_time = ''  # 执行测试计划开始时间
 totalTime = ''  # 执行测试计划运行时间
 now_time = ''  # 饼图命名区分
@@ -1117,7 +1118,7 @@ def case_run(request):
             username = request.session.get('user', '')
             log.info('用户 {} 在 {} 环境 运行用例 {} .'.format(username, env_id, case_id))
             execute = Test_execute(case_id, env_id, ['1'])
-            case_result = execute.test_case()
+            case_result = execute.test_case
             Case.objects.filter(case_id=case_id).update(update_user=username)
             return JsonResponse(case_result)
 
@@ -1315,7 +1316,8 @@ def plan_run(request):
             i = 0
             for case_id in case_id_list:
                 execute = Test_execute(case_id, env_id, case_id_list, run_mode, plan)
-                case_result = execute.test_case()
+                case_result = execute.test_case
+
                 if isinstance(case_result, dict):
                     content.append(case_result)
                 else:
@@ -1340,15 +1342,27 @@ def plan_run(request):
                             error_num += 1
                             i += 1
                             s['id'] = i
+            if run_mode == '1':
+                summary = case_result.get('summary', {})
+                stat = summary.get('stat', {}).get('teststeps', {})
+                pass_num = stat.get('successes', 0)
+                fail_num = stat.get('failures', 0)
+                error_num = stat.get('errors', 0)
             pic_name = DrawPie(pass_num, fail_num, error_num)
-            report_name = plan.plan_name + "-" + str(start_time)
+            report_name = plan.plan_name + "-" + str(start_time).replace(':', '-')
             username = request.session.get('user', '')
+            from lib.processingJson import write_data
+            write_data(content, r'D:\EasyTest\test.json')
             report = Report(plan=plan, report_name=report_name, content=content, case_num=case_num,
                             pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
                             totalTime=totalTime, startTime=start_time, update_user=username)
             report.save()
-            Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now(),
-                                                        update_user=username)
+            if run_mode == '1':
+                Plan.objects.filter(plan_id=plan_id).update(make=1, update_time=datetime.now(),
+                                                            update_user=username)
+            elif run_mode == '0':
+                Plan.objects.filter(plan_id=plan_id).update(make=0, update_time=datetime.now(),
+                                                            update_user=username)
             return HttpResponse(plan.plan_name + " 执行成功！")
 
 
@@ -1531,28 +1545,27 @@ def report_index(request):
             if not report_id:
                 return render(request, "report.html")
             try:
-                report = Report.objects.get(report_id=report_id)
+                Report.objects.get(report_id=report_id)
             except Report.DoesNotExist:
                 return render(request, 'report.html')
             plan_id = Report.objects.get(report_id=report_id).plan_id
             make = Plan.objects.get(plan_id=plan_id).make
-            plan_name = Plan.objects.get(plan_id=plan_id).report_name
-            if make:  # unittest报告
-                log.info('report_index plan_id: {} , plan_name: {}'.format(plan_id, plan_name))
-                return render(request, '{}'.format(plan_name))
             report = Report.objects.get(report_id=report_id)
             case_num = report.case_num
             pass_num = report.pass_num
             fail_num = report.fail_num
             error_num = report.error_num
-            report_content = eval(report.content)
+            report_content = eval(report.content.replace('Markup', ''))
             for case in report_content:
                 global class_name
                 class_name = case['class_name']
             info = {"report": report, 'plan_id': plan_id, 'case_num': case_num, "error_num": error_num,
                     'pass_num': pass_num, 'fail_num': fail_num, "report_content": report_content,
                     'img_name': str(now_time) + 'pie.png', 'class_name': class_name}
-            return render(request, "report.html", info)
+            if make:
+                return render(request, "report_httprunner.html", info)
+            else:
+                return render(request, "report.html", info)
 
 
 def report_search(request):
@@ -1572,7 +1585,7 @@ def report_search(request):
                 report = Report.objects.get(report_id=report_id)
             except Report.DoesNotExist:
                 return render(request, "report.html")
-            report_content = eval(report.content)
+            report_content = eval(report.content.replace('Markup', ''))
             if result not in ['pass', 'fail', 'error']:
                 return HttpResponse(str(report_content))
             for case in report_content:
@@ -1618,21 +1631,14 @@ def file_download(request):
         return render(request, 'user/login_action.html')
     else:
         if request.method == 'GET':
-            plan_id = request.GET.get('plan_id', '')
-            name = request.GET.get('log_file', '')
-            if plan_id:
-                name = Plan.objects.get(plan_id=plan_id).report_name
-                if not name:
-                    if plan_id:
-                        report_list = Report.objects.filter(plan_id=plan_id).order_by('-report_id')
-                    else:
-                        report_list = Report.objects.all().order_by('-report_id')
-                    page = request.GET.get('page')
-                    contacts = paginator(report_list, page)
-                    return render(request, "base/report_page/report_page.html",
-                                  {"contacts": contacts, 'plan_id': plan_id,
-                                   'error': '计划 {} 不存在unittest报告'.format(
-                                       plan_id)})
+            report_id = request.GET.get('report_id', '')
+            report = Report.objects.get(report_id=report_id)
+            name = report.report_name[-19:]
+            plan_id = report.plan_id
+            file_name = os.path.join(report_path, name + '.html')
+            if not os.path.exists(file_name):
+                return render(request, "base/report_page/report_page.html",
+                              {'error': '计划 {} 中的 执行报告 {} 无法下载！'.format(plan_id, report_id)})
 
             def file_iterator(file_name, chunk_size=512):
                 with open(file_name, encoding='utf-8') as f:
@@ -1643,10 +1649,10 @@ def file_download(request):
                         else:
                             break
 
-            response = StreamingHttpResponse(file_iterator(name))
+            response = StreamingHttpResponse(file_iterator(file_name))
             response['Content-Type'] = 'application/octet-stream'
-            response['Content-Disposition'] = 'attachment;filename="{0}"'.format(name)
-            log.info('用户 {} 下载测试报告或日志文件：{} .'.format(user_id, name))
+            response['Content-Disposition'] = 'attachment;filename="{0}"'.format(file_name)
+            log.info('用户 {} 下载测试报告或日志文件：{} .'.format(user_id, file_name))
             return response
 
 

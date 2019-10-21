@@ -73,7 +73,7 @@
                         <tbody>
                         {% for env in object_list %}
                             <tr>
-                                <td id="cen">{{ env.report_id }}</td>
+                                <td id="cen" class="report_id">{{ env.report_id }}</td>
                                 <td class="env-name">{{ env.report_name }}</td>
                                 <td id="cen">{{ env.totalTime }}</td>
                                 <td id="cen">{{ env.case_num }}</td>
@@ -91,9 +91,11 @@
                                     <a href="/base/report_logs?report_id={{ env.report_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs">
                                         <i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;</a>
-                                    {#                                    <a href="/base/file_download?plan_id={{ env.plan_id }}"#}
-                                    {#                                       class="layui-btn layui-btn-danger layui-btn-xs"#}
-                                    {#                                       onclick="return download_btn()"><i class="fa fa-cloud-download"></i>&nbsp;</a>#}
+                                    <a href="/base/file_download?report_id={{ env.report_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs"
+                                       onclick="return download_btn()"><i
+                                            class="fa fa-cloud-download"></i>&nbsp;
+                                    </a>
                                     <a href="/base/report_delete?report_id={{ env.report_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;
@@ -154,7 +156,7 @@
         }
         //删除
         function download_btn() {
-            if (window.confirm("要下载unittest报告吗？")) {
+            if (window.confirm("下载HttpRunner报告前，请先执行测试计划~~~")) {
                 return true;//确定返回真
             }
             else {

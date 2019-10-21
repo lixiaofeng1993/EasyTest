@@ -15,18 +15,20 @@ class HttpRunerMain:
         self.data = step_info
 
     def splicing_api(self):
-        path = self.data.get('path', '')
-        url = self.data.get('base_url', '') + path
+        url = self.data.get('base_url', '') + self.data['url']
         method = self.data.get('method')
         self.http_test_request['url'] = url
         self.http_test_request['method'] = method
-        if method == 'post':
+        if method in ['post', 'put']:
             if self.data['data_type'] == 'json':
                 self.http_test_request['json'] = self.data.get('body', '')
             elif self.data['data_type'] == 'data':
                 self.http_test_request['data'] = self.data.get('body', '')
-        elif method == 'get':
-            self.http_test_request['params'] = self.data.get('body', '')
+        elif method in ['get', 'delete']:
+            if self.data['data_type'] == 'json':
+                self.http_test_request['json'] = self.data.get('body', '')
+            else:
+                self.http_test_request['params'] = self.data.get('body', '')
         self.http_test_request['headers'] = self.data.get('header', '')
         self.http_test['request'].update(self.http_test_request)
         self.http_test['name'] = self.data.get('if_name')
