@@ -8,6 +8,7 @@ from base.models import Event, Guest
 
 log = logging.getLogger('log')
 
+
 # from rest_framework.schemas import get_schema_view
 #
 # from rest_framework.renderers import CoreJSONRenderer
@@ -72,7 +73,7 @@ def get_event_list(request):
             event['address'] = result.address
             event['start_time'] = result.start_time
             event['id'] = result.id
-            log.info('get_event_list，查询发布会成功！')
+            log.info('get_event_list，查询发布会成功！data: {}'.format(event))
             return JsonResponse({'status': 200, 'message': 'success', 'data': event})
 
     if name != '':
@@ -88,7 +89,7 @@ def get_event_list(request):
                 event['start_time'] = r.start_time
                 event['id'] = r.id
                 datas.append(event)
-                log.info('get_event_list，查询发布会成功！')
+            log.info('get_event_list，查询发布会成功！data: {}'.format(datas))
             return JsonResponse({'status': 200, 'message': 'success', 'data': datas})
         else:
             log.info('get_event_list，查询结果为空.')
