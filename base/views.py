@@ -1078,6 +1078,7 @@ def case_logs(request):
                 for line in data:
                     data_list.append(line.decode())
                 info = {'data': data_list, 'make': True, 'log_file': log_file}
+                log.info('case_logs 查询日志文件名称 ===========================>>> {}'.format(log_file))
                 return render(request, 'base/case/log.html', info)
         else:
             info = {'data': '0', 'make': True, 'log_file': ''}
@@ -1824,7 +1825,7 @@ def findata(request):
                     data = f.readlines()
             for i in data:
                 data_list.append(i.replace('True', 'true').replace('False', 'false').replace('None', 'null'))
-            log.info('data_listdata_listdata_listdata_listdata_listdata_list==========================={}'.format(log_file))
+            log.info('get_log 查询日志文件名称 ===========================>>> {}'.format(log_file))
             return JsonResponse(data_list, safe=False)
         if get_type == 'get_task_log':
             task_log_path = '/var/celery_logs/celery_worker_err.log'

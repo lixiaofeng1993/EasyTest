@@ -88,7 +88,7 @@ class Test_execute():
                     case_run = interface_is_delete(case_run, case.case_name, step["if_name"], step_info)
                     return case_run
         if self.run_mode == '1':
-            runner = HttpRunner(failfast=False)
+            runner = HttpRunner(failfast=False, log_file='all-')
             runner.run(self.http)
             summary = runner.summary
             case_run['summary'] = summary
