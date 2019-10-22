@@ -245,7 +245,7 @@ class Test_execute():
                 extract_dict = get_extract(step_content["extract"], if_dict["res_content"],
                                            interface.url)
                 if 'error' in extract_dict.keys():
-                    if_dict = index_error(if_dict)
+                    if_dict = index_error(if_dict, extract_dict)
                     return if_dict
                 else:
                     self.extract_list.append(extract_dict)

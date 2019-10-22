@@ -51,3 +51,5 @@ class ErrorCode:
     eval_error = 'eval()错误，请前往【用例管理】页面核实相关参数配置！'
 
     sql_query_error = 'sql查询返回数据错误，请确保sql查询有返回值且是正确的！'
+
+    extract_value_path_error = '提取参数值路径错误，请核实并写入正确的路径！'

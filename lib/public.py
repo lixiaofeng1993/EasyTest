@@ -227,39 +227,45 @@ def get_extract(extract_dict, res, url=''):
     for key, value in extract_dict.items():
         patt = value.split('.')
         _extract = httprunner_extract(res, patt)
-        with_extract_dict[key] = _extract
+        if _extract == 'error':
+            return {'error': ErrorCode.extract_value_path_error}
+        else:
+            with_extract_dict[key] = _extract
 
-        # if ',' in key:  # 一个接口支持同时提取多个参数
-        #     key_list = key.split(',')
-        #     if len(key_list) > 1:
-        #         for k in key_list:
-        #             key_value = the_same_one(k, res)
-        #             if isinstance(key_value, dict):
-        #                 with_extract_dict = key_value
-        #             else:
-        #                 url_key = splicing_url(url, k)
-        #                 with_extract_dict[url_key] = key_value
-        #     else:
-        #         key = key.strip(',')
-        #         key_value = get_param(key, res)
-        #         url_key = splicing_url(url, key)
-        #         with_extract_dict[url_key] = key_value
-        # else:
-        #     key_value = the_same_one(key, res)
-        #     if isinstance(key_value, dict):
-        #         with_extract_dict = key_value
-        #     else:
-        #         url_key = splicing_url(url, key)
-        #         with_extract_dict[url_key] = key_value
+            # if ',' in key:  # 一个接口支持同时提取多个参数
+            #     key_list = key.split(',')
+            #     if len(key_list) > 1:
+            #         for k in key_list:
+            #             key_value = the_same_one(k, res)
+            #             if isinstance(key_value, dict):
+            #                 with_extract_dict = key_value
+            #             else:
+            #                 url_key = splicing_url(url, k)
+            #                 with_extract_dict[url_key] = key_value
+            #     else:
+            #         key = key.strip(',')
+            #         key_value = get_param(key, res)
+            #         url_key = splicing_url(url, key)
+            #         with_extract_dict[url_key] = key_value
+            # else:
+            #     key_value = the_same_one(key, res)
+            #     if isinstance(key_value, dict):
+            #         with_extract_dict = key_value
+            #     else:
+            #         url_key = splicing_url(url, key)
+            #         with_extract_dict[url_key] = key_value
     return with_extract_dict
 
 
 def httprunner_extract(res, patt):
     for par in patt:
         try:
-            res = res[int(par)]
-        except ValueError:
-            res = res[par]
+            try:
+                res = res[int(par)]
+            except ValueError:
+                res = res[par]
+        except Exception:
+            return 'error'
         patt.remove(par)
         if patt:
             return httprunner_extract(res, patt)
@@ -451,7 +457,7 @@ def call_interface(s, method, url, header, data, content_type='json', user_auth=
     :param user_auth:
     :return:
     """
-    log.info('========interface params==============> {} {} {} {}'.format(url, header, data, content_type))
+    # log.info('========interface params==============> {} {} {} {}'.format(url, header, data, content_type))
     if method in ["post", "put"]:
         if content_type in ["json", 'sql']:
             res = s.request(method=method, url=url, json=data, headers=header, verify=False)
@@ -472,7 +478,7 @@ def call_interface(s, method, url, header, data, content_type='json', user_auth=
     if content_type == 'file':
         # res = s.request(method=method, url=url, params=data, headers=header, verify=False)
         res = s.request(method=method, url=url, files=data, headers=header, verify=False)
-    log.info('========接口返回信息==============> {} {}'.format(res.status_code, res.text))
+    # log.info('========接口返回信息==============> {} {}'.format(res.status_code, res.text))
     return res
 
 

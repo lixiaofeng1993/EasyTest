@@ -370,11 +370,11 @@ def request_api_error(if_dict, e):
     return if_dict
 
 
-def index_error(if_dict):
+def index_error(if_dict, extract_dict):
     if_dict["result"] = "error"
     if_dict["checkpoint"] = ''
-    if_dict["error"] = ErrorCode.index_error
-    if_dict["msg"] = ErrorCode.index_error
+    if_dict["error"] = extract_dict['error']
+    if_dict["msg"] = extract_dict['error']
     return if_dict
 
 
