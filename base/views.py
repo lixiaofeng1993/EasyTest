@@ -1319,6 +1319,10 @@ def plan_run(request):
                     for records in case_result['summary']['details'][0]['records']:
                         j += 1
                         records['id'] = j
+                        for data in records.get('meta_datas', {}).get('data', {}):
+                            body = json.dumps(data.get('request', {}).get('body', {}), ensure_ascii=False).replace('Markup', '').replace('&#34;', '')
+                            if body:
+                                data['request']['body'] = body.encode('utf-8').decode('unicode_escape').encode('utf-8').decode('unicode_escape')
 
                 if isinstance(case_result, dict):
                     content.append(case_result)

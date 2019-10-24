@@ -21,6 +21,7 @@ from lib.except_check import env_not_exit, case_is_delete, interface_is_delete, 
     response_value_error, request_api_error, index_error, checkpoint_no_error, eval_set_error, sql_query_error
 from httprunner.api import HttpRunner
 from lib.httprunner_execute import HttpRunerMain
+# from lib.processingJson import write_data
 
 # from lib.connectMySql import SqL
 
@@ -93,7 +94,7 @@ class Test_execute():
             summary = runner.summary
             case_run['summary'] = summary
         case_run['case_name'], case_run["step_list"] = case.case_name, case_step_list
-        log.info('interface response data: {}'.format(case_run))
+        # log.info('interface response data: {}'.format(case_run))
         return case_run
 
     def step(self, step_content):
@@ -128,20 +129,22 @@ class Test_execute():
             if_dict = eval_set_error(if_dict)
             return if_dict
 
-        if_dict['header'] = random_params(if_dict['header'])  # random参数化
-        if_dict['body'] = random_params(if_dict['body'])
-        if if_dict['header'] == 'error' or if_dict['body'] == 'error':  # 参数化异常
-            if_dict = parametric_set_error(if_dict)
-            return if_dict
+        if self.run_mode == '0':
+            if_dict['header'] = random_params(if_dict['header'])  # random参数化
+            if_dict['body'] = random_params(if_dict['body'])
+            if if_dict['header'] == 'error' or if_dict['body'] == 'error':  # 参数化异常
+                if_dict = parametric_set_error(if_dict)
+                return if_dict
 
-        set_headers = Environment.objects.get(env_id=self.env_id).set_headers
-        if set_headers:  # 把设置的header赋值到if_dict中
-            headers = eval(set_headers)['header']
-            for k, v in headers.items():
-                if '$' not in v:
-                    self.make = True
-            if self.make:
-                if_dict['header'] = headers
+            set_headers = Environment.objects.get(env_id=self.env_id).set_headers
+            if set_headers:  # 把设置的header赋值到if_dict中
+                headers = eval(set_headers)['header']
+                for k, v in headers.items():
+                    if '$' not in v:
+                        self.make = True
+                if self.make:
+                    if_dict['header'] = headers
+
         # if interface.data_type == 'sql':
         #     for k, v in if_dict['body'].items():
         #         if 'select' in v:
