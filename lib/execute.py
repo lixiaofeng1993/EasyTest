@@ -30,7 +30,7 @@ log = logging.getLogger('log')
 
 
 class Test_execute():
-    def __init__(self, case_id, env_id, case_id_list, run_mode='0', plan=''):
+    def __init__(self, env_id, case_id_list, run_mode='0', plan='', case_id=0):
         self.case_id = case_id
         self.env_id = env_id
         self.case_id_list = case_id_list
@@ -44,8 +44,6 @@ class Test_execute():
         self.user_auth = ''  # 用户认证
         self.make = False  # 未设置默认header的情况
         # self.sql = SqL(job=True)
-        self.http = {"config": {"name": "", "base_url": "", "variables": {}, "output": []},
-                     "testcases": [{"teststeps": []}]}
 
     @property
     def test_case(self):
@@ -63,23 +61,38 @@ class Test_execute():
             return case_run
         self.sign_type = self.get_sign(self.prj_id)  # 获取签名数据
 
-        try:
-            case = Case.objects.get(case_id=self.case_id)
-        except Case.DoesNotExist as e:
-            case_run = case_is_delete(case_run, e)
-            return case_run
-
-        self.step_list = eval(case.content)
-
         case_step_list = []
+        if self.run_mode == '1':
+            for case_id in self.case_id_list:
+                try:
+                    case = Case.objects.get(case_id=case_id)
+                except Case.DoesNotExist as e:
+                    case_run = case_is_delete(case_run, e)
+                    return case_run
+                self.step_list = eval(case.content)
+                for step in self.step_list:
+                    step_info = self.step(step)
+                    if isinstance(step_info, dict):
+                        case_step_list.append(step_info)
+                    else:
+                        case_run = interface_is_delete(case_run, case.case_name, step["if_name"], step_info)
+                        return case_run
+            http = HttpRunerMain(case_step_list).splicing_api()
+            http['config']['name'] = self.plan.plan_name
+            runner = HttpRunner(failfast=False, log_file='all-')
+            runner.run(http)
+            summary = runner.summary
+            case_run['summary'] = summary
+        elif self.run_mode == '0':
+            try:
+                case = Case.objects.get(case_id=self.case_id)
+            except Case.DoesNotExist as e:
+                case_run = case_is_delete(case_run, e)
+                return case_run
 
-        for step in self.step_list:
-            step_info = self.step(step)
-            if self.run_mode == '1':
-                self.http['config']['name'] = self.plan.plan_name
-                http = HttpRunerMain(step_info).splicing_api()
-                self.http['testcases'][0]['teststeps'].append(http)
-            else:
+            self.step_list = eval(case.content)
+            for step in self.step_list:
+                step_info = self.step(step)
                 if isinstance(step_info, dict):
                     case_step_list.append(step_info)
                     if step_info["result"] == "fail":
@@ -89,13 +102,9 @@ class Test_execute():
                 else:
                     case_run = interface_is_delete(case_run, case.case_name, step["if_name"], step_info)
                     return case_run
-        if self.run_mode == '1':
-            runner = HttpRunner(failfast=False, log_file='all-')
-            runner.run(self.http)
-            summary = runner.summary
-            case_run['summary'] = summary
+
         case_run['case_name'], case_run["step_list"] = case.case_name, case_step_list
-        # log.info('interface response data: {}'.format(case_run))
+        log.info('interface response data: {}'.format(case_run))
         return case_run
 
     def step(self, step_content):
@@ -137,7 +146,7 @@ class Test_execute():
             if_dict = parametric_set_error(if_dict)
             return if_dict
 
-        if self.run_mode == '0':
+        if self.run_mode == '0':  # 补全header
             set_headers = Environment.objects.get(env_id=self.env_id).set_headers
             if set_headers:  # 把设置的header赋值到if_dict中
                 headers = eval(set_headers)['header']
@@ -178,6 +187,7 @@ class Test_execute():
         if interface.data_type == 'file':  # 图片上传类型接口
             if_dict["body"] = {
                 "file": ("login-bg.jpg", open("/var/static/static/img/login-bg.jpg", "rb"), "image/jpeg", {})}
+
         if self.run_mode == '0':
             if interface.set_mock == '1':  # 使用mock接口
                 if_dict['url'] = 'http://www.easytest.xyz/mocks' + interface.url

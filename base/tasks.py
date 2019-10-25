@@ -46,7 +46,7 @@ def run_plan():
     error_num = 0
     i = 0
     for case_id in case_id_list:
-        execute = Test_execute(case_id, env_id, case_id_list)
+        execute = Test_execute(env_id, case_id_list, case_id=case_id)
         case_result = execute.test_case
         content.append(case_result)
     end_time = time.clock()

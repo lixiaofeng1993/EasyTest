@@ -1118,7 +1118,7 @@ def case_run(request):
             env_id = request.POST['env_id']
             username = request.session.get('user', '')
             log.info('用户 {} 在 {} 环境 运行用例 {} .'.format(username, env_id, case_id))
-            execute = Test_execute(case_id, env_id, ['1'])
+            execute = Test_execute(env_id, ['1'], case_id=case_id)
             case_result = execute.test_case
             Case.objects.filter(case_id=case_id).update(update_user=username)
             return JsonResponse(case_result)
@@ -1312,52 +1312,59 @@ def plan_run(request):
             case_num = len(case_id_list)
             content = []
             j = 0
-            for case_id in case_id_list:
-                execute = Test_execute(case_id, env_id, case_id_list, run_mode, plan)
+            i = 0
+            pass_num = 0
+            fail_num = 0
+            error_num = 0
+            if run_mode == '1':
+                execute = Test_execute(env_id, case_id_list, run_mode=run_mode, plan=plan)
                 case_result = execute.test_case
-                if run_mode == '1':
-                    for records in case_result['summary']['details'][0]['records']:
-                        j += 1
-                        records['id'] = j
-                        for data in records.get('meta_datas', {}).get('data', {}):
-                            body = json.dumps(data.get('request', {}).get('body', {}), ensure_ascii=False).replace('Markup', '').replace('&#34;', '')
-                            if body:
-                                data['request']['body'] = body.encode('utf-8').decode('unicode_escape').encode('utf-8').decode('unicode_escape')
-
+                for records in case_result['summary']['details'][0]['records']:
+                    j += 1
+                    records['id'] = j
+                    for data in records.get('meta_datas', {}).get('data', {}):
+                        body = json.dumps(data.get('request', {}).get('body', {}), ensure_ascii=False).replace(
+                            'Markup', '').replace('&#34;', '')
+                        if body:
+                            data['request']['body'] = body.encode('utf-8').decode('unicode_escape').encode(
+                                'utf-8').decode('unicode_escape')
                 if isinstance(case_result, dict):
                     content.append(case_result)
                 else:
                     return HttpResponse(case_result)
-            end_time = time.clock()
-            totalTime = str(end_time - begin_time)[:6] + ' s'
-            pass_num = 0
-            fail_num = 0
-            error_num = 0
-            i = 0
-            for step in content:
-                if 'error' in step.keys():
-                    log.error('plan run error：{}'.format(step['msg']))
-                    return HttpResponse(step['msg'])
-                else:
-                    for s in step['step_list']:
-                        if s["result"] == "pass":
-                            pass_num += 1
-                            i += 1
-                            s['id'] = i
-                        if s["result"] == "fail":
-                            fail_num += 1
-                            i += 1
-                            s['id'] = i
-                        if s["result"] == "error":
-                            error_num += 1
-                            i += 1
-                            s['id'] = i
-            if run_mode == '1':
                 summary = case_result.get('summary', {})
                 stat = summary.get('stat', {}).get('teststeps', {})
                 pass_num = stat.get('successes', 0)
                 fail_num = stat.get('failures', 0)
                 error_num = stat.get('errors', 0)
+            elif run_mode == '0':
+                for case_id in case_id_list:
+                    execute = Test_execute(env_id, case_id_list, run_mode, plan, case_id=case_id)
+                    case_result = execute.test_case
+                    if isinstance(case_result, dict):
+                        content.append(case_result)
+                    else:
+                        return HttpResponse(case_result)
+                for step in content:
+                    if 'error' in step.keys():
+                        log.error('plan run error：{}'.format(step['msg']))
+                        return HttpResponse(step['msg'])
+                    else:
+                        for s in step['step_list']:
+                            if s["result"] == "pass":
+                                pass_num += 1
+                                i += 1
+                                s['id'] = i
+                            if s["result"] == "fail":
+                                fail_num += 1
+                                i += 1
+                                s['id'] = i
+                            if s["result"] == "error":
+                                error_num += 1
+                                i += 1
+                                s['id'] = i
+            end_time = time.clock()
+            totalTime = str(end_time - begin_time)[:6] + ' s'
             pic_name = DrawPie(pass_num, fail_num, error_num)
             report_name = plan.plan_name + "-" + str(start_time).replace(':', '-')
             username = request.session.get('user', '')
