@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .tasks import delete_logs, run_plan, stop_locust
 from django.http import StreamingHttpResponse
-from base.models import Project, Sign, Environment, Interface, Case, Plan, Report
+from base.models import Project, Sign, Environment, Interface, Case, Plan, Report, LocustReport
 from django.contrib.auth.models import User  # django自带user
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.db.models import Q  # 与或非 查询
@@ -1553,7 +1553,7 @@ def report_index(request):
     """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
-        request.session['login_from'] = '/base/report_page/'
+        request.session['login_from'] = '/base/report_index/'
         return render(request, 'user/login_action.html')
     else:
         if request.method == 'GET':
@@ -1716,6 +1716,77 @@ def start_locust(request):
             request.session['login_from'] = '/base/performance/'
             return render(request, 'user/login_action.html')
 
+
+def performance_report(request):
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/performance_report/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            import requests
+            from lib.processingJson import get_json
+            locust_report = LocustReport.objects.all().order_by('-id')[:1]
+            stats_list = []
+            for report in locust_report:
+                stats = report.stats
+                stats_list.append(eval(stats))
+            return render(request, 'base/performance/locust_report.html', {'info': stats_list, 'locust_report': locust_report})
+
+
+def performance_real(request):
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/performance_report/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            import requests
+            from lib.processingJson import get_json
+            res = requests.get('http://www.easytest.xyz:8089/stats/requests')
+            res = eval(res.text.replace('false', 'False').replace('null', 'None').replace('true', 'True'))
+            current_response_time_percentile_50 = res.get('current_response_time_percentile_50', '0.0')
+            current_response_time_percentile_95 = res.get('current_response_time_percentile_95', '0.0')
+            errors = res.get('errors', [])
+            fail_ratio = res.get('fail_ratio', '0.0')
+            slaves = res.get('slaves', [])
+            state = res.get('state', '')
+            stats = res.get('stats', [])
+            total_rps = res.get('total_rps', '0.0')
+            user_count = res.get('user_count', '1')
+            username = User.objects.get(id=user_id).username
+            locust_report = LocustReport(current_response_time_percentile_50=current_response_time_percentile_50,
+                                         current_response_time_percentile_95=current_response_time_percentile_95,
+                                         errors=errors, fail_ratio=fail_ratio, slaves=slaves, state=state, stats=stats,
+                                         total_rps=total_rps, user_count=user_count, update_user=username)
+            locust_report.save()
+            return render(request, 'base/performance/locust_real.html', {'info': res})
+
+
+def performance_history(request):
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/performance_report/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            locust_report = LocustReport.objects.all().order_by('-id')
+            stats_list = []
+            for report in locust_report:
+                stats = report.stats
+                stats_list.append(eval(stats))
+            return render(request, 'base/performance/locust_history.html', {'info': stats_list})
+
+
+def performance_delete(request):
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/performance_report/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            LocustReport.objects.all().delete()
+            return render(request, 'base/performance/locust_history.html')
 
 # 用户列表
 @method_decorator(login_required, name='dispatch')

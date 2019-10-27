@@ -47,7 +47,7 @@ urlpatterns = [
     url(r'plan_delete/', view=views.plan_delete, name='plan_delete'),
     url(r'plan_run/', view=views.plan_run, name='plan_run'),
     # 报告
-    url(r'report/', view=views.report_index, name='report'),
+    url(r'^report/', view=views.report_index, name='report'),
     url(r'report_search/', view=views.report_search, name='report_search'),
     # 异步请求获取数据
     url(r'findata/', view=views.findata, name='findata'),
@@ -63,6 +63,10 @@ urlpatterns = [
     # locust
     url(r'performance/', view=views.performance_index, name='performance_index'),
     url(r'start_locust/', view=views.start_locust, name='start_locust'),
+    url(r'performance_report/', view=views.performance_report, name='performance_report'),
+    url(r'performance_real/', view=views.performance_real, name='performance_real'),
+    url(r'performance_history/', view=views.performance_history, name='performance_history'),
+    url(r'performance_delete/', view=views.performance_delete, name='performance_delete'),
     # 下载
     url(r'file_download/', view=views.file_download, name='file_download'),
     # 添加用户

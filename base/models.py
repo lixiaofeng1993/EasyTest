@@ -143,3 +143,19 @@ class Guest(models.Model):
     # admin中显示嘉宾名称
     def __str__(self):
         return self.realname
+
+
+# locust报告
+class LocustReport(models.Model):
+    id = models.AutoField(primary_key=True, null=False)
+    current_response_time_percentile_50 = models.FloatField(default=0.0, null=True)
+    current_response_time_percentile_95 = models.FloatField(default=0.0, null=True)
+    fail_ratio = models.FloatField(default=0.0, null=True)
+    total_rps = models.FloatField(default=0.0, null=True)
+    user_count = models.IntegerField(default=0, null=True)
+    errors = models.TextField()
+    slaves = models.TextField()
+    stats = models.TextField()
+    state = models.CharField(max_length=50, default='')
+    update_time = models.DateTimeField('更新时间', auto_now=True)
+    update_user = models.CharField(max_length=30, default='')
