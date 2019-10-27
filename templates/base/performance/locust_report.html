@@ -74,56 +74,109 @@
                     <a href="/base/performance_history/" class="btn btn-primary">历史数据</a>
                 </div>
                 <div class="spinner"></div>
-                <div class="panel-body">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr>
-                            <th id="cen">Label</th>
-                            <th id="cen">Type</th>
-                            <th id="cen">#样本</th>
-                            <th id="cen">平均值</th>
-                            <th id="cen">中位数</th>
-                            <th id="cen">最小值</th>
-                            <th id="cen">最大值</th>
-                            <th id="cen">异常次数</th>
-                            <th id="cen">吞吐量</th>
-                        </tr>
-                        </thead>
-                        <tbody>
+                {% if error %}
+                    <span style="color: red; font-size: 10px;">{{ error }}</span>
+                {% else %}
+                    <div class="panel-body">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr>
+                                <th id="cen">Label</th>
+                                <th id="cen">Type</th>
+                                <th id="cen">#样本</th>
+                                <th id="cen">平均值</th>
+                                <th id="cen">中位数</th>
+                                <th id="cen">最小值</th>
+                                <th id="cen">最大值</th>
+                                <th id="cen">异常次数</th>
+                                <th id="cen">吞吐量</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
+                            {% if stats_list %}
+                                {% for stats in stats_list %}
+                                        <tr>
+                                            <td id="cen" class="plan-name">{{ stats.name }}</td>
+                                            <td id="cen">{{ stats.method }}</td>
+                                            <td id="cen">{{ stats.num_requests }}</td>
+                                            <td id="cen">{{ stats.avg_response_time }}</td>
+                                            <td id="cen">{{ stats.median_response_time }}</td>
+                                            <td id="cen">{{ stats.min_response_time }}</td>
+                                            <td id="cen">{{ stats.max_response_time }}</td>
+                                            <td id="cen">{{ stats.num_failures }}</td>
+                                            <td id="cen">{{ stats.current_rps }}</td>
 
-                        {% for stats in info %}
-                            {% for stat in stats %}
-                                <tr>
-                                    <td id="cen" class="plan-name">{{ stat.name }}</td>
-                                    <td id="cen">{{ stat.method }}</td>
-                                    <td id="cen">{{ stat.num_requests }}</td>
-                                    <td id="cen">{{ stat.avg_response_time }}</td>
-                                    <td id="cen">{{ stat.median_response_time }}</td>
-                                    <td id="cen">{{ stat.min_response_time }}</td>
-                                    <td id="cen">{{ stat.max_response_time }}</td>
-                                    <td id="cen">{{ stat.num_failures }}</td>
-                                    <td id="cen">{{ stat.current_rps }}</td>
+                                        </tr>
 
-                                </tr>
+                                {% endfor %}
+                            {% else %}
+                                {% for stat in info.stats %}
+                                    {#                            {% for plan in plan_ %}#}
+                                    <tr>
+                                        <td id="cen" class="plan-name">{{ stat.name }}</td>
+                                        <td id="cen">{{ stat.method }}</td>
+                                        <td id="cen">{{ stat.num_requests }}</td>
+                                        <td id="cen">{{ stat.avg_response_time }}</td>
+                                        <td id="cen">{{ stat.median_response_time }}</td>
+                                        <td id="cen">{{ stat.min_response_time }}</td>
+                                        <td id="cen">{{ stat.max_response_time }}</td>
+                                        <td id="cen">{{ stat.num_failures }}</td>
+                                        <td id="cen">{{ stat.current_rps }}</td>
 
-                            {% endfor %}
-                        {% endfor %}
-                        </tbody>
-                    </table>
-                    <div id="input-timed">
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                            </tbody>
+                        </table>
+                        <div id="input-timed">
+                            <h4 style="margin: 5px 7%">Master</h4>
+                            {% if locust_report %}
+                                {% for statss in locust_report %}
+
+                                    <p><span style="margin: 5px 10%">状态：{{ statss.state }}</span><span
+                                            style="margin-right:10%">Total RPS: {{ statss.total_rps }}</span><span
+                                            style="margin-right:10%">失败率: {{ statss.fail_ratio }}</span><span
+                                            style="margin-right:10%">用户数: {{ statss.user_count }}</span>
+                                            </p>
+                                    <p><span
+                                            style="margin: 5px 10%">50% 百分比：{{ statss.current_response_time_percentile_50 }}</span><span
+                                            style="margin-right:10%">9511% 百分比: {{ statss.current_response_time_percentile_95 }}</span>
+                                    </p>
+                                    <h4 style="margin: 5px 7%">Slaves</h4>
+                                    {% for slave in slave_list %}
+                                        <p>
+                                            <span style="margin: 5px 10%">Slave Id: {{ slave.id }}</span>
+                                            <span style="margin-right:10%">状态: {{ slave.state }}</span>
+                                            <span style="margin-right:10%">用户数：{{ slave.user_count }}</span>
+                                        </p>
+                                    {% endfor %}
+                                {% endfor %}
+                            {% else %}
+                                <p><span style="margin: 5px 10%">状态：{{ info.state }}</span><span
+                                        style="margin-right:10%">Total RPS: {{ info.total_rps }}</span><span
+                                        style="margin-right:10%">失败率: {{ info.fail_ratio }}</span><span
+                                        style="margin-right:10%">用户数: {{ info.user_count }}</span>
+                                </p>
+                                <p><span
+                                        style="margin: 5px 10%">50% 百分比：{{ info.current_response_time_percentile_50 }}</span><span
+                                        style="margin-right:10%">95% 百分比: {{ info.current_response_time_percentile_95 }}</span>
+                                </p>
+                                <h4 style="margin: 5px 7%">Slaves</h4>
+
+                                {% for slave in info.slaves %}
+                                    <p>
+                                        <span style="margin: 5px 10%">Slave Id: {{ slave.id }}</span>
+                                        <span style="margin-right:10%">状态: {{ slave.state }}</span>
+                                        <span style="margin-right:10%">用户数：{{ slave.user_count }}</span>
+                                    </p>
+                                {% endfor %}
+
+                            {% endif %}
+                        </div>
+
                     </div>
-                    {% for statss in locust_report %}
-                        <p><span style="margin: 5px 10%">状态：{{ statss.state }}</span><span
-                                style="margin-right:10%">Total RPS: {{ statss.total_rps }}</span><span
-                                style="margin-right:10%">失败率: {{ statss.fail_ratio }}</span><span
-                                style="margin-right:10%">用户数: {{ statss.user_count }}</span></p>
-                        <p><span
-                                style="margin: 5px 10%">50% 百分比：{{ statss.current_response_time_percentile_50 }}</span><span
-                                style="margin-right:10%">9511% 百分比: {{ statss.current_response_time_percentile_95 }}</span>
-                        </p>
-                    {% endfor %}
-                </div>
+                {% endif %}
 
             </div>
 

@@ -1725,13 +1725,22 @@ def performance_report(request):
     else:
         if request.method == 'GET':
             import requests
-            from lib.processingJson import get_json
-            locust_report = LocustReport.objects.all().order_by('-id')[:1]
-            stats_list = []
-            for report in locust_report:
-                stats = report.stats
-                stats_list.append(eval(stats))
-            return render(request, 'base/performance/locust_report.html', {'info': stats_list, 'locust_report': locust_report})
+            try:
+                res = requests.get('http://www.easytest.xyz:8089/stats/requests')
+                res = res.json()
+                return render(request, 'base/performance/locust_report.html', {'info': res})
+            except requests.exceptions.ConnectionError:
+                locust_report = LocustReport.objects.all().order_by('-id')[:1]
+                if locust_report:
+                    for report in locust_report:
+                        stats_list = eval(report.stats)
+                        slave_list = eval(report.slaves)
+                        return render(request, 'base/performance/locust_report.html',
+                                      {'locust_report': locust_report, 'stats_list': stats_list,
+                                       'slave_list': slave_list})
+                else:
+                    return render(request, 'base/performance/locust_report.html', {'error': '请先执行locust性能测试！'})
+        return render(request, 'base/performance/locust_report.html', {'error': '额，数据丢失了呢！'})
 
 
 def performance_real(request):
@@ -1742,9 +1751,11 @@ def performance_real(request):
     else:
         if request.method == 'GET':
             import requests
-            from lib.processingJson import get_json
-            res = requests.get('http://www.easytest.xyz:8089/stats/requests')
-            res = eval(res.text.replace('false', 'False').replace('null', 'None').replace('true', 'True'))
+            try:
+                res = requests.get('http://www.easytest.xyz:8089/stats/requests')
+            except requests.exceptions.ConnectionError:
+                return render(request, 'base/performance/locust_real.html', {'error': '未运行locust，无法获取实时数据！'})
+            res = res.json()
             current_response_time_percentile_50 = res.get('current_response_time_percentile_50', '0.0')
             current_response_time_percentile_95 = res.get('current_response_time_percentile_95', '0.0')
             errors = res.get('errors', [])
@@ -1787,6 +1798,7 @@ def performance_delete(request):
         if request.method == 'GET':
             LocustReport.objects.all().delete()
             return render(request, 'base/performance/locust_history.html')
+
 
 # 用户列表
 @method_decorator(login_required, name='dispatch')
