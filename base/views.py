@@ -1771,6 +1771,7 @@ def performance_real(request):
                                          errors=errors, fail_ratio=fail_ratio, slaves=slaves, state=state, stats=stats,
                                          total_rps=total_rps, user_count=user_count, update_user=username)
             locust_report.save()
+            log.info('用户 {} ，查看性能测试实时数据 并 写入到数据库中.'.format(user_id))
             return render(request, 'base/performance/locust_real.html', {'info': res})
 
 
@@ -1786,6 +1787,7 @@ def performance_history(request):
             for report in locust_report:
                 stats = report.stats
                 stats_list.append(eval(stats))
+            log.info('用户 {} ，正在查看性能测试历史数据.'.format(user_id))
             return render(request, 'base/performance/locust_history.html', {'info': stats_list})
 
 
@@ -1797,6 +1799,7 @@ def performance_delete(request):
     else:
         if request.method == 'GET':
             LocustReport.objects.all().delete()
+            log.info('用户 {} ，清空性能测试历史数据完成！'.format(user_id))
             return render(request, 'base/performance/locust_history.html')
 
 

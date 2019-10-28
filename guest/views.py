@@ -6,6 +6,9 @@ from django.db.models import Q  # 与或非 查询
 from lib.public import paginator  # 分页封装，每页显示10条
 from base.models import Event, Guest
 from lib.execute import get_user
+import logging
+
+log = logging.getLogger('log')  # 初始化log
 
 
 def index(request):
@@ -139,8 +142,14 @@ def sign_index_action(request, eid):
 
 
 def delete_all(request):
-    Event.objects.all().delete()
-    Guest.objects.all().delete()
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/project/'
+        return render(request, 'user/login_action.html')
+    else:
+        Event.objects.all().delete()
+        Guest.objects.all().delete()
+        log.info('用户 {} ，清空测试数据完成！'.format(user_id))
     return HttpResponseRedirect('/api/event_manage/')
 
 
