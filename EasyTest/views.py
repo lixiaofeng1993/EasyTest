@@ -86,14 +86,19 @@ def index(request):
             ip = request.META['HTTP_X_FORWARDED_FOR']
         else:
             ip = request.META['REMOTE_ADDR']
-
-        online_ips = ip.split(',')
-        log.info('同时在线人员：{}'.format(online_ips))
+        online_ips = cache.get("online_ips", [])
+        if online_ips:
+            online_ips = list(cache.get_many(online_ips).keys())
+        cache.set(ip, 0, 5 * 60)
+        if ip not in online_ips:
+            online_ips.append(ip)
+        cache.set("online_ips", online_ips)
+        log.info('同时在线人员：{}'.format(cache.get("online_ips", [])))
 
         info = {'project_num': project_num,
                 'env_num': env_num, 'interface_num': interface_num, 'case_num': case_num,
                 'plan_num': plan_num, 'total': total,
-                'sign_num': sign_num, 'report_num': report_num, "online_ips": len(online_ips),
+                'sign_num': sign_num, 'report_num': report_num, "online_ips": len(cache.get("online_ips", [])),
                 'task_num': periodic_num + crontabSchedule_num, 'user_num': user_num}
 
         return render(request, "index.html", info)
