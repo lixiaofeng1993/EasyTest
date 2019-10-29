@@ -82,13 +82,12 @@ def index(request):
 
         total = get_total_values(user_id)
 
-        online_ips = []  # 在线人数
-        if 'HTTP_X_FORWARDED_FOR' in request.META:
+        if 'HTTP_X_FORWARDED_FOR' in request.META:  # 在线人数
             ip = request.META['HTTP_X_FORWARDED_FOR']
         else:
             ip = request.META['REMOTE_ADDR']
 
-        online_ips.append(ip)
+        online_ips = ip.split(',')
         log.info('同时在线人员：{}'.format(online_ips))
 
         info = {'project_num': project_num,
