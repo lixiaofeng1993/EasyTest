@@ -15,6 +15,7 @@ from lib.execute import get_user, get_total_values, is_superuser
 from lib.send_email import send_email
 from lib.except_check import register_info_logic, change_info_logic
 import sys, json, requests, re, datetime
+from django.core.cache import cache
 
 log = logging.getLogger('log')  # 初始化log
 num_list = []
@@ -81,10 +82,19 @@ def index(request):
 
         total = get_total_values(user_id)
 
+        online_ips = []  # 在线人数
+        if 'HTTP_X_FORWARDED_FOR' in request.META:
+            ip = request.META['HTTP_X_FORWARDED_FOR']
+        else:
+            ip = request.META['REMOTE_ADDR']
+
+        online_ips.append(ip)
+        log.info('同时在线人员：{}'.format(online_ips))
+
         info = {'project_num': project_num,
                 'env_num': env_num, 'interface_num': interface_num, 'case_num': case_num,
                 'plan_num': plan_num, 'total': total,
-                'sign_num': sign_num, 'report_num': report_num,
+                'sign_num': sign_num, 'report_num': report_num, "online_ips": len(online_ips),
                 'task_num': periodic_num + crontabSchedule_num, 'user_num': user_num}
 
         return render(request, "index.html", info)
