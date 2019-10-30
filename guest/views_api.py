@@ -30,15 +30,15 @@ def add_event(request):
 
     if eid == '' or name == '' or limit == '' or status == '' or address == '' or start_time == '':
         log.info('默认服务==>  add_event，参数错误，不能为空.')
-        return JsonResponse({'status': 10021, 'message': 'parameter error'})
+        return JsonResponse({'status': 200, 'message': 'parameter error', 'error_code': 10021})
     result = Event.objects.filter(id=eid)
     if result:
         log.info('默认服务==>  add_event，发布会id已经存在.')
-        return JsonResponse({'status': 10022, 'message': 'event id already exists'})
+        return JsonResponse({'status': 200, 'message': 'event id already exists', 'error_code': 10022})
     result = Event.objects.filter(name=name)
     if result:
         log.info('默认服务==>  add_event，发布会名称已经存在.')
-        return JsonResponse({'status': 10023, 'message': 'event name already exists'})
+        return JsonResponse({'status': 200, 'message': 'event name already exists', 'error_code': 10023})
     if status == '':
         status = 1
     try:
@@ -46,7 +46,7 @@ def add_event(request):
     except ValidationError as e:
         error = 'start_time format error.It must be in YYYY-MM-DD HH:MM:SS format. error: {}'.format(e)
         log.info('默认服务==>  add_event，开始时间格式错误.')
-        return JsonResponse({'status': 10024, 'message': error})
+        return JsonResponse({'status': 200, 'message': error, 'error_code': 10024})
     log.info('默认服务==>  add_event，发布会添加成功！')
     return JsonResponse({'status': 200, 'message': 'add event success'})
 
@@ -58,14 +58,14 @@ def get_event_list(request):
 
     if eid == '' and name == '':
         log.info('默认服务==>  get_event_list，参数错误，不能为空.')
-        return JsonResponse({'status': 10021, 'message': 'parameter error'})
+        return JsonResponse({'status': 200, 'message': 'parameter error', 'error_code': 10021})
     if eid != '':
         event = {}
         try:
             result = Event.objects.get(id=eid)
         except ObjectDoesNotExist:
             log.info('默认服务==>  get_event_list，查询结果为空.')
-            return JsonResponse({'status': 10022, 'message': 'query result is empty'})
+            return JsonResponse({'status': 200, 'message': 'query result is empty', 'error_code': 10022})
         else:
             event['name'] = result.name
             event['limit'] = result.limit
@@ -93,7 +93,7 @@ def get_event_list(request):
             return JsonResponse({'status': 200, 'message': 'success', 'data': datas})
         else:
             log.info('默认服务==>  get_event_list，查询结果为空.')
-            return JsonResponse({'status': 10022, 'message': 'query result is empty'})
+            return JsonResponse({'status': 200, 'message': 'query result is empty', 'error_code': 10022})
 
 
 # 添加嘉宾接口
@@ -105,21 +105,21 @@ def add_guest(request):
 
     if eid == '' or realname == '' or phone == '':
         log.info('默认服务==>  add_guest，参数错误，不能为空.')
-        return JsonResponse({'status': 10021, 'message': 'parameter error'})
+        return JsonResponse({'status': 200, 'message': 'parameter error', 'error_code': 10021})
     result = Event.objects.filter(id=eid)
     if not result:
         log.info('默认服务==>  add_guest，关联Event id 为 null.')
-        return JsonResponse({'status': 10022, 'message': 'event id null'})
+        return JsonResponse({'status': 200, 'message': 'event id null', 'error_code': 10022})
     result = Event.objects.get(id=eid).status
     if not result:
         log.info('默认服务==>  add_guest，Event 状态未激活.')
-        return JsonResponse({'status': 10023, 'message': 'event status is not available'})
+        return JsonResponse({'status': 200, 'message': 'event status is not available', 'error_code': 10023})
 
     event_limit = Event.objects.get(id=eid).limit  # 限制人数
     guest_limit = Guest.objects.filter(event_id=eid)  # 发布会已添加的嘉宾数
     if len(guest_limit) >= event_limit:
         log.info('默认服务==>  add_guest，参加发布会的人已满.')
-        return JsonResponse({'status': 10024, 'message': 'event number is full'})
+        return JsonResponse({'status': 200, 'message': 'event number is full', 'error_code': 10024})
 
     event_time = Event.objects.get(id=eid).start_time  # 发布会时间
     etime = str(event_time).split('+')[0]
@@ -132,12 +132,12 @@ def add_guest(request):
 
     if now_time >= e_time:
         log.info('默认服务==>  add_guest，活动已开始.')
-        return JsonResponse({'status': 10025, 'message': 'event has started'})
+        return JsonResponse({'status': 200, 'message': 'event has started', 'error_code': 10025})
     try:
         Guest.objects.create(realname=realname, phone=int(phone), email=email, sign=0, event_id=int(eid))
     except IntegrityError:
         log.info('默认服务==>  add_guest，手机号已存在.')
-        return JsonResponse({'status': 10026, 'message': 'the event guest phone number repeat'})
+        return JsonResponse({'status': 200, 'message': 'the event guest phone number repeat', 'error_code': 10026})
     log.info('默认服务==>  add_guest，嘉宾添加成功！')
     return JsonResponse({'status': 200, 'message': 'add guest success'})
 
@@ -161,7 +161,7 @@ def get_guest_list(request):
                 guest['id'] = event.id
                 datas.append(guest)
             log.info('默认服务==>  get_guest_list，查询嘉宾成功！')
-            return JsonResponse({'status': 200, 'message': 'success', 'data': datas})
+            return JsonResponse({'status': 200, 'message': 'success'})
     else:
         results = Guest.objects.filter(Q(phone__contains=name) | Q(realname__contains=name))  # guest 表中查询
         if results:
@@ -177,7 +177,7 @@ def get_guest_list(request):
                 guest['id'] = r.id
                 datas.append(guest)
             log.info('默认服务==>  get_guest_list，查询嘉宾成功！')
-            return JsonResponse({'status': 200, 'message': 'success', 'data': datas})
+            return JsonResponse({'status': 200, 'message': 'success'})
         else:
             id_results = Event.objects.filter(name__contains=name)  # event 表联查
             if id_results:
@@ -195,10 +195,10 @@ def get_guest_list(request):
                             guest['event_name'] = event.name
                             datas.append(guest)
                 log.info('默认服务==>  get_guest_list，查询嘉宾成功！')
-                return JsonResponse({'status': 200, 'message': 'success', 'data': datas, 'test': False})
+                return JsonResponse({'status': 200, 'message': 'success', 'test': False})
             else:
                 log.info('默认服务==>  get_guest_list，查询结果为空.')
-                return JsonResponse({'status': 10022, 'message': 'query result is empty'})
+                return JsonResponse({'status': 200, 'message': 'query result is empty', 'error_code': 10022})
 
 
 # 签到接口
@@ -208,16 +208,16 @@ def user_sign(request):
 
     if eid == '' or phone == '':
         log.info('默认服务==>  user_sign，参数错误，不能为空.')
-        return JsonResponse({'status': 10021, 'message': 'parameter error'})
+        return JsonResponse({'status': 200, 'message': 'parameter error', 'error_code': 10021})
 
     result = Event.objects.filter(id=eid)
     if not result:
-        return JsonResponse({'status': 10022, 'message': 'event id null'})
+        return JsonResponse({'status': 200, 'message': 'event id null', 'error_code': 10022})
 
     result = Event.objects.get(id=eid).status
     if not result:
         log.info('默认服务==>  user_sign，Event 状态未激活.')
-        return JsonResponse({'status': 10023, 'message': 'event status is not available'})
+        return JsonResponse({'status': 200, 'message': 'event status is not available', 'error_code': 10023})
 
     event_time = Event.objects.get(id=eid).start_time  # 发布会时间
     etime = str(event_time).split('+')[0]
@@ -230,21 +230,21 @@ def user_sign(request):
 
     if now_time >= e_time:
         log.info('默认服务==>  user_sign，活动已开始.')
-        return JsonResponse({'status': 10024, 'message': 'event has started'})
+        return JsonResponse({'status': 200, 'message': 'event has started', 'error_code': 10024})
 
     result = Guest.objects.filter(phone=phone)
     if not result:
         log.info('默认服务==>  user_sign，嘉宾手机号不存在.')
-        return JsonResponse({'status': 10025, 'message': 'user phone null'})
+        return JsonResponse({'status': 200, 'message': 'user phone null', 'error_code': 10025})
 
     result = Guest.objects.filter(event_id=eid, phone=phone)
     if not result:
         log.info('默认服务==>  user_sign，嘉宾签到发布会和参加发布会不符.')
-        return JsonResponse({'status': 10026, 'message': 'user did not participate in the conference'})
+        return JsonResponse({'status': 200, 'message': 'user did not participate in the conference', 'error_code': 10026})
     result = Guest.objects.get(event_id=eid, phone=phone).sign
     if result:
         log.info('默认服务==>  user_sign，嘉宾已签到.')
-        return JsonResponse({'status': 10027, 'message': 'user has sign in'})
+        return JsonResponse({'status': 200, 'message': 'user has sign in', 'error_code': 10027})
     else:
         Guest.objects.filter(event_id=eid, phone=phone).update(sign='1')
         return JsonResponse({'status': 200, 'message': 'sign success'})
