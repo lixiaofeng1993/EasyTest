@@ -149,7 +149,7 @@ def delete_all(request):
     else:
         Event.objects.all().delete()
         Guest.objects.all().delete()
-        log.info('用户 {} ，清空测试数据完成！'.format(user_id))
+        log.info('默认服务==>  用户 {} ，清空测试数据完成！'.format(user_id))
     return HttpResponseRedirect('/api/event_manage/')
 
 

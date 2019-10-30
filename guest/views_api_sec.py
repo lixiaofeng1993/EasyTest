@@ -34,15 +34,15 @@ def sec_add_event(request):
     start_time = request.POST.get('start_time', '')  # 发布会时间
 
     if eid == '' or name == '' or limit == '' or status == '' or address == '' or start_time == '':
-        log.info('sec_add_event，参数错误，不能为空.')
+        log.info('默认服务==>  sec_add_event，参数错误，不能为空.')
         return JsonResponse({'status': 10021, 'message': 'parameter error'})
     result = Event.objects.filter(id=eid)
     if result:
-        log.info('sec_add_event，发布会id已经存在.')
+        log.info('默认服务==>  sec_add_event，发布会id已经存在.')
         return JsonResponse({'status': 10022, 'message': 'event id already exists'})
     result = Event.objects.filter(name=name)
     if result:
-        log.info('sec_add_event，发布会名称已经存在.')
+        log.info('默认服务==>  sec_add_event，发布会名称已经存在.')
         return JsonResponse({'status': 10023, 'message': 'event name already exists'})
     if status == '':
         status = 1
@@ -50,9 +50,9 @@ def sec_add_event(request):
         Event.objects.create(id=eid, name=name, limit=limit, address=address, status=int(status), start_time=start_time)
     except ValidationError as e:
         error = 'start_time format error.It must be in YYYY-MM-DD HH:MM:SS format. error: {}'.format(e)
-        log.info('sec_add_event，开始时间格式错误.')
+        log.info('默认服务==>  sec_add_event，开始时间格式错误.')
         return JsonResponse({'status': 10024, 'message': error})
-    log.info('sec_add_event，发布会添加成功！')
+    log.info('默认服务==>  sec_add_event，发布会添加成功！')
     return JsonResponse({'status': 200, 'message': 'add event success'})
 
 
@@ -68,14 +68,14 @@ def sec_get_event_list(request):
     name = request.GET.get('name', '')  # 发布会名称
 
     if eid == '' and name == '':
-        log.info('sec_get_event_list，参数错误，不能为空.')
+        log.info('默认服务==>  sec_get_event_list，参数错误，不能为空.')
         return JsonResponse({'status': 10021, 'message': 'parameter error'})
     if eid != '':
         event = {}
         try:
             result = Event.objects.get(id=eid)
         except ObjectDoesNotExist:
-            log.info('sec_get_event_list，查询结果为空.')
+            log.info('默认服务==>  sec_get_event_list，查询结果为空.')
             return JsonResponse({'status': 10022, 'message': 'query result is empty'})
         else:
             event['name'] = result.name
@@ -83,7 +83,7 @@ def sec_get_event_list(request):
             event['status'] = result.status
             event['address'] = result.address
             event['start_time'] = result.start_time
-            log.info('sec_get_event_list，查询嘉宾成功！')
+            log.info('默认服务==>  sec_get_event_list，查询嘉宾成功！')
             return JsonResponse({'status': 200, 'message': 'success', 'data': event})
 
     if name != '':
@@ -98,10 +98,10 @@ def sec_get_event_list(request):
                 event['address'] = r.address
                 event['start_time'] = r.start_time
                 datas.append(event)
-                log.info('sec_get_event_list，查询发布会成功！')
+                log.info('默认服务==>  sec_get_event_list，查询发布会成功！')
             return JsonResponse({'status': 200, 'message': 'success', 'data': datas})
         else:
-            log.info('sec_get_event_list，查询结果为空.')
+            log.info('默认服务==>  sec_get_event_list，查询结果为空.')
             return JsonResponse({'status': 10022, 'message': 'query result is empty'})
 
 
@@ -128,7 +128,7 @@ def sec_get_guest_list(request):
                 guest['sign'] = r.sign
                 guest['event_name'] = event.name
                 datas.append(guest)
-            log.info('sec_get_guest_list，AES, 查询嘉宾成功！')
+            log.info('默认服务==>  sec_get_guest_list，AES, 查询嘉宾成功！')
             return JsonResponse({'status': 200, 'message': 'success', 'data': datas})
     else:
         results = Guest.objects.filter(Q(phone__contains=name) | Q(realname__contains=name))  # guest 表中查询
@@ -143,7 +143,7 @@ def sec_get_guest_list(request):
                 guest['sign'] = r.sign
                 guest['event_name'] = event.name
                 datas.append(guest)
-            log.info('sec_get_guest_list，AES, 查询嘉宾成功！')
+            log.info('默认服务==>  sec_get_guest_list，AES, 查询嘉宾成功！')
             return JsonResponse({'status': 200, 'message': 'success', 'data': datas})
         else:
             id_results = Event.objects.filter(name__contains=name)  # event 表联查
@@ -161,10 +161,10 @@ def sec_get_guest_list(request):
                             guest['sign'] = r.sign
                             guest['event_name'] = event.name
                             datas.append(guest)
-                log.info('sec_get_guest_list，AES, 查询嘉宾成功！')
+                log.info('默认服务==>  sec_get_guest_list，AES, 查询嘉宾成功！')
                 return JsonResponse({'status': 200, 'message': 'success', 'data': datas})
             else:
-                log.info('sec_get_guest_list，AES, 查询结果为空.')
+                log.info('默认服务==>  sec_get_guest_list，AES, 查询结果为空.')
                 return JsonResponse({'status': 10022, 'message': 'query result is empty'})
 
 
