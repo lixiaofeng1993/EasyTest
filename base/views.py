@@ -1652,6 +1652,7 @@ def file_download(request):
             plan_id = report.plan_id
             file_name = os.path.join(report_path, name + '.html')
             if not os.path.exists(file_name):
+                log.info('计划 {} 中的 执行报告 {} 无法下载！'.format(plan_id, file_name))
                 return render(request, "base/report_page/report_page.html",
                               {'error': '计划 {} 中的 执行报告 {} 无法下载！'.format(plan_id, report_id)})
 
