@@ -89,13 +89,21 @@ def run_plan():
 # @shared_task
 def delete_logs():
     log.info('remove logs------->删除过期日志中<--------------')
+    ubuntu_path = '/var/test_app/EasyTest'
+    logs_num1 = 0
+    report_num1 = 0
+    if os.path.exists(ubuntu_path):
+        logs_path1 = os.path.join(os.getcwd(), 'logs')
+        report_path1 = os.path.join(os.getcwd(), 'reports')
+        logs_num1 = remove_logs(logs_path1)
+        report_num1 = remove_logs(report_path1)
     logs_path = os.path.join(os.getcwd(), 'logs')
     report_path = os.path.join(os.getcwd(), 'reports')
     pic_path = os.path.join(settings.MEDIA_ROOT)
     logs_num = remove_logs(logs_path)
     pic_num = remove_logs(pic_path)
     report_num = remove_logs(report_path)
-    total_num = logs_num + pic_num + report_num
+    total_num = logs_num + pic_num + report_num + logs_num1 + report_num1
     if total_num == 0:
         log.info('remove logs------->没有要删除的文件.<--------------')
     else:
