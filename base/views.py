@@ -22,7 +22,6 @@ from django.views.generic import ListView
 
 log = logging.getLogger('log')  # 初始化log
 logs_path = os.path.join(os.getcwd(), 'logs')  # 拼接删除目录完整路径
-report_path = os.path.join(os.getcwd(), 'reports')  # 拼接删除目录完整路径
 start_time = ''  # 执行测试计划开始时间
 totalTime = ''  # 执行测试计划运行时间
 now_time = ''  # 饼图命名区分
@@ -1319,7 +1318,6 @@ def plan_run(request):
             if run_mode == '1':
                 execute = Test_execute(env_id, case_id_list, run_mode=run_mode, plan=plan)
                 case_result = execute.test_case
-                global report_path
                 report_path = case_result['report_path']
                 for records in case_result['summary']['details'][0]['records']:
                     j += 1
@@ -1373,11 +1371,12 @@ def plan_run(request):
             if run_mode == '1':
                 report = Report(plan=plan, report_name=report_name, content=content, case_num=case_num,
                                 pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
-                                totalTime=totalTime, startTime=start_time, update_user=username, make=1)
+                                totalTime=totalTime, startTime=start_time, update_user=username, make=1,
+                                report_path=report_path)
             elif run_mode == '0':
                 report = Report(plan=plan, report_name=report_name, content=content, case_num=case_num,
                                 pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
-                                totalTime=totalTime, startTime=start_time, update_user=username, make=0)
+                                totalTime=totalTime, startTime=start_time, update_user=username, make=0, report_path='')
             report.save()
             Plan.objects.filter(plan_id=plan_id).update(update_user=username, update_time=datetime.now())
             return HttpResponse(plan.plan_name + " 执行成功！")
@@ -1651,11 +1650,12 @@ def file_download(request):
             report_id = request.GET.get('report_id', '')
             report = Report.objects.get(report_id=report_id)
             name = report.report_name[-19:]
+            report_path = report.report_path
             plan_id = report.plan_id
-            global report_path
-            if os.path.isfile(report_path):
+            if report_path:
                 file_name = report_path
             else:
+                report_path = os.path.join(os.getcwd(), 'reports')  # 拼接删除目录完整路径
                 file_name = os.path.join(report_path, name + '.html')
             if not os.path.exists(file_name):
                 log.info('计划 {} 中的 执行报告 {} 无法下载！'.format(plan_id, file_name))

@@ -97,6 +97,7 @@ class Plan(models.Model):
 class Report(models.Model):
     report_id = models.AutoField(primary_key=True, null=False)
     report_name = models.CharField(max_length=255)
+    report_path = models.CharField(max_length=255, default='', null=True)
     pic_name = models.CharField(max_length=255, default='')
     totalTime = models.CharField(max_length=50, default='')
     startTime = models.CharField(max_length=50, default='')
