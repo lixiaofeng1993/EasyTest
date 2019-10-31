@@ -93,8 +93,8 @@ def delete_logs():
     logs_num1 = 0
     report_num1 = 0
     if os.path.exists(ubuntu_path):
-        logs_path1 = os.path.join(os.getcwd(), 'logs')
-        report_path1 = os.path.join(os.getcwd(), 'reports')
+        logs_path1 = os.path.join(ubuntu_path, 'logs')
+        report_path1 = os.path.join(ubuntu_path, 'reports')
         logs_num1 = remove_logs(logs_path1)
         report_num1 = remove_logs(report_path1)
     logs_path = os.path.join(os.getcwd(), 'logs')
