@@ -1319,6 +1319,8 @@ def plan_run(request):
             if run_mode == '1':
                 execute = Test_execute(env_id, case_id_list, run_mode=run_mode, plan=plan)
                 case_result = execute.test_case
+                global report_path
+                report_path = case_result['report_path']
                 for records in case_result['summary']['details'][0]['records']:
                     j += 1
                     records['id'] = j
@@ -1650,7 +1652,11 @@ def file_download(request):
             report = Report.objects.get(report_id=report_id)
             name = report.report_name[-19:]
             plan_id = report.plan_id
-            file_name = os.path.join(report_path, name + '.html')
+            global report_path
+            if os.path.isfile(report_path):
+                file_name = report_path
+            else:
+                file_name = os.path.join(report_path, name + '.html')
             if not os.path.exists(file_name):
                 log.info('计划 {} 中的 执行报告 {} 无法下载！'.format(plan_id, file_name))
                 return render(request, "base/report_page/report_page.html",

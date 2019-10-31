@@ -80,9 +80,10 @@ class Test_execute():
             http = HttpRunerMain(case_step_list).splicing_api()
             http['config']['name'] = self.plan.plan_name
             runner = HttpRunner(failfast=False, log_file='all-')
-            runner.run(http)
+            report_path = runner.run(http)
             summary = runner.summary
             case_run['summary'] = summary
+            case_run['report_path'] = report_path
         elif self.run_mode == '0':
             try:
                 case = Case.objects.get(case_id=self.case_id)
