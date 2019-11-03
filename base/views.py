@@ -1898,7 +1898,7 @@ def document_download(request):
             local_dir = r'D:\Document'
 
             # 连接远程服务器
-            t = paramiko.Transport((host_name, port))
+            t = paramiko.Transport((host_name, int(port)))
             t.connect(username=user_name, password=password)
             sftp = paramiko.SFTPClient.from_transport(t)
 
