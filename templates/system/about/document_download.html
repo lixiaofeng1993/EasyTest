@@ -1,0 +1,159 @@
+{% extends "../../base.html" %}
+
+{% block css %}
+    <style>
+        .panel-body {
+            margin-left: 5%;
+        }
+
+        a:hover {
+            color: red;
+        }
+
+        .time-item strong {
+            background: #C71C60;
+            color: #fff;
+            line-height: 49px;
+            font-size: 36px;
+            padding: 0 10px;
+            margin-right: 10px;
+            border-radius: 5px;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+
+        }
+
+        #day_show {
+            float: left;
+            line-height: 49px;
+            color: #c71c60;
+            font-size: 32px;
+            text-indent: 25px;
+            margin: 0 10px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .item-title .unit {
+            background: none;
+            line-height: 49px;
+            font-size: 24px;
+            padding: 0 10px;
+            float: left;
+        }
+
+    </style>
+{% endblock %}
+
+{% block crumbs %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li>
+                    <a href="/index">主页</a>
+                </li>
+                <li class="active">
+                    <a class="this">文档下载</a>
+                </li>
+                <li class="active">
+                    <a class="this-page">文档下载</a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-body">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>文档名称</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="detailBody">
+
+                        {% for document in file_list %}
+                            <tr id="tr-pass" style='font-family: Consolas'>
+                                <td>{{ document.id }}</td>
+                                <td>{{ document.doc_name }}</td>
+                                <td>
+                                    <button type='button' data-state="open" data-index="{{ step.id }}"
+                                            id="expand"
+                                            class='btn btn-primary btn-xs expand-{{ step.id }}'
+                                            style='margin-bottom: 0px'>
+                                        展开
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <tr id="msg{{ step.id }}" class="step" style="display: none;padding-left: 10%">
+
+                                <td colspan="3">
+                                {% for foo in document.file_dict %}
+
+                                    <div>
+                                        <span>{{ foo.file_id }}</span>
+                                        <span>{{ foo.file_name }}</span>
+                                        <a href="/base/document_file_download?report_path={{ foo.file_path }}"
+                                           class="layui-btn layui-btn-danger layui-btn-xs"
+                                           onclick="return download_btn()"><i
+                                                class="fa fa-cloud-download"></i>&nbsp;
+                                        </a>
+                                        <span>{{ foo.file_size }}</span>
+                                    </div>
+
+                                {% endfor %}
+                                </td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block javascript %}
+    <script>
+
+        //删除
+        function delete_btn() {
+            if (window.confirm("你确定要删除吗？")) {
+                return true;//确定返回真
+            }
+            else {
+                return false;//取消返回假
+            }
+        }
+
+        $('#detailBody').on('click', '.btn-primary', function () {
+            var id = this.dataset.index,
+                state = this.dataset.state,
+                node = $("#msg" + id + "");
+            node.toggle();
+            state == 'open'
+                ? $(this).html('收起').attr("data-state", "close").css('background-color', '#ff7575')
+                : $(this).html('展开').attr("data-state", "open").css('background-color', '#1ab394')
+        });
+
+        function download_btn() {
+            if (window.confirm("确定下载吗？")) {
+                return true;//确定返回真
+            }
+            else {
+                return false;//取消返回假
+            }
+        }
+    </script>
+{% endblock %}
