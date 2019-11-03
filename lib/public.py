@@ -683,12 +683,15 @@ def remove_logs(path):
     num = 0
     for file in file_list:
         file_path = os.path.join(path, file)
-        file_ctime = datetime(*time.localtime(os.path.getctime(file_path))[:6])
-        if (now_time - file_ctime).days > 5:
-            try:
-                os.remove(file_path)
-                num += 1
-                log.info('------删除文件------->>> {}'.format(file_path))
-            except PermissionError as e:
-                log.warning('删除报告失败：{}'.format(e))
+        if os.path.isfile(file_path):
+            file_ctime = datetime(*time.localtime(os.path.getctime(file_path))[:6])
+            if (now_time - file_ctime).days > 5:
+                try:
+                    os.remove(file_path)
+                    num += 1
+                    log.info('------删除文件------->>> {}'.format(file_path))
+                except PermissionError as e:
+                    log.warning('删除报告失败：{}'.format(e))
+        else:
+            log.info('文件夹跳过：{}'.format(file_path))
     return num

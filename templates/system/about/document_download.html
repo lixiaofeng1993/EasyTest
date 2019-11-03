@@ -95,20 +95,20 @@
                             <tr id="msg{{ step.id }}" class="step" style="display: none;padding-left: 10%">
 
                                 <td colspan="3">
-                                {% for foo in document.file_dict %}
+                                    {% for foo in document.file_dict %}
 
-                                    <div>
-                                        <span>{{ foo.file_id }}</span>
-                                        <span>{{ foo.file_name }}</span>
-                                        <a href="/base/document_download?report_path={{ foo.file_path }}"
-                                           class="layui-btn layui-btn-danger layui-btn-xs"
-                                           onclick="return download_btn()"><i
-                                                class="fa fa-cloud-download"></i>&nbsp;
-                                        </a>
-                                        <span>{{ foo.file_size }}</span>
-                                    </div>
+                                        <div>
+                                            <span>{{ foo.file_id }}</span>
+                                            <span>{{ foo.file_name }}</span>
+                                            <a href="{{ foo.file_path }}"
+                                               class="layui-btn layui-btn-danger layui-btn-xs"
+                                               onclick="return download_btn()"><i
+                                                    class="fa fa-cloud-download"></i>&nbsp;
+                                            </a>
+                                            <span>{{ foo.file_size }}</span>
+                                        </div>
 
-                                {% endfor %}
+                                    {% endfor %}
                                 </td>
 
                             </tr>

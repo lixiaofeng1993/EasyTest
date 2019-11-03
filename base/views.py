@@ -1864,7 +1864,8 @@ def document(request):
         request.session['login_from'] = '/base/document_download/'
         return render(request, 'user/login_action.html')
     else:
-        path = r'/var/celery_logs/'
+        path = r'/var/lib/jenkins/workspace/EasyTest/media/automation/'
+        media_path = 'media/automation/'
         path_list = os.listdir(path)
         file_list = []
         file_dict = {}
@@ -1874,66 +1875,67 @@ def document(request):
             file_path = os.path.join(path, file)
             if os.path.isfile(file_path):
                 log.info(file_path)
-                file_dict = {"file_id": 1, "file_name": file, "file_path": file_path, "file_size": "10m"}
+                file_dict = {"file_id": 1, "file_name": file, "file_path": os.path.join(media_path, file),
+                             "file_size": "10m"}
                 document_dict["file_dict"].append(file_dict)
         file_list.append(document_dict)
 
         return render(request, 'system/about/document_download.html', {"file_list": file_list})
 
 
-def document_download(request):
-    user_id = request.session.get('user_id', '')
-    if not get_user(user_id):
-        request.session['login_from'] = '/base/document_download/'
-        return render(request, 'user/login_action.html')
-    else:
-        if request.method == 'GET':
-            # 服务器连接信息
-            remote_dir = request.GET.get('report_path', '')
-            log.info(remote_dir)
-            host_name = readConfig.host_name
-            user_name = readConfig.user_name
-            password = readConfig.password
-            port = readConfig.port
-            # 远程文件路径（需要绝对路径）
-            # remote_dir = '/var/celery_logs/'
-            # 本地文件存放路径（绝对路径或者相对路径都可以）
-            local_dir = r'D:\Document'
-
-            # 连接远程服务器
-            t = paramiko.Transport((host_name, int(port)))
-            t.connect(username=user_name, password=password)
-            sftp = paramiko.SFTPClient.from_transport(t)
-
-            def down_from_remote(sftp_obj, remote_dir_name, local_dir_name):
-                """远程下载文件"""
-                remote_file = sftp_obj.stat(remote_dir_name)
-                if isdir(remote_file.st_mode):
-                    # 文件夹，不能直接下载，需要继续循环
-                    check_local_dir(local_dir_name)
-                    log.info('开始下载文件夹：' + remote_dir_name)
-                    for remote_file_name in sftp.listdir(remote_dir_name):
-                        sub_remote = os.path.join(remote_dir_name, remote_file_name)
-                        sub_remote = sub_remote.replace('\\', '/')
-                        sub_local = os.path.join(local_dir_name, remote_file_name)
-                        sub_local = sub_local.replace('\\', '/')
-                        down_from_remote(sftp_obj, sub_remote, sub_local)
-                else:
-                    # 文件，直接下载
-                    log.info('开始下载文件：' + remote_dir_name)
-                    sftp.get(remote_dir_name, local_dir_name)
-
-            def check_local_dir(local_dir_name):
-                """本地文件夹是否存在，不存在则创建"""
-                if not os.path.exists(local_dir_name):
-                    os.makedirs(local_dir_name)
-
-            # 远程文件开始下载
-            down_from_remote(sftp, remote_dir, local_dir)
-            # 关闭连接
-            t.close()
-            response = HttpResponseRedirect("/base/document/")
-            return response
+# def document_download(request):
+#     user_id = request.session.get('user_id', '')
+#     if not get_user(user_id):
+#         request.session['login_from'] = '/base/document_download/'
+#         return render(request, 'user/login_action.html')
+#     else:
+#         if request.method == 'GET':
+#             # 服务器连接信息
+#             remote_dir = request.GET.get('report_path', '')
+#             log.info(remote_dir)
+#             host_name = readConfig.host_name
+#             user_name = readConfig.user_name
+#             password = readConfig.password
+#             port = readConfig.port
+#             # 远程文件路径（需要绝对路径）
+#             # remote_dir = '/var/celery_logs/'
+#             # 本地文件存放路径（绝对路径或者相对路径都可以）
+#             local_dir = r'D:\Document'
+#
+#             # 连接远程服务器
+#             t = paramiko.Transport((host_name, int(port)))
+#             t.connect(username=user_name, password=password)
+#             sftp = paramiko.SFTPClient.from_transport(t)
+#
+#             def down_from_remote(sftp_obj, remote_dir_name, local_dir_name):
+#                 """远程下载文件"""
+#                 remote_file = sftp_obj.stat(remote_dir_name)
+#                 if isdir(remote_file.st_mode):
+#                     # 文件夹，不能直接下载，需要继续循环
+#                     check_local_dir(local_dir_name)
+#                     log.info('开始下载文件夹：' + remote_dir_name)
+#                     for remote_file_name in sftp.listdir(remote_dir_name):
+#                         sub_remote = os.path.join(remote_dir_name, remote_file_name)
+#                         sub_remote = sub_remote.replace('\\', '/')
+#                         sub_local = os.path.join(local_dir_name, remote_file_name)
+#                         sub_local = sub_local.replace('\\', '/')
+#                         down_from_remote(sftp_obj, sub_remote, sub_local)
+#                 else:
+#                     # 文件，直接下载
+#                     log.info('开始下载文件：' + remote_dir_name)
+#                     sftp.get(remote_dir_name, local_dir_name)
+#
+#             def check_local_dir(local_dir_name):
+#                 """本地文件夹是否存在，不存在则创建"""
+#                 if not os.path.exists(local_dir_name):
+#                     os.makedirs(local_dir_name)
+#
+#             # 远程文件开始下载
+#             down_from_remote(sftp, remote_dir, local_dir)
+#             # 关闭连接
+#             t.close()
+#             response = HttpResponseRedirect("/base/document/")
+#             return response
 
 
 def findata(request):
