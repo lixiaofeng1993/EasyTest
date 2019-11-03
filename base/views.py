@@ -1853,7 +1853,7 @@ def about_index(request):
         return render(request, 'user/login_action.html')
 
 
-def document_download(request):
+def document(request):
     """
     关于我们
     :param request:
@@ -1879,7 +1879,7 @@ def document_download(request):
         return render(request, 'system/about/document_download.html', {"file_list": file_list})
 
 
-def document_file_download(request):
+def document_download(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
         request.session['login_from'] = '/base/document_download/'

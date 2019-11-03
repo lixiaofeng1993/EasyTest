@@ -73,6 +73,6 @@ urlpatterns = [
     url(r'user/', view=views.UserIndex.as_view(), name='user_index'),
     # 关于我们
     url(r'about/', view=views.about_index, name='about_index'),
+    url(r'document/', view=views.document, name='document'),
     url(r'document_download/', view=views.document_download, name='document_download'),
-    url(r'document_file_download/', view=views.document_file_download, name='document_file_download'),
 ]
