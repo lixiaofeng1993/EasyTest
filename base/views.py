@@ -1864,22 +1864,24 @@ def document(request):
         request.session['login_from'] = '/base/document_download/'
         return render(request, 'user/login_action.html')
     else:
-        path = r'/var/lib/jenkins/workspace/EasyTest/media/automation/'
-        media_path = 'http://www.easytest.xyz/media/'
-        path_list = os.listdir(path)
+        document_dir = ["automation"]
         file_list = []
-        file_dict = {}
+        for doc in document_dir:
+            path = os.path.join(r'/var/lib/jenkins/workspace/EasyTest/media/', doc)
+            media_path = 'http://www.easytest.xyz/media/'
+            path_list = os.listdir(path)
 
-        document_dict = {"id": 1, "doc_name": "自动化测试", "file_dict": []}
-        for file in path_list:
-            file_path = os.path.join(path, file)
-            if os.path.isfile(file_path):
-                log.info(file_path)
-                file_dict = {"file_id": 1, "file_name": file, "file_path": os.path.join(media_path, file),
-                             "file_size": "10m"}
-                document_dict["file_dict"].append(file_dict)
-        file_list.append(document_dict)
+            file_dict = {}
 
+            document_dict = {"id": 1, "doc_name": doc, "file_dict": []}
+            for file in path_list:
+                file_path = os.path.join(path, file)
+                if os.path.isfile(file_path):
+                    log.info(file_path)
+                    file_dict = {"file_id": 1, "file_name": file, "file_path": os.path.join(media_path, file),
+                                 "file_size": "10m"}
+                    document_dict["file_dict"].append(file_dict)
+            file_list.append(document_dict)
         return render(request, 'system/about/document_download.html', {"file_list": file_list})
 
 
