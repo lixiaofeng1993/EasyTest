@@ -1932,6 +1932,8 @@ def document_download(request):
             down_from_remote(sftp, remote_dir, local_dir)
             # 关闭连接
             t.close()
+            response = HttpResponseRedirect("/base/document/")
+            return
 
 
 def findata(request):
