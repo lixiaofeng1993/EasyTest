@@ -1881,7 +1881,7 @@ def document(request):
                     size = os.path.getsize(file_path)
                     file_num += 1
                     file_dict = {"file_id": file_num, "file_name": file, "file_path": os.path.join(media_path, file),
-                                 "file_size": size / 1024}
+                                 "file_size": size / 1024 / 1024}
                     document_dict["file_dict"].append(file_dict)
             file_list.append(document_dict)
         return render(request, 'system/about/document_download.html', {"file_list": file_list})
