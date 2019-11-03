@@ -1864,7 +1864,7 @@ def document(request):
         request.session['login_from'] = '/base/document_download/'
         return render(request, 'user/login_action.html')
     else:
-        document_dir = ["automation"]
+        document_dir = ["文档模板", "自动化测试"]
         file_list = []
         for doc in document_dir:
             path = os.path.join(r'/var/lib/jenkins/workspace/EasyTest/media/', doc)
