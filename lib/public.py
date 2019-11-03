@@ -683,7 +683,7 @@ def remove_logs(path):
     num = 0
     for file in file_list:
         file_path = os.path.join(path, file)
-        if os.path.isfile(file_path) and os.path.splitext(file_path) == '.png'[-1]:
+        if os.path.isfile(file_path) and os.path.splitext(file_path)[-1] in ['.png', '.log', '.1', '.2', '.3', '.4', '.5', '.html']:
             file_ctime = datetime(*time.localtime(os.path.getctime(file_path))[:6])
             if (now_time - file_ctime).days > 5:
                 try:

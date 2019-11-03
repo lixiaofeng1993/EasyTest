@@ -1877,7 +1877,6 @@ def document(request):
             for file in path_list:
                 file_path = os.path.join(path, file)
                 if os.path.isfile(file_path):
-                    log.info("下载文件：{}".format(file_path))
                     size = os.path.getsize(file_path)
                     file_num += 1
                     file_dict = {"file_id": file_num, "file_name": file, "file_path": os.path.join(media_path, file),
