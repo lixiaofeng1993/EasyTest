@@ -1933,7 +1933,7 @@ def document_download(request):
             # 关闭连接
             t.close()
             response = HttpResponseRedirect("/base/document/")
-            return
+            return response
 
 
 def findata(request):
