@@ -1865,7 +1865,7 @@ def document(request):
         return render(request, 'user/login_action.html')
     else:
         path = r'/var/lib/jenkins/workspace/EasyTest/media/automation/'
-        media_path = 'media/automation/'
+        media_path = 'http://www.easytest.xyz/media/'
         path_list = os.listdir(path)
         file_list = []
         file_dict = {}
