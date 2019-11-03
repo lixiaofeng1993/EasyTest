@@ -1868,10 +1868,12 @@ def document(request):
         path_list = os.listdir(path)
         file_list = []
         file_dict = {}
+
         document_dict = {"id": 1, "doc_name": "自动化测试", "file_dict": []}
         for file in path_list:
             file_path = os.path.join(path, file)
             if os.path.isfile(file_path):
+                log.info(file_path)
                 file_dict = {"file_id": 1, "file_name": file, "file_path": file_path, "file_size": "10m"}
                 document_dict["file_dict"].append(file_dict)
         file_list.append(document_dict)
@@ -1888,6 +1890,7 @@ def document_download(request):
         if request.method == 'GET':
             # 服务器连接信息
             remote_dir = request.GET.get('report_path', '')
+            log.info(remote_dir)
             host_name = readConfig.host_name
             user_name = readConfig.user_name
             password = readConfig.password
