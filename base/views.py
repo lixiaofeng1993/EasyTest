@@ -1866,19 +1866,21 @@ def document(request):
     else:
         document_dir = ["文档模板", "自动化测试"]
         file_list = []
+        num = 0
         for doc in document_dir:
             path = os.path.join(r'/var/lib/jenkins/workspace/EasyTest/media/', doc)
             media_path = 'http://www.easytest.xyz/media/'
             path_list = os.listdir(path)
-
-            file_dict = {}
-
-            document_dict = {"id": 1, "doc_name": doc, "file_dict": []}
+            num += 1
+            file_num = 0
+            document_dict = {"id": num, "doc_name": doc, "file_dict": []}
             for file in path_list:
                 file_path = os.path.join(path, file)
                 if os.path.isfile(file_path):
-                    log.info(file_path)
-                    file_dict = {"file_id": 1, "file_name": file, "file_path": os.path.join(media_path, file),
+                    log.info("下载文件：{}".format(file_path))
+                    size = os.path.getsize(file_path)
+                    file_num += 1
+                    file_dict = {"file_id": file_num, "file_name": file, "file_path": os.path.join(media_path, file),
                                  "file_size": "10m"}
                     document_dict["file_dict"].append(file_dict)
             file_list.append(document_dict)
