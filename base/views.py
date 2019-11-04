@@ -1868,7 +1868,6 @@ def document(request):
         document_dir = '/var/lib/jenkins/workspace/EasyTest/media/'
         document_list = os.listdir(document_dir)
         file_list = []
-        document_dict = {}
         num = 0
         for doc in document_list:
             document_path = os.path.join(document_dir, doc)
@@ -1888,8 +1887,8 @@ def document(request):
                                      "file_path": os.path.join(media_path, file),
                                      "file_size": str(size / 1024 / 1024)[:4]}
                         document_dict["file_dict"].append(file_dict)
-        file_list.append(document_dict)
-        log.info('-----------------------------{}'.format(file_list))
+                file_list.append(document_dict)
+                log.info('-----------------------------{}'.format(file_list))
         return render(request, 'system/about/document_download.html', {"file_list": file_list})
 
 
