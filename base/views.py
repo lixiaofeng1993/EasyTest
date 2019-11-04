@@ -1864,8 +1864,8 @@ def document(request):
         request.session['login_from'] = '/base/document_download/'
         return render(request, 'user/login_action.html')
     else:
-        # document_dir = '/var/lib/jenkins/workspace/EasyTest/media/'
-        document_dir = r'C:\Users\liyongfeng\Desktop\密钥'
+        document_dir = '/var/lib/jenkins/workspace/EasyTest/media/'
+        # document_dir = r'C:\Users\liyongfeng\Desktop\密钥'
         document_list = os.listdir(document_dir)
         file_list = []
         num = 0
