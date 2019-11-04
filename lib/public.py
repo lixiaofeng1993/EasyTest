@@ -691,7 +691,7 @@ def remove_logs(path):
                     num += 1
                     log.info('------删除文件------->>> {}'.format(file_path))
                 except PermissionError as e:
-                    log.warning('删除报告失败：{}'.format(e))
+                    log.warning('删除文件失败：{}'.format(e))
         else:
             log.info('文件夹跳过：{}'.format(file_path))
     return num
