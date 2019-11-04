@@ -1889,6 +1889,7 @@ def document(request):
                                      "file_size": str(size / 1024 / 1024)[:4]}
                         document_dict["file_dict"].append(file_dict)
         file_list.append(document_dict)
+        log.info('-----------------------------{}'.format(file_list))
         return render(request, 'system/about/document_download.html', {"file_list": file_list})
 
 
