@@ -390,32 +390,3 @@ def get_total_values(user_id):
         total['percent'].append(total_percent)
 
     return total
-
-
-def format_httprunner_case():
-    format = [
-        {
-            "config": {
-                "name": "",
-                "base_url": "",
-                "variables": {},
-                "output": []
-            }
-        },
-        {
-            "test": {
-                "name": "",
-                "output": [],
-                "variables": {},
-                "request": {
-                    "url": "",
-                    "method": "",
-                    "headers": {},
-                    "json": {},
-                    "params": {}
-                },
-                "extract": [],
-                "validate": []
-            }
-        }
-    ]
