@@ -1,7 +1,7 @@
 from flask import request, json
 
 from lib.response import VALID, TYPE_NOT_MATCH, EQUALS, NOT_BETWEEN, STR_NOT_CONTAINS, STR_TOO_LONG, MISS, \
-    INVALID
+    INVALID, EVAL
 
 
 def get_response(response, actual):
@@ -100,7 +100,11 @@ def domain_server(request, **kwargs):
             for i in body:
                 params = i.split('=')
                 form[params[0]] = params[1]
-
+        else:
+            try:
+                form = eval(body)
+            except Exception:
+                return json.dumps(EVAL, ensure_ascii=False)
     if data == {}:  # 不验证参数，直接返回有效数据
         return Validator.valid(response=kwargs.get('valid'))
     else:

@@ -28,6 +28,12 @@ MISS = {
     'success': False
 }
 
+EVAL = {
+    'code': '0022',
+    'msg': 'eval error',
+    'success': False
+}
+
 TYPE_NOT_MATCH = {
     "success": False,
     "code": "0001",
