@@ -1864,14 +1864,15 @@ def document(request):
         request.session['login_from'] = '/base/document_download/'
         return render(request, 'user/login_action.html')
     else:
-        document_dir = '/var/lib/jenkins/workspace/EasyTest/media/'
+        # document_dir = '/var/lib/jenkins/workspace/EasyTest/media/'
+        document_dir = r'C:\Users\liyongfeng\Desktop\密钥'
         document_list = os.listdir(document_dir)
         file_list = []
         num = 0
         for doc in document_list:
             document_path = os.path.join(document_dir, doc)
             if os.path.isdir(document_path):
-                path = os.path.join(r'/var/lib/jenkins/workspace/EasyTest/media/', doc)
+                path = os.path.join(document_dir, doc)
                 media_path = os.path.join('http://www.easytest.xyz/media/', doc)
                 path_list = os.listdir(path)
                 path_list.sort()
@@ -1885,7 +1886,7 @@ def document(request):
                         file_num += 1
                         file_dict = {"file_id": file_num, "file_name": file,
                                      "file_path": os.path.join(media_path, file),
-                                     "file_size": str(size / 1024 / 1024)[:4]}
+                                     "file_size": str(size / 1024)[:4]}
                         document_dict["file_dict"].append(file_dict)
                 file_list.append(document_dict)
                 # log.info('-----------------------------{}'.format(file_list))
