@@ -19,10 +19,10 @@ from lib.error_code import ErrorCode
 from lib.except_check import project_info_logic, sign_info_logic, env_info_logic, interface_info_logic, format_params, \
     case_info_logic, plan_info_logic, header_value_error  # 自定义异常逻辑
 from django.views.generic import ListView
-import paramiko
-import os
-from stat import S_ISDIR as isdir
-from lib import readConfig
+
+# import paramiko
+# from stat import S_ISDIR as isdir
+# from lib import readConfig
 
 log = logging.getLogger('log')  # 初始化log
 logs_path = os.path.join(os.getcwd(), 'logs')  # 拼接删除目录完整路径
@@ -1864,25 +1864,31 @@ def document(request):
         request.session['login_from'] = '/base/document_download/'
         return render(request, 'user/login_action.html')
     else:
-        document_dir = ["文档模板", "自动化测试"]
+        # document_dir = ["文档模板", "自动化测试"]
+        document_dir = '/var/lib/jenkins/workspace/EasyTest/media/'
+        document_list = os.listdir(document_dir)
         file_list = []
+        document_dict = {}
         num = 0
-        for doc in document_dir:
-            path = os.path.join(r'/var/lib/jenkins/workspace/EasyTest/media/', doc)
-            media_path = 'http://www.easytest.xyz/media/'
-            path_list = os.listdir(path)
-            num += 1
-            file_num = 0
-            document_dict = {"id": num, "doc_name": doc, "file_dict": []}
-            for file in path_list:
-                file_path = os.path.join(path, file)
-                if os.path.isfile(file_path):
-                    size = os.path.getsize(file_path)
-                    file_num += 1
-                    file_dict = {"file_id": file_num, "file_name": file, "file_path": os.path.join(media_path, file),
-                                 "file_size": str(size / 1024 / 1024)[:4]}
-                    document_dict["file_dict"].append(file_dict)
-            file_list.append(document_dict)
+        for doc in document_list:
+            document_path = os.path.join(document_dir, doc)
+            if os.path.isdir(document_path):
+                path = os.path.join(r'/var/lib/jenkins/workspace/EasyTest/media/', doc)
+                media_path = os.path.join('http://www.easytest.xyz/media/', doc)
+                path_list = os.listdir(path)
+                num += 1
+                file_num = 0
+                document_dict = {"id": num, "doc_name": doc, "file_dict": []}
+                for file in path_list:
+                    file_path = os.path.join(path, file)
+                    if os.path.isfile(file_path):
+                        size = os.path.getsize(file_path)
+                        file_num += 1
+                        file_dict = {"file_id": file_num, "file_name": file,
+                                     "file_path": os.path.join(media_path, file),
+                                     "file_size": str(size / 1024 / 1024)[:4]}
+                        document_dict["file_dict"].append(file_dict)
+        file_list.append(document_dict)
         return render(request, 'system/about/document_download.html', {"file_list": file_list})
 
 
