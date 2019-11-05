@@ -429,7 +429,7 @@ def format_body(body):
     """
     if isinstance(body, dict):
         for key, value in body.items():
-            value = re.sub('[ \n\t ]', '', value)
+            value = re.sub('[\n\t ]', '', value)
             if key == 'list':  # 标识body参数为list的情况
                 try:
                     body = eval(value)
