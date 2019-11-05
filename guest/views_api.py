@@ -2,7 +2,7 @@ from django.http import JsonResponse, HttpResponse
 from django.core.exceptions import ValidationError, ObjectDoesNotExist  # 验证错误
 from django.db.utils import IntegrityError  # 完整性错误
 from django.db.models import Q  # 与或非 查询
-import time
+import time, json
 import logging
 from base.models import Event, Guest
 
@@ -45,10 +45,39 @@ def add_event(request):
         Event.objects.create(id=eid, name=name, limit=limit, address=address, status=int(status), start_time=start_time)
     except ValidationError as e:
         error = 'start_time format error.It must be in YYYY-MM-DD HH:MM:SS format. error: {}'.format(e)
-        log.info('默认服务==>  add_event，开始时间格式错误.')
+        log.info('默认服务==>  add_event，发布会开始时间格式错误.')
         return JsonResponse({'status': 200, 'message': error, 'error_code': 10024})
     log.info('默认服务==>  add_event，发布会添加成功！')
     return JsonResponse({'status': 200, 'message': 'add event success'})
+
+
+# 修改发布会接口
+def update_event(request):
+    if request.method == 'POST':
+        req = json.loads(request.body)
+        info = req.get('info', {})
+        eid = info.get('eid', '')
+        name = info.get('name', '')
+        limit = info.get('limit', '')
+        status = info.get('status', '')
+        address = info.get('address', '')
+        start_time = info.get('start_time', '')
+        if eid == '':
+            log.info('默认服务==>  update_event参数eid，参数错误，不能为空.')
+            return JsonResponse({'status': 200, 'message': 'parameter eid error', 'error_code': 10021})
+        result = Event.objects.filter(id=eid)
+        if not result:
+            log.info('默认服务==>  update_event，发布会id不存在，无法修改.')
+            return JsonResponse({'status': 200, 'message': 'event id not exists', 'error_code': 10022})
+        try:
+            result.update(name=name, limit=limit, address=address, status=int(status),
+                          start_time=start_time)
+        except ValidationError as e:
+            error = 'start_time format error.It must be in YYYY-MM-DD HH:MM:SS format. error: {}'.format(e)
+            log.info('默认服务==>  update_event，发布会开始时间格式错误.')
+            return JsonResponse({'status': 200, 'message': error, 'error_code': 10024})
+        log.info('默认服务==>  update_event，发布会 {} 修改成功！'.format(eid))
+        return JsonResponse({'status': 200, 'message': 'update event success'})
 
 
 # 查询发布会接口
@@ -240,7 +269,8 @@ def user_sign(request):
     result = Guest.objects.filter(event_id=eid, phone=phone)
     if not result:
         log.info('默认服务==>  user_sign，嘉宾签到发布会和参加发布会不符.')
-        return JsonResponse({'status': 200, 'message': 'user did not participate in the conference', 'error_code': 10026})
+        return JsonResponse(
+            {'status': 200, 'message': 'user did not participate in the conference', 'error_code': 10026})
     result = Guest.objects.get(event_id=eid, phone=phone).sign
     if result:
         log.info('默认服务==>  user_sign，嘉宾已签到.')
