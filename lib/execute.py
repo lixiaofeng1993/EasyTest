@@ -84,6 +84,7 @@ class Test_execute():
             summary = runner.summary
             case_run['summary'] = summary
             case_run['report_path'] = report_path
+            case_run['case_name'] = case.case_name
         elif self.run_mode == '0':
             try:
                 case = Case.objects.get(case_id=self.case_id)
@@ -104,8 +105,8 @@ class Test_execute():
                     case_run = interface_is_delete(case_run, case.case_name, step["if_name"], step_info)
                     return case_run
 
-        case_run['case_name'], case_run["step_list"] = case.case_name, case_step_list
-        log.info('interface response data: {}'.format(case_run))
+            case_run['case_name'], case_run["step_list"] = case.case_name, case_step_list
+            log.info('interface response data: {}'.format(case_run))
         return case_run
 
     def step(self, step_content):

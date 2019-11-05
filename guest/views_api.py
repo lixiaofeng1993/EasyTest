@@ -54,7 +54,7 @@ def add_event(request):
 # 修改发布会接口
 def update_event(request):
     if request.method == 'POST':
-        req = json.loads(request.body)
+        req = json.loads(request.body).decode('utf-8')
         info = req.get('info', {})
         eid = info.get('eid', '')
         name = info.get('name', '')
