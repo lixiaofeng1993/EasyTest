@@ -1652,19 +1652,21 @@ def file_download(request):
     else:
         if request.method == 'GET':
             report_id = request.GET.get('report_id', '')
-            report = Report.objects.get(report_id=report_id)
-            name = report.report_name[-19:]
-            report_path = report.report_path
-            plan_id = report.plan_id
-            if report_path:
-                file_name = report_path
+            if report_id:
+                report = Report.objects.get(report_id=report_id)
+                name = report.report_name[-19:]
+                report_path = report.report_path
+                if report_path:
+                    file_name = report_path
+                else:
+                    report_path = os.path.join(os.getcwd(), 'reports')  # 拼接删除目录完整路径
+                    file_name = os.path.join(report_path, name + '.html')
             else:
-                report_path = os.path.join(os.getcwd(), 'reports')  # 拼接删除目录完整路径
-                file_name = os.path.join(report_path, name + '.html')
+                file_name = request.GET.get("log_file", "")
             if not os.path.exists(file_name):
-                log.info('计划 {} 中的 执行报告 {} 无法下载！'.format(plan_id, file_name))
+                log.info('文件：{} 无法下载！'.format(file_name))
                 return render(request, "base/report_page/report_page.html",
-                              {'error': '计划 {} 中的 执行报告 {} 无法下载！'.format(plan_id, report_id)})
+                              {'error': '文件：{} 无法下载！'.format(file_name)})
 
             def file_iterator(file_name, chunk_size=512):
                 with open(file_name, encoding='utf-8') as f:
