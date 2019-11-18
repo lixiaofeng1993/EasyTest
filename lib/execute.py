@@ -232,8 +232,9 @@ class Test_execute():
                             if_dict = response_value_error(if_dict, make=True)
                             return if_dict
                 except SyntaxError as e:
-                    if_dict = response_value_error(if_dict, e)  # 解析返回值异常
-                    return if_dict
+                    # if_dict = response_value_error(if_dict, e)  # 解析返回值异常
+                    if_dict["res_content"] = res.text  # 返回值无法eval的情况
+                    # return if_dict
             except requests.RequestException as e:
                 if_dict = request_api_error(if_dict, e)  # 接口请求异常
                 return if_dict
@@ -243,29 +244,29 @@ class Test_execute():
             #             'mock']  # 模拟接口返回值
             #     if_dict["result"] = "fail"
             #     if_dict['fail'] = ErrorCode.mock_fail
+            if not isinstance(if_dict["res_content"], str):
+                if interface.is_header and self.make:  # 补充默认headers中的变量
+                    set_headers = Environment.objects.get(env_id=self.env_id).set_headers
+                    headers = eval(set_headers)['header']
+                    if headers:
+                        for k, v in headers.items():
+                            if k == 'token':
+                                if 'error' in if_dict.keys():
+                                    headers[k] = ''
+                                else:
+                                    headers[k] = if_dict["res_content"]['data']
+                                now_time = datetime.datetime.now()
+                                Environment.objects.filter(env_id=self.env_id).update(set_headers={'header': headers},
+                                                                                      update_time=now_time)
 
-            if interface.is_header and self.make:  # 补充默认headers中的变量
-                set_headers = Environment.objects.get(env_id=self.env_id).set_headers
-                headers = eval(set_headers)['header']
-                if headers:
-                    for k, v in headers.items():
-                        if k == 'token':
-                            if 'error' in if_dict.keys():
-                                headers[k] = ''
-                            else:
-                                headers[k] = if_dict["res_content"]['data']
-                            now_time = datetime.datetime.now()
-                            Environment.objects.filter(env_id=self.env_id).update(set_headers={'header': headers},
-                                                                                  update_time=now_time)
-
-            if step_content["extract"]:  # 提取接口中的变量
-                extract_dict = get_extract(step_content["extract"], if_dict["res_content"],
-                                           interface.url)
-                if 'error' in extract_dict.keys():
-                    if_dict = index_error(if_dict, extract_dict)
-                    return if_dict
-                else:
-                    self.extract_list.append(extract_dict)
+                if step_content["extract"]:  # 提取接口中的变量
+                    extract_dict = get_extract(step_content["extract"], if_dict["res_content"],
+                                               interface.url)
+                    if 'error' in extract_dict.keys():
+                        if_dict = index_error(if_dict, extract_dict)
+                        return if_dict
+                    else:
+                        self.extract_list.append(extract_dict)
 
             if step_content["validators"]:  # 判断接口返回值
                 if_dict["result"], if_dict["msg"], if_dict['checkpoint'] = validators_result(step_content["validators"],
