@@ -162,11 +162,15 @@ CACHES = {
         "LOCATION": "redis://127.0.0.1:6379/2",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "PICKLE_VERSION": -1,
+            "PICKLE_VERSION": -1,  # 使用其他版本的pickle
+            "CONNECTION_POOL_KWARGS": {"max_connections": 100},  # 连接池的最大连接数
+            "SERIALIZER": "django_redis.serializers.json.JSONSerializer",  # json 序列化数据
         }
     }
 }
+# 将 django-redis 作为 session 储存后端
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"
 
 # 自定义配置
 REDIS = {
@@ -258,7 +262,7 @@ LOGGING = {
 import djcelery
 
 djcelery.setup_loader()
-BROKER_URL = 'redis://127.0.0.1:6379/'
+BROKER_URL = 'redis://127.0.0.1:6379/0'
 # broker_pool_limit=None
 # BROKER_POOL_LIMIT=None
 CELERY_IMPORTS = ('base.tasks')

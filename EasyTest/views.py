@@ -200,6 +200,8 @@ def login_action(request):
                     request.session['login_from'] = '/index/'
                 elif 'api' in request.session['login_from']:
                     request.session['login_from'] = '/index/'
+                elif 'login_action' in request.session['login_from']:
+                    request.session['login_from'] = '/index/'
             except KeyError as e:
                 request.session['login_from'] = '/index/'
             log.info('---------地址来源-------------> {}'.format(request.session['login_from']))
