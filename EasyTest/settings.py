@@ -129,7 +129,7 @@ USE_I18N = True
 USE_L10N = True
 
 # 页面展示时间比数据库时间快8h
-# USE_TZ = True
+USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/

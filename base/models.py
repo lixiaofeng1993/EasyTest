@@ -12,6 +12,10 @@ class Sign(models.Model):
     def __str__(self):
         return self.sign_name
 
+    class Meta:
+        verbose_name = "签名管理"
+        verbose_name_plural = "签名管理"
+
 
 class Project(models.Model):
     prj_id = models.AutoField(primary_key=True, null=False)
@@ -23,6 +27,10 @@ class Project(models.Model):
 
     def __str__(self):
         return self.prj_name
+
+    class Meta:
+        verbose_name = "项目管理"
+        verbose_name_plural = "项目管理"
 
 
 class Environment(models.Model):
@@ -39,6 +47,10 @@ class Environment(models.Model):
 
     def __str__(self):
         return self.env_name
+
+    class Meta:
+        verbose_name = "测试环境"
+        verbose_name_plural = "测试环境"
 
 
 class Interface(models.Model):
@@ -62,6 +74,10 @@ class Interface(models.Model):
     def __str__(self):
         return self.if_name
 
+    class Meta:
+        verbose_name = "接口管理"
+        verbose_name_plural = "接口管理"
+
 
 class Case(models.Model):
     case_id = models.AutoField(primary_key=True, null=False)
@@ -74,6 +90,10 @@ class Case(models.Model):
 
     def __str__(self):
         return self.case_name
+
+    class Meta:
+        verbose_name = "测试用例"
+        verbose_name_plural = "测试用例"
 
 
 class Plan(models.Model):
@@ -92,6 +112,10 @@ class Plan(models.Model):
 
     def __str__(self):
         return self.plan_name
+
+    class Meta:
+        verbose_name = "测试计划"
+        verbose_name_plural = "测试计划"
 
 
 class Report(models.Model):
@@ -114,6 +138,10 @@ class Report(models.Model):
     def __str__(self):
         return self.report_name
 
+    class Meta:
+        verbose_name = "测试报告"
+        verbose_name_plural = "测试报告"
+
 
 # 发布会表
 class Event(models.Model):
@@ -128,6 +156,10 @@ class Event(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = "发布会表"
+        verbose_name_plural = "发布会表"
+
 
 # 嘉宾表
 class Guest(models.Model):
@@ -140,6 +172,8 @@ class Guest(models.Model):
 
     class Meta:
         unique_together = ('event', 'phone')
+        verbose_name = "嘉宾表"
+        verbose_name_plural = "嘉宾表"
 
     # admin中显示嘉宾名称
     def __str__(self):
@@ -160,3 +194,7 @@ class LocustReport(models.Model):
     state = models.CharField(max_length=50, default='')
     update_time = models.DateTimeField('更新时间', auto_now=True)
     update_user = models.CharField(max_length=30, default='')
+
+    class Meta:
+        verbose_name = "locust报告"
+        verbose_name_plural = "locust报告"
