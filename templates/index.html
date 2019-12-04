@@ -72,43 +72,45 @@
                         <h5>快捷入口</h5>
                         <div class="panel-tbody">
                             <p><i class="fa fa-product-hunt"></i>&nbsp;项目</p>
-                            <div style="text-align: center"><a href="/base/project/">{{ project_num }}</a></div>
+                            <div style="text-align: center"><a href="{% url 'base:project' %}">{{ project_num }}</a>
+                            </div>
                         </div>
                         <div class="panel-tbody">
                             <p><i class="fa fa-envira"></i>&nbsp;环境</p>
-                            <div style="text-align: center"><a href="/base/env/">{{ env_num }}</a></div>
+                            <div style="text-align: center"><a href="{% url 'base:env' %}">{{ env_num }}</a></div>
                         </div>
                         <div class="panel-tbody">
                             <p><i class="fa fa-pinterest-square"></i>&nbsp;接口</p>
-                            <div style="text-align: center"><a href="/base/interface/">{{ interface_num }}</a></div>
+                            <div style="text-align: center"><a href="{% url 'base:interface' %}">{{ interface_num }}</a>
+                            </div>
                         </div>
                         <div class="panel-tbody">
                             <p><i class="fa fa-suitcase"></i>&nbsp;用例</p>
-                            <div style="text-align: center"><a href="/base/case/">{{ case_num }}</a></div>
+                            <div style="text-align: center"><a href="{% url 'base:case' %}">{{ case_num }}</a></div>
                         </div>
                         <div class="panel-tbody">
                             <p><i class="fa fa-paper-plane"></i>&nbsp;计划</p>
-                            <div style="text-align: center"><a href="/base/plan/">{{ plan_num }}</a></div>
+                            <div style="text-align: center"><a href="{% url 'base:plan' %}">{{ plan_num }}</a></div>
                         </div>
                         <div class="panel-tbody">
                             <p><i class="fa fa-pencil"></i>&nbsp;签名</p>
-                            <div style="text-align: center"><a href="/base/sign/">{{ sign_num }}</a></div>
+                            <div style="text-align: center"><a href="{% url 'base:sign' %}">{{ sign_num }}</a></div>
                         </div>
                         <div class="panel-tbody">
                             <p><i class="fa fa-bar-chart"></i>&nbsp;报告</p>
-                            <div style="text-align: center"><a href="/base/report_page/">{{ report_num }}</a></div>
+                            <div style="text-align: center"><a href="{% url 'base:report_page' %}">{{ report_num }}</a>
+                            </div>
                         </div>
                         <div class="panel-tbody">
                             <p><i class="fa fa-tasks"></i>&nbsp;任务</p>
-                            <div style="text-align: center"><a href="/base/timing_task/">{{ task_num }}</a></div>
+                            <div style="text-align: center"><a href="{% url 'base:timing_task' %}">{{ task_num }}</a>
+                            </div>
                         </div>
                         <div class="panel-tbody">
                             <p><i class="fa fa-user-secret"></i>&nbsp;用户</p>
-                            <div style="text-align: center"><a href="/base/user/">{{ user_num }}</a></div>
+                            <div style="text-align: center"><a href="{% url 'base:user' %}">{{ user_num }}</a></div>
                         </div>
                     </div>
-                    {#                    <div class="whether" onclick="whether()">#}
-                    {#                    </div>#}
 
                     <iframe class="whether" name="weather_inc" src="http://i.tianqi.com/index.php?c=code&id=112"
                             width="110" height="150" frameborder="0" marginwidth="0" marginheight="0"
@@ -148,12 +150,6 @@
                     </div>
                 </div>
                 <br>
-                {#                <div class="panel-body">#}
-                {#                    <h5>格式化JSON</h5>#}
-                {#                    <br>#}
-                {#                    <iframe src="https://www.json.cn/" height="750" width="1550" frameborder="0"#}
-                {#                            scrolling="0"></iframe>#}
-                {#                </div>#}
                 <div class="panel-body">
                     <h5>未完待续，持续开发中...</h5>
                 </div>
@@ -163,23 +159,11 @@
 {% endblock %}
 
 {% block javascript %}
-    {#    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>#}
-    {#    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>#}
-    {#    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>#}
-    {#    <script type="text/javascript"#}
-    {#            src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>#}
-    {#    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>#}
-    {#    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>#}
-    {#    <script type="text/javascript"#}
-    {#            src="http://api.map.baidu.com/api?v=2.0&ak=QI0Gwkg9y0oaZmyMRc58dp5uQXsgloBh"></script>#}
-    {#    <script type="text/javascript"#}
-    {#            src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>#}
-    {#    <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>#}
-    <script type="text/javascript" src="/static/echarts/bmap.min.js"></script>
-    <script type="text/javascript" src="/static/echarts/china.js"></script>
-    <script type="text/javascript" src="/static/echarts/dataTool.min.js"></script>
-    <script type="text/javascript" src="/static/echarts/echarts.min.js"></script>
-    <script type="text/javascript" src="/static/echarts/world.js"></script>
+    <script type="text/javascript" src="{% static 'echarts/bmap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'echarts/china.js' %}"></script>
+    <script type="text/javascript" src="{% static 'echarts/dataTool.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'echarts/echarts.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'echarts/world.js' %}"></script>
     <script>
         var dom = document.getElementById("main");
         var myChart = echarts.init(dom);
@@ -391,23 +375,5 @@
                 $("#submit").trigger("click");
             }
         });
-
-        {#        window.onload = function whether() {#}
-        {#            $('.whether').empty();#}
-        {#            $.ajax({#}
-        {#                type: 'get',#}
-        {#                url: "/get_whether/",#}
-        {#                success: function (data) {#}
-        {#                    if (data == '0') {#}
-        {#                        alert('请求天气接口发生错误！')#}
-        {#                    } else {#}
-        {#                        html = '<p> 城市：' + data.city + '</p><p> 时间：' + data.now + '</p><p> 天气：' + data.weather + '</p><p> 气温：' + data.temp1 + '/' + data.temp2 + '</p>';#}
-        {#                        $('.whether').append(html);#}
-        {#                    }#}
-        {#                }, error: function () {#}
-        {#                    alert("获取天气信息失败！");#}
-        {#                }#}
-        {#            })#}
-        {#        };#}
     </script>
 {% endblock %}

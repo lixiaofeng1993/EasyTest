@@ -1,4 +1,4 @@
-{% extends "../../base.html" %}
+{% extends "base.html" %}
 
 {% block css %}
     <style>
@@ -51,13 +51,13 @@
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="/yqjr/index">主页</a>
+                    <a href="{% url 'index' %}">主页</a>
                 </li>
                 <li class="active">
-                    <a class="this" href="/base/performance_report/">性能测试</a>
+                    <a class="this" href="{% url 'base:performance_report' %}">性能测试</a>
                 </li>
                 <li class="active">
-                    <a class="this-page" href="/base/performance_report/">聚合报告</a>
+                    <a class="this-page" href="{% url 'base:performance_report' %}">聚合报告</a>
                 </li>
                 <li class="active">
                     <a class="this-page">实时数据</a>

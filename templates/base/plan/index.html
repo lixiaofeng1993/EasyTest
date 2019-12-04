@@ -1,4 +1,4 @@
-{% extends "../../base.html" %}
+{% extends "base.html" %}
 
 {% block css %}
     <style>
@@ -51,7 +51,7 @@
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="/yqjr/index">主页</a>
+                    <a href="{% url 'index' %}">主页</a>
                 </li>
                 <li class="active">
                     <a class="this">测试计划</a>
@@ -70,7 +70,7 @@
         <div class="col-md-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <a href="/base/plan_add/" class="btn btn-primary"><i class="fa fa-plus-circle"></i>&nbsp;添加计划</a>
+                    <a href="{% url 'base:plan_add' %}" class="btn btn-primary"><i class="fa fa-plus-circle"></i>&nbsp;添加计划</a>
                 </div>
                 <div class="spinner"></div>
                 <div class="panel-body">
@@ -95,7 +95,7 @@
                             {#                            {% for plan in plan_ %}#}
                             <tr>
                                 <td id="cen">{{ plan.plan_id }}</td>
-                                <td id="plan-name"><a href="/base/plan_update?plan_id={{ plan.plan_id }}"
+                                <td id="plan-name"><a href="{% url 'base:plan_update' %}?plan_id={{ plan.plan_id }}"
                                                       class="layui-btn layui-btn-xs"
                                                       lay-event="edit">{{ plan.plan_name }}</a></td>
                                 <td id="cen" prj_id="{{ plan.project.prj_id }}">{{ plan.project }}</td>
@@ -116,10 +116,10 @@
                                     {#                                       data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;#}
                                     {#                                    </a>#}
                                     <a class="layui-btn layui-btn-danger layui-btn-xs"
-                                       href="/base/report_page?plan_id={{ plan.plan_id }}">
+                                       href="{% url 'base:report_page' %}?plan_id={{ plan.plan_id }}">
                                         <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;
                                     </a>
-                                    <a href="/base/plan_delete?plan_id={{ plan.plan_id }}"
+                                    <a href="{% url 'base:plan_delete' %}?plan_id={{ plan.plan_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs" onclick="return delete_btn()">
                                         <img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
                                 </td>

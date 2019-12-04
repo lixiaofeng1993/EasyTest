@@ -1,4 +1,4 @@
-{% extends "../../base.html" %}
+{% extends "base.html" %}
 {% block css %}
     <style>
         .btn-primary:hover {
@@ -11,13 +11,13 @@
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="/yqjr/index">主页</a>
+                    <a href="{% url 'index' %}">主页</a>
                 </li>
                 <li class="active">
                     <a class="this">基础信息</a>
                 </li>
                 <li class="active">
-                    <a class="this-page" href="/base/project/">项目管理</a>
+                    <a class="this-page" href="{% url 'base:project' %}">项目管理</a>
                 </li>
                 <li class="active">
                     <a class="">添加项目</a>
@@ -38,7 +38,8 @@
                     <h3 class="panel-title">添加项目</h3>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" method="post" action="/base/project_add/" onsubmit="return check()">
+                    <form class="form-horizontal" method="post" action="{% url 'base:project_add' %}"
+                          onsubmit="return check()">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">项目名称</label>
                             <div class="col-sm-6">
@@ -68,7 +69,8 @@
                         <div class="form-group">
                             <div class="col-sm-offset-2 col-sm-6">
                                 <button type="submit" class="btn btn-primary"><i
-                                        class="fa fa-save"></i>&nbsp;保存</button>
+                                        class="fa fa-save"></i>&nbsp;保存
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -80,26 +82,4 @@
 
     </div>
 
-{% endblock %}
-
-{% block javascript %}
-    <script type="application/javascript">
-        {#        function check() {#}
-        {#            var strValue = $('#prj_name').val();#}
-        {#            strValue = strValue.replace(/\n/g, '');#}
-        {#            if (javaTrim(strValue) == "") {#}
-        {#                alert('项目名称输入错误！');#}
-        {#                $('#prj_name').focus();#}
-        {#                return false#}
-        {#            }#}
-        {#        }#}
-        {#        function javaTrim(str) {#}
-        {#            for (var i = 0; (str.charAt(i) == ' ') && i < str.length; i++);#}
-        {#            if (i == str.length) return ''; //whole string is space#}
-        {#            var newstr = str.substr(i);#}
-        {#            for (var i = newstr.length - 1; newstr.charAt(i) == ' ' && i >= 0; i--);#}
-        {#            newstr = newstr.substr(0, i + 1);#}
-        {#            return newstr;#}
-        {#        }#}
-    </script>
 {% endblock %}

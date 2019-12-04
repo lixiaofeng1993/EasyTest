@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -8,10 +9,8 @@
 
     <!-- Bootstrap -->
     <link href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    {#    <link href="{{ url_for('static', filename = 'css/common.css') }}" rel="stylesheet">#}
-    <link rel="stylesheet" href="/static/css/common.css">
-    {#    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">#}
-    <link rel="icon" type="image/png" sizes="96x96" href="/static/img/E_fa.png">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'img/favicon.png' %}">
 
 </head>
 <body>
@@ -111,11 +110,11 @@
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
                     aria-expanded="false" aria-controls="navbar">
             </button>
-            <a href="/mocks/api/" class="navbar-brand" style="color: rosybrown" title="首页">Mock Server</a>
+            <a href="{% url 'mocks:mock_api' %}" class="navbar-brand" style="color: rosybrown" title="首页">Mock Server</a>
         </div>
 
         <div id="navbar" class="navbar-collapse collapse">
-            <form class="navbar-form navbar-left" method="GET" action="/mocks/api/">
+            <form class="navbar-form navbar-left" method="GET" action="{% url 'mocks:mock_api' %}">
                 <div class="form-group">
                     <input type="text" placeholder="Search Mock API" name="api_name" value="" class="form-control">
                 </div>
@@ -187,8 +186,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ext-language_tools.js"></script>
     <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    {#    <script src="{{ url_for('static', filename = 'js/common.js') }}"></script>#}
-    <script src="/static/scripts/common.js"></script>
+    <script src="{% static 'scripts/common.js' %}"></script>
 
     <script>
         editor = null;

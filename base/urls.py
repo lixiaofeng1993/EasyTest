@@ -6,6 +6,7 @@ from django.conf.urls import url
 # from django.views.generic.base import RedirectView
 from . import views
 
+app_name = "base"
 urlpatterns = [
     # 项目
     url(r'project/', view=views.ProjectIndex.as_view(), name='project'),
@@ -57,11 +58,11 @@ urlpatterns = [
     url(r'timing_task/', view=views.timing_task, name='timing_task'),
     url(r'task_logs/', view=views.task_logs, name='task_logs'),
     # 报告页面展示
-    url(r'report_page/', view=views.ReportPage.as_view(), name='report'),
+    url(r'report_page/', view=views.ReportPage.as_view(), name='report_page'),
     url(r'report_logs/', view=views.report_logs, name='report_logs'),  # 日志
     url(r'report_delete/', view=views.report_delete, name='report_delete'),
     # locust
-    url(r'performance/', view=views.performance_index, name='performance_index'),
+    url(r'performance/', view=views.performance_index, name='performance'),
     url(r'start_locust/', view=views.start_locust, name='start_locust'),
     url(r'performance_report/', view=views.performance_report, name='performance_report'),
     url(r'performance_real/', view=views.performance_real, name='performance_real'),
@@ -70,9 +71,8 @@ urlpatterns = [
     # 下载
     url(r'file_download/', view=views.file_download, name='file_download'),
     # 添加用户
-    url(r'user/', view=views.UserIndex.as_view(), name='user_index'),
+    url(r'user/', view=views.UserIndex.as_view(), name='user'),
     # 关于我们
-    url(r'about/', view=views.about_index, name='about_index'),
+    url(r'about/', view=views.about_index, name='about'),
     url(r'document/', view=views.document, name='document'),
-    # url(r'document_download/', view=views.document_download, name='document_download'),
 ]

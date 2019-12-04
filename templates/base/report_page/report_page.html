@@ -1,4 +1,4 @@
-{% extends "../../base.html" %}
+{% extends "base.html" %}
 
 {% block css %}
     <style>
@@ -34,7 +34,7 @@
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="/yqjr/index">主页</a>
+                    <a href="{% url 'index' %}">主页</a>
                 </li>
                 <li class="active">
                     <a class="this">运行报告</a>
@@ -88,19 +88,19 @@
                                 <td id="cen">{{ env.update_time }}</td>
                                 <td id="cen">{{ env.update_user }}</td>
                                 <td id="cen">
-                                    <a href="/base/report?report_id={{ env.report_id }}"
+                                    <a href="{% url 'base:report' %}?report_id={{ env.report_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs">
                                         <i class="fa fa-bar-chart"></i>&nbsp;&nbsp;&nbsp;
                                     </a>
-                                    <a href="/base/report_logs?report_id={{ env.report_id }}"
+                                    <a href="{% url 'base:report_logs' %}?report_id={{ env.report_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs">
                                         <i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;</a>
-                                    <a href="/base/file_download?report_id={{ env.report_id }}"
+                                    <a href="{% url 'base:file_download' %}?report_id={{ env.report_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="return download_btn()"><i
                                             class="fa fa-cloud-download"></i>&nbsp;
                                     </a>
-                                    <a href="/base/report_delete?report_id={{ env.report_id }}"
+                                    <a href="{% url 'base:report_delete' %}?report_id={{ env.report_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;
                                     </a>

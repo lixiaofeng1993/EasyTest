@@ -1,4 +1,4 @@
-{% extends "../../base.html" %}
+{% extends "base.html" %}
 
 {% block css %}
     <style>
@@ -25,7 +25,7 @@
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="/index">主页</a>
+                    <a href="{% url 'index' %}">主页</a>
                 </li>
                 <li class="active">
                     <a class="this">签名方式</a>
@@ -45,7 +45,7 @@
         <div class="col-md-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <a class="btn btn-primary" id="add_id_PeriodicTask" href="/base/sign_add"> <i
+                    <a class="btn btn-primary" id="add_id_PeriodicTask" href="{% url 'base:sign_add' %}"> <i
                             class="fa fa-plus-circle"></i>&nbsp;添加签名 </a>
                 </div>
                 <div class="panel-body">
@@ -64,13 +64,13 @@
                         {% for sign in object_list %}
                             <tr>
                                 <td id="cen">{{ sign.sign_id }}</td>
-                                <td><a href="/base/sign_update?sign_id={{ sign.sign_id }}"
+                                <td><a href="{% url 'base:sign_update' %}?sign_id={{ sign.sign_id }}"
                                        class="layui-btn layui-btn-xs" lay-event="edit">{{ sign.sign_name }}</a></td>
                                 <td>{{ sign.description }}</td>
                                 <td id="cen">{{ sign.update_time }}</td>
                                 <td id="cen">{{ sign.update_user }}</td>
                                 <td id="cen">
-                                    <a href="/base/sign_delete?sign_id={{ sign.sign_id }}"
+                                    <a href="{% url 'base:sign_delete' %}?sign_id={{ sign.sign_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"
                                        onclick="return delete_btn()"><img
                                             src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>

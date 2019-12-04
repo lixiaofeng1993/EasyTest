@@ -1,4 +1,4 @@
-{% extends "../../base.html" %}
+{% extends "base.html" %}
 
 {% block css %}
     <style>
@@ -71,13 +71,13 @@
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="/yqjr/index">主页</a>
+                    <a href="{% url 'index' %}">主页</a>
                 </li>
                 <li class="active">
                     <a class="this">基础信息</a>
                 </li>
                 <li class="active">
-                    <a class="this-page" href="/base/case/">定时任务</a>
+                    <a class="this-page" href="{% url 'base:timing_task' %}">定时任务</a>
                 </li>
                 <li class="active">
                     <a class="">运行日志</a>
@@ -100,7 +100,7 @@
             {% else %}
                 <div style="margin: 1% 1%">
                     {% if log_file %}
-                        <a href="/base/file_download?log_file={{ log_file }}" class="btn btn-primary"><i
+                        <a href="{% url 'base:file_download' %}?log_file={{ log_file }}" class="btn btn-primary"><i
                                 class="fa fa-cloud-download"></i>&nbsp;下载运行任务日志</a>
                         <button onclick="get_task_log()" class="btn btn-primary"><i
                                 class="fa fa-code-fork"></i>&nbsp;格式化日志

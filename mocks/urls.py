@@ -11,6 +11,7 @@ from django.conf.urls import url
 # from django.views.generic.base import RedirectView
 from . import views
 
+app_name = "mocks"
 urlpatterns = [
     # 项目
     url(r'api/?', view=views.mock_api, name='mock_api'),

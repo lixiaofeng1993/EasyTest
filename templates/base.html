@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 
@@ -7,19 +8,19 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!-- VENDOR CSS -->
-    <link rel="stylesheet" href="/static/vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/static/vendor/font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="/static/vendor/linearicons/style.css">
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'vendor/linearicons/style.css' %}">
     <!-- MAIN CSS -->
-    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
-    <link rel="stylesheet" href="/static/css/demo.css">
-    <link rel="stylesheet" href="/static/css/loading.css">
+    <link rel="stylesheet" href="{% static 'css/demo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/loading.css' %}">
     <!-- GOOGLE FONTS -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
     <!-- ICONS -->
-    <link rel="apple-touch-icon" sizes="76x76" href="/static/img/E_fa.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/static/img/E_fa.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'img/favicon.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'img/favicon.png' %}">
 
     {% block css %}{% endblock %}
 
@@ -31,8 +32,8 @@
     <!-- NAVBAR -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="brand">
-            <a href="/index/"><img src="/static/img/logo.png" alt="Klorofil Logo"
-                                   class="img-responsive logo"></a>
+            <a href="{% url 'index' %}"><img src="{% static 'img/logo.png' %}" alt="Klorofil Logo"
+                                             class="img-responsive logo"></a>
         </div>
         <div class="container-fluid">
             <div class="navbar-btn">
@@ -41,8 +42,9 @@
             <div id="navbar-menu1">
                 <ul class="nav navbar-nav navbar-right">
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="/static/img/userImg.jpg"
-                                                                                        class="img-circle" alt="Avatar">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img
+                                src="{% static 'img/userImg.jpeg' %}"
+                                class="img-circle" alt="Avatar">
                             <span>{{ user }}</span> <i class="icon-submenu fa fa-caret-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="javascript:void(0)" onclick="changePassword()"><i
@@ -51,10 +53,10 @@
                             <li><a href="https://email.163.com/" target="_blank"><i class="fa fa-envelope-open"></i>
                                 <span>163邮箱</span></a></li>
                             <li><a href="/admin/"><i class="fa fa-bookmark"></i> <span>管理后台</span></a></li>
-                            <li><a href="/api/event_manage/"><i
+                            <li><a href="{% url 'guest:event_manage' %}"><i
                                     class="fa fa-mouse-pointer"></i> <span>demo页面</span></a>
                             </li>
-                            <li><a href="/mocks/api/"><i
+                            <li><a href="{% url 'mocks:mock_api' %}"><i
                                     class="fa fa-pinterest-square"></i> <span>Mocks服务</span></a>
                             </li>
                             <li><a href="http://www.easytest.xyz:8080" target="_blank"><i
@@ -69,7 +71,7 @@
                             <li><a href="https://www.cnblogs.com/changqing8023" target="_blank"><i
                                     class="fa fa-rouble"></i> <span>博客园地址</span></a>
                             </li>
-                            <li><a href="/logout/"><i class="fa fa-sign-out"></i> <span>退出</span></a></li>
+                            <li><a href="{% url 'logout' %}"><i class="fa fa-sign-out"></i> <span>退出</span></a></li>
                         </ul>
                     </li>
                 </ul>
@@ -81,7 +83,7 @@
         <div class="sidebar-scroll">
             <nav>
                 <ul class="nav" style="margin-top: 15px">
-                    <li><a href="/index" class=""><i class="fa fa-home"></i> <span
+                    <li><a href="{% url 'index' %}" class=""><i class="fa fa-home"></i> <span
                             style="margin-left: 0">主页</span></a></li>
                     <li>
                         <a href="#project" data-toggle="collapse" class="collapsed"><i
@@ -90,7 +92,7 @@
                                     class="icon-submenu fa fa-chevron-left"></i></a>
                         <div id="project" class="collapse ">
                             <ul class="nav">
-                                <li><a href="/base/project/" class="">项目管理</a></li>
+                                <li><a href="{% url 'base:project' %}" class="">项目管理</a></li>
                             </ul>
                         </div>
                     </li>
@@ -100,7 +102,7 @@
                                     class="icon-submenu fa fa-chevron-left"></i></a>
                         <div id="env" class="collapse ">
                             <ul class="nav">
-                                <li><a href="/base/env/" class="">测试环境</a></li>
+                                <li><a href="{% url 'base:env' %}" class="">测试环境</a></li>
                             </ul>
                         </div>
                     </li>
@@ -111,7 +113,7 @@
                                     class="icon-submenu fa fa-chevron-left"></i></a>
                         <div id="interface" class="collapse ">
                             <ul class="nav">
-                                <li><a href="/base/interface/" class="">接口管理</a></li>
+                                <li><a href="{% url 'base:interface' %}" class="">接口管理</a></li>
                             </ul>
                         </div>
                     </li>
@@ -121,7 +123,7 @@
                                     class="icon-submenu fa fa-chevron-left"></i></a>
                         <div id="case" class="collapse ">
                             <ul class="nav">
-                                <li><a href="/base/case/" class="">用例管理</a></li>
+                                <li><a href="{% url 'base:case' %}" class="">用例管理</a></li>
                             </ul>
                         </div>
                     </li>
@@ -131,7 +133,7 @@
                                     class="icon-submenu fa fa-chevron-left"></i></a>
                         <div id="plan" class="collapse ">
                             <ul class="nav">
-                                <li><a href="/base/plan/" class="">测试计划</a></li>
+                                <li><a href="{% url 'base:plan' %}" class="">测试计划</a></li>
                             </ul>
                         </div>
                     </li>
@@ -141,7 +143,7 @@
                                     class="icon-submenu fa fa-chevron-left"></i></a>
                         <div id="task" class="collapse ">
                             <ul class="nav">
-                                <li><a href="/base/timing_task/" class="">定时任务</a></li>
+                                <li><a href="{% url 'base:timing_task' %}" class="">定时任务</a></li>
                             </ul>
                         </div>
                     </li>
@@ -151,7 +153,7 @@
                                     class="icon-submenu fa fa-chevron-left"></i></a>
                         <div id="report" class="collapse ">
                             <ul class="nav">
-                                <li><a href="/base/report_page/" class="">运行报告</a></li>
+                                <li><a href="{% url 'base:report_page' %}" class="">运行报告</a></li>
                             </ul>
                         </div>
                     </li>
@@ -161,10 +163,10 @@
                                     class="icon-submenu fa fa-chevron-left"></i></a>
                         <div id="performance" class="collapse ">
                             <ul class="nav">
-                                <li><a href="/base/performance/" class="">性能测试</a></li>
+                                <li><a href="{% url 'base:performance' %}" class="">性能测试</a></li>
                             </ul>
                             <ul class="nav">
-                                <li><a href="/base/performance_report/" class="">聚合报告</a></li>
+                                <li><a href="{% url 'base:performance_report' %}" class="">聚合报告</a></li>
                             </ul>
                         </div>
                     </li>
@@ -176,7 +178,7 @@
                             <i class="icon-submenu fa fa-chevron-left"></i></a>
                         <div id="sign" class="collapse ">
                             <ul class="nav">
-                                <li><a href="/base/sign/" class="">签名方式</a></li>
+                                <li><a href="{% url 'base:sign' %}" class="">签名方式</a></li>
                             </ul>
                         </div>
                     </li>
@@ -187,7 +189,7 @@
                             <i class="icon-submenu fa fa-chevron-left"></i></a>
                         <div id="user" class="collapse ">
                             <ul class="nav">
-                                <li><a href="/base/user/" class="">用户管理</a></li>
+                                <li><a href="{% url 'base:user' %}" class="">用户管理</a></li>
                             </ul>
                         </div>
                     </li>
@@ -197,10 +199,10 @@
                             <i class="icon-submenu fa fa-chevron-left"></i></a>
                         <div id="about" class="collapse ">
                             <ul class="nav">
-                                <li><a href="/base/about/" class="">关于我们</a></li>
+                                <li><a href="{% url 'base:about' %}" class="">关于我们</a></li>
                             </ul>
                             <ul class="nav">
-                                <li><a href="/base/document/" class="">文档下载</a></li>
+                                <li><a href="{% url 'base:document' %}" class="">文档下载</a></li>
                             </ul>
                         </div>
                     </li>
@@ -224,10 +226,10 @@
 
 </div>
 
-<script src="/static/vendor/jquery/jquery.min.js"></script>
-<script src="/static/vendor/bootstrap/js/bootstrap.min.js"></script>
-<script src="/static/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<script src="/static/scripts/klorofil-common.js"></script>
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendor/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
+{#<script src="/static/scripts/klorofil-common.js"></script>#}
 <script>
     $(document).ready(function () {
         var a_name = $("a.this").text();

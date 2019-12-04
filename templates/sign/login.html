@@ -1,9 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <link rel="apple-touch-icon" sizes="76x76" href="/static/img/E_fa.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/static/img/E_fa.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'img/favicon.png' %}">
+    <link rel="icon" type="image/png" sizes="96x96" href="{% static 'img/favicon.png' %}">
     <!-- 加载bootstrap3的应用、CSS。JavaScript文件-->
     {% load bootstrap3 %}
     {% bootstrap_css %}
@@ -14,12 +15,12 @@
 <!-- 导航栏 -->
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
-        <a class="navbar-brand" href="/index/">返回测试平台</a>
+        <a class="navbar-brand" href="{% url 'index' %}">返回测试平台</a>
     </div>
 </nav>
 <div class="page-header" style="padding-top: 80px;margin-left: 20%">
 
-    <form class="navbar-form" method="post" action="/api/login_action_guest/">
+    <form class="navbar-form" method="post" action="{% url 'guest:login_action_guest' %}">
         {% csrf_token %}
         <div id="navbar" class="navbar-collapse collapse">
             <div class="ui-spinner-input">

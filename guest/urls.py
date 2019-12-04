@@ -90,6 +90,7 @@ router.register(r'guests', GuestViewSet)
 
 schema_view = get_schema_view(title='EasyTest 测试接口', renderer_classes=[OpenAPIRenderer, SwaggerUIRenderer], url='/')
 
+app_name = "guest"
 urlpatterns = [
     # web
     url(r'^index_guest/$', view=views.index, name='index_guest'),  # 登录页面

@@ -1,4 +1,4 @@
-{% extends "../../base.html" %}
+{% extends "base.html" %}
 
 {% block css %}
     <style>
@@ -108,7 +108,7 @@
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="/yqjr/index">主页</a>
+                    <a href="{% url 'index' %}">主页</a>
                 </li>
                 <li class="active">
                     <a class="this">接口管理</a>
@@ -127,7 +127,7 @@
         <div class="col-md-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <a href="/base/interface_add/" class="btn btn-primary"><i
+                    <a href="{% url 'base:interface_add' %}" class="btn btn-primary"><i
                             class="fa fa-plus-circle"></i>&nbsp;添加接口</a>&nbsp;&nbsp;
                     <button class="btn btn-primary" id="batch" onclick="batch_index()"><i
                             class="fa fa-plus-circle"></i>&nbsp;swagger导入
@@ -161,7 +161,7 @@
                             {#                            {% for if in if_ %}#}
                             <tr>
                                 <td id="cen">{{ if.if_id }}</td>
-                                <td id="if_name"><a href="/base/interface_update?if_id={{ if.if_id }}"
+                                <td id="if_name"><a href="{% url 'base:interface_update' %}?if_id={{ if.if_id }}"
                                                     class="layui-btn layui-btn-xs"
                                                     lay-event="edit">{{ if.if_name }}</a></td>
                                 <td id="cen">{{ if.project }}</td>
@@ -180,10 +180,10 @@
 {#                                    <a href="/base/set_mock?if_id={{ if.if_id }}"#}
 {#                                       class="layui-btn layui-btn-danger layui-btn-xs"><i class="fa fa-etsy"></i>&nbsp;&nbsp;&nbsp;#}
 {#                                    </a>#}
-                                    <a href="/base/interface_copy?if_id={{ if.if_id }}"
+                                    <a href="{% url 'base:interface_copy' %}?if_id={{ if.if_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="return copy_btn()"><i class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;</a>
-                                    <a href="/base/interface_delete?if_id={{ if.if_id }}"
+                                    <a href="{% url 'base:interface_delete' %}?if_id={{ if.if_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"
                                        onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;
                                     </a>

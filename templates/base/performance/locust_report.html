@@ -1,4 +1,4 @@
-{% extends "../../base.html" %}
+{% extends "base.html" %}
 
 {% block css %}
     <style>
@@ -51,7 +51,7 @@
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="/yqjr/index">主页</a>
+                    <a href="{% url 'index' %}">主页</a>
                 </li>
                 <li class="active">
                     <a class="this">性能测试</a>
@@ -70,8 +70,8 @@
         <div class="col-md-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <a href="/base/performance_real/" class="btn btn-primary">实时数据</a>
-                    <a href="/base/performance_history/" class="btn btn-primary">历史数据</a>
+                    <a href="{% url 'base:performance_real' %}" class="btn btn-primary">实时数据</a>
+                    <a href="{% url 'base:performance_history' %}" class="btn btn-primary">历史数据</a>
                 </div>
                 <div class="spinner"></div>
                 {% if error %}

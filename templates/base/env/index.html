@@ -1,4 +1,4 @@
-{% extends "../../base.html" %}
+{% extends "base.html" %}
 
 {% block css %}
     <style>
@@ -38,7 +38,7 @@
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="/yqjr/index">主页</a>
+                    <a href="{% url 'index' %}">主页</a>
                 </li>
                 <li class="active">
                     <a class="this">测试环境</a>
@@ -58,7 +58,7 @@
         <div class="col-md-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <a href="/base/env_add" class="btn btn-primary"><i
+                    <a href="{% url 'base:env_add' %}" class="btn btn-primary"><i
                             class="fa fa-plus-circle"></i>&nbsp;添加环境</a>
                 </div>
                 <div class="panel-body">
@@ -82,7 +82,7 @@
                             {#                            {% for env in env_ %}#}
                             <tr>
                                 <td id="cen">{{ env.env_id }}</td>
-                                <td class="env-name"><a href="/base/env_update?env_id={{ env.env_id }}"
+                                <td class="env-name"><a href="{% url 'base:env_update' %}?env_id={{ env.env_id }}"
                                                         class="layui-btn layui-btn-xs"
                                                         lay-event="edit">{{ env.env_name }}</a></td>
                                 <td id="cen">{{ env.is_swagger }}</td>
@@ -93,10 +93,10 @@
                                 <td id="cen">{{ env.update_time }}</td>
                                 <td id="cen">{{ env.update_user }}</td>
                                 <td id="cen">
-                                    <a href="/base/set_headers?env_id={{ env.env_id }}"
+                                    <a href="{% url 'base:set_headers' %}?env_id={{ env.env_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs"><i
                                             class="fa fa-header"></i>&nbsp;&nbsp;&nbsp;</a>
-                                    <a href="/base/env_delete?env_id={{ env.env_id }}"
+                                    <a href="{% url 'base:env_delete' %}?env_id={{ env.env_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="return delete_btn()"><img
                                             src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>

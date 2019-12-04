@@ -9,23 +9,23 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="icon" href="{% static '/img/E_fa.png' %}">
+    <link rel="icon" href="{% static 'img/favicon.png' %}">
 
-    <link rel="stylesheet" href="{% static '/admin/simpleui-x/elementui/theme-chalk/index.css' %}">
-    <link rel="stylesheet" href="{% static '/admin/simpleui-x/fontawesome-free-5.8.1-web/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'admin/simpleui-x/elementui/theme-chalk/index.css' %}">
+    <link rel="stylesheet" href="{% static 'admin/simpleui-x/fontawesome-free-5.8.1-web/css/all.min.css' %}">
 
     {#    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">#}
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/5.8.1/css/all.min.css">
 
 
-    <link rel="stylesheet" href="{% static '/admin/simpleui-x/css/login.css' %}?_=2.1">
+    <link rel="stylesheet" href="{% static 'admin/simpleui-x/css/login.css' %}?_=2.1">
 
 
     <!-- VENDOR CSS -->
     <link rel="stylesheet" href="/static/vendor/font-awesome/css/font-awesome.min.css">
     <!-- ICONS -->
-    <link rel="apple-touch-icon" sizes="76x76" href="/static/img/E_fa.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/static/img/E_fa.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/static/img/favicon.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/static/img/favicon.png">
     <style>
         .bg {
             text-align: center;
@@ -34,7 +34,7 @@
             background-repeat: no-repeat;
             background-size: 100%;
             background: #f0f2f5;
-            background-image: url('{% static '/admin/simpleui-x/img/bg.svg' %}');
+            background-image: url('{% static 'admin/simpleui-x/img/bg.svg' %}');
             min-height: 100%;
             background-repeat: no-repeat;
             background-position: 50%;
@@ -88,7 +88,7 @@
     <div class="panel">
         <h1>EasyTest-自动化测试平台</h1>
         <div class="page-header">
-            <form id="RegisterForm" class="simpleui-form" method="post" action="/register/">
+            <form id="RegisterForm" class="simpleui-form" method="post" action="{% url 'register' %}">
                 {% csrf_token %}
                 <div id="navbar" class="navbar-collapse collapse">
                     <div class="simpleui-input-inline" align="center">
@@ -124,10 +124,9 @@
 </div>
 </body>
 </html>
-<script type="text/javascript" src="{% static '/admin/simpleui-x/particles/particles.js' %}"></script>
-<script type="text/javascript" src="{% static '/admin/simpleui-x/particles/app.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/simpleui-x/particles/particles.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/simpleui-x/particles/app.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue"></script>
-{#<script src="https://unpkg.com/element-ui/lib/index.js"></script>#}
-<script type="text/javascript" src="{% static '/admin/simpleui-x/js/vue.min.js' %}"></script>
-<script type="text/javascript" src="{% static '/admin/simpleui-x/elementui/index.js' %}"></script>
-<script type="text/javascript" src="{% static '/admin/simpleui-x/js/login.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/simpleui-x/js/vue.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/simpleui-x/elementui/index.js' %}"></script>
+<script type="text/javascript" src="{% static 'admin/simpleui-x/js/login.js' %}"></script>

@@ -1,4 +1,4 @@
-{% extends "../../base.html" %}
+{% extends "base.html" %}
 
 {% block css %}
     <style>
@@ -13,13 +13,13 @@
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li>
-                    <a href="/yqjr/index">主页</a>
+                    <a href="{% url 'index' %}">主页</a>
                 </li>
                 <li class="active">
                     <a class="this">基础信息</a>
                 </li>
                 <li class="active">
-                    <a class="this-page" href="/base/env/">测试环境</a>
+                    <a class="this-page" href="{% url 'base:env' %}">测试环境</a>
                 </li>
                 <li class="active">
                     <a class="">添加环境</a>
@@ -38,7 +38,7 @@
                     <h3 class="panel-title">添加测试环境</h3>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" method="post" action="/base/env_add/">
+                    <form class="form-horizontal" method="post" action="{% url 'base:env_add' %}">
                         <div class="form-group">
                             <label class="col-sm-2 control-label">环境名称</label>
                             <div class="col-sm-6">
