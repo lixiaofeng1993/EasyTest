@@ -227,13 +227,21 @@ class Test_execute():
                     if_dict["res_content"] = eval(
                         res.text.replace('false', 'False').replace('null', 'None').replace('true',
                                                                                            'True'))  # 查看报告时转码错误的问题
+                    if isinstance(if_dict["res_content"], dict):
+                        if_dict["res_content"].update({"res_status_code": res.status_code})
+                    elif isinstance(if_dict["res_content"], list):
+                        res_content = {}
+                        res_content.update({"res_status_code": res.status_code, "data": if_dict["res_content"]})
+                        if_dict["res_content"] = res_content
+                    elif isinstance(if_dict["res_content"], (str, int)):
+                        if_dict["res_content"] = {"res_status_code": res.status_code, "data": res.text}
                     if isinstance(if_dict['res_content'], dict):
                         if '系统异常' in if_dict['res_content'].values():
                             if_dict = response_value_error(if_dict, make=True)
                             return if_dict
                 except SyntaxError as e:
                     # if_dict = response_value_error(if_dict, e)  # 解析返回值异常
-                    if_dict["res_content"] = res.text  # 返回值无法eval的情况
+                    if_dict["res_content"] = {"res_status_code": res.status_code, "data": res.text}  # 返回值无法eval的情况
                     # return if_dict
             except requests.RequestException as e:
                 if_dict = request_api_error(if_dict, e)  # 接口请求异常
