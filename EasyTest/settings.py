@@ -148,6 +148,7 @@ SIMPLEUI_HOME_ICON = 'fa fa-user'
 
 # 上传
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # 对应文件夹
+if not os.path.exists(MEDIA_ROOT): os.mkdir(MEDIA_ROOT)
 MEDIA_URL = '/media/'  # 对应上线后的url
 
 STATIC_URL = '/static/'

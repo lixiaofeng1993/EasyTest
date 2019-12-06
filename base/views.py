@@ -1325,6 +1325,7 @@ def plan_run(request):
                 if case_result.get("error", ""):
                     return HttpResponse(case_result)
                 report_path = case_result['report_path']
+
                 for records in case_result['summary']['details'][0]['records']:
                     j += 1
                     records['id'] = j

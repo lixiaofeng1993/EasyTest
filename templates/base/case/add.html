@@ -228,7 +228,7 @@
         function add_extract_row(obj) {
             var panel = $(obj).parent().parent();
             var tbody = $(panel).find("table[name='extract']").children('tbody');
-{#            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";#}
+            {#            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";#}
             var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td> <td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
             $(tbody).append(newRow);
         }
@@ -456,6 +456,10 @@
                         if (i == 0) return true;
                         var name = $(this).find("td[name='var_name']").text();
                         var value = $(this).find("td[name='var_value']").text();
+                        // 参数值显示数字
+                        if (!isNaN(value)) {
+                            value = value * 1
+                        }
                         var remark = $(this).find("td[name='var_remark']").text();
                         body[name] = value;
                     });

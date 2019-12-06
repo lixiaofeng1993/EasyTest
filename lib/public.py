@@ -429,18 +429,19 @@ def format_body(body):
     """
     if isinstance(body, dict):
         for key, value in body.items():
-            value = re.sub('[\n\t ]', '', value)
-            if key == 'list':  # 标识body参数为list的情况
-                try:
-                    body = eval(value)
-                except Exception:
-                    return 'error'
-            else:
-                if '[' in value or '{' in value:
+            if not isinstance(value, int):  # 排除参数是int的情况
+                value = re.sub('[\n\t ]', '', value)
+                if key == 'list':  # 标识body参数为list的情况
                     try:
-                        body[key] = eval(value)
-                    except Exception as e:
+                        body = eval(value)
+                    except Exception:
                         return 'error'
+                else:
+                    if '[' in value or '{' in value:
+                        try:
+                            body[key] = eval(value)
+                        except Exception as e:
+                            return 'error'
         return body
     else:
         return 'error'
@@ -555,8 +556,8 @@ def DrawPie(pass_num=0, fail=0, error=0):
     plt.axis('equal')
     # plt.show()
     # 保存饼图
-    # pic_path = settings.MEDIA_ROOT
-    pic_path = '/var/lib/jenkins/workspace/EasyTest/media'
+    pic_path = settings.MEDIA_ROOT
+    # pic_path = '/var/lib/jenkins/workspace/EasyTest/media'
     imgPath = os.path.join(pic_path, str(now_time) + "pie.png")
     plt.savefig(imgPath)
     plt.tight_layout()
