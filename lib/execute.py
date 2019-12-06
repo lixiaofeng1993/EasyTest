@@ -81,7 +81,7 @@ class Test_execute():
             http['config']['name'] = self.plan.plan_name
             runner = HttpRunner(failfast=False, log_file='all-')
             report_path = runner.run(http)
-            summary = runner.summary
+            summary = runner._summary
             case_run['summary'] = summary
             case_run['report_path'] = report_path
             case_run['case_name'] = case.case_name
