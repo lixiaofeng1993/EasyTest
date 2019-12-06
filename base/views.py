@@ -1322,6 +1322,8 @@ def plan_run(request):
             if run_mode == '1':
                 execute = Test_execute(env_id, case_id_list, run_mode=run_mode, plan=plan)
                 case_result = execute.test_case
+                if case_result.get("error", ""):
+                    return HttpResponse(case_result)
                 report_path = case_result['report_path']
                 for records in case_result['summary']['details'][0]['records']:
                     j += 1
