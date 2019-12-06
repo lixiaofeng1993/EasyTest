@@ -154,19 +154,19 @@ def interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, r
         return '请选择接口的请求数据类型！'
     if is_headers == '':
         return '请选择接口是否需要设置请求头！'
-    att = re.compile('^[\w-]+$', re.A)
+    att = re.compile('^[\s\w-]+$', re.A)
     if request_header_data:
         request_header_data = eval(request_header_data)
         for data in request_header_data:
             math = att.findall(data['var_name'])
             if not math:
-                return '请求头中有参数不符合规则【^[\w-]+$】，请重新输入！'
+                return '请求头中有参数不符合规则【^[\s\w-]+$】，请重新输入！'
     if request_body_data:
         request_body_data = eval(request_body_data)
         for data in request_body_data:
             math = att.findall(data['var_name'])
             if not math:
-                return 'body中有参数不符合规则【^[\w-]+$】，请重新输入！'
+                return 'body中有参数不符合规则【^[\s\w-]+$】，请重新输入！'
     # if response_header_data:
     #     response_header_data = eval(response_header_data)
     #     for data in response_header_data:
@@ -236,16 +236,16 @@ def case_info_logic(case_name, content, case_id=''):
     if content == '[]':
         return '请输入接口参数信息！'
     contents = eval(content)
-    att = re.compile('^[\w-]+$', re.A)
+    att = re.compile('^[\s\w-]+$', re.A)
     for param in contents:
         for key in param['header']:
             math = att.findall(key)
             if not math:
-                return '请求头中有参数不符合规则【^[\w-]+$】，请重新输入！'
+                return '请求头中有参数不符合规则【^[\s\w-]+$】，请重新输入！'
         for key in param['body']:
             math = att.findall(key)
             if not math:
-                return 'body中有参数不符合规则【^[\w-]+$】，请重新输入！'
+                return 'body中有参数不符合规则【^[\s\w-]+$】，请重新输入！'
     if not case_id:
         name_exit = Case.objects.filter(case_name=case_name)
     else:
@@ -278,17 +278,17 @@ def plan_info_logic(plan_name, content, plan_id=''):
 def header_value_error(content):
     if content:
         content = eval(content)['header']
-        att = re.compile('^[&\.,:?*\w;/=-]*$', re.A)
+        att = re.compile('^[\s&\.,:?*\w;/=-]*$', re.A)
         make = True
         for k, v in content.items():
             math = att.findall(k)
             if not math:
                 make = False
-                return '请求头中有参数不符合规则【^[&\.,:?*\w;/=-]*$】，请重新输入！'
+                return '请求头中有参数不符合规则【^[\s&\.,:?*\w;/=-]*$】，请重新输入！'
             math = att.findall(v)
             if not math:
                 make = False
-                return '请求头中有参数 值 不符合规则【^[&\.,:?*\w;/=-]*$】，请重新输入！'
+                return '请求头中有参数 值 不符合规则【^[\s&\.,:?*\w;/=-]*$】，请重新输入！'
         if make:
             return 'ok'
     else:
