@@ -333,14 +333,15 @@
             //编辑接口--从 case 中获取数据 "<th>备注</th>" +
             $("#add_interface").click(function () {
                 var if_id = $("#if_id").val();
-                console.log(if_id);
+                var case_list = $("#case-list").text();
+                console.log(if_id + "---" + case_list + "====");
                 if (if_id == "") {
                     alert("请先选择接口");
                 }
                 else {
                     var case_id = $("#case_id").val();
                     var if_list = $("#if_list").val().split(',');
-                    if (if_list.indexOf(if_id) > -1) {
+                    if (if_list.indexOf(if_id) > -1 && case_list.trim() == "") {
                         $.ajax({
                             url: "/base/findata/",
                             type: "get",
