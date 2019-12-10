@@ -11,6 +11,7 @@ import logging
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.header import Header
+from lib import readConfig
 
 # from lib import readConfig
 
@@ -27,8 +28,8 @@ def send_email(_to, title, report_id='', register=False):
     :return:
     """
     smtp_service = 'smtp.qq.com'
-    user = '954274592@qq.com'
-    pwd = 'hlymvkoqcukvbdif'
+    user = readConfig.email_user
+    pwd = readConfig.email_pwd
 
     msg = MIMEMultipart()
     msg['Subject'] = title + ' 执行报告'
