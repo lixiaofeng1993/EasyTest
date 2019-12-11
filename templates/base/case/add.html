@@ -456,9 +456,14 @@
                         if (i == 0) return true;
                         var name = $(this).find("td[name='var_name']").text();
                         var value = $(this).find("td[name='var_value']").text();
-                        // 参数值显示数字
-                        if (!isNaN(value)) {
-                            value = value * 1
+                        if (Number.isSafeInteger(Math.abs(value))) {
+                            console.log("是安全数字");
+                            // 参数值显示数字
+                            if (!isNaN(value)) {
+                                value = value * 1
+                            }
+                        } else {
+                            console.log("不是安全数字");
                         }
                         var remark = $(this).find("td[name='var_remark']").text();
                         body[name] = value;
