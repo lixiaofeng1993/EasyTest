@@ -61,6 +61,7 @@ urlpatterns = [
     url(r'report_page/', view=views.ReportPage.as_view(), name='report_page'),
     url(r'report_logs/', view=views.report_logs, name='report_logs'),  # 日志
     url(r'report_delete/', view=views.report_delete, name='report_delete'),
+    url(r'report_results/', view=views.report_results, name='report_results'),  # 获取报告执行结果
     # locust
     url(r'performance/', view=views.performance_index, name='performance'),
     url(r'start_locust/', view=views.start_locust, name='start_locust'),

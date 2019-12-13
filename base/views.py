@@ -2059,3 +2059,47 @@ def findata(request):
             except Exception as e:
                 log.error('解析参数错误. {}'.format(e))
                 return HttpResponse('no')
+
+
+def report_results(request):
+    """
+    获取报告结果接口
+    :param request:
+    :return:
+    """
+    report_id = request.GET.get("report_id", "")
+    if report_id:
+        report = Report.objects.get(report_id=report_id)
+    else:
+        report = Report.objects.all().order_by("-report_id").first()
+    name = report.report_name
+    case_num = report.case_num
+    pass_num = int(report.pass_num)
+    fail_num = int(report.fail_num)
+    error_num = int(report.error_num)
+    error_list = []
+    if fail_num or error_num:
+        content = eval(report.content)
+        if isinstance(content, list):
+            for case in content:
+                for data in case.get("step_list", []):
+                    error_dict = {
+                        "接口名称": data.get("if_name", ""),
+                        "接口地址": data.get("url", ""),
+                        "自定义报错信息": data.get("error", ""),
+                        "接口请求参数": data.get("body", ""),
+                        "接口请求头": data.get("header", ""),
+                        "接口返回信息": data.get("res_content", ""),
+                    }
+                    error_list.append(error_dict)
+
+    info = {
+        "报告名称": name,
+        "用例数量": case_num,
+        "接口通过数量": pass_num,
+        "接口失败数量": fail_num,
+        "接口错误数量": error_num,
+        "接口通过率": str(format(pass_num / (error_num + fail_num + pass_num) * 100, ".2f")) + "%",
+        "异常接口信息": error_list,
+    }
+    return JsonResponse(info)
