@@ -942,7 +942,7 @@ def case_update(request):
             case_id = request.POST['case_id']
             case_name = request.POST.get('case_name', '').strip()
             content = request.POST.get('content')
-            msg = case_info_logic(case_name, content, case_id)
+            msg = case_info_logic(case_name, content, case_id, user_id)
             if msg != 'ok':
                 log.error('case update error：{}'.format(msg))
                 return HttpResponse(msg)

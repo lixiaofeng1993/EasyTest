@@ -227,7 +227,7 @@ def format_params(params):
     return method, is_sign, is_headers, mock
 
 
-def case_info_logic(case_name, content, case_id=''):
+def case_info_logic(case_name, content, case_id='', user_id=""):
     """
     用例新增、编辑逻辑
     :return:
@@ -250,7 +250,9 @@ def case_info_logic(case_name, content, case_id=''):
         if param.get("url", ""):  # case中修改url，更新到接口中
             url = Interface.objects.get(if_id=param["if_id"]).url
             if url != param["url"]:
-                Interface.objects.filter(if_id=param["if_id"]).update(url=param["url"])
+                from django.utils import timezone
+                Interface.objects.filter(if_id=param["if_id"]).update(url=param["url"], update_time=timezone.now())
+                log.info("用户 {} 更新 接口 {} url成功！ {} ==> {}".format(user_id, param["if_name"], url, param["url"]))
     if not case_id:
         name_exit = Case.objects.filter(case_name=case_name)
     else:
