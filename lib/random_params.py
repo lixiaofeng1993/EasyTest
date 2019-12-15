@@ -147,7 +147,6 @@ def fake_params(params, value, key='', i=0):
             else:
                 params.remove(value)
                 params.insert(i, str_value + str_email + str_value1)
-
     return params
 
 
@@ -159,18 +158,25 @@ def random_params(params):
     """
     if isinstance(params, dict):  # params是字典，包含字典或者列表
         for key, value in params.items():
-            if isinstance(value, dict):
-                for k, v in value.items():
-                    fake_params(value, v, k)
-            elif isinstance(value, list):
-                # value.sort()
-                for i in range(len(value)):
-                    fake_params(value, value[i], i=i)
-            else:
+            if isinstance(value, (dict, list)):
+                random_params(value)
+            elif isinstance(value, str):
                 fake_params(params, value, key)
+                # for k, v in value.items():
+                #     fake_params(value, v, k)
+                # elif isinstance(value, list):
+                # value.sort()
+                # for i in range(len(value)):
+                #     fake_params(value, value[i], i=i)
+                # else:
+                #     fake_params(params, value, key)
     elif isinstance(params, list):  # params是列表，包含字典
         for i in range(len(params)):
-            if isinstance(params[i], dict):
-                for k, v in params[i].items():
-                    fake_params(params[i], v, k)
+            if isinstance(params[i], (dict, list)):
+                random_params(params[i])
+            elif isinstance(params[i], str):
+                fake_params(params, params[i])
+                # if isinstance(params[i], dict):
+                #     for k, v in params[i].items():
+                #         fake_params(params[i], v, k)
     return params
