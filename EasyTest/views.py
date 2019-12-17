@@ -21,9 +21,6 @@ log = logging.getLogger('log')  # 初始化log
 num_list = []
 
 
-# appid = 'wx506830910cbd77e9'
-# appsecret = 'e0e5d5ed1d507103f73d6667eef00d7a' pages/index/detail/index?id=365&campId=12&index=1
-
 @login_required
 def index(request):
     """
