@@ -350,27 +350,32 @@ def get_param(param, content, num=0):
     :return: 返回非变量的提取参数值
     """
     param_val = None
-    if isinstance(content, str):
-        try:
-            content = json.loads(content)
-        except:
-            content = ""
-    if isinstance(content, dict):
-        param_val = get_param_response(param, content, num)
-    if isinstance(content, list):
-        dict_data = {}
-        for i in range(len(content)):
-            try:
-                dict_data[str(i)] = eval(content[i])
-            except:
-                dict_data[str(i)] = content[i]
-        param_val = get_param_response(param, dict_data, num)
-    if param_val is None:
+    if "." in param:
+        patt = param.split('.')
+        param_val = httprunner_extract(content, patt)
         return param_val
     else:
-        if "$" + param == param_val:
-            param_val = None
-        return param_val
+        if isinstance(content, str):
+            try:
+                content = json.loads(content)
+            except:
+                content = ""
+        if isinstance(content, dict):
+            param_val = get_param_response(param, content, num)
+        if isinstance(content, list):
+            dict_data = {}
+            for i in range(len(content)):
+                try:
+                    dict_data[str(i)] = eval(content[i])
+                except:
+                    dict_data[str(i)] = content[i]
+            param_val = get_param_response(param, dict_data, num)
+        if param_val is None:
+            return param_val
+        else:
+            if "$" + param == param_val:
+                param_val = None
+            return param_val
 
 
 def get_param_response(param_name, dict_data, num=0, default=None):

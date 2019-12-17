@@ -2069,7 +2069,10 @@ def report_results(request):
     """
     report_id = request.GET.get("report_id", "")
     if report_id:
-        report = Report.objects.get(report_id=report_id)
+        try:
+            report = Report.objects.get(report_id=report_id)
+        except Report.DoesNotExist:
+            return JsonResponse({"error": "查看的报告不存在，请跟测试人员核实！"})
     else:
         report = Report.objects.all().order_by("-report_id").first()
     name = report.report_name
@@ -2083,15 +2086,16 @@ def report_results(request):
         if isinstance(content, list):
             for case in content:
                 for data in case.get("step_list", []):
-                    error_dict = {
-                        "接口名称": data.get("if_name", ""),
-                        "接口地址": data.get("url", ""),
-                        "自定义报错信息": data.get("error", ""),
-                        "接口请求参数": data.get("body", ""),
-                        "接口请求头": data.get("header", ""),
-                        "接口返回信息": data.get("res_content", ""),
-                    }
-                    error_list.append(error_dict)
+                    if data.get("result", "") in ("fail", "error"):
+                        error_dict = {
+                            "接口名称": data.get("if_name", ""),
+                            "接口地址": data.get("url", ""),
+                            "自定义报错信息": data.get("error", ""),
+                            "接口请求参数": data.get("body", ""),
+                            "接口请求头": data.get("header", ""),
+                            "接口返回信息": data.get("res_content", ""),
+                        }
+                        error_list.append(error_dict)
 
     info = {
         "报告名称": name,
