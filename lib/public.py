@@ -434,6 +434,11 @@ def format_body(body):
     """
     if isinstance(body, dict):
         for key, value in body.items():
+            if "str" in str(value):  # 参数值数字需要时字符串的情况，传参时使用 str(number)
+                patt = re.compile("str\((\d+)\)")
+                number_list = patt.findall(value)
+                if number_list:
+                    body[key] = str(number_list[0])
             if not isinstance(value, int):  # 排除参数是int的情况
                 value = re.sub('[\n\t ]', '', value)
                 if key == 'list':  # 标识body参数为list的情况
