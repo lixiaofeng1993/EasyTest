@@ -153,6 +153,30 @@ def format_url(url, body):
         return url, body
 
 
+def get_check_filed(check_filed, response):
+    """
+    返回值降序排序后，获取断言字段值
+    :param check_filed: 查找的排序字段
+    :param response: 降序排序后的返回值
+    :return:
+    """
+    param_val = None
+    if "." in check_filed:
+        patt = check_filed.split('.')
+        for par in patt:
+            if isinstance(response, list):
+                for check in response:
+                    if check[0] == par:
+                        patt.remove(par)
+                        param_val = httprunner_extract(check[1], patt)
+    elif isinstance(response, list):
+        for check in response:
+            if isinstance(check, tuple):
+                if check[0] == check_filed:
+                    param_val = check[1]
+    return param_val
+
+
 def validators_result(validators_list, res):
     """
     验证结果
@@ -163,14 +187,15 @@ def validators_result(validators_list, res):
     msg = ""
     result = ""
     checkpoint = ''
-    response = res["res_content"]
-    sorted(response.items(), reverse=True)  # 字典排序，无效
+    # response = res["res_content"]
+    response = sorted(res["res_content"].items(), reverse=True)  # 字典降序排序
     for var_field in validators_list:
         check_filed = var_field["check"]
         expect_filed = str(var_field["expect"]).lower()
         comparator = var_field['comparator']
         checkpoint += '字段：' + check_filed + '--> 值：' + expect_filed + '    '
-        check_filed_value = str(get_param(check_filed, response)).lower()
+        # check_filed_value = str(get_param(check_filed, response)).lower()
+        check_filed_value = str(get_check_filed(check_filed, response)).lower()
         if 'error' in res.keys():
             result += "error" + '    '
             msg += res['error']
