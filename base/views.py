@@ -1310,7 +1310,8 @@ def plan_run(request):
             plan_id = request.POST.get('plan_id', '')
             run_mode = request.POST.get('run_mode', '')
             plan = Plan.objects.get(plan_id=plan_id)
-            env_id = plan.environment.env_id
+            # env_id = plan.environment.env_id
+            env_id = request.POST.get('env_id', '')
             case_id_list = eval(plan.content)
             case_num = len(case_id_list)
             content = []
@@ -1983,43 +1984,55 @@ def report_results(request):
     :param request:
     :return:
     """
-    report_id = request.GET.get("report_id", "")
-    if report_id:
-        try:
-            report = Report.objects.get(report_id=report_id)
-        except Report.DoesNotExist:
-            return JsonResponse({"error": "查看的报告不存在，请跟测试人员核实！"})
+    user_id = request.session.get('user_id', '')  # 从session中获取user_id
+    if not get_user(user_id):
+        return JsonResponse({"msg": "请先登录您的帐号！"})
     else:
-        report = Report.objects.all().order_by("-report_id").first()
-    name = report.report_name
-    case_num = report.case_num
-    pass_num = int(report.pass_num)
-    fail_num = int(report.fail_num)
-    error_num = int(report.error_num)
-    error_list = []
-    if fail_num or error_num:
-        content = eval(report.content)
-        if isinstance(content, list):
-            for case in content:
-                for data in case.get("step_list", []):
-                    if data.get("result", "") in ("fail", "error"):
-                        error_dict = {
-                            "接口名称": data.get("if_name", ""),
-                            "接口地址": data.get("url", ""),
-                            "自定义报错信息": data.get("error", ""),
-                            "接口请求参数": data.get("body", ""),
-                            "接口请求头": data.get("header", ""),
-                            "接口返回信息": data.get("res_content", ""),
-                        }
-                        error_list.append(error_dict)
+        superuser = User.objects.get(id=user_id).is_superuser
+        if not superuser:
+            return JsonResponse({"msg": "您的帐号没有管理员权限，请跟测试人员了解详情！"})
+        else:
+            if request.method != "GET":
+                return JsonResponse({"msg": "您的请求方式错误，该接口需要使用 GET 请求！"})
+            else:
+                report_id = request.GET.get("report_id", "")
+                if report_id:
+                    try:
+                        report = Report.objects.get(report_id=report_id)
+                    except Report.DoesNotExist:
+                        return JsonResponse({"error": "查看的报告不存在，请跟测试人员核实！"})
+                else:
+                    report = Report.objects.all().order_by("-report_id").first()
+                name = report.report_name
+                case_num = report.case_num
+                pass_num = int(report.pass_num)
+                fail_num = int(report.fail_num)
+                error_num = int(report.error_num)
+                error_list = []
+                if fail_num or error_num:
+                    content = eval(report.content)
+                    if isinstance(content, list):
+                        for case in content:
+                            for data in case.get("step_list", []):
+                                if data.get("result", "") in ("fail", "error"):
+                                    error_dict = {
+                                        "接口名称": data.get("if_name", ""),
+                                        "接口地址": data.get("url", ""),
+                                        "自定义报错信息": data.get("error", ""),
+                                        "检查点": data.get("msg", ""),
+                                        "接口请求参数": data.get("body", ""),
+                                        "接口请求头": data.get("header", ""),
+                                        "接口返回信息": data.get("res_content", ""),
+                                    }
+                                    error_list.append(error_dict)
 
-    info = {
-        "报告名称": name,
-        "用例数量": case_num,
-        "接口通过数量": pass_num,
-        "接口失败数量": fail_num,
-        "接口错误数量": error_num,
-        "接口通过率": str(format(pass_num / (error_num + fail_num + pass_num) * 100, ".2f")) + "%",
-        "异常接口信息": error_list,
-    }
-    return JsonResponse(info)
+                info = {
+                    "报告名称": name,
+                    "用例数量": case_num,
+                    "接口通过数量": pass_num,
+                    "接口失败数量": fail_num,
+                    "接口错误数量": error_num,
+                    "接口通过率": str(format(pass_num / (error_num + fail_num + pass_num) * 100, ".2f")) + "%",
+                    "异常接口信息": error_list,
+                }
+                return JsonResponse(info)

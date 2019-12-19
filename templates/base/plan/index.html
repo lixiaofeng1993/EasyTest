@@ -248,12 +248,13 @@
             $('#result').empty();
             var plan_id = $("#debug_case_id").val();
             var run_mode = $("#run_mode").val();
+            var env_id = $("#debug_env_id").val();
             $('.spinner').show();
             $.ajax({
                 type: "post",
                 url: "/base/plan_run/",
                 async: false,
-                data: {"plan_id": plan_id, "run_mode": run_mode},
+                data: {"plan_id": plan_id, "run_mode": run_mode, "env_id": env_id},
                 success: function (data) {
                     if (data.hasOwnProperty('error')) {
                         console.log(data);

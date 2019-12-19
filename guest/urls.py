@@ -51,44 +51,44 @@ from rest_framework_swagger.renderers import SwaggerUIRenderer, OpenAPIRenderer
 # serializer_class = UserSerializer
 
 
-class EventSerializer(serializers.ModelSerializer):
-    # guests = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-
-    class Meta:
-        model = Event
-        fields = '__all__'
-
-
-# ViewSets define the view behavior.
-class EventViewSet(viewsets.ModelViewSet):
-    queryset = Event.objects.all()
-    serializer_class = EventSerializer
-
-
-class GuestSerializer(serializers.ModelSerializer):
-    event = EventSerializer(many=False, read_only=True)
-
-    # event = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-
-    class Meta:
-        model = Guest
-        fields = '__all__'
-        exclude = []
-
-
-# ViewSets define the view behavior.
-class GuestViewSet(viewsets.ModelViewSet):
-    queryset = Guest.objects.all()
-    serializer_class = GuestSerializer
-
-
-# Routers provide an easy way of automatically determining the URL conf.
-router = routers.DefaultRouter()
-# router.register(r'users', UserViewSet)
-router.register(r'events', EventViewSet)
-router.register(r'guests', GuestViewSet)
-
-schema_view = get_schema_view(title='EasyTest 测试接口', renderer_classes=[OpenAPIRenderer, SwaggerUIRenderer], url='/')
+# class EventSerializer(serializers.ModelSerializer):
+#     # guests = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+#
+#     class Meta:
+#         model = Event
+#         fields = '__all__'
+#
+#
+# # ViewSets define the view behavior.
+# class EventViewSet(viewsets.ModelViewSet):
+#     queryset = Event.objects.all()
+#     serializer_class = EventSerializer
+#
+#
+# class GuestSerializer(serializers.ModelSerializer):
+#     event = EventSerializer(many=False, read_only=True)
+#
+#     # event = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+#
+#     class Meta:
+#         model = Guest
+#         fields = '__all__'
+#         exclude = []
+#
+#
+# # ViewSets define the view behavior.
+# class GuestViewSet(viewsets.ModelViewSet):
+#     queryset = Guest.objects.all()
+#     serializer_class = GuestSerializer
+#
+#
+# # Routers provide an easy way of automatically determining the URL conf.
+# router = routers.DefaultRouter()
+# # router.register(r'users', UserViewSet)
+# router.register(r'events', EventViewSet)
+# router.register(r'guests', GuestViewSet)
+#
+# schema_view = get_schema_view(title='EasyTest 测试接口', renderer_classes=[OpenAPIRenderer, SwaggerUIRenderer], url='/')
 
 app_name = "guest"
 urlpatterns = [
@@ -118,7 +118,7 @@ urlpatterns = [
     url(r'^sec_get_event_list/', view=views_api_sec.sec_get_event_list, name='sec_get_event_list'),  # 查询发布会加密接口
     url(r'^sec_get_guest_list/', view=views_api_sec.sec_get_guest_list, name='sec_get_guest_list'),  # 查询嘉宾接口
 
-    url(r'^docs/$', schema_view, name='docs'),
-    url(r'^', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    # url(r'^docs/$', schema_view, name='docs'),
+    # url(r'^', include(router.urls)),
+    # url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]

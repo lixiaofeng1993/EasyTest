@@ -6,6 +6,7 @@
 # 说   明: 
 # 创建时间: 2019/10/20 15:13
 '''
+from lib.public import str_number
 
 
 class HttpRunerMain:
@@ -38,8 +39,9 @@ class HttpRunerMain:
             self.http_test['request'].update(self.http_test_request)
             self.http_test['name'] = data.get('if_name')
             validators = data.get('validators', [])
-            check_point = {}
             for validator in validators:
+                check_point = {}
+                validator = str_number(validator)
                 check_point[validator.get('comparator')] = ['content.' + validator.get('check', ''),
                                                             validator.get('expect', '')]
                 self.http_test['validate'].append(check_point)

@@ -485,6 +485,15 @@
                         var vl = {};
                         var name = $(this).find("td[name='var_name']").text();
                         var value = $(this).find("td[name='var_value']").text();
+                        if (Number.isSafeInteger(Math.abs(value)) && value != "") {
+                            console.log("是安全数字");
+                            // 参数值显示数字
+                            if (!isNaN(value)) {
+                                value = value * 1
+                            }
+                        } else {
+                            console.log("不是安全数字 或者 为空");
+                        }
                         var comparator = $(this).find("td[name='comparator']").find('select').find("option:selected").val();
                         vl["check"] = name;
                         vl["comparator"] = comparator;

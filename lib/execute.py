@@ -7,6 +7,7 @@ __author__ = 'wsy'
 from base.models import Project, Sign, Environment, Interface, Case, Plan, Report
 from django.contrib.auth.models import User  # django自带user
 import requests
+from django.conf import settings
 # import hashlib
 import re, os, datetime
 from django.db.models import Sum
@@ -79,7 +80,9 @@ class Test_execute():
                         return case_run
             http = HttpRunerMain(case_step_list).splicing_api()
             http['config']['name'] = self.plan.plan_name
-            runner = HttpRunner(failfast=False, log_file='all-')
+            today = str(datetime.datetime.now())[:10]
+            log_file = os.path.join(settings.BASE_DIR, "logs/all-" + today + ".log")
+            runner = HttpRunner(failfast=False, log_file=log_file)
             report_path = runner.run(http)
             summary = runner._summary
             case_run['summary'] = summary
