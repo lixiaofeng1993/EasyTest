@@ -178,8 +178,8 @@
 
         function get_env() {
             var prj_id = $('#prj_id').val();
-            if (prj_id == null) {
-                alert("请先选择项目");
+            if (prj_id == "") {
+                alert("项目不能为空！");
             }
             else {
                 $.ajax({
@@ -208,8 +208,8 @@
         function get_cases() {
             $("#list").empty();
             var prj_id = $("#prj_id").val();
-            if (prj_id == null) {
-                alert("请先选择项目");
+            if (prj_id == "") {
+                alert("项目不能为空！");
             }
             else {
                 $.ajax({

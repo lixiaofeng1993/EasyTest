@@ -55,7 +55,7 @@
                             <div class="col-sm-6">
                                 <select class="form-control m-b" id="prj_id" required="required" name="prj_id"
                                         onchange=get_env()>
-                                    <option value="">请选择项目</option>
+                                    <option value="">--- 请选择项目 ---</option>
                                     {% for prj in prj_list %}
                                         <option value="{{ prj.prj_id }}">{{ prj.prj_name }}</option>
                                     {% endfor %}
@@ -131,8 +131,8 @@
     <script type="text/javascript">
         function get_env() {
             var prj_id = $('#prj_id').val();
-            if (prj_id == null) {
-                alert("请先选择项目");
+            if (prj_id == "") {
+                alert("项目不能为空！");
             }
             else {
                 $.ajax({
@@ -181,8 +181,8 @@
         function get_cases() {
             $("#list").empty();
             var prj_id = $("#prj_id").val();
-            if (prj_id == null) {
-                alert("请先选择项目");
+            if (prj_id == "") {
+                alert("项目不能为空！");
             }
             else {
                 $.ajax({

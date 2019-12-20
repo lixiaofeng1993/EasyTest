@@ -99,7 +99,7 @@
                                                       class="layui-btn layui-btn-xs"
                                                       lay-event="edit">{{ plan.plan_name }}</a></td>
                                 <td id="cen" prj_id="{{ plan.project.prj_id }}">{{ plan.project }}</td>
-                                <td id="cen">{{ plan.environment }}</td>
+                                <td id="cen" env_id="{{ plan.environment.env_id }}">{{ plan.environment.env_name }}</td>
                                 <td id="plan-content">{{ plan.content }}</td>
                                 <td id="cen">{{ plan.is_locust }}</td>
                                 <td id="cen">{{ plan.is_task }}</td>
@@ -270,7 +270,7 @@
                 },
                 error: function () {
                     html = '<p style="font-family: Consolas;font-size:12px;color:red;margin:5% 10%">' + '执行失败!!!' + '</p>';
-                        $("#result").append(html);
+                    $("#result").append(html);
                     $('.spinner').hide();
                 }
             });
@@ -303,11 +303,14 @@
             var case_id = obj.parentNode.parentNode.children[0].innerText;
             var case_name = obj.parentNode.parentNode.children[1].innerText;
             var prj_id = obj.parentNode.parentNode.children[2].getAttribute("prj_id");
+            var env_name = obj.parentNode.parentNode.children[3].innerText;
+            var env_id = obj.parentNode.parentNode.children[3].getAttribute("env_id");
 
             $("#debug_case_id").val(case_id);
             $("#cancel_run").html("取消");
             $("#cancel_run").attr("class", "btn btn-default");
             $('#case_name_').empty();
+            $("#debug_env_id").empty();
             $.ajax({
                 type: "get",
                 url: "/base/findata/",
@@ -317,8 +320,8 @@
                 },
                 success: function (data) {
                     var listdata = eval(data);
-                    $("#debug_env_id").empty();
                     $('#case_name_').append(case_name);
+                    $("#debug_env_id").append("<option value=" + env_id + ">" + env_name + "</option>");
                     $(listdata).each(function (i, item) {
                         $("#debug_env_id").append("<option value=" + item.env_id + ">" + item.env_name + "</option>");
                     })
