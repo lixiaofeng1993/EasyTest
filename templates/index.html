@@ -23,7 +23,7 @@
         }
 
         .btn-primary {
-            margin-left: 20%;
+            margin-left: 13%;
         }
 
         #main {
@@ -55,6 +55,12 @@
 {% block body %}
     <div class="row">
         <div class="col-md-12">
+
+            <ol class="breadcrumb">
+                <li class="active">
+                    <a class="this-page">主页</a>
+                </li>
+            </ol>
             <p><span>首页数据控制</span>
                 <a href="javascript:void(0)" class="index_data sure-btn"><i
                         class="fa fa-toggle-off fa-1x">&nbsp;&nbsp;</i></a>
@@ -149,21 +155,17 @@
                     <div class="img_qr">
                     </div>
                 </div>
-                <br>
-                <div class="panel-body">
-                    <h5>未完待续，持续开发中...</h5>
-                </div>
             </div>
         </div>
     </div>
 {% endblock %}
 
 {% block javascript %}
-    <script type="text/javascript" src="{% static 'echarts/bmap.min.js' %}"></script>
-    <script type="text/javascript" src="{% static 'echarts/china.js' %}"></script>
-    <script type="text/javascript" src="{% static 'echarts/dataTool.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'echarts/echarts.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'echarts/world.js' %}"></script>
+    <script type="text/javascript" src="{% static 'echarts/china.js' %}"></script>
+    <script type="text/javascript" src="{% static 'echarts/bmap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'echarts/dataTool.min.js' %}"></script>
     <script>
         var dom = document.getElementById("main");
         var myChart = echarts.init(dom);

@@ -3,25 +3,54 @@
 <html lang="en">
 
 <head>
-    <title>EasyTest-自动化测试平台</title>
+    <title>EasyTest - 接口自动化测试平台</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!-- VENDOR CSS -->
-    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}">
-    <link rel="stylesheet" href="{% static 'vendor/linearicons/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'font-awesome-4.7.0/css/font-awesome.min.css' %}">
     <!-- MAIN CSS -->
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
     <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
     <link rel="stylesheet" href="{% static 'css/demo.css' %}">
     <link rel="stylesheet" href="{% static 'css/loading.css' %}">
     <!-- GOOGLE FONTS -->
-{#    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">#}
+    {#    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">#}
     <!-- ICONS -->
     <link rel="apple-touch-icon" sizes="76x76" href="{% static 'img/favicon.png' %}">
     <link rel="icon" type="image/png" sizes="96x96" href="{% static 'img/favicon.png' %}">
+    <style type="text/css">
+        body {
+            background-image: "{% static 'img/bg.svg' %}";
+            background-color: #F3F5F8;
+        }
 
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1;
+        }
+
+        #sidebar-nav .sidebar-scroll nav li {
+            border-bottom: 1px solid rgba(107, 108, 109, 0.19);
+        }
+
+        .breadcrumb {
+            background-color: transparent;
+        }
+
+        .breadcrumb li a {
+            color: #777777;
+            font-size: 18px;
+            font-weight: 600;
+        }
+    </style>
     {% block css %}{% endblock %}
 
 </head>
@@ -41,7 +70,7 @@
             </div>
             <div id="navbar-menu1">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
+                    <li class="dropdown" onclick="select_ul()">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img
                                 src="{% static 'img/userImg.jpeg' %}"
                                 class="img-circle" alt="Avatar">
@@ -86,130 +115,28 @@
                     <li><a href="{% url 'index' %}" class=""><i class="fa fa-home"></i> <span
                             style="margin-left: 0">主页</span></a></li>
                     <li>
-                        <a href="#project" data-toggle="collapse" class="collapsed"><i
-                                class="fa fa-product-hunt fa-fw"></i>
-                            <span style="margin-left: 0">项目管理</span> <i
-                                    class="icon-submenu fa fa-chevron-left"></i></a>
-                        <div id="project" class="collapse ">
-                            <ul class="nav">
-                                <li><a href="{% url 'base:project' %}" class="">项目管理</a></li>
-                            </ul>
-                        </div>
+                    <li><a href="{% url 'base:project' %}" class=""><i class="fa fa-product-hunt fa-fw"></i>项目管理</a>
                     </li>
-                    <li>
-                        <a href="#env" data-toggle="collapse" class="collapsed"><i class="fa fa-envira fa-fw"></i>
-                            <span style="margin-left: 0">测试环境</span> <i
-                                    class="icon-submenu fa fa-chevron-left"></i></a>
-                        <div id="env" class="collapse ">
-                            <ul class="nav">
-                                <li><a href="{% url 'base:env' %}" class="">测试环境</a></li>
-                            </ul>
-                        </div>
+                    <li><a href="{% url 'base:env' %}" class=""><i class="fa fa-envira fa-fw"></i>测试环境</a>
                     </li>
-                    <li>
-                        <a href="#interface" data-toggle="collapse" class="collapsed"><i
-                                class="fa fa-pinterest-square fa-fw"></i>
-                            <span style="margin-left: 0">接口管理</span> <i
-                                    class="icon-submenu fa fa-chevron-left"></i></a>
-                        <div id="interface" class="collapse ">
-                            <ul class="nav">
-                                <li><a href="{% url 'base:interface' %}" class="">接口管理</a></li>
-                            </ul>
-                        </div>
+                    <li><a href="{% url 'base:interface' %}" class=""><i
+                            class="fa fa-pinterest-square fa-fw"></i>接口管理</a>
                     </li>
-                    <li>
-                        <a href="#case" data-toggle="collapse" class="collapsed"><i class="fa fa-suitcase fa-fw"></i>
-                            <span style="margin-left: 0">用例管理</span> <i
-                                    class="icon-submenu fa fa-chevron-left"></i></a>
-                        <div id="case" class="collapse ">
-                            <ul class="nav">
-                                <li><a href="{% url 'base:case' %}" class="">用例管理</a></li>
-                            </ul>
-                        </div>
+                    <li><a href="{% url 'base:case' %}" class=""><i class="fa fa-suitcase fa-fw"></i>用例管理</a>
                     </li>
-                    <li>
-                        <a href="#plan" data-toggle="collapse" class="collapsed"><i class="fa fa-book fa-fw"></i>
-                            <span style="margin-left: 0">测试计划</span> <i
-                                    class="icon-submenu fa fa-chevron-left"></i></a>
-                        <div id="plan" class="collapse ">
-                            <ul class="nav">
-                                <li><a href="{% url 'base:plan' %}" class="">测试计划</a></li>
-                            </ul>
-                        </div>
+                    <li><a href="{% url 'base:plan' %}" class=""><i class="fa fa-book fa-fw"></i>测试计划</a>
                     </li>
-                    <li>
-                        <a href="#task" data-toggle="collapse" class="collapsed"><i class="fa fa-tasks fa-fw"></i>
-                            <span style="margin-left: 0">定时任务</span> <i
-                                    class="icon-submenu fa fa-chevron-left"></i></a>
-                        <div id="task" class="collapse ">
-                            <ul class="nav">
-                                <li><a href="{% url 'base:timing_task' %}" class="">定时任务</a></li>
-                            </ul>
-                        </div>
+                    <li><a href="{% url 'base:timing_task' %}" class=""><i class="fa fa-tasks fa-fw"></i>定时任务</a>
                     </li>
-                    <li>
-                        <a href="#report" data-toggle="collapse" class="collapsed"><i class="fa fa-bar-chart fa-fw"></i>
-                            <span style="margin-left: 0">运行报告</span> <i
-                                    class="icon-submenu fa fa-chevron-left"></i></a>
-                        <div id="report" class="collapse ">
-                            <ul class="nav">
-                                <li><a href="{% url 'base:report_page' %}" class="">运行报告</a></li>
-                            </ul>
-                        </div>
+                    <li><a href="{% url 'base:report_page' %}" class=""><i class="fa fa-bar-chart fa-fw"></i>运行报告</a>
                     </li>
-                    <li>
-                        <a href="#performance" data-toggle="collapse" class="collapsed"><i class="fa fa-book fa-fw"></i>
-                            <span style="margin-left: 0">性能测试</span> <i
-                                    class="icon-submenu fa fa-chevron-left"></i></a>
-                        <div id="performance" class="collapse ">
-                            <ul class="nav">
-                                <li><a href="{% url 'base:performance' %}" class="">性能测试</a></li>
-                            </ul>
-                            <ul class="nav">
-                                <li><a href="{% url 'base:performance_report' %}" class="">聚合报告</a></li>
-                            </ul>
-                        </div>
+                    <li><a href="{% url 'base:performance' %}" class=""><i class="fa fa-book fa-fw"></i>性能测试</a>
+                    <li><a href="{% url 'base:sign' %}" class=""><i class="fa fa-pencil fa-fw"></i>签名方式</a>
                     </li>
-
-                    <li>
-                        <a href="#sign" data-toggle="collapse" class="collapsed"><i class="fa fa-pencil fa-fw"></i>
-                            <span
-                                    style="margin-left: 0">签名方式</span>
-                            <i class="icon-submenu fa fa-chevron-left"></i></a>
-                        <div id="sign" class="collapse ">
-                            <ul class="nav">
-                                <li><a href="{% url 'base:sign' %}" class="">签名方式</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#user" data-toggle="collapse" class="collapsed"><i class="fa fa-user-secret fa-fw"></i>
-                            <span
-                                    style="margin-left: 0">用户管理</span>
-                            <i class="icon-submenu fa fa-chevron-left"></i></a>
-                        <div id="user" class="collapse ">
-                            <ul class="nav">
-                                <li><a href="{% url 'base:user' %}" class="">用户管理</a></li>
-                            </ul>
-                        </div>
-                    </li>
-                    <li>
-                        <a href="#about" data-toggle="collapse" class="collapsed"><i class="fa fa-cog fa-cab"></i> <span
-                                style="margin-left: 0">关于我们</span>
-                            <i class="icon-submenu fa fa-chevron-left"></i></a>
-                        <div id="about" class="collapse ">
-                            <ul class="nav">
-                                <li><a href="{% url 'base:about' %}" class="">关于我们</a></li>
-                            </ul>
-                            <ul class="nav">
-                                <li><a href="{% url 'base:document' %}" class="">文档下载</a></li>
-                            </ul>
-                        </div>
-                    </li>
+                    <li><a href="{% url 'base:about' %}" class=""> <i class="fa fa-cog fa-cab"></i> 关于我们</a></li>
                 </ul>
             </nav>
         </div>
-        <div style="text-align: center;"><h5><span>晋ICP备19007973号-1</span></h5></div>
     </div>
     <!-- END LEFT SIDEBAR -->
     <!-- MAIN -->
@@ -226,16 +153,19 @@
 
 </div>
 
-<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
-<script src="{% static 'vendor/jquery-slimscroll/jquery.slimscroll.min.js' %}"></script>
-{#<script src="/static/scripts/klorofil-common.js"></script>#}
+<div id="particles-js"></div>
+
+<script src="{% static 'jquery/jquery.min.js' %}"></script>
+<script src="{% static 'js/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static 'js/klorofil-common.js' %}"></script>
+<script type="application/javascript" src="{% static 'js/particles.js' %}"></script>
+<script type="application/javascript" src="{% static 'js/app.js' %}"></script>
 <script>
     $(document).ready(function () {
-        var a_name = $("a.this").text();
+        var a_name = $("a").text();
 
         var page_name = $("a.this-page").text();
-        console.log(a_name, page_name);
+        console.log(page_name);
         if (a_name) {
             $("span:contains(" + a_name + ")").parent('a').removeClass("collapsed");
             $("span:contains(" + a_name + ")").parent('a').addClass("active");
@@ -271,8 +201,24 @@
             }
         })
     }
+    function select_ul() {
+        console.log(1);
+        $(".dropdown").attr("class", "dropdown open");
+        $("#img").attr("aria-expanded", "true");
+    }
+{#    $(document).click(function (e) {#}
+{#        var tag = e.target;#}
+{#        console.log(tag.tagName, 1111111111);#}
+{#        if (tag.tagName == "IMG" || tag.tagName == "SPAN" || tag.tagName == "A") {#}
+{#            console.log("下拉框.")#}
+{#        } else {#}
+{#            $(".dropdown").attr("class", "dropdown");#}
+{#            $("#img").attr("aria-expanded", "false")#}
+{#        }#}
+{#    });#}
 
 </script>
+
 {% block javascript %} {% endblock %}
 </body>
 

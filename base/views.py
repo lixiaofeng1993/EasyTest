@@ -1714,7 +1714,7 @@ def performance_report(request):
         if request.method == 'GET':
             import requests
             try:
-                res = requests.get('http://www.easytest.xyz:8089/stats/requests')
+                res = requests.get('http://localhost:8089/stats/requests')
                 res = res.json()
                 return render(request, 'base/performance/locust_report.html', {'info': res})
             except requests.exceptions.ConnectionError:
@@ -1740,7 +1740,7 @@ def performance_real(request):
         if request.method == 'GET':
             import requests
             try:
-                res = requests.get('http://www.easytest.xyz:8089/stats/requests')
+                res = requests.get('http://localhost:8089/stats/requests')
             except requests.exceptions.ConnectionError:
                 return render(request, 'base/performance/locust_real.html', {'error': '未运行locust，无法获取实时数据！'})
             res = res.json()

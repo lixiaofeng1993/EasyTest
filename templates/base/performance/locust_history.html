@@ -50,17 +50,14 @@
     <div class="row">
         <div class="col-md-12">
             <ol class="breadcrumb">
-                <li>
-                    <a href="{% url 'index' %}">主页</a>
+                <li class="active">
+                    <a class="this-page" href="{% url 'base:performance_report' %}">性能测试</a>
                 </li>
                 <li class="active">
-                    <a class="this" href="{% url 'base:performance_report' %}">性能测试</a>
+                    <a class="last" href="{% url 'base:performance_report' %}">聚合报告</a>
                 </li>
                 <li class="active">
-                    <a class="this-page" href="{% url 'base:performance_report' %}">聚合报告</a>
-                </li>
-                <li class="active">
-                    <a class="this-page">历史数据</a>
+                    <a class="this">历史数据</a>
                 </li>
             </ol>
 
