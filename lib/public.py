@@ -490,7 +490,7 @@ def format_body(body):
     if isinstance(body, dict):
         for key, value in body.items():
             body = str_number(body)
-            if not isinstance(value, int):  # 排除参数是int的情况
+            if not isinstance(value, (int, float)):  # 排除参数是int的情况
                 value = re.sub('[\n\t ]', '', value)
                 if key == 'list':  # 标识body参数为list的情况
                     try:
@@ -498,7 +498,7 @@ def format_body(body):
                     except Exception:
                         return 'error'
                 else:
-                    if '[' in value or '{' in value:
+                    if '[' in value or '{' in value and "$" not in value:
                         try:
                             body[key] = eval(value)
                         except Exception as e:
@@ -506,6 +506,34 @@ def format_body(body):
         return body
     else:
         return 'error'
+
+
+def http_random(body):
+    if isinstance(body, dict):
+        for key, value in body.items():
+            if not str(value).isdigit():
+                if "_random_in" in value:
+                    body[key] = "__random_int()"
+                elif "_name" in value:
+                    body[key] = "__name"
+                elif "_address" in value:
+                    body[key] = "__address"
+                elif "_phone" in value:
+                    body[key] = "__phone"
+                elif "_text" in value:
+                    body[key] = "__text()"
+                elif "_random_time" in value:
+                    body[key] = "__random_time"
+                elif "_now" in value:
+                    body[key] = "__now"
+                elif "_email" in value:
+                    body[key] = "__email"
+                elif "list(" in value:
+                    patt = re.compile("list\((.+)\)")
+                    params = patt.findall(value)[0]
+                    params = params.split(',')[0]
+                    body[key] = params
+        return body
 
 
 def call_interface(s, method, url, header, data, content_type='json', user_auth=''):

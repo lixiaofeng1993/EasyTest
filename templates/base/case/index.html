@@ -113,7 +113,7 @@
         }
 
         xmp, pre, plaintext {
-            white-space:normal;
+            white-space: normal;
         }
     </style>
 {% endblock %}
@@ -169,7 +169,7 @@
                                 <td id="cen">{{ case.update_time }}</td>
                                 <td id="cen">{{ case.update_user }}</td>
                                 <td id="cen">
-                                    <a href="#" class="layui-btn layui-btn-danger layui-btn-xs"
+                                    <a href="" class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="debug_button(this);"
                                        data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;
                                     </a>
@@ -345,6 +345,31 @@
                                 $("#result").append(html);
                             }
                             $('.spinner1').hide();
+                        }
+                        else if (res.hasOwnProperty("summary")) {
+                            $('.spinner1').hide();
+                            data = res["summary"]["details"];
+                            for (j in data) {
+                                html = '<h5>' + (parseInt(j) + 1) + '. ' + data[j].name + '</h5>';
+                                var records = data[j].records;
+                                for (q in records) {
+                                    meta_datas = records[q].meta_datas;
+                                    request_data = meta_datas.data;
+                                    for (y in request_data) {
+                                        request = request_data[y].request;
+                                        html += '<p style="font-family: Consolas;font-size:12px" id="interface_res">' + '请求方式：' + request.method + '，请求url：' + request.url + '</p><p style="font-family: Consolas;font-size:12px" id="interface_res">' + '请求参数：' + JSON.stringify(request.body) + '</p>'
+                                        response = request_data[y].response;
+                                        html += '<p style="font-family: Consolas;font-size:12px" id="interface_res">' + '接口返回信息：<xmp style="font-family: Consolas;font-size:12px" id="interface_res">' + JSON.stringify(response.json) + '</xmp></p>';
+                                    }
+                                    validators = meta_datas.validators;
+                                    for (x in validators) {
+                                        html += '<p style="font-family: Consolas;font-size:12px" id="interface_res">' + '检查点：' + JSON.stringify(validators[x]) + '</p>';
+                                        html +=  '<p style="font-family: Consolas;font-size:12px;">' + '测试结果：<xmp style="font-family: Consolas;font-size:12px;color:green" id="interface_res">' + validators[x].check_result + '</xmp></p>'
+                                    }
+                                }
+                                $("#result").append(html)
+                            }
+
                         }
                         else {
                             $('.spinner1').hide();

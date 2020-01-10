@@ -38,7 +38,7 @@ def fake_params(params, value, key='', i=0):
                 except ValueError:
                     return 'error'
             else:
-                return 'error'
+                params[key] = random.randint(1, 10000)
         elif '__name' in value:
             str_value = value.split('__name')[0]
             str_value1 = value.split('__name')[1]

@@ -50,6 +50,14 @@
             font-size: 18px;
             font-weight: 600;
         }
+
+        .navbar .nav > li .dropdown-menu {
+            margin: 0;
+        }
+
+        .navbar .nav > li:hover .dropdown-menu {
+            display: block;
+        }
     </style>
     {% block css %}{% endblock %}
 
@@ -156,6 +164,7 @@
 <div id="particles-js"></div>
 
 <script src="{% static 'jquery/jquery.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
 <script src="{% static 'js/jquery.slimscroll.min.js' %}"></script>
 <script src="{% static 'js/klorofil-common.js' %}"></script>
 <script type="application/javascript" src="{% static 'js/particles.js' %}"></script>
@@ -206,16 +215,6 @@
         $(".dropdown").attr("class", "dropdown open");
         $("#img").attr("aria-expanded", "true");
     }
-{#    $(document).click(function (e) {#}
-{#        var tag = e.target;#}
-{#        console.log(tag.tagName, 1111111111);#}
-{#        if (tag.tagName == "IMG" || tag.tagName == "SPAN" || tag.tagName == "A") {#}
-{#            console.log("下拉框.")#}
-{#        } else {#}
-{#            $(".dropdown").attr("class", "dropdown");#}
-{#            $("#img").attr("aria-expanded", "false")#}
-{#        }#}
-{#    });#}
 
 </script>
 

@@ -198,3 +198,14 @@ class LocustReport(models.Model):
     class Meta:
         verbose_name = "locust报告"
         verbose_name_plural = "locust报告"
+
+
+class DebugTalk(models.Model):
+    create_time = models.DateTimeField('创建时间', auto_now_add=True)
+    update_time = models.DateTimeField('更新时间', auto_now=True)
+    belong_project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    debugtalk = models.TextField(null=True, default='#debugtalk.py')
+
+    class Meta:
+        verbose_name = '驱动py文件'
+        db_table = 'DebugTalk'

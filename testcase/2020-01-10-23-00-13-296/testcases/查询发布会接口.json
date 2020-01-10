@@ -1,0 +1,18 @@
+{
+    "config": {
+        "base_url": "http://localhost:8000/api",
+        "name": "查询发布会接口",
+        "variables": {}
+    },
+    "noReset": true,
+    "teststeps": [
+        {
+            "api": "api/查询发布会接口/查询发布会接口.json",
+            "extract": [],
+            "name": "查询发布会接口",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        }
+    ]
+}

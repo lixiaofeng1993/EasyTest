@@ -6,17 +6,12 @@ __author__ = 'wsy'
 
 from base.models import Project, Sign, Environment, Interface, Case, Plan, Report
 from django.contrib.auth.models import User  # django自带user
-import requests
+import requests, re, os, datetime, json, logging, time
 from django.conf import settings
-# import hashlib
-import re, os, datetime
 from django.db.models import Sum
-import json
 from lib.signtype import user_sign_api, encryptAES, auth_user
-import logging
-import time
 from lib.public import validators_result, get_extract, get_param, replace_var, \
-    extract_variables, call_interface, format_url, format_body
+    extract_variables, call_interface, format_url, format_body, http_random
 from lib.random_params import random_params
 from lib.except_check import env_not_exit, case_is_delete, interface_is_delete, parametric_set_error, AES_length_error, \
     response_value_error, request_api_error, index_error, checkpoint_no_error, eval_set_error, sql_query_error
@@ -53,7 +48,7 @@ class Test_execute():
         func_name = sys._getframe().f_code.co_name
         # method_doc = self.test_case.__doc__
         method_doc = "接口测试用例"
-        case_run = {'class_name': class_name, 'func_name': func_name, 'method_doc': method_doc, 'case_id': self.case_id}
+        case_run = {'class_name': class_name, 'func_name': func_name, 'method_doc': method_doc}
 
         if self.get_env(self.env_id):  # 获取测试环境数据
             self.prj_id, self.env_url, self.private_key = self.get_env(self.env_id)
@@ -67,23 +62,27 @@ class Test_execute():
             for case_id in self.case_id_list:
                 try:
                     case = Case.objects.get(case_id=case_id)
+                    case_run.update(
+                        {"case_name": case.case_name, "case_id": case.case_id, "project_id": case.project_id})
+                    if self.plan:
+                        case_run.update({"plan_name": self.plan.plan_name})
                 except Case.DoesNotExist as e:
                     case_run = case_is_delete(case_run, e)
                     return case_run
                 self.step_list = eval(case.content)
                 for step in self.step_list:
                     step_info = self.step(step)
+                    step_info.update(case_run)
                     if isinstance(step_info, dict):
                         case_step_list.append(step_info)
                     else:
                         case_run = interface_is_delete(case_run, case.case_name, step["if_name"], step_info)
                         return case_run
-            http = HttpRunerMain(case_step_list).splicing_api()
-            http['config']['name'] = self.plan.plan_name
+            testsuites_json_path = HttpRunerMain(case_step_list).splicing_api()
             today = str(datetime.datetime.now())[:10]
             log_file = os.path.join(settings.BASE_DIR, "logs/all-" + today + ".log")
             runner = HttpRunner(failfast=False, log_file=log_file)
-            report_path = runner.run(http)
+            report_path = runner.run(testsuites_json_path)
             summary = runner._summary
             case_run['summary'] = summary
             case_run['report_path'] = report_path
@@ -109,7 +108,7 @@ class Test_execute():
                     return case_run
 
             case_run['case_name'], case_run["step_list"] = case.case_name, case_step_list
-            log.info('interface response data: {}'.format(case_run))
+        # log.info('interface response data: {}'.format(case_run))
         return case_run
 
     def step(self, step_content):
@@ -145,11 +144,12 @@ class Test_execute():
             return if_dict
 
         if self.run_mode == '0':
+            if_dict['body'] = http_random(if_dict['body'])
             if_dict['header'] = random_params(if_dict['header'])  # random参数化
-        if_dict['body'] = random_params(if_dict['body'])
-        if if_dict['header'] == 'error' or if_dict['body'] == 'error':  # 参数化异常
-            if_dict = parametric_set_error(if_dict)
-            return if_dict
+            if_dict['body'] = random_params(if_dict['body'])
+            if if_dict['header'] == 'error' or if_dict['body'] == 'error':  # 参数化异常
+                if_dict = parametric_set_error(if_dict)
+                return if_dict
 
         if self.run_mode == '0':  # 补全header
             set_headers = Environment.objects.get(env_id=self.env_id).set_headers

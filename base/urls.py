@@ -2,6 +2,7 @@
 # coding=utf-8
 # from django.conf import settings
 from django.conf.urls import url
+from django.urls import path
 # from django.conf.urls.static import static
 # from django.views.generic.base import RedirectView
 from . import views
@@ -76,4 +77,5 @@ urlpatterns = [
     # 关于我们
     url(r'about/', view=views.about_index, name='about'),
     url(r'document/', view=views.document, name='document'),
+    url(r'debugtalk/', view=views.debugtalk, name='debugtalk'),
 ]

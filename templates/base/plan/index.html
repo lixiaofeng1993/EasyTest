@@ -104,18 +104,14 @@
                                     <a href="#" class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="debug_button(this);"
                                        data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;
-                                    </a>
-                                    {#                                    <a href="#" class="layui-btn layui-btn-danger layui-btn-xs"#}
-                                    {#                                       onclick="run_button(this);"#}
-                                    {#                                       data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;#}
-                                    {#                                    </a>#}
-                                    <a class="layui-btn layui-btn-danger layui-btn-xs"
-                                       href="{% url 'base:report_page' %}?plan_id={{ plan.plan_id }}">
-                                        <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;
-                                    </a>
-                                    <a href="{% url 'base:plan_delete' %}?plan_id={{ plan.plan_id }}"
-                                       class="layui-btn layui-btn-danger layui-btn-xs" onclick="return delete_btn()">
-                                        <img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
+                                        <a class="layui-btn layui-btn-danger layui-btn-xs"
+                                           href="{% url 'base:report_page' %}?plan_id={{ plan.plan_id }}">
+                                            <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;
+                                        </a>
+                                        <a href="{% url 'base:plan_delete' %}?plan_id={{ plan.plan_id }}"
+                                           class="layui-btn layui-btn-danger layui-btn-xs"
+                                           onclick="return delete_btn()">
+                                            <img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
                                 </td>
                             </tr>
                         {% endfor %}
@@ -150,8 +146,8 @@
                                             <label class="col-sm-3 control-label">执行方式</label>
                                             <div class="col-sm-8">
                                                 <select type="text" id="run_mode" class="form-control">
-                                                    <option value='0'>默认执行方式</option>
-                                                    <option value='1'>HttpRunner执行</option>
+                                                    <option value='1'>HttpRunner</option>
+                                                    <option value='0'>Default</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -237,8 +233,6 @@
 
         //运行
         function run_button(obj) {
-            {#            alert("开始执行...");#}
-            {#            var plan_id = obj.parentNode.parentNode.children[0].innerText;#}
             $('#result').empty();
             var plan_id = $("#debug_case_id").val();
             var run_mode = $("#run_mode").val();
@@ -260,6 +254,11 @@
                         html = '<p style="font-family: Consolas;font-size:12px;color:green;margin:5% 10%">' + data + '</p>';
                         $("#result").append(html);
                         $('.spinner').hide();
+                        $("#debug").html("运行完成，点击查看测试报告.");
+                        $("#debug").removeAttr("onclick");
+                        $("#debug").on("click", function () {
+                            location = "/base/report_page/?plan_id=" + plan_id
+                        })
                     }
                 },
                 error: function () {
@@ -270,27 +269,7 @@
             });
 
         }
-        //运行unittest
-        function run_unittest(obj) {
-            alert("开始执行...");
-            $('.spinner').show();
-            var plan_id = obj.parentNode.parentNode.children[0].innerText;
-            $.ajax({
-                type: "post",
-                url: "/base/plan_unittest_run/",
-                data: {"plan_id": plan_id},
-                success: function (data) {
-                    console.log(data);
-                    alert(data);
-                    $('.spinner').hide();
-                },
-                error: function () {
-                    alert("执行失败");
-                    $('.spinner').hide();
-                }
-            });
 
-        }
 
         function debug_button(obj) {
             $('#result').empty();

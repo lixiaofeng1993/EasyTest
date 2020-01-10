@@ -1,0 +1,18 @@
+{
+    "config": {
+        "base_url": "http://localhost:8000/api",
+        "name": "添加发布会测试用例",
+        "variables": {}
+    },
+    "noReset": true,
+    "teststeps": [
+        {
+            "api": "api/添加发布会测试用例/添加发布会接口.json",
+            "extract": [],
+            "name": "添加发布会接口",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        }
+    ]
+}

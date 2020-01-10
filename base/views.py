@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .tasks import delete_logs, run_plan, stop_locust
 from django.http import StreamingHttpResponse
-from base.models import Project, Sign, Environment, Interface, Case, Plan, Report, LocustReport
+from base.models import Project, Sign, Environment, Interface, Case, Plan, Report, LocustReport, DebugTalk
 from django.contrib.auth.models import User  # django自带user
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.db.models import Q  # 与或非 查询
@@ -1118,11 +1118,14 @@ def case_run(request):
     else:
         if request.method == 'POST':
             case_id = request.POST['case_id']
+            case_id_list = [case_id]
             env_id = request.POST['env_id']
             username = request.session.get('user', '')
             log.info('用户 {} 在 {} 环境 运行用例 {} .'.format(username, env_id, case_id))
-            execute = Test_execute(env_id, ['1'], case_id=case_id)
+            execute = Test_execute(env_id, case_id_list, case_id=case_id, run_mode="1")
             case_result = execute.test_case
+            import urllib.parse
+            case_result = eval(urllib.parse.unquote(str(case_result).replace('Markup', '').replace('&#34;', '')))
             Case.objects.filter(case_id=case_id).update(update_user=username)
             return JsonResponse(case_result)
 
@@ -1326,16 +1329,18 @@ def plan_run(request):
                 if case_result.get("error", ""):
                     return HttpResponse(case_result)
                 report_path = case_result['report_path']
-
-                for records in case_result['summary']['details'][0]['records']:
-                    j += 1
-                    records['id'] = j
-                    for data in records.get('meta_datas', {}).get('data', {}):
-                        body = json.dumps(data.get('request', {}).get('body', {}), ensure_ascii=False).replace(
-                            'Markup', '').replace('&#34;', '')
-                        if body:
-                            data['request']['body'] = body.encode('utf-8').decode('unicode_escape').encode(
-                                'utf-8').decode('unicode_escape')
+                for i in range(len(case_result['summary']['details'])):
+                    for records in case_result['summary']['details'][i]['records']:
+                        j += 1
+                        records['id'] = j
+                        for data in records.get('meta_datas', {}).get('data', {}):
+                            body = json.dumps(data.get('request', {}).get('body', {}), ensure_ascii=False).replace(
+                                'Markup', '').replace('&#34;', '')
+                            if body:
+                                import urllib.parse
+                                data['request']['body'] = urllib.parse.unquote(
+                                    body.encode('utf-8').decode('unicode_escape').encode(
+                                        'utf-8').decode('unicode_escape'))
                 if isinstance(case_result, dict):
                     content.append(case_result)
                 else:
@@ -2036,3 +2041,23 @@ def report_results(request):
                     "异常接口信息": error_list,
                 }
                 return JsonResponse(info)
+
+
+def debugtalk(request):
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        return render(request, 'user/login_action.html')
+
+    else:
+        if request.method == 'GET':
+            id = request.get_full_path().split("/")[-2]
+            debugtalk = DebugTalk.objects.values('id', 'debugtalk').get(belong_project_id=id)
+            return render_to_response('debugtalk.html', debugtalk)
+        else:
+            id = request.POST.get('id')
+            debugtalk = request.POST.get('debugtalk')
+            code = debugtalk.replace('new_line', '\r\n')
+            obj = DebugTalk.objects.get(id=id)
+            obj.debugtalk = code
+            obj.save()
+            return HttpResponseRedirect("/base/project/")
