@@ -1118,11 +1118,12 @@ def case_run(request):
     else:
         if request.method == 'POST':
             case_id = request.POST['case_id']
+            run_mode = request.POST['run_mode']
             case_id_list = [case_id]
             env_id = request.POST['env_id']
             username = request.session.get('user', '')
             log.info('用户 {} 在 {} 环境 运行用例 {} .'.format(username, env_id, case_id))
-            execute = Test_execute(env_id, case_id_list, case_id=case_id, run_mode="1")
+            execute = Test_execute(env_id, case_id_list, case_id=case_id, run_mode=run_mode)
             case_result = execute.test_case
             import urllib.parse
             case_result = eval(urllib.parse.unquote(str(case_result).replace('Markup', '').replace('&#34;', '')))

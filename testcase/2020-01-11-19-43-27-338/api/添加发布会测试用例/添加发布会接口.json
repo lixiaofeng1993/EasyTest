@@ -4,7 +4,7 @@
     "output": [],
     "request": {
         "data": {
-            "address": "${get_random_address()}",
+            "address": "${get_random_email()}",
             "eid": "${get_random_int(1, 10000)}",
             "limit": "$limit",
             "name": "${get_random_name()}",

@@ -71,7 +71,3 @@ def get_random_time():
 def get_randon_phone():
     fake = Faker("zh_CN")
     return fake.phone_number()
-
-def get_radom_email():
-    fake = Faker("zh_CN")
-    return fake.email()
