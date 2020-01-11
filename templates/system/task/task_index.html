@@ -144,14 +144,18 @@
         }
 
         function run_delay(obj) {
-            alert("开始执行异步任务...");
             var task_id = obj.parentNode.parentNode.children[0].innerText;
             $.ajax({
                 type: "post",
                 url: "/base/timing_task/",
                 data: {"id": task_id},
                 success: function (data) {
-                    alert(data)
+                    if (confirm(data)) {
+                        location = "/base/report_page/"
+                    } else {
+
+                    }
+
                 },
                 error: function () {
                     alert("执行失败");

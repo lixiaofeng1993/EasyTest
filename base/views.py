@@ -2,7 +2,7 @@ import os, time, json, logging, threading
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-from .tasks import delete_logs, run_plan, stop_locust
+from .tasks import delete_logs, run_plan, stop_locust, test_httprunner, test_plan
 from django.http import StreamingHttpResponse
 from base.models import Project, Sign, Environment, Interface, Case, Plan, Report, LocustReport, DebugTalk
 from django.contrib.auth.models import User  # django自带user
@@ -1307,92 +1307,20 @@ def plan_run(request):
     else:
         if request.method == 'POST':
             global totalTime, start_time, now_time
-            begin_time = time.clock()
             start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
             now_time = int(time.mktime(time.strptime(start_time, '%Y-%m-%d %H:%M:%S')))
             plan_id = request.POST.get('plan_id', '')
             run_mode = request.POST.get('run_mode', '')
             plan = Plan.objects.get(plan_id=plan_id)
-            # env_id = plan.environment.env_id
             env_id = request.POST.get('env_id', '')
             case_id_list = eval(plan.content)
-            case_num = len(case_id_list)
-            content = []
-            j = 0
-            i = 0
-            pass_num = 0
-            fail_num = 0
-            error_num = 0
-            if run_mode == '1':
-                execute = Test_execute(env_id, case_id_list, run_mode=run_mode, plan=plan)
-                case_result = execute.test_case
-                if case_result.get("error", ""):
-                    return HttpResponse(case_result)
-                report_path = case_result['report_path']
-                for i in range(len(case_result['summary']['details'])):
-                    for records in case_result['summary']['details'][i]['records']:
-                        j += 1
-                        records['id'] = j
-                        for data in records.get('meta_datas', {}).get('data', {}):
-                            body = json.dumps(data.get('request', {}).get('body', {}), ensure_ascii=False).replace(
-                                'Markup', '').replace('&#34;', '')
-                            if body:
-                                import urllib.parse
-                                data['request']['body'] = urllib.parse.unquote(
-                                    body.encode('utf-8').decode('unicode_escape').encode(
-                                        'utf-8').decode('unicode_escape'))
-                if isinstance(case_result, dict):
-                    content.append(case_result)
-                else:
-                    return HttpResponse(case_result)
-                summary = case_result.get('summary', {})
-                stat = summary.get('stat', {}).get('teststeps', {})
-                pass_num = stat.get('successes', 0)
-                fail_num = stat.get('failures', 0)
-                error_num = stat.get('errors', 0)
-            elif run_mode == '0':
-                for case_id in case_id_list:
-                    execute = Test_execute(env_id, case_id_list, run_mode, plan, case_id=case_id)
-                    case_result = execute.test_case
-                    if isinstance(case_result, dict):
-                        content.append(case_result)
-                    else:
-                        return HttpResponse(case_result)
-                for step in content:
-                    if 'error' in step.keys():
-                        log.error('plan run error：{}'.format(step['msg']))
-                        return HttpResponse(step['msg'])
-                    else:
-                        for s in step['step_list']:
-                            if s["result"] == "pass":
-                                pass_num += 1
-                                i += 1
-                                s['id'] = i
-                            if s["result"] == "fail":
-                                fail_num += 1
-                                i += 1
-                                s['id'] = i
-                            if s["result"] == "error":
-                                error_num += 1
-                                i += 1
-                                s['id'] = i
-            end_time = time.clock()
-            totalTime = str(end_time - begin_time)[:6] + ' s'
-            pic_name = DrawPie(pass_num, fail_num, error_num)
-            report_name = plan.plan_name + "-" + str(start_time).replace(':', '-')
             username = request.session.get('user', '')
             if run_mode == '1':
-                report = Report(plan=plan, report_name=report_name, content=content, case_num=case_num,
-                                pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
-                                totalTime=totalTime, startTime=start_time, update_user=username, make=1,
-                                report_path=report_path)
+                test_httprunner.delay(env_id, case_id_list, plan=plan, username=username)
+                return HttpResponse('测试计划执行中，稍后可在【运行报告】处查看！')
             elif run_mode == '0':
-                report = Report(plan=plan, report_name=report_name, content=content, case_num=case_num,
-                                pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
-                                totalTime=totalTime, startTime=start_time, update_user=username, make=0, report_path='')
-            report.save()
-            Plan.objects.filter(plan_id=plan_id).update(update_user=username, update_time=datetime.now())
-            return HttpResponse(plan.plan_name + " 执行成功！")
+                test_plan.delay(env_id, case_id_list, plan=plan, username=username)
+                return HttpResponse("测试计划执行中，稍后可在【运行报告】处查看！")
 
 
 def timing_task(request):
@@ -1417,18 +1345,18 @@ def timing_task(request):
         elif request.method == 'POST':
             task_id = request.POST.get('id', '')
             if task_id:
-                task = PeriodicTask.objects.filter(id=task_id)[0].task
-                if 'run_plan' in task:
-                    run_plan.delay()
-                    return HttpResponse('用例执行中，请稍后查看报告即可,默认以 计划名称 + 时间戳命名.')
-                elif 'delete_logs' in task:
+                task = PeriodicTask.objects.get(id=task_id)
+                if 'run_plan' in task.task:
+                    run_plan.delay(task.name)
+                    return HttpResponse('定时任务执行中，稍后在【运行报告】处查看即可,默认以 任务名称 + 时间戳 命名.【点击确定立即查看】')
+                elif 'delete_logs' in task.task:
                     delete_logs.delay()
                     return HttpResponse('用例执行中，稍后可在日志中查看执行记录.')
-                elif 'stop_locust' in task:
+                elif 'stop_locust' in task.task:
                     stop_locust.delay()
                     return HttpResponse('用例执行中，稍后可在日志中查看执行记录.')
                 else:
-                    return HttpResponse('未定义该定时任务.{}--{}'.format(task_id, task))
+                    return HttpResponse('未定义该定时任务.{}--{}'.format(task_id, task.task))
             else:
                 return HttpResponse('未定义该定时任务.{}'.format(task_id))
 
@@ -2051,13 +1979,20 @@ def debugtalk(request):
     else:
         if request.method == 'GET':
             id = request.get_full_path().split("/")[-2]
-            debugtalk = DebugTalk.objects.values('id', 'debugtalk').get(belong_project_id=id)
-            return render_to_response('debugtalk.html', debugtalk)
+            try:
+                debugtalk = DebugTalk.objects.values('id', 'debugtalk').get(belong_project_id=id)
+                return render_to_response('debugtalk.html', debugtalk)
+            except DebugTalk.DoesNotExist:
+                return render(request, "debugtalk.html", {"id": id})
         else:
             id = request.POST.get('id')
             debugtalk = request.POST.get('debugtalk')
             code = debugtalk.replace('new_line', '\r\n')
-            obj = DebugTalk.objects.get(id=id)
-            obj.debugtalk = code
+            try:
+                obj = DebugTalk.objects.get(id=id)
+                obj.debugtalk = code
+            except DebugTalk.DoesNotExist:
+                obj = DebugTalk(create_time=datetime.now(), update_time=datetime.now(), debugtalk=code,
+                                belong_project_id=id)
             obj.save()
             return HttpResponseRedirect("/base/project/")

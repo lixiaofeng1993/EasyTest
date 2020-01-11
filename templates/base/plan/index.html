@@ -153,7 +153,7 @@
                                         </div>
 
                                         <div class="form-group">
-                                            <label class="col-sm-3 control-label"> 实际返回结果</label>
+                                            <label class="col-sm-3 control-label"> 提示信息</label>
                                             <div class="spinner1"></div>
                                             <div class="col-sm-8" id="result">
 
@@ -254,7 +254,7 @@
                         html = '<p style="font-family: Consolas;font-size:12px;color:green;margin:5% 10%">' + data + '</p>';
                         $("#result").append(html);
                         $('.spinner').hide();
-                        $("#debug").html("运行完成，点击查看测试报告.");
+                        $("#debug").html("立即查看测试报告");
                         $("#debug").removeAttr("onclick");
                         $("#debug").on("click", function () {
                             location = "/base/report_page/?plan_id=" + plan_id
