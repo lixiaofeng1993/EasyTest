@@ -8,7 +8,7 @@
 '''
 from lib.public import str_number
 from lib.helper import *
-import os, re
+import os, re, time
 
 
 class HttpRunerMain:
@@ -167,7 +167,6 @@ class HttpRunerMain:
         write_data(testsuites_json, testsuites_json_path)
         while True:
             if not os.path.exists(testsuites_json_path):
-                import time
                 time.sleep(1)
                 continue
             return testsuites_json_path

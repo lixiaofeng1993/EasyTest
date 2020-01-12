@@ -108,7 +108,7 @@ class Test_execute():
                     return case_run
 
             case_run['case_name'], case_run["step_list"] = case.case_name, case_step_list
-        # log.info('interface response data: {}'.format(case_run))
+            # log.info('interface response data: {}'.format(case_run))
         return case_run
 
     def step(self, step_content):
@@ -144,7 +144,7 @@ class Test_execute():
             return if_dict
 
         if self.run_mode == '0':
-            if_dict['body'] = http_random(if_dict['body'])
+            if_dict['body'] = http_random(if_dict['body'])  # 默认参数化和httpruner参数化保持基本一致
             if_dict['header'] = random_params(if_dict['header'])  # random参数化
             if_dict['body'] = random_params(if_dict['body'])
             if if_dict['header'] == 'error' or if_dict['body'] == 'error':  # 参数化异常

@@ -3,7 +3,7 @@
 '''
 # 创 建 人: 李先生
 # 文 件 名: helper.py
-# 说   明: 
+# 说   明: httprunner运行支持文件
 # 创建时间: 2020/1/9 21:01
 '''
 from django.conf import settings
@@ -49,6 +49,7 @@ def delete_testcase(file_path):
 
 
 def get_time_stamp():
+    """当前时间"""
     ct = time.time()
     local_time = time.localtime(ct)
     data_head = time.strftime("%Y-%m-%d-%H-%M-%S", local_time)
@@ -58,6 +59,7 @@ def get_time_stamp():
 
 
 def check_path(path):
+    """路径是否存在"""
     if not os.path.exists(path):
         os.makedirs(path)
     return path
@@ -99,6 +101,7 @@ def write_data(res, json_path):
 
 
 def copy_debugtalk(path, project_id):
+    """复制写入debugtalk.py参数化函数"""
     from base.models import DebugTalk
     debugtalk_path = os.path.join(BASE_DIR, "lib/" + "debugtalk.py")
     try:

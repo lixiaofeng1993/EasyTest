@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os, time, json, logging, threading
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -19,6 +20,7 @@ from lib.error_code import ErrorCode
 from lib.except_check import project_info_logic, sign_info_logic, env_info_logic, interface_info_logic, format_params, \
     case_info_logic, plan_info_logic, header_value_error  # 自定义异常逻辑
 from django.views.generic import ListView
+from django.conf import settings
 
 # import paramiko
 # from stat import S_ISDIR as isdir
@@ -92,6 +94,16 @@ def project_add(request):
                 log.info('add project   {}  success. project info: {} // {} '.format(prj_name, description, sign))
                 return HttpResponseRedirect("/base/project/")
         elif request.method == 'GET':
+            if not sign_list:
+                querysetlist = []
+                sign_dict = [{"id": 1, "name": "md5"}, {"id": 2, "name": "不签名"}, {"id": 3, "name": "用户认证"},
+                             {"id": 4, "name": "AES算法"}]
+                for signer in sign_dict:
+                    querysetlist.append(
+                        Sign(sign_id=signer["id"], sign_name=signer["name"], description="", update_time=datetime.now(),
+                             update_user="root"))
+                Sign.objects.bulk_create(querysetlist)
+                sign_list = Sign.objects.all()
             info = {"sign_list": sign_list}
             return render(request, "base/project/add.html", info)
 
@@ -1125,8 +1137,10 @@ def case_run(request):
             log.info('用户 {} 在 {} 环境 运行用例 {} .'.format(username, env_id, case_id))
             execute = Test_execute(env_id, case_id_list, case_id=case_id, run_mode=run_mode)
             case_result = execute.test_case
+            case_result = json.dumps(case_result, ensure_ascii=False).replace('Markup', '') \
+                .replace('&#34;', '').replace('true', 'True').replace('false', 'False').replace('null', 'None')
             import urllib.parse
-            case_result = eval(urllib.parse.unquote(str(case_result).replace('Markup', '').replace('&#34;', '')))
+            case_result = eval(urllib.parse.unquote(case_result))
             Case.objects.filter(case_id=case_id).update(update_user=username)
             return JsonResponse(case_result)
 

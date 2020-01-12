@@ -48,20 +48,19 @@ def add_event(request):
         log.info('默认服务==>  add_event，发布会开始时间格式错误.')
         return JsonResponse({'status': 200, 'message': error, 'error_code': 10024})
     log.info('默认服务==>  add_event，发布会添加成功！')
-    return JsonResponse({'status': 200, 'message': 'add event success'})
+    return JsonResponse({'status': 200, 'message': 'add event success', "eid": eid})
 
 
 # 修改发布会接口
 def update_event(request):
     if request.method == 'POST':
         req = json.loads(request.body.decode('utf-8'))
-        info = req.get('info', {})
-        eid = info.get('eid', '')
-        name = info.get('name', '')
-        limit = info.get('limit', '')
-        status = info.get('status', '')
-        address = info.get('address', '')
-        start_time = info.get('start_time', '')
+        eid = req.get('eid', '')
+        name = req.get('name', '')
+        limit = req.get('limit', '')
+        status = req.get('status', '')
+        address = req.get('address', '')
+        start_time = req.get('start_time', '')
         if eid == '':
             log.info('默认服务==>  update_event参数eid，参数错误，不能为空.')
             return JsonResponse({'status': 200, 'message': 'parameter eid error', 'error_code': 10021})
@@ -77,7 +76,7 @@ def update_event(request):
             log.info('默认服务==>  update_event，发布会开始时间格式错误.')
             return JsonResponse({'status': 200, 'message': error, 'error_code': 10024})
         log.info('默认服务==>  update_event，发布会 {} 修改成功！'.format(eid))
-        return JsonResponse({'status': 200, 'message': 'update event success'})
+        return JsonResponse({'status': 200, 'message': 'update event success', "eid": eid})
 
 
 # 查询发布会接口
