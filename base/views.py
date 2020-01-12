@@ -96,12 +96,12 @@ def project_add(request):
         elif request.method == 'GET':
             if not sign_list:
                 querysetlist = []
-                sign_dict = [{"id": 1, "name": "md5"}, {"id": 2, "name": "不签名"}, {"id": 3, "name": "用户认证"},
-                             {"id": 4, "name": "AES算法"}]
+                sign_dict = [{"id": 1, "name": "不签名", "type": "无"}, {"id": 2, "name": "md5加密", "type": "md5加密"},
+                             {"id": 3, "name": "用户认证", "type": "用户认证"}, {"id": 4, "name": "AES算法", "type": "AES算法"}]
                 for signer in sign_dict:
                     querysetlist.append(
-                        Sign(sign_id=signer["id"], sign_name=signer["name"], description="", update_time=datetime.now(),
-                             update_user="root"))
+                        Sign(sign_id=signer["id"], sign_name=signer["name"], sign_type=signer["type"], description="",
+                             update_time=datetime.now(), update_user="root"))
                 Sign.objects.bulk_create(querysetlist)
                 sign_list = Sign.objects.all()
             info = {"sign_list": sign_list}
@@ -203,7 +203,7 @@ def sign_add(request):
     else:
         if request.method == 'POST':
             sign_name = request.POST['sign_name'].strip()
-
+            sign_type = request.POST['sign_type'].strip()
             msg = sign_info_logic(sign_name)
             if msg != 'ok':
                 log.error('sign add error：{}'.format(msg))
@@ -212,7 +212,7 @@ def sign_add(request):
             else:
                 description = request.POST['description']
                 username = request.session.get('user', '')
-                sign = Sign(sign_name=sign_name, description=description, update_user=username)
+                sign = Sign(sign_name=sign_name, description=description, update_user=username, sign_type=sign_type)
                 sign.save()
                 log.info('add sign   {}  success.  sign info： {} '.format(sign_name, description))
                 return HttpResponseRedirect("/base/sign/")
@@ -234,7 +234,7 @@ def sign_update(request):
         if request.method == 'POST':
             sign_id = request.POST['sign_id']
             sign_name = request.POST['sign_name'].strip()
-
+            sign_type = request.POST['sign_type'].strip()
             msg = sign_info_logic(sign_name, sign_id)
             if msg != 'ok':
                 log.error('sign update error：{}'.format(msg))
@@ -244,8 +244,9 @@ def sign_update(request):
             else:
                 description = request.POST['description']
                 username = request.session.get('user', '')
-                Sign.objects.filter(sign_id=sign_id).update(sign_name=sign_name, description=description,
-                                                            update_time=datetime.now(), update_user=username)
+                Sign.objects.filter(sign_id=sign_id).update(
+                    sign_name=sign_name, description=description, update_time=datetime.now(), update_user=username,
+                    sign_type=sign_type)
                 log.info('edit sign   {}  success.  sign info： {} '.format(sign_name, description))
                 return HttpResponseRedirect("/base/sign/")
         elif request.method == 'GET':

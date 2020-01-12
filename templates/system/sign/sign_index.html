@@ -48,6 +48,7 @@
                         <tr>
                             <th id="cen">ID</th>
                             <th id="cen">名称</th>
+                            <th id="cen">类型</th>
                             <th id="cen">描述</th>
                             <th id="cen">更新时间</th>
                             <th id="cen">更新用户</th>
@@ -60,6 +61,7 @@
                                 <td id="cen">{{ sign.sign_id }}</td>
                                 <td><a href="{% url 'base:sign_update' %}?sign_id={{ sign.sign_id }}"
                                        class="layui-btn layui-btn-xs" lay-event="edit">{{ sign.sign_name }}</a></td>
+                                <td id="cen">{{ sign.sign_type }}</td>
                                 <td>{{ sign.description }}</td>
                                 <td id="cen">{{ sign.update_time }}</td>
                                 <td id="cen">{{ sign.update_user }}</td>

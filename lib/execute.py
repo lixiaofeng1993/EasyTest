@@ -170,13 +170,13 @@ class Test_execute():
         #                 return if_dict
 
         if interface.is_sign:  # 接口存在签名时，处理参数
-            if self.sign_type == 1:  # md5加密
+            if self.sign_type == "md5加密":  # md5加密
                 if_dict["body"] = user_sign_api(if_dict["body"], self.private_key)
-            elif self.sign_type == 2:  # 不签名
+            elif self.sign_type == "无":  # 不签名
                 pass
-            elif self.sign_type == 3:  # 用户认证
+            elif self.sign_type == "用户认证":  # 用户认证
                 self.user_auth = auth_user()
-            elif self.sign_type == 4:  # AES算法加密
+            elif self.sign_type == "AES算法":  # AES算法加密
                 if len(self.private_key) in [16, 24, 32]:
                     if_dict["body"] = encryptAES(json.dumps(if_dict['body']).encode('utf-8'),
                                                  self.private_key.encode('utf-8')).decode('utf-8')
@@ -216,7 +216,7 @@ class Test_execute():
             # if not interface.set_mock:  # 请求接口或者模拟接口返回值
             try:
                 if interface.is_sign:
-                    if self.sign_type == 4:
+                    if self.sign_type == "AES算法":
                         res = call_interface(self.s, if_dict["method"], if_dict["url"], if_dict["header"],
                                              {'data': if_dict["body"]}, if_dict["data_type"])
                     else:
@@ -318,7 +318,7 @@ class Test_execute():
         :return:
         """
         prj = Project.objects.get(prj_id=prj_id)
-        sign_type = prj.sign.sign_id
+        sign_type = prj.sign.sign_type
         return sign_type
 
 
