@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os, time, json, logging, threading
+import os, time, json, logging, threading, platform, re
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -1624,29 +1624,65 @@ def performance_index(request):
 
 
 class StartLocust(threading.Thread):
-    def __init__(self, make):
+    def __init__(self, make, slave, path):
         threading.Thread.__init__(self)
         self.make = make
+        self.slave = slave
+        self.path = path
 
     def run(self):
         log.info(
-            datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ========= {}".format(self.getName(),
-                                                                                                      self.make))
-        if self.make == 'master':
-            p = os.system('/home/lixiaofeng/./locust_run.sh')
-            log.info('====================p================={}'.format(p))
-        elif self.make == 'slave':
-            os.system('/home/lixiaofeng/./locust_slave_run.sh')
-        elif self.make == 'stop':
-            os.system('/home/lixiaofeng/./locust_stop.sh')
+            datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ========= {}"
+            .format(self.getName(), self.make))
+        if platform.system() == 'Windows':
+            if self.make == 'master':
+                path_list = self.path.split("performance\\")
+                execute_path = os.path.join(path_list[0], "performance")
+                locust_path = path_list[1]
+                os.chdir(execute_path)
+                if str(self.slave).isdigit():
+                    p = os.popen('locusts -f {} --processes {}'.format(locust_path, int(self.slave)))
+                else:
+                    p = os.popen('locusts -f {} --processes'.format(locust_path))
+                os.chdir(settings.BASE_DIR)
+                log.info("---------p-----------{}".format(p))
+            elif self.make == 'stop':
+                find_port = 'netstat -aon | findstr "8089"'
+                result = os.popen(find_port)
+                text = result.read()
+                log.info("返回的 8089 端口相关的信息：{}".format(text))
+                listening_patt = re.compile("LISTENING       (\d+)")
+                established_patt = re.compile("ESTABLISHED     (\d+)")
+                listening = listening_patt.findall(text)[0]
+                established_list = established_patt.findall(text)
+                established_list.append(listening)
+                established_list = list(set(established_list))
+                for pid in established_list:
+                    if 1 <= int(pid) <= 65535 and pid != "8089":
+                        # 占用端口的pid
+                        find_kill = 'taskkill -f -pid %s' % pid
+                        result = os.popen(find_kill)
+                        log.info("--stop--->>> {}".format(result.read()))
+
+        else:
+            if self.make == 'master':
+                p = os.system('/home/lixiaofeng/./locust_run.sh')
+            elif self.make == 'stop':
+                os.system('/home/lixiaofeng/./locust_stop.sh')
 
 
 def start_locust(request):
     if request.method == 'GET':
         user_id = request.session.get('user_id', '')
         if get_user(user_id):
+            plan = Plan.objects.get(is_locust=1)
+            env_id = plan.environment_id
+            case_id_list = eval(plan.content)
+            execute = Test_execute(env_id, case_id_list, run_mode="1", plan=plan, locust=True)
+            testsuites_json_path = execute.test_case
             make = request.GET.get('make')
-            locust = StartLocust(make)
+            slave = request.GET.get('slave')
+            locust = StartLocust(make, slave, testsuites_json_path)
             locust.start()
             return HttpResponse('ok')
         else:

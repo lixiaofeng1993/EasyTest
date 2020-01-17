@@ -2,7 +2,7 @@
 
 {% block css %}
     <style>
-        #search-btn {
+        #start-btn {
             border-color: #1dc5a3;
             background-color: #1dc5a3;
             border-radius: 2px;
@@ -15,8 +15,25 @@
             font-size: 14px;
         }
 
-        #search-btn:hover {
+        #start-btn:hover {
             color: red;
+        }
+
+        #stop-btn {
+            border-color: #1dc5a3;
+            background-color: #FF6666;
+            border-radius: 2px;
+            border: none;
+            color: white;
+            padding: 7px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+        }
+
+        #stop-btn:hover {
+            color: black;
         }
 
         iframe {
@@ -48,15 +65,11 @@
         <div class="col-md-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <button id="search-btn" class="start-master" onclick="master()"><i
+                    <button id="start-btn" class="start-master" onclick="master()"><i
                             class="fa fa-try"></i>&nbsp;启动master
                     </button>
                     &nbsp;&nbsp;&nbsp;
-                    <button id="search-btn" class="start-slave" onclick="slave()"><i
-                            class="fa fa-try"></i>&nbsp;启动slave
-                    </button>
-                    &nbsp;&nbsp;&nbsp;
-                    <button id="search-btn" class="stop-master" onclick="stop()"><i
+                    <button id="stop-btn" class="stop-master" onclick="stop()"><i
                             class="fa fa-try"></i>&nbsp;停止master
                     </button>
                     &nbsp;&nbsp;&nbsp;
@@ -72,59 +85,55 @@
     <script>
 
         function master() {
-            $.ajax({
-                url: "/base/start_locust/",
-                type: "get",
-                data: {
-                    "make": 'master'
-                },
-                success: function (data) {
-                    console.log(data);
-                    if (data == 'ok') {
-                        alert("执行成功！");
-                        window.location.reload();
-                    } else {
-                        alert("出现异常，请联系管理员！");
-                    }
+            var slave = prompt('设置需要启动的 slave 数量：');
+            if (slave || slave === "") {
+                $.ajax({
+                    url: "/base/start_locust/",
+                    type: "get",
+                    data: {
+                        "make": 'master',
+                        "slave": slave
+                    },
+                    success: function (data) {
+                        console.log(data);
+                        if (data == 'ok') {
+                            alert("启动 locust 成功！");
+                            window.location.reload();
+                        } else {
+                            alert("出现异常，请联系管理员！");
+                        }
 
 
-                }
-            })
-        }
-        function slave() {
-            $.ajax({
-                url: "/base/start_locust/",
-                type: "get",
-                data: {
-                    "make": 'slave'
-                },
-                success: function (data) {
-                    if (data == 'ok') {
-                        alert("执行成功！");
-                        window.location.reload();
-                    } else {
-                        alert("出现异常，请联系管理员！");
                     }
-                }
-            })
+                })
+            } else {
+                console.log("点击的取消按钮.")
+            }
 
         }
+
         function stop() {
-            $.ajax({
-                url: "/base/start_locust/",
-                type: "get",
-                data: {
-                    "make": 'stop'
-                },
-                success: function (data) {
-                    if (data == 'ok') {
-                        alert("执行成功！");
-                        window.location.reload();
-                    } else {
-                        alert("出现异常，请联系管理员！");
+            var res = confirm("确定停止 locust 服务吗？");
+            if (res) {
+                $.ajax({
+                    url: "/base/start_locust/",
+                    type: "get",
+                    data: {
+                        "make": 'stop'
+                    },
+                    success: function (data) {
+                        if (data == 'ok') {
+                            alert("停止 locust 成功！");
+                            window.location.reload();
+                        } else {
+                            alert("出现异常，请联系管理员！");
+                        }
                     }
-                }
-            })
+                })
+            } else {
+                console.log("点击的取消按钮.")
+            }
+
 
         }
     </script>

@@ -12,24 +12,41 @@ import os, re, time
 
 
 class HttpRunerMain:
-    def __init__(self, step_info):
+    def __init__(self, step_info, locust=False):
         self.case_name_list = []
         self.data_list = step_info
+        self.locust = locust
         self.project_id = 0
 
     def splicing_api(self):
+        for data in self.data_list:
+            case_name = data.get("case_name", "")
+            self.project_id = data.get("project_id", 0)
+            if case_name:
+                self.case_name_list.append(case_name)
+            else:
+                raise ValueError("case_id打印为0！")
 
-        testcase_dir = os.path.join(BASE_DIR, "testcase")
-        delete_testcase(testcase_dir)
-        report_path = os.path.join(BASE_DIR, "reports")
-        delete_testcase(report_path)
-        logs_path = os.path.join(BASE_DIR, "logs")
-        delete_testcase(logs_path)
-        testcase_dir_path = os.path.join(testcase_dir, get_time_stamp())
-        testsuites_dir = check_path(os.path.join(testcase_dir_path, "testsuites"))
-        testcases_dir = check_path(os.path.join(testcase_dir_path, "testcases"))
-        api_dir = check_path(os.path.join(testcase_dir_path, "api"))
-
+        if self.locust:
+            testcase_dir = check_path(os.path.join(BASE_DIR, "performance"))
+            testsuites_dir = check_path(os.path.join(testcase_dir, "testsuites"))
+            testcases_dir = check_path(os.path.join(testcase_dir, "testcases"))
+            api_dir = check_path(os.path.join(testcase_dir, "api"))
+            debugtalk_path = os.path.join(testcase_dir, "debugtalk.py")
+            copy_debugtalk(debugtalk_path, self.project_id)
+        else:
+            testcase_dir = os.path.join(BASE_DIR, "testcase")
+            delete_testcase(testcase_dir)
+            report_path = os.path.join(BASE_DIR, "reports")
+            delete_testcase(report_path)
+            logs_path = os.path.join(BASE_DIR, "logs")
+            delete_testcase(logs_path)
+            testcase_dir_path = os.path.join(testcase_dir, get_time_stamp())
+            testsuites_dir = check_path(os.path.join(testcase_dir_path, "testsuites"))
+            testcases_dir = check_path(os.path.join(testcase_dir_path, "testcases"))
+            api_dir = check_path(os.path.join(testcase_dir_path, "api"))
+            debugtalk_path = os.path.join(testcase_dir_path, "debugtalk.py")
+            copy_debugtalk(debugtalk_path, self.project_id)
 
         testsuites_json = {
             "config": {
@@ -43,15 +60,6 @@ class HttpRunerMain:
             ]
         }
 
-        for data in self.data_list:
-            case_name = data.get("case_name", "")
-            self.project_id = data.get("project_id", 0)
-            if case_name:
-                self.case_name_list.append(case_name)
-            else:
-                raise ValueError("case_id打印为0！")
-        debugtalk_path = os.path.join(testcase_dir_path, "debugtalk.py")
-        copy_debugtalk(debugtalk_path, self.project_id)
         self.case_name_list = list(set(self.case_name_list))
         for _case_name in self.case_name_list:
             testcases_json = {

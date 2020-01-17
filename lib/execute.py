@@ -26,9 +26,10 @@ log = logging.getLogger('log')
 
 
 class Test_execute():
-    def __init__(self, env_id, case_id_list, run_mode='0', plan='', case_id=0):
+    def __init__(self, env_id, case_id_list, run_mode='0', plan='', case_id=0, locust=False):
         self.case_id = case_id
         self.env_id = env_id
+        self.locust = locust
         self.case_id_list = case_id_list
         self.begin_time = time.clock()
         self.s = requests.session()
@@ -78,15 +79,18 @@ class Test_execute():
                     else:
                         case_run = interface_is_delete(case_run, case.case_name, step["if_name"], step_info)
                         return case_run
-            testsuites_json_path = HttpRunerMain(case_step_list).splicing_api()
-            today = str(datetime.datetime.now())[:10]
-            log_file = os.path.join(settings.BASE_DIR, "logs/all-" + today + ".log")
-            runner = HttpRunner(failfast=False, log_file=log_file)
-            report_path = runner.run(testsuites_json_path)
-            summary = runner._summary
-            case_run['summary'] = summary
-            case_run['report_path'] = report_path
-            case_run['case_name'] = case.case_name
+            testsuites_json_path = HttpRunerMain(case_step_list, locust=self.locust).splicing_api()
+            if not self.locust:
+                today = str(datetime.datetime.now())[:10]
+                log_file = os.path.join(settings.BASE_DIR, "logs/all-" + today + ".log")
+                runner = HttpRunner(failfast=False, log_file=log_file)
+                report_path = runner.run(testsuites_json_path)
+                summary = runner._summary
+                case_run['summary'] = summary
+                case_run['report_path'] = report_path
+                case_run['case_name'] = case.case_name
+            else:
+                return testsuites_json_path
         elif self.run_mode == '0':
             try:
                 case = Case.objects.get(case_id=self.case_id)
