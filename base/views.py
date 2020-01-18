@@ -1634,19 +1634,19 @@ class StartLocust(threading.Thread):
         log.info(
             datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ========= {}"
             .format(self.getName(), self.make))
-        if platform.system() == 'Windows':
-            if self.make == 'master':
-                path_list = self.path.split("performance\\")
-                execute_path = os.path.join(path_list[0], "performance")
-                locust_path = path_list[1]
-                os.chdir(execute_path)
-                if str(self.slave).isdigit():
-                    p = os.popen('locusts -f {} --processes {}'.format(locust_path, int(self.slave)))
-                else:
-                    p = os.popen('locusts -f {} --processes'.format(locust_path))
-                os.chdir(settings.BASE_DIR)
-                log.info("---------p-----------{}".format(p))
-            elif self.make == 'stop':
+        if self.make == 'master':
+            path_list = self.path.split("performance\\")
+            execute_path = os.path.join(path_list[0], "performance")
+            locust_path = path_list[1]
+            os.chdir(execute_path)
+            if str(self.slave).isdigit():
+                p = os.popen('locusts -f {} --processes {}'.format(locust_path, int(self.slave)))
+            else:
+                p = os.popen('locusts -f {} --processes'.format(locust_path))
+            os.chdir(settings.BASE_DIR)
+            log.info("---------p-----------{}".format(p))
+        elif self.make == 'stop':
+            if platform.system() == 'Windows':
                 find_port = 'netstat -aon | findstr "8089"'
                 result = os.popen(find_port)
                 text = result.read()
@@ -1663,12 +1663,8 @@ class StartLocust(threading.Thread):
                         find_kill = 'taskkill -f -pid %s' % pid
                         result = os.popen(find_kill)
                         log.info("--stop--->>> {}".format(result.read()))
-
-        else:
-            if self.make == 'master':
-                p = os.system('/home/lixiaofeng/./locust_run.sh')
-            elif self.make == 'stop':
-                os.system('/home/lixiaofeng/./locust_stop.sh')
+            else:
+                log.info("linux系统---------------------------------------------")
 
 
 def start_locust(request):
