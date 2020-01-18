@@ -1665,7 +1665,8 @@ class StartLocust(threading.Thread):
                         result = os.popen(find_kill)
                         log.info("--stop--->>> {}".format(result.read()))
             else:
-                os.popen("/home/lixiaofeng/./stop_locust.sh")
+                os.system("/home/lixiaofeng/./stop_locust.sh")
+                log.info("--stop---success-!")
 
 
 def start_locust(request):
