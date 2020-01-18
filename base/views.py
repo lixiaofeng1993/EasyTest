@@ -1636,7 +1636,8 @@ class StartLocust(threading.Thread):
             .format(self.getName(), self.make))
         if self.make == 'master':
             log.info("=================={}=============".format(self.path))
-            path_list = self.path.split("performance\\")
+            pattern = '/' if platform.system() != 'Windows' else '\\'
+            path_list = self.path.split("performance" + pattern)
             execute_path = os.path.join(path_list[0], "performance")
             locust_path = path_list[1]
             os.chdir(execute_path)
