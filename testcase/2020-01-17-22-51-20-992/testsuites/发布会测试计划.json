@@ -1,7 +1,7 @@
 {
     "config": {
         "base_url": "http://localhost:8000/api",
-        "name": "发布会测试用例",
+        "name": "发布会测试计划",
         "variables": {}
     },
     "noReset": true,
@@ -17,6 +17,12 @@
                 }
             ],
             "testcase": "testcases/发布会测试用例.json",
+            "variables": {}
+        },
+        {
+            "name": "发布会测试用例copy",
+            "parameters": [],
+            "testcase": "testcases/发布会测试用例copy.json",
             "variables": {}
         }
     ]
