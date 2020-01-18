@@ -1639,6 +1639,7 @@ class StartLocust(threading.Thread):
             execute_path = os.path.join(path_list[0], "performance")
             locust_path = path_list[1]
             os.chdir(execute_path)
+            log.info(execute_path, locust_path, 1111111111111111111)
             if str(self.slave).isdigit():
                 p = os.popen('locusts -f {} --processes {}'.format(locust_path, int(self.slave)))
             else:
