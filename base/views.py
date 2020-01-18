@@ -1635,13 +1635,11 @@ class StartLocust(threading.Thread):
             datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ========= {}"
             .format(self.getName(), self.make))
         if self.make == 'master':
-            log.info("=================={}=============".format(self.path))
             pattern = '/' if platform.system() != 'Windows' else '\\'
             path_list = self.path.split("performance" + pattern)
             execute_path = os.path.join(path_list[0], "performance")
             locust_path = path_list[1]
             os.chdir(execute_path)
-            log.info("=============================={}   {}".format(execute_path, locust_path))
             if str(self.slave).isdigit():
                 p = os.popen('locusts -f {} --processes {}'.format(locust_path, int(self.slave)))
             else:
@@ -1667,7 +1665,7 @@ class StartLocust(threading.Thread):
                         result = os.popen(find_kill)
                         log.info("--stop--->>> {}".format(result.read()))
             else:
-                log.info("linux系统---------------------------------------------")
+                os.popen("/home/lixiaofeng/./stop_locust.sh")
 
 
 def start_locust(request):
