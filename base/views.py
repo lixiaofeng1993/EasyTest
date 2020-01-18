@@ -1671,7 +1671,10 @@ def start_locust(request):
     if request.method == 'GET':
         user_id = request.session.get('user_id', '')
         if get_user(user_id):
-            plan = Plan.objects.get(is_locust=1)
+            try:
+                plan = Plan.objects.get(is_locust=1)
+            except Plan.DoesNotExist:
+                return HttpResponse("no")
             env_id = plan.environment_id
             case_id_list = eval(plan.content)
             execute = Test_execute(env_id, case_id_list, run_mode="1", plan=plan, locust=True)

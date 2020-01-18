@@ -100,7 +100,10 @@
                         if (data == 'ok') {
                             alert("启动 locust 成功！");
                             window.location.reload();
-                        } else {
+                        } else if (data == "no") {
+                            alert("测试计划为设置为性能测试参数！")
+                        }
+                        else {
                             alert("出现异常，请联系管理员！");
                         }
 
