@@ -44,8 +44,6 @@ INSTALLED_APPS = [
     'mocks',
     'djcelery',
     'bootstrap3',
-    'rest_framework',
-    'rest_framework_swagger',
 ]
 
 MIDDLEWARE = [
