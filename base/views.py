@@ -1635,11 +1635,12 @@ class StartLocust(threading.Thread):
             datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ========= {}"
             .format(self.getName(), self.make))
         if self.make == 'master':
+            log.info("=================={}=============".format(self.path))
             path_list = self.path.split("performance\\")
             execute_path = os.path.join(path_list[0], "performance")
             locust_path = path_list[1]
             os.chdir(execute_path)
-            log.info(execute_path, locust_path, 1111111111111111111)
+            log.info("=============================={}   {}".format(execute_path, locust_path))
             if str(self.slave).isdigit():
                 p = os.popen('locusts -f {} --processes {}'.format(locust_path, int(self.slave)))
             else:
