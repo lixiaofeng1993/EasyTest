@@ -35,17 +35,19 @@ def delete_testcase(file_path):
         dir_list = dir_list[0:-4]
         for d in dir_list:
             d_path = os.path.join(file_path, d)
-
-            if os.path.isdir(d_path):
-                try:
-                    shutil.rmtree(d_path)
-                except PermissionError as e:
-                    logger.log_error('权限错误，删除日志文件失败！{}'.format(d_path))
-            elif os.path.isfile(d_path):
-                try:
-                    os.remove(d_path)
-                except PermissionError as e:
-                    logger.log_error('权限错误，删除日志文件失败！{}'.format(d_path))
+            if os.path.exists(d_path):
+                if os.path.isdir(d_path):
+                    try:
+                        shutil.rmtree(d_path)
+                    except PermissionError as e:
+                        logger.log_error('权限错误，删除日志文件失败！{}'.format(d_path))
+                elif os.path.isfile(d_path):
+                    try:
+                        os.remove(d_path)
+                    except PermissionError as e:
+                        logger.log_error('权限错误，删除日志文件失败！{}'.format(d_path))
+            else:
+                logger.log_info("要删除的目录不存在！")
 
 
 def get_time_stamp():
