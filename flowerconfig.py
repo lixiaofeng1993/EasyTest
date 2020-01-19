@@ -7,12 +7,11 @@
 # @Software: PyCharm
 
 # Broker settings
-BROKER_URL = 'amqp:redis://127.0.0.1:6379/0'
+BROKER_URL = 'amqp:redis://localhost:6379/0'
 
 # RabbitMQ management api
 broker_api = 'http://guest:guest@39.105.136.231:15672/api/'
 
-basic_auth = 'lixiaofeng:123456'
 # Enable debug logging
 logging = 'INFO'
 
