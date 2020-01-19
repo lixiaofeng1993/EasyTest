@@ -50,7 +50,7 @@ django-rest-swagger==2.1.2
 django-simpleui==2.1.5
 django-timezone-field==3.0
 django-uuslug==1.1.9
-djangorestframework==3.7.1
+djangorestframework==3.9.1
 dwebsocket==0.4.2
 elasticsearch==7.0.0
 elasticsearch-dsl==7.0.0
