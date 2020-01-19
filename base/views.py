@@ -1363,7 +1363,7 @@ def timing_task(request):
             if task_id:
                 task = PeriodicTask.objects.get(id=task_id)
                 if 'run_plan' in task.task:
-                    run_plan.delay()
+                    run_plan.delay(task.name)
                     return HttpResponse('定时任务执行中，稍后在【运行报告】处查看即可,默认以 任务名称 + 时间戳 命名.【点击确定立即查看】')
                 elif 'delete_logs' in task.task:
                     delete_logs.delay()
