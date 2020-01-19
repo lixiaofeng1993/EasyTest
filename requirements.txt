@@ -111,7 +111,7 @@ olefile==0.46
 openapi-codec==1.3.2
 openpyxl==2.6.2
 packaging==19.2
-paramiko==2.4.1
+paramiko==2.4.2
 ParamUnittest==0.2
 parso==0.5.2
 pdfminer==20191020
