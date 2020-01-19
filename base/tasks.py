@@ -121,7 +121,7 @@ def test_plan(env_id, case_id_list, plan="", username="root"):
 
 
 @app.task
-def run_plan(task_name=""):
+def run_plan():
     logger.log_info('run plan------->执行定时任务中<--------------')
     start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
     try:
@@ -159,10 +159,7 @@ def run_plan(task_name=""):
     end_time = time.clock()
     totalTime = str(end_time - begin_time)[:6] + ' s'
     pic_name = DrawPie(pass_num, fail_num, error_num)
-    if task_name:
-        report_name = task_name + "-" + str(start_time).replace(':', '-')
-    else:
-        report_name = plan.plan_name + "-" + str(start_time).replace(':', '-')
+    report_name = plan.plan_name + "-" + str(start_time).replace(':', '-')
     report = Report(plan_id=plan.plan_id, report_name=report_name, content=content, case_num=case_num,
                     pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
                     totalTime=totalTime, startTime=start_time, update_user="root", make=1, report_path=report_path)

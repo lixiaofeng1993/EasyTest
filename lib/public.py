@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # coding:utf-8
-import json, re, os
+import json, re, os, platform
 import time
 import logging
 from datetime import datetime
@@ -645,8 +645,10 @@ def DrawPie(pass_num=0, fail=0, error=0):
     plt.axis('equal')
     # plt.show()
     # 保存饼图
-    pic_path = settings.MEDIA_ROOT
-    # pic_path = '/var/lib/jenkins/workspace/EasyTest/media'
+    if platform.system() == "Windows":
+        pic_path = settings.MEDIA_ROOT
+    else:
+        pic_path = '/www/wwwroot/server/EasyTest/media'
     imgPath = os.path.join(pic_path, str(now_time) + "pie.png")
     plt.savefig(imgPath)
     plt.tight_layout()
