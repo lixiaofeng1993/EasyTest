@@ -210,5 +210,5 @@ def delete_logs():
 # @shared_task
 def stop_locust():
     logger.log_info('stop locust------->停止locust服务<--------------')
-    os.system('/home/lixiaofeng/./locust_stop.sh')
+    os.system("/home/lixiaofeng/./stop_locust.sh")
     logger.log_info('remove logs------->停止locust完成.<--------------')
