@@ -74,7 +74,7 @@ def index(request):
         sign_num = Sign.objects.aggregate(Count('sign_id'))['sign_id__count']
         report_num = Report.objects.filter(plan_id__in=plan_list).aggregate(Count('report_id'))['report_id__count']
         periodic_num = PeriodicTask.objects.aggregate(Count('id'))['id__count']
-        crontabSchedule_num = CrontabSchedule.objects.aggregate(Count('id'))['id__count']
+        # crontabSchedule_num = CrontabSchedule.objects.aggregate(Count('id'))['id__count']
         user_num = User.objects.aggregate(Count('id'))['id__count']
 
         total = get_total_values(user_id)
@@ -96,7 +96,7 @@ def index(request):
                 'env_num': env_num, 'interface_num': interface_num, 'case_num': case_num,
                 'plan_num': plan_num, 'total': total,
                 'sign_num': sign_num, 'report_num': report_num, "online_ips": len(cache.get("online_ips", [])),
-                'task_num': periodic_num + crontabSchedule_num, 'user_num': user_num}
+                'task_num': periodic_num, 'user_num': user_num}
 
         return render(request, "index.html", info)
 

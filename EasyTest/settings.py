@@ -347,7 +347,7 @@ SIMPLEUI_CONFIG = {
     'system_keep': False,
     'menus': [
         {
-            'app': ' auth',
+            'app': 'auth',
             'name': '账户管理',
             # 'icon': 'fas fa-user-shield',
             'models': [{
@@ -362,7 +362,7 @@ SIMPLEUI_CONFIG = {
             ]
         },
         {
-            'app': ' base',
+            'app': 'base',
             'name': '测试平台',
             # 'icon': 'fas fa-user-shield',
             'models': [
