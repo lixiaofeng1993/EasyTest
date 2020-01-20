@@ -1391,7 +1391,7 @@ def task_logs(request):
         superuser = User.objects.get(id=user_id).is_superuser
         if superuser:
             if platform.system() != 'Windows':
-                task_log_path = '/www/wwwlogs/celery_worker_err.log'
+                task_log_path = '/www/wwwlogs/celery_worker.log'
             else:
                 return render(request, 'system/task/log.html', {'data': '0', 'make': True, 'log_file': ''})
             data_list = []
