@@ -7,7 +7,7 @@
 # @Software: PyCharm
 
 # Broker settings
-BROKER_URL = 'amqp:redis://localhost:6379/0'
+BROKER_URL = 'redis://localhost:6379/0'
 
 # RabbitMQ management api
 broker_api = 'http://guest:guest@39.105.136.231:15672/api/'
