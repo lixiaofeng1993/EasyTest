@@ -7235,29 +7235,29 @@
                                                     [------------------------------]期望数据：字段-> {{ validators.expect }}
                                                     值-> {{ validators.expect_value }}</p>
                                                 {% ifequal validators.check_result 'pass' %}
-                                                    <p style='font-family: Consolas;font-size:12px'>
-                                                        [------------------------------]测试结果：{{ validators.check_result }}</p>
+                                                    <p>
+                                                        [------------------------------]测试结果：<span  style='font-family: Consolas;font-size:12px;color: green'>{{ validators.check_result }}</span></p>
                                                 {% else %}
                                                     {% ifequal validators.check_result 'fail' %}
-                                                        <p style='font-family: Consolas;font-size:12px;color: orange'>
-                                                            [------------------------------]测试结果：{{ validators.check_result }}</p>
+                                                        <p>
+                                                            [------------------------------]测试结果：<span  style='font-family: Consolas;font-size:12px;color: orange'>{{ validators.check_result }}</span></p>
                                                     {% else %}
-                                                        <p style='font-family: Consolas;font-size:12px;color: red'>
-                                                            [------------------------------]测试结果：{{ validators.check_result }}</p>
+                                                        <p>
+                                                            [------------------------------]测试结果：<span  style='font-family: Consolas;font-size:12px;color: red'>{{ validators.check_result }}</span></p>
                                                     {% endifequal %}
                                                 {% endifequal %}
                                             {% endfor %}
                                             {% ifequal  records.status "failure" %}
-                                                <p style='font-family: Consolas;font-size:12px;color: orange'>
-                                                    [------------------------------]测试结果：{{ records.status }}</p>
-                                                <p style='font-family: Consolas;font-size:12px;color: orange'>
-                                                    [------------------------------]附件：{{ records.attachment }}</p>
+                                                <p>
+                                                    [------------------------------]测试结果：<span style='font-family: Consolas;font-size:12px;color: orange'>{{ records.status }}</span></p>
+                                                <p>
+                                                    [------------------------------]附件：<span style='font-family: Consolas;font-size:12px;color: orange'>{{ records.attachment }}</span></p>
                                             {% else %}
                                                 {% ifnotequal  records.status "success" %}
-                                                    <p style='font-family: Consolas;font-size:12px;color: red'>
-                                                        [------------------------------]测试结果：{{ records.status }}</p>
-                                                    <p style='font-family: Consolas;font-size:12px;color: red'>
-                                                        [------------------------------]附件：{{ records.attachment }}</p>
+                                                    <p>
+                                                        [------------------------------]测试结果：<span style='font-family: Consolas;font-size:12px;color: red'>{{ records.status }}</span></p>
+                                                    <p>
+                                                        [------------------------------]附件：<span style='font-family: Consolas;font-size:12px;color: red'>{{ records.attachment }}</span></p>
                                                 {% endifnotequal %}
                                             {% endifequal %}
                                         </td>
