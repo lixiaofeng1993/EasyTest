@@ -7,7 +7,7 @@
         "json": {},
         "method": "get",
         "params": {
-            "eid": "$eid"
+            "es": "$eid"
         },
         "url": "/get_event_list"
     },

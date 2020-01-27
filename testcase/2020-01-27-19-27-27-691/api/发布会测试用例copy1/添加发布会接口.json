@@ -9,7 +9,7 @@
             "limit": "$limit",
             "name": "${get_random_name()}",
             "start_time": "${get_now_time()}",
-            "status": 1
+            "status": 0
         },
         "headers": {},
         "json": {},
