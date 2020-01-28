@@ -202,7 +202,7 @@ def validators_result(validators_list, res):
         elif 'fail' in res.keys():
             result += "fail" + '    '
             msg += res['fail']
-        elif comparator == 'eq':
+        elif comparator in ["eq", "equals"]:
             if check_filed_value == expect_filed:
                 result += "pass" + '    '
                 msg += "success！" + '    '
@@ -210,7 +210,7 @@ def validators_result(validators_list, res):
                 result += "fail" + '    '
                 msg += "断言方式 -> 等于    字段: " + check_filed + " 实际值为：" + str(
                     check_filed_value) + " 与期望值：" + expect_filed + " 不符" + '    '
-        elif comparator == 'neq':
+        elif comparator in ["neq", "not_equals"]:
             if expect_filed != check_filed_value:
                 result += "pass" + '    '
                 msg += "success！" + '    '
@@ -218,7 +218,7 @@ def validators_result(validators_list, res):
                 result += "fail" + '    '
                 msg += "断言方式 -> 不等于    字段: " + check_filed + " 实际值为：" + str(
                     check_filed_value) + " 与期望值：" + expect_filed + " 相等" + '    '
-        elif comparator == 'included':
+        elif comparator in ["included", "contains"]:
             if expect_filed in check_filed_value:
                 result += "pass" + '    '
                 msg += "success！" + '    '
@@ -226,14 +226,59 @@ def validators_result(validators_list, res):
                 result += "fail" + '    '
                 msg += "断言方式 -> 包含    字段: " + check_filed + " 实际值为：" + str(
                     check_filed_value) + "  不包含  " + " 期望值：" + expect_filed + '    '
-        elif comparator == 'not_included':
-            if expect_filed not in check_filed_value:
+        elif comparator == 'string_equals':
+            if str(expect_filed) == str(check_filed_value):
                 result += "pass" + '    '
                 msg += "success！" + '    '
             else:
                 result += "fail" + '    '
-                msg += "断言方式 -> 不包含    字段: " + check_filed + " 实际值为：" + str(
-                    check_filed_value) + "  包含  " + " 与期望值：" + expect_filed + '    '
+                msg += "断言方式 -> 字符串等于    字段: " + check_filed + " 实际值为：" + str(
+                    check_filed_value) + "  与  " + " 期望值：" + expect_filed + '  字符串不相等    '
+        elif comparator == "less_than":
+            if expect_filed > check_filed_value:
+                result += "pass" + '    '
+                msg += "success！" + '    '
+            else:
+                result += "fail" + '    '
+                msg += "断言方式 -> 小于    字段: " + check_filed + " 实际值为：" + str(
+                    check_filed_value) + "  大于  " + " 期望值：" + expect_filed + '    '
+        elif comparator == "less_than_or_equals":
+            if expect_filed >= check_filed_value:
+                result += "pass" + '    '
+                msg += "success！" + '    '
+            else:
+                result += "fail" + '    '
+                msg += "断言方式 -> 小于等于    字段: " + check_filed + " 实际值为：" + str(
+                    check_filed_value) + "  大于等于  " + " 期望值：" + expect_filed + '    '
+        elif comparator == "greater_than":
+            if expect_filed < check_filed_value:
+                result += "pass" + '    '
+                msg += "success！" + '    '
+            else:
+                result += "fail" + '    '
+                msg += "断言方式 -> 大于    字段: " + check_filed + " 实际值为：" + str(
+                    check_filed_value) + "  小于  " + " 期望值：" + expect_filed + '    '
+        elif comparator == "greater_than_or_equals":
+            if expect_filed <= check_filed_value:
+                result += "pass" + '    '
+                msg += "success！" + '    '
+            else:
+                result += "fail" + '    '
+                msg += "断言方式 -> 大于等于    字段: " + check_filed + " 实际值为：" + str(
+                    check_filed_value) + "  小于等于  " + " 期望值：" + expect_filed + '    '
+        elif comparator == "regex_match":
+            if isinstance(expect_filed, (str, bytes)) and isinstance(check_filed_value, (str, bytes)):
+                if re.match(expect_filed, check_filed_value):
+                    result += "pass" + '    '
+                    msg += "success！" + '    '
+                else:
+                    result += "fail" + '    '
+                    msg += "断言方式 -> 正则匹配    字段: " + check_filed + " 实际值为：" + str(
+                        check_filed_value) + "  与  " + " 期望值：" + expect_filed + '    正则匹配失败    '
+            else:
+                result += "fail" + '    '
+                msg += "断言方式 -> 正则匹配    字段: " + check_filed + " 实际值为：" + str(
+                    check_filed_value) + "  与  " + " 期望值：" + expect_filed + '    无法正则匹配，类型错误！    '
         else:
             result += "fail" + '    '
             msg += "字段: " + check_filed + " 实际值为：" + str(
@@ -479,6 +524,11 @@ def str_number(params):
                 if number_list:
                     params[key] = str(number_list[0])
         return params
+    elif isinstance(params, list):
+        params_list = []
+        for param in params:
+            params_list.append(str_number(param))
+        return params_list
 
 
 def format_body(body):

@@ -11,7 +11,7 @@ from django.conf import settings
 from django.db.models import Sum
 from lib.signtype import user_sign_api, encryptAES, auth_user
 from lib.public import validators_result, get_extract, get_param, replace_var, \
-    extract_variables, call_interface, format_url, format_body, http_random
+    extract_variables, call_interface, format_url, format_body, http_random, str_number
 from lib.random_params import random_params
 from lib.except_check import env_not_exit, case_is_delete, interface_is_delete, parametric_set_error, AES_length_error, \
     response_value_error, request_api_error, index_error, checkpoint_no_error, eval_set_error, sql_query_error
@@ -81,13 +81,14 @@ class Test_execute():
                         return case_run
             testsuites_json_path = HttpRunerMain(case_step_list, locust=self.locust).splicing_api()
             if not self.locust:
-                from lib.helper import pattern
+                from lib.helper import pattern, write_data
 
                 today = str(datetime.datetime.now())[:10]
                 log_file = os.path.join(settings.BASE_DIR, "logs" + pattern + "all-" + today + ".log")
                 runner = HttpRunner(failfast=False, log_file=log_file)
                 report_path = runner.run(testsuites_json_path)
                 summary = runner._summary
+                write_data(summary, "test.json")
                 case_run['summary'] = summary
                 case_run['report_path'] = report_path
                 case_run['case_name'] = case.case_name
@@ -286,8 +287,8 @@ class Test_execute():
                         self.extract_list.append(extract_dict)
 
             if step_content["validators"]:  # 判断接口返回值
-                if_dict["result"], if_dict["msg"], if_dict['checkpoint'] = validators_result(step_content["validators"],
-                                                                                             if_dict)
+                validators = str_number(step_content["validators"])
+                if_dict["result"], if_dict["msg"], if_dict['checkpoint'] = validators_result(validators, if_dict)
                 if 'error' in if_dict['result']:
                     if_dict['result'] = 'error'
                 elif 'fail' in if_dict['result']:

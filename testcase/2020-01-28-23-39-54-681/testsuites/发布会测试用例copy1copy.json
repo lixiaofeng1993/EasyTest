@@ -1,0 +1,16 @@
+{
+    "config": {
+        "base_url": "http://localhost:8000/api",
+        "name": "发布会测试用例copy1copy",
+        "variables": {}
+    },
+    "noReset": true,
+    "testcases": [
+        {
+            "name": "发布会测试用例copy1copy",
+            "parameters": [],
+            "testcase": "testcases/发布会测试用例copy1copy.json",
+            "variables": {}
+        }
+    ]
+}

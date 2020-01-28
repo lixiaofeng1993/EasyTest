@@ -252,7 +252,18 @@
         function add_validators_row(obj) {
             var panel = $(obj).parent().parent();
             var tbody = $(panel).find("table[name='validators']").children('tbody');
-            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td> <td name='comparator' contenteditable='true'><select type='text' id='data_type' class='form-control'><option value='eq'>等于</option><option value='neq'>不等于</option><option value='included'>包含</option><option value='not_included'>不包含</option></select></td><td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td> <td name='comparator' contenteditable='true'>" +
+                "<select type='text' id='data_type' class='form-control'>" +
+                "<option value='equals'>equals</option>" +
+                "<option value='not_equals'>not_equals</option>" +
+                "<option value='contains'>contains</option>" +
+                "<option value='string_equals'>string_equals</option>" +
+                "<option value='less_than'>less_than</option>" +
+                "<option value='less_than_or_equals'>less_than_or_equals</option>" +
+                "<option value='greater_than'>greater_than</option>" +
+                "<option value='greater_than_or_equals'>greater_than_or_equals</option>" +
+                "<option value='regex_match'>regex_match</option>" +
+                "</select></td><td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
             $(tbody).append(newRow);
         }
 
@@ -420,18 +431,31 @@
                                                 var check = eval(validators_list)[va].check;
                                                 var expect = eval(validators_list)[va].expect;
                                                 var comparator = eval(validators_list)[va].comparator;
-                                                if (comparator == 'eq') {
-                                                    var tr_va = "<tr> <td>#</td><td name='var_name' contenteditable='true'>" + check + "</td><td name='var_value' contenteditable='true'>" + expect + "</td><td name='comparator' contenteditable='true'><select type='text' id='data_type' class='form-control'><option value='eq' selected>等于</option><option value='neq'>不等于</option><option value='included'>包含</option><option value='not_included'>不包含</option></select></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
-                                                } else if (comparator == 'neq') {
-                                                    var tr_va = "<tr> <td>#</td><td name='var_name' contenteditable='true'>" + check + "</td><td name='var_value' contenteditable='true'>" + expect + "</td><td name='comparator' contenteditable='true'><select type='text' id='data_type' class='form-control'><option value='eq'>等于</option><option value='neq' selected>不等于</option><option value='included'>包含</option><option value='not_included'>不包含</option></select></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
-                                                } else if (comparator == 'included') {
-                                                    var tr_va = "<tr> <td>#</td><td name='var_name' contenteditable='true'>" + check + "</td><td name='var_value' contenteditable='true'>" + expect + "</td><td name='comparator' contenteditable='true'><select type='text' id='data_type' class='form-control'><option value='eq'>等于</option><option value='neq'>不等于</option><option value='included' selected>包含</option><option value='not_included'>不包含</option></select></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
-                                                } else if (comparator == 'not_included') {
-                                                    var tr_va = "<tr> <td>#</td><td name='var_name' contenteditable='true'>" + check + "</td><td name='var_value' contenteditable='true'>" + expect + "</td><td name='comparator' contenteditable='true'><select type='text' id='data_type' class='form-control'><option value='eq'>等于</option><option value='neq' selected>不等于</option><option value='included'>包含</option><option value='not_included' selected>不包含</option></select></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
-                                                }
-                                                else {
-                                                    var tr_va = "<tr> <td>#</td><td name='var_name' contenteditable='true'>" + check + "</td><td name='var_value' contenteditable='true'>" + expect + "</td><td name='comparator' contenteditable='true'><select type='text' id='data_type' class='form-control'><option value='eq'>等于</option><option value='neq'>不等于</option><option value='included'>包含</option><option value='not_included'>不包含</option></select></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
-                                                }
+                                                var tr_va = "<tr> <td>#</td><td name='var_name' contenteditable='true'>" + check + "</td><td name='var_value' contenteditable='true'>" + expect + "</td><td name='comparator' contenteditable='true'>" +
+                                                    "<select type='text' id='data_type' class='form-control'>" +
+                                                    "<option value='" + comparator + "' selected>" + comparator + "</option>" +
+                                                    "<option value='equals'>equals</option>" +
+                                                    "<option value='not_equals'>not_equals</option>" +
+                                                    "<option value='contains'>contains</option>" +
+                                                    "<option value='string_equals'>string_equals</option>" +
+                                                    "<option value='less_than'>less_than</option>" +
+                                                    "<option value='less_than_or_equals'>less_than_or_equals</option>" +
+                                                    "<option value='greater_than'>greater_than</option>" +
+                                                    "<option value='greater_than_or_equals'>greater_than_or_equals</option>" +
+                                                    "<option value='regex_match'>regex_match</option>" +
+                                                    "</select></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
+                                                {#                                                if (comparator == 'eq') {#}
+                                                {#                                                    var tr_va = "<tr> <td>#</td><td name='var_name' contenteditable='true'>" + check + "</td><td name='var_value' contenteditable='true'>" + expect + "</td><td name='comparator' contenteditable='true'><select type='text' id='data_type' class='form-control'><option value='eq' selected>等于</option><option value='neq'>不等于</option><option value='included'>包含</option><option value='not_included'>不包含</option></select></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";#}
+                                                {#                                                } else if (comparator == 'neq') {#}
+                                                {#                                                    var tr_va = "<tr> <td>#</td><td name='var_name' contenteditable='true'>" + check + "</td><td name='var_value' contenteditable='true'>" + expect + "</td><td name='comparator' contenteditable='true'><select type='text' id='data_type' class='form-control'><option value='eq'>等于</option><option value='neq' selected>不等于</option><option value='included'>包含</option><option value='not_included'>不包含</option></select></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";#}
+                                                {#                                                } else if (comparator == 'included') {#}
+                                                {#                                                    var tr_va = "<tr> <td>#</td><td name='var_name' contenteditable='true'>" + check + "</td><td name='var_value' contenteditable='true'>" + expect + "</td><td name='comparator' contenteditable='true'><select type='text' id='data_type' class='form-control'><option value='eq'>等于</option><option value='neq'>不等于</option><option value='included' selected>包含</option><option value='not_included'>不包含</option></select></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";#}
+                                                {#                                                } else if (comparator == 'not_included') {#}
+                                                {#                                                    var tr_va = "<tr> <td>#</td><td name='var_name' contenteditable='true'>" + check + "</td><td name='var_value' contenteditable='true'>" + expect + "</td><td name='comparator' contenteditable='true'><select type='text' id='data_type' class='form-control'><option value='eq'>等于</option><option value='neq' selected>不等于</option><option value='included'>包含</option><option value='not_included' selected>不包含</option></select></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";#}
+                                                {#                                                }#}
+                                                {#                                                else {#}
+                                                {#                                                    var tr_va = "<tr> <td>#</td><td name='var_name' contenteditable='true'>" + check + "</td><td name='var_value' contenteditable='true'>" + expect + "</td><td name='comparator' contenteditable='true'><select type='text' id='data_type' class='form-control'><option value='eq'>等于</option><option value='neq'>不等于</option><option value='included'>包含</option><option value='not_included'>不包含</option></select></td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";#}
+                                                {#                                                }#}
                                                 validators_table = validators_table + tr_va;
                                                 var validators = validators_table + "</tbody></table>";
                                             }
