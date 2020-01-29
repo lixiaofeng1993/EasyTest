@@ -635,14 +635,14 @@
                         if (i == 0) return true;
                         var name = $(this).find("td[name='var_name']").text();
                         var value = $(this).find("td[name='var_value']").text();
-                        if (Number.isSafeInteger(Math.abs(value))) {
+                        if (Number.isSafeInteger(Math.abs(value)) && value != "") {
                             console.log("是安全数字");
                             // 参数值显示数字
                             if (!isNaN(value)) {
                                 value = value * 1
                             }
                         } else {
-                            console.log("不是安全数字");
+                            console.log("不是安全数字 或者 为空");
                         }
                         body[name] = value;
                     });
@@ -690,7 +690,7 @@
                     content.push(step);
                 });
                 var content_json = JSON.stringify(content);
-
+                console.log(content_json, 111111)
                 $.ajax({
                     url: "/base/case_update/",
                     type: "post",

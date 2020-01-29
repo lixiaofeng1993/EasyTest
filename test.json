@@ -8,7 +8,7 @@
             "name": "发布会测试用例copy1copy",
             "records": [
                 {
-                    "attachment": "",
+                    "attachment": "Traceback (most recent call last):\n  File \"D:\\python\\lib\\site-packages\\httprunner\\api.py\", line 68, in test\n    test_runner.run_test(test_dict)\nhttprunner.exceptions.ValidationFailure: \nvalidate: content.message regex_match success(str)\t==> fail\nparameter error(str) regex_match success(str)\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"D:\\python\\lib\\site-packages\\httprunner\\api.py\", line 70, in test\n    self.fail(str(ex))\nAssertionError: \nvalidate: content.message regex_match success(str)\t==> fail\nparameter error(str) regex_match success(str)\n",
                     "meta_datas": {
                         "data": [
                             {
@@ -23,7 +23,7 @@
                                         "User-Agent": "python-requests/2.22.0"
                                     },
                                     "method": "GET",
-                                    "url": "http://localhost:8000/api/get_event_list?eid=283"
+                                    "url": "http://localhost:8000/api/get_event_list?eid="
                                 },
                                 "response": {
                                     "content_type": "text/html; charset=utf-8",
@@ -32,15 +32,15 @@
                                     "headers": {
                                         "Content-Length": "0",
                                         "Content-Type": "text/html; charset=utf-8",
-                                        "Date": "Tue, 28 Jan 2020 15:41:47 GMT",
-                                        "Location": "/api/get_event_list/?eid=283",
+                                        "Date": "Wed, 29 Jan 2020 02:28:41 GMT",
+                                        "Location": "/api/get_event_list/?eid=",
                                         "Server": "WSGIServer/0.2 CPython/3.6.5"
                                     },
                                     "ok": true,
                                     "reason": "Moved Permanently",
                                     "status_code": 301,
                                     "text": "",
-                                    "url": "http://localhost:8000/api/get_event_list?eid=283"
+                                    "url": "http://localhost:8000/api/get_event_list?eid="
                                 }
                             },
                             {
@@ -52,43 +52,36 @@
                                         "User-Agent": "python-requests/2.22.0"
                                     },
                                     "method": "GET",
-                                    "url": "http://localhost:8000/api/get_event_list/?eid=283"
+                                    "url": "http://localhost:8000/api/get_event_list/?eid="
                                 },
                                 "response": {
                                     "content_type": "application/json",
                                     "cookies": {},
                                     "encoding": "None",
                                     "headers": {
-                                        "Content-Length": "257",
+                                        "Content-Length": "66",
                                         "Content-Type": "application/json",
-                                        "Date": "Tue, 28 Jan 2020 15:41:47 GMT",
+                                        "Date": "Wed, 29 Jan 2020 02:28:41 GMT",
                                         "Server": "WSGIServer/0.2 CPython/3.6.5",
                                         "X-Frame-Options": "SAMEORIGIN"
                                     },
                                     "json": {
-                                        "data": {
-                                            "address": "内蒙古自治区飞市吉区朱路S座 450217",
-                                            "id": 283,
-                                            "limit": 1000,
-                                            "name": "李志强",
-                                            "start_time": "2020-01-27T16:58:58",
-                                            "status": true
-                                        },
-                                        "message": "success",
+                                        "error_code": 10021,
+                                        "message": "parameter error",
                                         "status": 200
                                     },
                                     "ok": true,
                                     "reason": "OK",
                                     "status_code": 200,
-                                    "url": "http://localhost:8000/api/get_event_list/?eid=283"
+                                    "url": "http://localhost:8000/api/get_event_list/?eid="
                                 }
                             }
                         ],
                         "name": "查询发布会接口",
                         "stat": {
-                            "content_size": 257,
-                            "elapsed_ms": 16.0,
-                            "response_time_ms": 1048.54
+                            "content_size": 66,
+                            "elapsed_ms": 2.525,
+                            "response_time_ms": 1028.93
                         },
                         "validators": [
                             {
@@ -101,8 +94,8 @@
                             },
                             {
                                 "check": "content.message",
-                                "check_result": "pass",
-                                "check_value": "success",
+                                "check_result": "fail",
+                                "check_value": "parameter error",
                                 "comparator": "regex_match",
                                 "expect": "success",
                                 "expect_value": "success"
@@ -124,7 +117,7 @@
                                             "User-Agent": "python-requests/2.22.0"
                                         },
                                         "method": "GET",
-                                        "url": "http://localhost:8000/api/get_event_list?eid=283"
+                                        "url": "http://localhost:8000/api/get_event_list?eid="
                                     },
                                     "response": {
                                         "content_type": "text/html; charset=utf-8",
@@ -133,15 +126,15 @@
                                         "headers": {
                                             "Content-Length": "0",
                                             "Content-Type": "text/html; charset=utf-8",
-                                            "Date": "Tue, 28 Jan 2020 15:41:47 GMT",
-                                            "Location": "/api/get_event_list/?eid=283",
+                                            "Date": "Wed, 29 Jan 2020 02:28:41 GMT",
+                                            "Location": "/api/get_event_list/?eid=",
                                             "Server": "WSGIServer/0.2 CPython/3.6.5"
                                         },
                                         "ok": true,
                                         "reason": "Moved Permanently",
                                         "status_code": 301,
                                         "text": "",
-                                        "url": "http://localhost:8000/api/get_event_list?eid=283"
+                                        "url": "http://localhost:8000/api/get_event_list?eid="
                                     }
                                 },
                                 {
@@ -153,43 +146,36 @@
                                             "User-Agent": "python-requests/2.22.0"
                                         },
                                         "method": "GET",
-                                        "url": "http://localhost:8000/api/get_event_list/?eid=283"
+                                        "url": "http://localhost:8000/api/get_event_list/?eid="
                                     },
                                     "response": {
                                         "content_type": "application/json",
                                         "cookies": {},
                                         "encoding": "None",
                                         "headers": {
-                                            "Content-Length": "257",
+                                            "Content-Length": "66",
                                             "Content-Type": "application/json",
-                                            "Date": "Tue, 28 Jan 2020 15:41:47 GMT",
+                                            "Date": "Wed, 29 Jan 2020 02:28:41 GMT",
                                             "Server": "WSGIServer/0.2 CPython/3.6.5",
                                             "X-Frame-Options": "SAMEORIGIN"
                                         },
                                         "json": {
-                                            "data": {
-                                                "address": "内蒙古自治区飞市吉区朱路S座 450217",
-                                                "id": 283,
-                                                "limit": 1000,
-                                                "name": "李志强",
-                                                "start_time": "2020-01-27T16:58:58",
-                                                "status": true
-                                            },
-                                            "message": "success",
+                                            "error_code": 10021,
+                                            "message": "parameter error",
                                             "status": 200
                                         },
                                         "ok": true,
                                         "reason": "OK",
                                         "status_code": 200,
-                                        "url": "http://localhost:8000/api/get_event_list/?eid=283"
+                                        "url": "http://localhost:8000/api/get_event_list/?eid="
                                     }
                                 }
                             ],
                             "name": "查询发布会接口",
                             "stat": {
-                                "content_size": 257,
-                                "elapsed_ms": 16.0,
-                                "response_time_ms": 1048.54
+                                "content_size": 66,
+                                "elapsed_ms": 2.525,
+                                "response_time_ms": 1028.93
                             },
                             "validators": [
                                 {
@@ -202,8 +188,8 @@
                                 },
                                 {
                                     "check": "content.message",
-                                    "check_result": "pass",
-                                    "check_value": "success",
+                                    "check_result": "fail",
+                                    "check_value": "parameter error",
                                     "comparator": "regex_match",
                                     "expect": "success",
                                     "expect_value": "success"
@@ -212,23 +198,23 @@
                         }
                     ],
                     "name": "查询发布会接口",
-                    "response_time": "1048.54",
-                    "status": "success"
+                    "response_time": "1028.93",
+                    "status": "failure"
                 }
             ],
             "stat": {
                 "errors": 0,
                 "expectedFailures": 0,
-                "failures": 0,
+                "failures": 1,
                 "skipped": 0,
-                "successes": 1,
+                "successes": 0,
                 "total": 1,
                 "unexpectedSuccesses": 0
             },
-            "success": true,
+            "success": false,
             "time": {
-                "duration": 1.0678861141204834,
-                "start_at": 1580226106.069057
+                "duration": 1.0418496131896973,
+                "start_at": 1580264920.9213321
             }
         }
     ],
@@ -239,24 +225,24 @@
     },
     "stat": {
         "testcases": {
-            "fail": 0,
-            "success": 1,
+            "fail": 1,
+            "success": 0,
             "total": 1
         },
         "teststeps": {
             "errors": 0,
             "expectedFailures": 0,
-            "failures": 0,
+            "failures": 1,
             "skipped": 0,
-            "successes": 1,
+            "successes": 0,
             "total": 1,
             "unexpectedSuccesses": 0
         }
     },
-    "success": true,
+    "success": false,
     "time": {
-        "duration": 1.0678861141204834,
-        "start_at": 1580226106.069057,
-        "start_datetime": "2020-01-28 23:41:46"
+        "duration": 1.0418496131896973,
+        "start_at": 1580264920.9213321,
+        "start_datetime": "2020-01-29 10:28:40"
     }
 }

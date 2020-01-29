@@ -518,7 +518,7 @@ def str_number(params):
     """数字需要是str的情况"""
     if isinstance(params, dict):
         for key, value in params.items():
-            if "str" in str(value):  # 参数值数字需要时字符串的情况，传参时使用 str(number)
+            if "str(" in str(value):  # 参数值数字需要时字符串的情况，传参时使用 str(number)
                 patt = re.compile("str\((\d+)\)")
                 number_list = patt.findall(value)
                 if number_list:

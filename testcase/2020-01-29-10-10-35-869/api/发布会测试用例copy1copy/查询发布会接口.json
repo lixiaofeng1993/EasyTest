@@ -13,13 +13,13 @@
     },
     "validate": [
         {
-            "regex_match": [
+            "equals": [
                 "content.status",
-                "200ads山水"
+                200
             ]
         },
         {
-            "contains": [
+            "regex_match": [
                 "content.message",
                 "success"
             ]
