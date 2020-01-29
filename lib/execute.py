@@ -81,14 +81,13 @@ class Test_execute():
                         return case_run
             testsuites_json_path = HttpRunerMain(case_step_list, locust=self.locust).splicing_api()
             if not self.locust:
-                from lib.helper import pattern, write_data
+                from lib.helper import pattern
 
                 today = str(datetime.datetime.now())[:10]
                 log_file = os.path.join(settings.BASE_DIR, "logs" + pattern + "all-" + today + ".log")
                 runner = HttpRunner(failfast=False, log_file=log_file)
                 report_path = runner.run(testsuites_json_path)
                 summary = runner._summary
-                write_data(summary, "test.json")
                 case_run['summary'] = summary
                 case_run['report_path'] = report_path
                 case_run['case_name'] = case.case_name
