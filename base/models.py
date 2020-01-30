@@ -107,8 +107,8 @@ class Plan(models.Model):
     content = models.TextField()
     report_name = models.CharField(max_length=255, default="")
     make = models.IntegerField(null=True)
-    is_locust = models.IntegerField(default=0)  # 性能测试
-    is_task = models.IntegerField(default=0)  # 定时任务
+    is_locust = models.IntegerField(default="")  # 性能测试
+    is_task = models.IntegerField(default="")  # 定时任务
     update_time = models.DateTimeField('更新时间', auto_now=True)
     update_user = models.CharField(max_length=30, default='')
 
