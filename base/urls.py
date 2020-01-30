@@ -58,6 +58,9 @@ urlpatterns = [
     # 定时任务
     url(r'timing_task/', view=views.timing_task, name='timing_task'),
     url(r'task_logs/', view=views.task_logs, name='task_logs'),
+    url(r'task_add/', view=views.task_add, name='task_add'),
+    url(r'task_update/', view=views.task_update, name='task_update'),
+    url(r'task_delete/', view=views.task_delete, name='task_delete'),
     # 报告页面展示
     url(r'report_page/', view=views.ReportPage.as_view(), name='report_page'),
     url(r'report_logs/', view=views.report_logs, name='report_logs'),  # 日志

@@ -134,7 +134,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">是否签名</label>
-                            <div class="col-sm-1 control-label">
+                            <div class="col-sm-2 control-label">
                                 <label class="fancy-radio">
                                     {% ifequal is_sign 1 %}
                                         <input name="is_sign" value="1" type="radio" checked><span><i></i>签名</span>
@@ -155,7 +155,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">设置headers</label>
-                            <div class="col-sm-1 control-label">
+                            <div class="col-sm-2 control-label">
                                 <label class="fancy-radio">
                                     {% ifequal is_headers 1 %}
                                         <input name="is_headers" value="1" type="radio" checked>
@@ -178,13 +178,13 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">是否mock</label>
-                            <div class="col-sm-1 control-label">
+                            <div class="col-sm-2 control-label">
                                 <label class="fancy-radio">
                                     {% ifequal mock "1" %}
                                         <input name="mock" value="1" type="radio" checked>
-                                        <span><i></i>mock</span>
+                                        <span><i></i>是的</span>
                                     {% else %}
-                                        <input name="mock" value="1" type="radio"><span><i></i>mock</span>
+                                        <input name="mock" value="1" type="radio"><span><i></i>是的</span>
                                     {% endifequal %}
                                 </label>
                             </div>
@@ -192,9 +192,9 @@
                                 <label class="fancy-radio">
                                     {% ifequal mock "0" %}
                                         <input name="mock" value="0" type="radio" checked>
-                                        <span><i></i>no mock</span>
+                                        <span><i></i>不是的</span>
                                     {% else %}
-                                        <input name="mock" value="0" type="radio"><span><i></i>no mock</span>
+                                        <input name="mock" value="0" type="radio"><span><i></i>不是的</span>
                                     {% endifequal %}
                                 </label>
                             </div>

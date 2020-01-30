@@ -561,7 +561,8 @@ def format_body(body):
 def http_random(body):
     if isinstance(body, dict):
         for key, value in body.items():
-            if not str(value).isdigit():
+            # if not str(value).isdigit():
+            if not isinstance(value, (int, float)):
                 if "_random_in" in value:
                     body[key] = "__random_int()"
                 elif "_name" in value:

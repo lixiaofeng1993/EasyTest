@@ -1,0 +1,23 @@
+{
+    "name": "查询发布会",
+    "noReset": true,
+    "output": [],
+    "request": {
+        "headers": {},
+        "json": {},
+        "method": "get",
+        "params": {
+            "eid": 12
+        },
+        "url": "/get_event_list/"
+    },
+    "validate": [
+        {
+            "equals": [
+                "content.status",
+                200
+            ]
+        }
+    ],
+    "variables": {}
+}

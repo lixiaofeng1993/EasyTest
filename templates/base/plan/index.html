@@ -77,7 +77,7 @@
                             <th id="cen">测试环境</th>
                             <th id="cen">计划内容</th>
                             <th id="cen">性能测试</th>
-                            <th id="cen">定时任务</th>
+                            {#                            <th id="cen">定时任务</th>#}
                             <th id="cen">描述</th>
                             <th id="cen">更新时间</th>
                             <th id="cen">更新用户</th>
@@ -96,7 +96,7 @@
                                 <td id="cen" env_id="{{ plan.environment.env_id }}">{{ plan.environment.env_name }}</td>
                                 <td id="plan-content">{{ plan.content }}</td>
                                 <td id="cen">{{ plan.is_locust }}</td>
-                                <td id="cen">{{ plan.is_task }}</td>
+                                {#                                <td id="cen">{{ plan.is_task }}</td>#}
                                 <td>{{ plan.description }}</td>
                                 <td id="cen">{{ plan.update_time }}</td>
                                 <td id="cen">{{ plan.update_user }}</td>

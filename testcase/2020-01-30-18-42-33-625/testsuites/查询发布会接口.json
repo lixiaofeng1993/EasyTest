@@ -1,0 +1,16 @@
+{
+    "config": {
+        "base_url": "http://www.easytest.xyz/api",
+        "name": "查询发布会接口",
+        "variables": {}
+    },
+    "noReset": true,
+    "testcases": [
+        {
+            "name": "查询发布会接口",
+            "parameters": [],
+            "testcase": "testcases/查询发布会接口.json",
+            "variables": {}
+        }
+    ]
+}

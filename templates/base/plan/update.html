@@ -72,7 +72,7 @@
                         <div class="form-group">
                             <label class="col-sm-2 control-label">是否运行性能测试</label>
                             {% if plan.is_locust %}
-                                <div class="col-sm-1 control-label">
+                                <div class="col-sm-2 control-label">
                                     <label class="fancy-radio">
                                         <input name="is_locust" value="1" type="radio"
                                                checked><span><i></i>运行性能测试</span>
@@ -84,7 +84,7 @@
                                     </label>
                                 </div>
                             {% else %}
-                                <div class="col-sm-1 control-label">
+                                <div class="col-sm-2 control-label">
                                     <label class="fancy-radio">
                                         <input name="is_locust" value="1" type="radio"><span><i></i>运行性能测试</span>
                                     </label>
@@ -97,32 +97,32 @@
                                 </div>
                             {% endif %}
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">是否执行定时任务</label>
-                            {% if plan.is_task %}
-                                <div class="col-sm-1 control-label">
-                                    <label class="fancy-radio">
-                                        <input name="is_task" value="1" type="radio" checked><span><i></i>执行定时任务</span>
-                                    </label>
-                                </div>
-                                <div class="col-sm-2 control-label">
-                                    <label class="fancy-radio">
-                                        <input name="is_task" value="0" type="radio"><span><i></i>不执行定时任务</span>
-                                    </label>
-                                </div>
-                            {% else %}
-                                <div class="col-sm-1 control-label">
-                                    <label class="fancy-radio">
-                                        <input name="is_task" value="1" type="radio"><span><i></i>执行定时任务</span>
-                                    </label>
-                                </div>
-                                <div class="col-sm-2 control-label">
-                                    <label class="fancy-radio">
-                                        <input name="is_task" value="0" type="radio" checked><span><i></i>不执行定时任务</span>
-                                    </label>
-                                </div>
-                            {% endif %}
-                        </div>
+                        {#                        <div class="form-group">#}
+                        {#                            <label class="col-sm-2 control-label">是否执行定时任务</label>#}
+                        {#                            {% if plan.is_task %}#}
+                        {#                                <div class="col-sm-2 control-label">#}
+                        {#                                    <label class="fancy-radio">#}
+                        {#                                        <input name="is_task" value="1" type="radio" checked><span><i></i>执行定时任务</span>#}
+                        {#                                    </label>#}
+                        {#                                </div>#}
+                        {#                                <div class="col-sm-2 control-label">#}
+                        {#                                    <label class="fancy-radio">#}
+                        {#                                        <input name="is_task" value="0" type="radio"><span><i></i>不执行定时任务</span>#}
+                        {#                                    </label>#}
+                        {#                                </div>#}
+                        {#                            {% else %}#}
+                        {#                                <div class="col-sm-2 control-label">#}
+                        {#                                    <label class="fancy-radio">#}
+                        {#                                        <input name="is_task" value="1" type="radio"><span><i></i>执行定时任务</span>#}
+                        {#                                    </label>#}
+                        {#                                </div>#}
+                        {#                                <div class="col-sm-2 control-label">#}
+                        {#                                    <label class="fancy-radio">#}
+                        {#                                        <input name="is_task" value="0" type="radio" checked><span><i></i>不执行定时任务</span>#}
+                        {#                                    </label>#}
+                        {#                                </div>#}
+                        {#                            {% endif %}#}
+                        {#                        </div>#}
                         <div class="form-group">
                             <label class="col-sm-2 control-label">描述</label>
                             <div class="col-sm-6">

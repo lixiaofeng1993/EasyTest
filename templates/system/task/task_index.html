@@ -40,7 +40,7 @@
             <div class="panel">
                 <div class="panel-heading">
                     <a class="btn btn-primary" id="add_id_PeriodicTask"
-                       href="/admin/djcelery/periodictask/add/?_to_field=id&amp;_popup=1" title="增加另一个 测试用例">
+                       href="{% url 'base:task_add' %}" title="增加另一个 测试用例">
                         <i class="fa fa-plus-circle"></i>&nbsp;添加任务
                     </a>&nbsp;&nbsp;&nbsp;
                     <a class="btn btn-primary" id="add_id_PeriodicTask"
@@ -69,7 +69,7 @@
                                 <td id="cen" class="task_id">{{ task.id }}</td>
                                 <td><a class="related-widget-wrapper-link add-related"
                                        id="add_id_Apitest"
-                                       href="../admin/djcelery/periodictask/{{ task.id }}/change/?_to_field=id&_popup=1">{{ task.name }}</a>
+                                       href="{% url 'base:task_update' %}{{ task.id }}">{{ task.name }}</a>
                                 </td>
                                 <td>{{ task.task }}</td>
                                 <td><a style='color:green'>{{ periodic.every }} {{ periodic.period }}/次</a></td>
@@ -80,7 +80,7 @@
                                    class="layui-btn layui-btn-danger layui-btn-xs"
                                    data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;
                                 </a>
-                                <a href="../admin/djcelery/periodictask/{{ task.id }}/delete/?_to_field=id&_popup=1"
+                                <a href="{% url 'base:task_delete' %}{{ task.id }}" onclick="return delete_btn()"
                                    class="layui-btn layui-btn-danger layui-btn-xs"><img
                                         src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
 

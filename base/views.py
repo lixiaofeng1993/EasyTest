@@ -1196,20 +1196,17 @@ def plan_add(request):
                 prj_id = request.POST['prj_id']
                 project = Project.objects.get(prj_id=prj_id)
                 is_locust = request.POST['is_locust']
-                is_task = request.POST['is_task']
                 env_id = request.POST['env_id']
                 environment = Environment.objects.get(env_id=env_id)
                 description = request.POST['description']
                 username = request.session.get('user', '')
                 if is_locust == '1':
                     Plan.objects.filter(is_locust=1).update(is_locust=0)
-                if is_task == '1':
-                    Plan.objects.filter(is_task=1).update(is_task=0)
                 plan = Plan(plan_name=plan_name, project=project, environment=environment, description=description,
-                            content=content, is_locust=is_locust, is_task=is_task, update_user=username)
+                            content=content, is_locust=is_locust, update_user=username)
                 plan.save()
-                log.info('add plan   {}  success. plan info: {} // {} // {} // {} //{} //{}'.
-                         format(plan_name, project, environment, description, content, is_locust, is_task))
+                log.info('add plan   {}  success. plan info: {} // {} // {} // {} //{} //'.
+                         format(plan_name, project, environment, description, content, is_locust))
                 return HttpResponseRedirect("/base/plan/")
         elif request.method == 'GET':
             prj_list = is_superuser(user_id)
@@ -1251,7 +1248,6 @@ def plan_update(request):
                 project = Project.objects.get(prj_id=prj_id)
                 is_locust = request.POST['is_locust']
                 env_id = request.POST['env_id']
-                is_task = request.POST['is_task']
                 environment = Environment.objects.get(env_id=env_id)
                 description = request.POST['description']
 
@@ -1259,13 +1255,10 @@ def plan_update(request):
 
                 if is_locust == '1':
                     Plan.objects.filter(is_locust=1).update(is_locust=0)
-                if is_task == '1':
-                    Plan.objects.filter(is_task=1).update(is_task=0)
                 Plan.objects.filter(plan_id=plan_id).update(plan_name=plan_name, project=project,
                                                             environment=environment,
                                                             description=description, content=content,
-                                                            is_locust=is_locust,
-                                                            is_task=is_task, update_time=datetime.now(),
+                                                            is_locust=is_locust, update_time=datetime.now(),
                                                             update_user=username)
                 log.info(
                     'edit plan   {}  success. plan info: {} // {} // {} // {}'.format(plan_name, project, environment,
@@ -1363,7 +1356,7 @@ def timing_task(request):
             if task_id:
                 task = PeriodicTask.objects.get(id=task_id)
                 if 'run_plan' in task.task:
-                    run_plan.delay(task.name)
+                    run_plan.delay()
                     return HttpResponse('定时任务执行中，稍后在【运行报告】处查看即可,默认以 任务名称 + 时间戳 命名.【点击确定立即查看】')
                 elif 'delete_logs' in task.task:
                     delete_logs.delay()
@@ -1408,6 +1401,169 @@ def task_logs(request):
                               {'data': data_list, 'make': True, 'log_file': task_log_path})
         else:
             return render(request, 'system/task/log.html', {'data': '0', 'make': True, 'log_file': ''})
+
+
+from djcelery.models import PeriodicTask, IntervalSchedule
+from base.models import TaskIndex
+
+
+# 增加定时任务
+def task_add(request):
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/plan/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == "GET":
+            interval_list = IntervalSchedule.objects.all()
+            info = {"interval_list": interval_list}
+            return render(request, 'system/task/add.html', info)
+        elif request.method == "POST":
+            task_time = request.POST.get("task_time", 0)
+            task_name = request.POST.get("task_name", "")
+            plan_id = request.POST.get("plan_id", "")
+            task = "base.tasks.run_plan"
+            plan_id_list = plan_id.split(",")
+            periodic = PeriodicTask.objects.filter(name=task_name)
+            if periodic:
+                return JsonResponse("任务名称已存在！", safe=False)
+            if task_time == "1":
+                interval = IntervalSchedule.objects.filter(every=1).filter(period="days")
+                if not interval:
+                    interval = IntervalSchedule(every=1, period="days")
+                    interval.save()
+                interval = IntervalSchedule.objects.filter(every=1).filter(period="days")[0]
+                periodic = PeriodicTask(name=task_name, task=task, enabled=1, date_changed=datetime.now(),
+                                        interval=interval)
+                periodic.save()
+            elif task_time == "2":
+                interval = IntervalSchedule.objects.filter(every=1).filter(period="week")
+                if not interval:
+                    interval = IntervalSchedule(every=1, period="week")
+                    interval.save()
+                interval = IntervalSchedule.objects.filter(every=1).filter(period="week")[0]
+                periodic = PeriodicTask(name=task_name, task=task, enabled=1, date_changed=datetime.now(),
+                                        interval=interval)
+                periodic.save()
+            elif task_time == "3":
+                id_every = request.POST.get("id_every", 0)
+                id_period = request.POST.get("id_period", "")
+                interval = IntervalSchedule.objects.filter(every=int(id_every)).filter(period=id_period)
+                if not interval:
+                    interval = IntervalSchedule(every=int(id_every), period=id_period)
+                    interval.save()
+                interval = IntervalSchedule.objects.filter(every=int(id_every)).filter(period=id_period)[0]
+                periodic = PeriodicTask(name=task_name, task=task, enabled=1, date_changed=datetime.now(),
+                                        interval=interval)
+                periodic.save()
+            elif task_time == "4":
+                interval = request.POST.get("interval", 0)
+                try:
+                    interval = IntervalSchedule.objects.get(id=int(interval))
+                except IntervalSchedule.DoesNotExist:
+                    return JsonResponse("选择时间间隔不存在！", safe=False)
+                periodic = PeriodicTask(name=task_name, task=task, enabled=1, date_changed=datetime.now(),
+                                        interval=interval)
+                periodic.save()
+            for plan_id in plan_id_list:
+                periodic = PeriodicTask.objects.get(name=task_name)
+                task = TaskIndex(content=plan_id, is_task=1, update_time=datetime.now(), update_user=user_id,
+                                 task_period_id=periodic.id)
+                task.save()
+            return JsonResponse("ok", safe=False)
+
+
+def task_update(request):
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/plan/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == "GET":
+            task_id = request.build_absolute_uri()[-1]
+            interval_list = IntervalSchedule.objects.all()
+            periodic = PeriodicTask.objects.get(id=task_id)
+            task_list = TaskIndex.objects.filter(task_period_id=periodic.id)
+            interval = IntervalSchedule.objects.get(id=periodic.interval_id)
+            plan_list = []
+            for task in task_list:
+                plan = Plan.objects.get(plan_id=task.content)
+                plan_list.append(plan)
+            info = {"interval_list": interval_list, "periodic": periodic, "plan_list": plan_list, "interval": interval}
+            return render(request, 'system/task/update.html', info)
+        elif request.method == "POST":
+            task_time = request.POST.get("task_time", 0)
+            task_name = request.POST.get("task_name", "")
+            task_id = request.POST.get("task_id", "")
+            plan_id = request.POST.get("plan_id", "")
+            task = "base.tasks.run_plan"
+            plan_id_list = plan_id.split(",")
+            periodic = PeriodicTask.objects.filter(name=task_name).exclude(id=task_id)
+            if periodic:
+                return JsonResponse("任务名称已存在！", safe=False)
+            if task_time == "1":
+                interval = IntervalSchedule.objects.filter(every=1).filter(period="days")
+                if not interval:
+                    interval = IntervalSchedule(every=1, period="days")
+                    interval.save()
+                interval = IntervalSchedule.objects.filter(every=1).filter(period="days")[0]
+                PeriodicTask.objects.filter(id=task_id) \
+                    .update(name=task_name, task=task, enabled=1, date_changed=datetime.now(), interval=interval)
+            elif task_time == "2":
+                interval = IntervalSchedule.objects.filter(every=1).filter(period="week")
+                if not interval:
+                    interval = IntervalSchedule(every=1, period="week")
+                    interval.save()
+                interval = IntervalSchedule.objects.filter(every=1).filter(period="week")[0]
+                PeriodicTask.objects.filter(id=task_id) \
+                    .update(name=task_name, task=task, enabled=1, date_changed=datetime.now(), interval=interval)
+            elif task_time == "3":
+                id_every = request.POST.get("id_every", 0)
+                id_period = request.POST.get("id_period", "")
+                interval = IntervalSchedule.objects.filter(every=int(id_every)).filter(period=id_period)
+                if not interval:
+                    interval = IntervalSchedule(every=int(id_every), period=id_period)
+                    interval.save()
+                interval = IntervalSchedule.objects.filter(every=int(id_every)).filter(period=id_period)[0]
+                PeriodicTask.objects.filter(id=task_id) \
+                    .update(name=task_name, task=task, enabled=1, date_changed=datetime.now(), interval=interval)
+            elif task_time == "4":
+                interval = request.POST.get("interval", 0)
+                try:
+                    interval = IntervalSchedule.objects.get(id=int(interval))
+                except IntervalSchedule.DoesNotExist:
+                    return JsonResponse("选择时间间隔不存在！", safe=False)
+                PeriodicTask.objects.filter(id=task_id) \
+                    .update(name=task_name, task=task, enabled=1, date_changed=datetime.now(),
+                            interval=interval)
+            periodic = PeriodicTask.objects.get(name=task_name)
+            task_list = TaskIndex.objects.filter(task_period_id=periodic.id)
+            for task in task_list:
+                if task.content not in plan_id_list:
+                    task_list.filter(content=task.content).delete()
+            for plan_id in plan_id_list:
+                task = TaskIndex.objects.filter(content=plan_id).filter(task_period_id=periodic.id)
+                if task:
+                    task.update(is_task=1, update_time=datetime.now(), update_user=user_id)
+                else:
+                    task = TaskIndex(content=plan_id, is_task=1, update_time=datetime.now(), update_user=user_id,
+                                     task_period_id=periodic.id)
+                    task.save()
+            log.info("用户 {} 更新定时任务 {} 成功！".format(user_id, task_id))
+            return JsonResponse("ok", safe=False)
+
+
+def task_delete(request):
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/report_page/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == 'GET':
+            task_id = request.build_absolute_uri()[-1]
+            PeriodicTask.objects.filter(id=task_id).delete()
+            log.info("用户 {} 删除定时任务 {} 成功！".format(user_id, task_id))
+            return HttpResponseRedirect("/base/timing_task/")
 
 
 # 报告列表
@@ -1898,6 +2054,11 @@ def findata(request):
             # 查询并将结果转换为json
             case = Case.objects.filter(case_id=case_id).values()
             return JsonResponse(list(case), safe=False)
+        if get_type == "get_all_plan":
+            plan = Plan.objects.all().values()
+            if not plan:
+                return JsonResponse("no", safe=False)
+            return JsonResponse(list(plan), safe=False)
         if get_type == "get_all_case_by_prj_id":
             prj_id = request.GET["prj_id"]
             try:

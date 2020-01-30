@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from djcelery.models import PeriodicTask
 
 
 class Sign(models.Model):
@@ -106,8 +107,8 @@ class Plan(models.Model):
     content = models.TextField()
     report_name = models.CharField(max_length=255, default="")
     make = models.IntegerField(null=True)
-    is_locust = models.IntegerField(default='')  # 性能测试
-    is_task = models.IntegerField(default='')  # 定时任务
+    is_locust = models.IntegerField(default=0)  # 性能测试
+    is_task = models.IntegerField(default=0)  # 定时任务
     update_time = models.DateTimeField('更新时间', auto_now=True)
     update_user = models.CharField(max_length=30, default='')
 
@@ -210,3 +211,20 @@ class DebugTalk(models.Model):
     class Meta:
         verbose_name = '驱动py文件'
         db_table = 'DebugTalk'
+
+
+class TaskIndex(models.Model):
+    task_id = models.AutoField(primary_key=True, null=False)
+    task_period = models.ForeignKey(PeriodicTask, on_delete=models.CASCADE)
+    content = models.TextField()
+    report_name = models.CharField(max_length=255, default="")
+    is_task = models.IntegerField(default=0)  # 定时任务
+    update_time = models.DateTimeField('更新时间', auto_now=True)
+    update_user = models.CharField(max_length=30, default='')
+
+    def __str__(self):
+        return self.task_id
+
+    class Meta:
+        verbose_name = "定时任务"
+        verbose_name_plural = "定时任务"
