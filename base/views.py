@@ -1496,7 +1496,6 @@ def task_update(request):
             task_name = request.POST.get("task_name", "")
             task_id = request.POST.get("task_id", "")
             plan_id = request.POST.get("plan_id", "")
-            task = "base.tasks.run_plan"
             plan_id_list = plan_id.split(",")
             periodic = PeriodicTask.objects.filter(name=task_name).exclude(id=task_id)
             if periodic:
@@ -1508,7 +1507,7 @@ def task_update(request):
                     interval.save()
                 interval = IntervalSchedule.objects.filter(every=1).filter(period="days")[0]
                 PeriodicTask.objects.filter(id=task_id) \
-                    .update(name=task_name, task=task, enabled=1, date_changed=datetime.now(), interval=interval)
+                    .update(name=task_name, enabled=1, date_changed=datetime.now(), interval=interval)
             elif task_time == "2":
                 interval = IntervalSchedule.objects.filter(every=1).filter(period="week")
                 if not interval:
@@ -1516,7 +1515,7 @@ def task_update(request):
                     interval.save()
                 interval = IntervalSchedule.objects.filter(every=1).filter(period="week")[0]
                 PeriodicTask.objects.filter(id=task_id) \
-                    .update(name=task_name, task=task, enabled=1, date_changed=datetime.now(), interval=interval)
+                    .update(name=task_name, enabled=1, date_changed=datetime.now(), interval=interval)
             elif task_time == "3":
                 id_every = request.POST.get("id_every", 0)
                 id_period = request.POST.get("id_period", "")
@@ -1526,7 +1525,7 @@ def task_update(request):
                     interval.save()
                 interval = IntervalSchedule.objects.filter(every=int(id_every)).filter(period=id_period)[0]
                 PeriodicTask.objects.filter(id=task_id) \
-                    .update(name=task_name, task=task, enabled=1, date_changed=datetime.now(), interval=interval)
+                    .update(name=task_name, enabled=1, date_changed=datetime.now(), interval=interval)
             elif task_time == "4":
                 interval = request.POST.get("interval", 0)
                 try:
@@ -1534,9 +1533,11 @@ def task_update(request):
                 except IntervalSchedule.DoesNotExist:
                     return JsonResponse("选择时间间隔不存在！", safe=False)
                 PeriodicTask.objects.filter(id=task_id) \
-                    .update(name=task_name, task=task, enabled=1, date_changed=datetime.now(),
+                    .update(name=task_name, enabled=1, date_changed=datetime.now(),
                             interval=interval)
             periodic = PeriodicTask.objects.get(name=task_name)
+            if "run_plan" not in periodic.task:
+                return JsonResponse("非选择测试计划的定时任务，无法保存！", safe=False)
             task_list = TaskIndex.objects.filter(task_period_id=periodic.id)
             for task in task_list:
                 if task.content not in plan_id_list:
