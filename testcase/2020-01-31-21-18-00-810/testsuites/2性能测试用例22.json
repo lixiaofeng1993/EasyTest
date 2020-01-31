@@ -1,15 +1,15 @@
 {
     "config": {
         "base_url": "http://www.easytest.xyz/api",
-        "name": "查询发布会接口",
+        "name": "2性能测试用例22",
         "variables": {}
     },
     "noReset": true,
     "testcases": [
         {
-            "name": "查询发布会接口",
+            "name": "查询发布会接口copy",
             "parameters": [],
-            "testcase": "testcases/查询发布会接口.json",
+            "testcase": "testcases/查询发布会接口copy.json",
             "variables": {}
         }
     ]

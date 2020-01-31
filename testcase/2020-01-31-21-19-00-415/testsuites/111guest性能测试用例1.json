@@ -1,0 +1,22 @@
+{
+    "config": {
+        "base_url": "http://www.easytest.xyz/api",
+        "name": "111guest性能测试用例1",
+        "variables": {}
+    },
+    "noReset": true,
+    "testcases": [
+        {
+            "name": "查询发布会接口",
+            "parameters": [],
+            "testcase": "testcases/查询发布会接口.json",
+            "variables": {}
+        },
+        {
+            "name": "查询发布会接口copy",
+            "parameters": [],
+            "testcase": "testcases/查询发布会接口copy.json",
+            "variables": {}
+        }
+    ]
+}

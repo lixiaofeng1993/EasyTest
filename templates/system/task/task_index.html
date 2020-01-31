@@ -55,7 +55,8 @@
                             <th id="cen">ID</th>
                             <th id="cen">任务名称</th>
                             <th id="cen">任务模块</th>
-                            <th id="cen">时间计划</th>
+                            <th id="cen">执行时间</th>
+                            <th id="cen">执行计划</th>
                             <th id="cen">更新时间</th>
                             <th id="cen">状态</th>
                             <th id="cen">操作</th>
@@ -65,57 +66,57 @@
                         {% for task in tasks %}{% for periodic in periodics %}
                             <tr>
 
-                            {% if task.interval_id != null and task.interval_id == periodic.id %}
-                                <td id="cen" class="task_id">{{ task.id }}</td>
-                                <td><a class="related-widget-wrapper-link add-related"
-                                       id="add_id_Apitest"
-                                       href="{% url 'base:task_update' %}{{ task.id }}">{{ task.name }}</a>
-                                </td>
-                                <td>{{ task.task }}</td>
-                                <td><a style='color:green'>{{ periodic.every }} {{ periodic.period }}/次</a></td>
-                                <td id="cen">{{ task.date_changed }}</td>
-                                <td id="cen">{{ task.enabled }}</td>
-                                <td id="cen">
-                                <a href="#" onclick="run_delay(this)"
-                                   class="layui-btn layui-btn-danger layui-btn-xs"
-                                   data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;
-                                </a>
-                                <a href="{% url 'base:task_delete' %}{{ task.id }}" onclick="return delete_btn()"
-                                   class="layui-btn layui-btn-danger layui-btn-xs"><img
-                                        src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
+                                {% if task.interval_id != null and task.interval_id == periodic.id %}
+                                    <td id="cen" class="task_id">{{ task.id }}</td>
+                                    <td><a class="related-widget-wrapper-link add-related"
+                                           id="add_id_Apitest"
+                                           href="{% url 'base:task_update' %}{{ task.id }}">{{ task.name }}</a>
+                                    </td>
+                                    <td>{{ task.task }}</td>
+                                    <td><a style='color:green'>{{ periodic.every }} {{ periodic.period }}/次</a></td>
+                                    <td id="cen">{{ task.args }}</td>
+                                    <td id="cen">{{ task.date_changed }}</td>
+                                    <td id="cen">{{ task.enabled }}</td>
+                                    <td id="cen">
+                                        <a href="#" onclick="run_delay(this)"
+                                           class="layui-btn layui-btn-danger layui-btn-xs"
+                                           data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;
+                                        </a>
+                                        <a href="{% url 'base:task_delete' %}{{ task.id }}"
+                                           onclick="return delete_btn()"
+                                           class="layui-btn layui-btn-danger layui-btn-xs"><img
+                                                src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a></td>
 
-                            {% else %}
-
-                            {% endif %}
-
-
-                            {#                        {% for crontab in crontabs %}#}
-                            {#                            {% if task.crontab_id != null and task.crontab_id == crontab.id %}#}
-                            {#                                <td id="cen">{{ task.id }}</td>#}
-                            {#                                <td><a class="related-widget-wrapper-link add-related"#}
-                            {#                                       id="add_id_Apitest"#}
-                            {#                                       href="../admin/djcelery/periodictask/{{ task.id }}/change/?_to_field=id&_popup=1">{{ task.name }}</a>#}
-                            {#                                </td>#}
-                            {#                                <td>{{ task.task }}</td>#}
-                            {#                                <td>#}
-                            {#                                    <a style='color:green'>{{ crontab.month_of_year }}年{{ crontab.day_of_month }}月{{ crontab.day_of_week }}日{{ crontab.hour }}时{{ crontab.minute }}分</a>#}
-                            {#                                </td>#}
-                            {#                                <td id="cen">{{ task.date_changed }}</td>#}
-                            {#                                <td id="cen">{{ task.enabled }}</td>#}
-                            {#                                <td id="cen">#}
-                            {#                                    <a href="/base/plan/" target="mainFrame"#}
-                            {#                                                    class="runCaseForm btn btn-primary"><i#}
-                            {#                                            class="fa fa-recycle"></i>&nbsp;运行</a>#}
-                            {#                                        <a class="runCaseForm btn btn-danger"#}
-                            {#                                           id="add_id_Apitest"#}
-                            {#                                           href="../admin/djcelery/periodictask/{{ task.id }}/delete/?_to_field=id&_popup=1"><i#}
-                            {#                                                class="fa fa-trash-o">&nbsp;删除</i></a></td>#}
-                            {#                                <a href="../admin/djcelery/periodictask/{{ task.id }}/delete/?_to_field=id&_popup=1"#}
-                            {#                                   class="layui-btn layui-btn-danger layui-btn-xs"><img#}
-                            {#                                        src="/static/admin/img/icon-deletelink.svg"/></a>#}
-                            {#                            {% else %}#}
-                            {#                            {% endif %}#}
-                            {#                        {% endfor %}#}
+                                {% endif %}
+                            </tr>
+                        {% endfor %}{% endfor %}
+                        {% for task in tasks %}{% for crontab in crontabs %}
+                            <tr>
+                                {% if task.crontab_id != null and task.crontab_id == crontab.id %}
+                                    <td id="cen">{{ task.id }}</td>
+                                    <td><a class="related-widget-wrapper-link add-related"
+                                           id="add_id_Apitest"
+                                           href="{% url 'base:task_update' %}{{ task.id }}">{{ task.name }}</a>
+                                    </td>
+                                    <td>{{ task.task }}</td>
+                                    <td>
+                                        <a style='color:green'>{{ crontab.minute }} {{ crontab.hour }} {{ crontab.day_of_week }} {{ crontab.day_of_month }} {{ crontab.month_of_year }}
+                                            (m/h/d/dM/MY)</a>
+                                    </td>
+                                    <td id="cen">{{ task.args }}</td>
+                                    <td id="cen">{{ task.date_changed }}</td>
+                                    <td id="cen">{{ task.enabled }}</td>
+                                    <td id="cen">
+                                        <a href="#" onclick="run_delay(this)"
+                                           class="layui-btn layui-btn-danger layui-btn-xs"
+                                           data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;
+                                        </a>
+                                        <a href="{% url 'base:task_delete' %}{{ task.id }}"
+                                           onclick="return delete_btn()"
+                                           class="layui-btn layui-btn-danger layui-btn-xs"><img
+                                                src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a></td>
+                                {% endif %}
+                            </tr>
                         {% endfor %}{% endfor %}
 
                         </tbody>

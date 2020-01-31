@@ -11,6 +11,7 @@ import time, os, json
 from lib.public import DrawPie, remove_logs
 from django.conf import settings
 from base.models import Plan, Report, User, TaskIndex
+from djcelery.models import PeriodicTask
 from lib.execute import Test_execute
 from lib.send_email import send_email
 from httprunner.api import logger
@@ -121,15 +122,15 @@ def test_plan(env_id, case_id_list, plan="", username="root"):
 
 
 @app.task
-def run_plan():
+def run_plan(*args):
     logger.log_info('run plan------->执行定时任务中<--------------')
     start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    tasks = TaskIndex.objects.filter(is_task=1)
-    if not tasks:
+    if not args:
         logger.log_error('查询定时任务计划为空！')
         return
-    for task in tasks:
-        plan_id = task.content
+    if "[" in str(args):
+        args = eval(args[0])
+    for plan_id in args:
         try:
             plan = Plan.objects.get(plan_id=plan_id)
         except Plan.DoesNotExist:
@@ -181,7 +182,7 @@ def run_plan():
                 send_email(_to=_to, title=title, report_id=report_id)
             else:
                 logger.log_warning('收件人邮箱为空，无法发送邮件！请在 EasyTeat接口测试平台 - 用户管理 模块中设置.')
-    logger.log_info('HttpRunner执行定时任务完成！')
+    logger.log_info('HttpRunner执行定时任务完成！{}----'.format(args))
 
 
 @app.task

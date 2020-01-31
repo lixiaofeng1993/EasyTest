@@ -51,10 +51,24 @@
                         <div class="form-group" style="margin-top: 2%">
                             <label class="col-sm-2 control-label">执行时间</label>
                             <div class="col-sm-6">
+                                <div class="col-sm-4 control-label" onclick="execution()">
+                                    <label class="fancy-radio">
+                                        <input name="crontab_time" value="1" type="radio"><span><i></i>间隔</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-4 control-label" onclick="execution()">
+                                    <label class="fancy-radio">
+                                        <input name="crontab_time" value="2" type="radio"><span><i></i>Crontab</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-top: 2%;display: none;" id="interval_div">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-6">
                                 <div class="col-sm-3 control-label" onclick="custom()">
                                     <label class="fancy-radio">
-                                        <input name="task_time" value="1" type="radio"
-                                               checked><span><i></i>每   天</span>
+                                        <input name="task_time" value="1" type="radio" checked><span><i></i>每   天</span>
                                     </label>
                                 </div>
                                 <div class="col-sm-3 control-label" onclick="custom()">
@@ -77,12 +91,13 @@
                             </div>
                         </div>
                         <div class="form-group" style="display: none" id="set_time">
-                            <label class="col-sm-3 control-label" style="font-size: 12px;font-weight: 100">Every</label>
+                            <label class="col-sm-3 control-label"
+                                   style="font-size: 12px;font-weight: 100">Every:</label>
                             <div class="col-sm-2">
                                 <input type="number" name="every" class="form-control" required="" id="id_every">
                             </div>
                             <label class="col-sm-1 control-label"
-                                   style="font-size: 12px;font-weight: 100">Period</label>
+                                   style="font-size: 12px;font-weight: 100">Period:</label>
                             <div class="col-sm-3">
                                 <select name="period" required="required" id="id_period" class="form-control">
                                     <option value="" selected="">---------</option>
@@ -100,6 +115,7 @@
                                 </select>
                             </div>
                             <span style="color: red; font-size: 10px;display: none" id="every_error"></span>
+
                         </div>
                         <div class="form-group" style="display: none" id="interval">
                             <label class="col-sm-3 control-label" style="font-size: 12px;font-weight: 100">间隔</label>
@@ -111,6 +127,69 @@
                                 </select>
                             </div>
                             <span style="color: red; font-size: 10px;display: none" id="interval_error"></span>
+                        </div>
+                        <div class="form-group" style="display: none;margin-top: 2%" id="crontab_div">
+                            <label class="col-sm-2 control-label"></label>
+                            <div class="col-sm-6">
+                                <div class="col-sm-3 control-label" onclick="crontab_div()">
+                                    <label class="fancy-radio">
+                                        <input name="crontab_div_time" value="1" type="radio"
+                                               id="custom"><span><i></i>自 定 义</span>
+                                    </label>
+                                </div>
+                                <div class="col-sm-3 control-label" onclick="crontab_div()">
+                                    <label class="fancy-radio">
+                                        <input name="crontab_div_time" value="2" type="radio"
+                                               id="custom"><span><i></i>已设置时间</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none" id="set_up_time">
+                            <label class="col-sm-3 control-label"
+                                   style="font-size: 12px;font-weight: 100">Crontab：</label>
+                            <div class="col-sm-6">
+                                <select name="crontab_" class="form-control" required="required" id="crontab_">
+                                    {% for crontab in crontab_list %}
+                                        <option value={{ crontab.id }}>{{ crontab.minute }} {{ crontab.hour }} {{ crontab.day_of_week }} {{ crontab.day_of_month }} {{ crontab.month_of_year }}
+                                            (m/h/d/dM/MY)
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <span style="color: red; font-size: 10px;display: none" id="crontab_time_error"></span>
+                        </div>
+                        <div class="form-group" style="display: none" id="crontab_minute">
+                            <label class="col-sm-3 control-label"
+                                   style="font-size: 12px;font-weight: 100">Minute:</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="minute" value="*" class="vTextField" maxlength="64" required=""
+                                       id="id_minute">
+                            </div>
+                            <label class="col-sm-3 control-label"
+                                   style="font-size: 12px;font-weight: 100">Hour:</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="hour" value="*" class="vTextField" maxlength="64" required=""
+                                       id="id_hour">
+                            </div>
+                            <label class="col-sm-3 control-label"
+                                   style="font-size: 12px;font-weight: 100">Day of week:</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="day_of_week" value="*" class="vTextField" maxlength="64"
+                                       required="" id="id_day_of_week">
+                            </div>
+                            <label class="col-sm-3 control-label"
+                                   style="font-size: 12px;font-weight: 100">Day of month:</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="day_of_month" value="*" class="vTextField" maxlength="64"
+                                       required="" id="id_day_of_month">
+                            </div>
+                            <label class="col-sm-3 control-label"
+                                   style="font-size: 12px;font-weight: 100">Month of year:</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="month_of_year" value="*" class="vTextField" maxlength="64"
+                                       required="" id="id_month_of_year">
+                            </div>
                         </div>
                         <div class="form-group" style="margin-top: 2%">
                             <div class="col-sm-offset-2 col-sm-6">
@@ -168,15 +247,60 @@
             });
 
         }
+        function execution() {
+            var crontab_time = $("input[name='crontab_time']:checked").val();
+            if (crontab_time == 1) {
+                $("#interval_div").show();
+                $("#crontab_div").hide();
+                $("#set_time").hide();
+                $("#interval").hide();
+                $("#set_up_time").hide();
+                $("#crontab_minute").hide();
+            } else if (crontab_time == 2) {
+                $("#interval_div").hide();
+                $("#crontab_div").show();
+                $("#set_time").hide();
+                $("#interval").hide();
+                $("#set_up_time").hide();
+                $("#crontab_minute").hide();
+            }
+
+        }
+
+        function crontab_div() {
+            var crontab_div_time = $("input[name='crontab_div_time']:checked").val();
+            if (crontab_div_time == 1) {
+                $("#crontab_minute").show();
+                $("#set_time").hide();
+                $("#interval").hide();
+                $("#set_up_time").hide();
+            } else if (crontab_div_time == 2) {
+                $("#set_up_time").show();
+                $("#crontab_minute").hide();
+                $("#set_time").hide();
+                $("#interval").hide();
+                var crontab = $("#crontab_").val();
+                if (crontab == null) {
+                    var error = $("#crontab_time_error");
+                    error.html("未找到已设置时间，请选择其他选项！");
+                    error.show();
+                } else {
+                    $("#crontab_time_error").hide()
+                }
+
+            }
+        }
 
         function custom() {
             var task_time = $("input[name='task_time']:checked").val();
             if (task_time == 3) {
                 $("#set_time").show();
                 $("#interval").hide();
+                $("#crontab_minute").hide();
             } else if (task_time == 4) {
                 $("#interval").show();
                 $("#set_time").hide();
+                $("#crontab_minute").hide();
                 var interval = $("#interval_").val();
                 if (interval == null) {
                     var error = $("#interval_error");
@@ -188,7 +312,8 @@
             }
             else {
                 $("#set_time").hide();
-                $("#interval").hide()
+                $("#interval").hide();
+                $("#crontab_minute").hide()
             }
         }
         function get_case() {
@@ -206,7 +331,7 @@
 
 
         $("#submit").click(function () {
-            var id_every, id_period, interval;
+            var id_every, id_period, interval, crontab_, crontab;
             var task_name = $("#task_name").val();
             var plan_id = get_case();
             if (Object.keys(plan_id).length == 0) {
@@ -224,22 +349,48 @@
                 } else {
                     $("#task_name_error").hide();
                 }
-                var task_time = $("input[name='task_time']:checked").val();
-                if (task_time == 3) {
-                    id_every = $("#id_every").val();
-                    id_period = $("#id_period").val();
-                    if (id_every == "" || id_period == "") {
-                        var error = $("#every_error");
-                        error.html("Every 或者 Period 不能为空！");
-                        error.show();
-                        return false
-                    } else {
-                        $("#every_error").hide()
+                var crontab_time = $("input[name='crontab_time']:checked").val();
+                if (crontab_time == 1) {
+                    var task_time = $("input[name='task_time']:checked").val();
+                    if (task_time == 3) {
+                        id_every = $("#id_every").val();
+                        id_period = $("#id_period").val();
+                        if (id_every == "" || id_period == "") {
+                            var error = $("#every_error");
+                            error.html("Every 或者 Period 不能为空！");
+                            error.show();
+                            return false
+                        } else {
+                            $("#every_error").hide()
 
+                        }
+
+                    } else if (task_time == 4) {
+                        interval = $("#interval_").val();
                     }
-
-                } else if (task_time == 4) {
-                    interval = $("#interval_").val();
+                } else if (crontab_time == 2) {
+                    var crontab_div_time = $("input[name='crontab_div_time']:checked").val();
+                    if (crontab_div_time == 1) {
+                        var id_minute, id_hour, id_day_of_week, id_day_of_month, id_month_of_year;
+                        id_minute = $("#id_minute").val();
+                        id_hour = $("#id_hour").val();
+                        id_day_of_week = $("#id_day_of_week").val();
+                        id_day_of_month = $("#id_day_of_month").val();
+                        id_month_of_year = $("#id_month_of_year").val();
+                        if (id_minute.trim().length == 0 || id_hour.trim().length == 0 || id_day_of_week.trim().length == 0 || id_day_of_month.trim().length == 0 || id_month_of_year.trim().length == 0) {
+                            alert("crontab输入框不能为空！");
+                            return
+                        }
+                        crontab = {
+                            "id_minute": id_minute,
+                            "id_hour": id_hour,
+                            "id_day_of_week": id_day_of_week,
+                            "id_day_of_month": id_day_of_month,
+                            "id_month_of_year": id_month_of_year
+                        }
+                    } else if (crontab_div_time == 2) {
+                        crontab_ = $("#crontab_").val();
+                    }
                 }
                 $.ajax({
                     type: "post",
@@ -250,6 +401,10 @@
                         "id_every": id_every,
                         "id_period": id_period,
                         "interval": interval,
+                        "crontab_": crontab_,
+                        "crontab": JSON.stringify(crontab),
+                        "crontab_time": crontab_time,
+                        "crontab_div_time": crontab_div_time,
                         "plan_id": plan_id
                     },
                     success: function (data) {
