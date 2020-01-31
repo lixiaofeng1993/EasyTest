@@ -1524,6 +1524,9 @@ def task_update(request):
             periodic = PeriodicTask.objects.filter(name=task_name).exclude(id=task_id)
             if periodic:
                 return JsonResponse("任务名称已存在！", safe=False)
+            periodic = PeriodicTask.objects.get(name=task_name)
+            if "run_plan" not in periodic.task:
+                return JsonResponse("非选择测试计划的定时任务，无法保存！", safe=False)
             if crontab_time == "1":
                 if task_time == "1":
                     interval = IntervalSchedule.objects.filter(every=1).filter(period="days")
@@ -1582,9 +1585,6 @@ def task_update(request):
                         return JsonResponse("选择时间间隔不存在！", safe=False)
                     PeriodicTask.objects.filter(id=task_id).update(name=task_name, enabled=1, date_changed=datetime.now(),
                                                 args=json.dumps(plan_id_list), crontab=crontab, interval="")
-            periodic = PeriodicTask.objects.get(name=task_name)
-            if "run_plan" not in periodic.task:
-                return JsonResponse("非选择测试计划的定时任务，无法保存！", safe=False)
             log.info("用户 {} 更新定时任务 {} 成功！".format(user_id, task_id))
             return JsonResponse("ok", safe=False)
 
