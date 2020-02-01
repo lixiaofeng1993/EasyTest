@@ -193,8 +193,7 @@
                         </div>
                         <div class="form-group" style="margin-top: 2%">
                             <div class="col-sm-offset-2 col-sm-6">
-                                <button type="submit" id="submit" class="btn btn-primary"
-                                        onclick="return confirm_submit()"><i
+                                <button type="submit" id="submit" class="btn btn-primary"><i
                                         class="fa fa-save"></i>&nbsp;保存
                                 </button>
                             </div>
@@ -211,15 +210,6 @@
 {% endblock %}
 {% block javascript %}
     <script type="text/javascript">
-        function confirm_submit() {
-            if (window.confirm("你确定要保存吗？")) {
-                return true;//确定返回真
-            }
-            else {
-                return false;//取消返回假
-            }
-        }
-
         function get_plan() {
             $("#list").empty();
             $.ajax({
@@ -409,6 +399,7 @@
                     },
                     success: function (data) {
                         if (data == "ok") {
+                            alert("保存成功！");
                             window.location.replace('/base/timing_task/')
                         } else {
                             alert(data)
