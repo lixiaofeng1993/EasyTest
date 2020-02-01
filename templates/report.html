@@ -7050,13 +7050,20 @@
 
                 <div class="ibox-content">
                     <div class="row">
-                        <div class="col-sm-6 b-r" style="height:370px">
+                        <div class="col-sm-6 b-r">
                             <form class="form-horizontal">
                                 <input name="report_id" id="report_id" value={{ report.report_id }} hidden>
                                 <div class="form-group">
-                                    <label class="col-sm-2 control-label text-navy">用例名称:</label>
+                                    <label class="col-sm-2 control-label text-navy">计划名称:</label>
                                     <div class="col-sm-5">
-                                        <span class="form-control" id="testName">{{ report.plan }}</span>
+                                        <a class="form-control" id="testName" target="_self" style="color: #3399ff"
+                                           href="{% url 'base:plan_update' %}?plan_id={{ report.plan_id }}">{{ report.plan }}</a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label text-navy">执行环境:</label>
+                                    <div class="col-sm-5">
+                                        <span class="form-control" id="testName">{{ report.plan.environment }}</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -7102,11 +7109,17 @@
                                         <span class="form-control" id="totalTime">{{ report.totalTime }}</span>
                                     </div>
                                 </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label text-navy">执行人员:</label>
+                                    <div class="col-sm-5">
+                                        <span class="form-control" id="testName">{{ report.update_user }}</span>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                         <div class="col-sm-6">
                             <div style="height:350px" id="echarts-map-chart">
-                                <img src="/media/{{ report.pic_name }}" height="370" width="520"
+                                <img src="/media/{{ report.pic_name }}" height="400" width="550"
                                      style="margin-left: 10%; margin-bottom: 3%;">
                             </div>
                         </div>
