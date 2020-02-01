@@ -10,8 +10,7 @@ from celery import shared_task
 import time, os, json
 from lib.public import DrawPie, remove_logs
 from django.conf import settings
-from base.models import Plan, Report, User, TaskIndex
-from djcelery.models import PeriodicTask
+from base.models import Plan, Report, User
 from lib.execute import Test_execute
 from lib.send_email import send_email
 from httprunner.api import logger

@@ -445,6 +445,14 @@
         $("#submit").click(function () {
             var id_every, id_period, interval, crontab_, crontab;
             var task_name = $("#task_name").val();
+            if (task_name == "") {
+                var task_name_error = $("#task_name_error");
+                task_name_error.html("项目名称不能为空！");
+                task_name_error.show();
+                return false
+            } else {
+                $("#task_name_error").hide();
+            }
             var plan_id = get_case();
             var task_id = $("#task_id").val();
             if (Object.keys(plan_id).length == 0) {
@@ -454,14 +462,6 @@
                 return false
             } else {
                 $("#plan_error").hide();
-                if (task_name == "") {
-                    var task_name_error = $("#task_name_error");
-                    task_name_error.html("项目名称不能为空！");
-                    task_name_error.show();
-                    return false
-                } else {
-                    $("#task_name_error").hide();
-                }
                 var crontab_time = $("input[name='crontab_time']:checked").val();
                 if (crontab_time == 1) {
                     var task_time = $("input[name='task_time']:checked").val();

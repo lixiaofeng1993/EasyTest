@@ -33,17 +33,19 @@
                     <h3 class="panel-title">编辑项目</h3>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal" action="{% url 'base:project_update' %}" method="post">
+                    <form class="form-horizontal" action="{% url 'base:project_update' %}" method="post"
+                          onsubmit="return check()">
                         <input name="prj_id" value={{ prj.prj_id }} hidden>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">项目名称</label>
                             <div class="col-sm-6">
-                                <input type="text" name="prj_name" lay-verify="title" autocomplete="off"
+                                <input type="text" name="prj_name" id="prj_name" autocomplete="off"
                                        class="form-control" value={{ prj.prj_name }}>
                             </div>
                             {% if error %}
                                 <span style="color: red; font-size: 10px;">{{ error }}</span>
                             {% endif %}
+                            <span style="color: red; font-size: 10px;display: none;" id="prj_error"></span>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">项目描述</label>
@@ -69,7 +71,8 @@
                                         class="fa fa-save"></i>&nbsp;保存
                                 </button>
                                 <button id="reset" type="reset" class="btn btn-primary"><i
-                                        class="fa fa-repeat"></i>&nbsp;重置</button>
+                                        class="fa fa-repeat"></i>&nbsp;重置
+                                </button>
                             </div>
                         </div>
                     </form>
@@ -86,5 +89,17 @@
         $('#reset').click(function () {
             location.reload();
         });
+        function check() {
+            var prj_name = $("#prj_name").val();
+            var error = $("#prj_error");
+            if (prj_name.trim().length == 0) {
+                error.html("项目名称不能为空哦！");
+                error.show();
+                return false
+            } else {
+                error.hide();
+                return true
+            }
+        }
     </script>
 {% endblock %}
