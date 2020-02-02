@@ -41,7 +41,7 @@ class Environment(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     description = models.CharField(max_length=200)
     url = models.CharField(max_length=100)
-    is_swagger = models.IntegerField(default='')  # 导入swagger
+    is_swagger = models.IntegerField(default=0)  # 导入swagger
     set_headers = models.TextField(default='')  # 设置默认headers
     private_key = models.CharField(max_length=100)
     update_time = models.DateTimeField('更新时间', auto_now=True)
@@ -63,7 +63,7 @@ class Interface(models.Model):
     data_type = models.CharField(max_length=10)
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     is_sign = models.IntegerField()
-    is_header = models.IntegerField(default='')  # 标记设置header接口
+    is_header = models.IntegerField(default=0)  # 标记设置header接口
     set_mock = models.TextField(default='')  # 设置mock
     description = models.CharField(max_length=200)
     request_header_param = models.TextField()
@@ -107,8 +107,8 @@ class Plan(models.Model):
     content = models.TextField()
     report_name = models.CharField(max_length=255, default="")
     make = models.IntegerField(null=True)
-    is_locust = models.IntegerField(default="")  # 性能测试
-    is_task = models.IntegerField(default="")  # 定时任务
+    is_locust = models.IntegerField(default=0)  # 性能测试
+    is_task = models.IntegerField(default=0)  # 定时任务
     update_time = models.DateTimeField('更新时间', auto_now=True)
     update_user = models.CharField(max_length=30, default='')
 
@@ -127,7 +127,8 @@ class Report(models.Model):
     pic_name = models.CharField(max_length=255, default='')
     totalTime = models.CharField(max_length=50, default='')
     startTime = models.CharField(max_length=50, default='')
-    plan = models.ForeignKey(Plan, on_delete=models.CASCADE)
+    plan = models.ForeignKey(Plan, on_delete=models.CASCADE, null=True)
+    task = models.ForeignKey(PeriodicTask, on_delete=models.CASCADE, null=True)
     content = models.TextField()
     case_num = models.IntegerField(null=True)
     pass_num = models.IntegerField(null=True)

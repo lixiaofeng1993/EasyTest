@@ -121,14 +121,28 @@ def test_plan(env_id, case_id_list, plan="", username="root"):
 
 
 @app.task
-def run_plan(*args):
-    logger.log_info('run plan------->执行定时任务中<--------------')
+def run_plan(*args, **kwargs):
+    logger.log_info('run plan------->执行定时任务中<------{}----{}----'.format(args, kwargs))
     start_time = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
-    if not args:
+    if not args and not kwargs:
         logger.log_error('查询定时任务计划为空！')
         return
+    if "data" in str(kwargs):
+        task_name = eval(kwargs["data"])["task_name"]
+        task_id = eval(kwargs["data"])["task_id"]
+    else:
+        task_name = kwargs["task_name"]
+        task_id = kwargs["task_id"]
     if "[" in str(args):
         args = eval(args[0])
+    begin_time = time.clock()
+    content = []
+    report_path = []
+    pass_num = 0
+    fail_num = 0
+    error_num = 0
+    j = 0
+    case_num = len(args)
     for plan_id in args:
         try:
             plan = Plan.objects.get(plan_id=plan_id)
@@ -138,12 +152,9 @@ def run_plan(*args):
         env_id = plan.environment_id
         case_id_list = eval(plan.content)
         begin_time = time.clock()
-        case_num = len(case_id_list)
-        content = []
-        j = 0
         execute = Test_execute(env_id, case_id_list, run_mode="1", plan=plan)
         case_result = execute.test_case
-        report_path = case_result['report_path']
+        report_path.append(case_result['report_path'])
         for i in range(len(case_result['summary']['details'])):
             for records in case_result['summary']['details'][i]['records']:
                 j += 1
@@ -159,29 +170,29 @@ def run_plan(*args):
         content.append(case_result)
         summary = case_result.get('summary', {})
         stat = summary.get('stat', {}).get('teststeps', {})
-        pass_num = stat.get('successes', 0)
-        fail_num = stat.get('failures', 0)
-        error_num = stat.get('errors', 0)
-        end_time = time.clock()
-        totalTime = str(end_time - begin_time)[:6] + ' s'
-        pic_name = DrawPie(pass_num, fail_num, error_num)
-        report_name = plan.plan_name + "-" + str(start_time).replace(':', '-')
-        report = Report(plan_id=plan.plan_id, report_name=report_name, content=content, case_num=case_num,
-                        pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
-                        totalTime=totalTime, startTime=start_time, update_user="root", make=1, report_path=report_path)
-        report.save()
-        if fail_num or error_num:
-            _to = []
-            user = User.objects.filter(is_superuser=1).filter(is_staff=1).filter(is_active=1).values()
-            for u in user:
-                _to.append(u['email'])
-            if _to:
-                title = plan.plan_name
-                report_id = Report.objects.get(report_name=report_name).report_id
-                send_email(_to=_to, title=title, report_id=report_id)
-            else:
-                logger.log_warning('收件人邮箱为空，无法发送邮件！请在 EasyTeat接口测试平台 - 用户管理 模块中设置.')
-    logger.log_info('HttpRunner执行定时任务完成！{}----'.format(args))
+        pass_num += stat.get('successes', 0)
+        fail_num += stat.get('failures', 0)
+        error_num += stat.get('errors', 0)
+    end_time = time.clock()
+    totalTime = str(end_time - begin_time)[:6] + ' s'
+    pic_name = DrawPie(pass_num, fail_num, error_num)
+    report_name = task_name + "-" + str(start_time).replace(':', '-')
+    report = Report(plan_id="", report_name=report_name, content=content, case_num=case_num, pass_num=pass_num,
+                    fail_num=fail_num, error_num=error_num, pic_name=pic_name, totalTime=totalTime,
+                    startTime=start_time, update_user="root", make=1, report_path=report_path, task_id=task_id)
+    report.save()
+    if fail_num or error_num:
+        _to = []
+        user = User.objects.filter(is_superuser=1).filter(is_staff=1).filter(is_active=1).values()
+        for u in user:
+            _to.append(u['email'])
+        if _to:
+            title = task_name
+            report_id = Report.objects.get(report_name=report_name).report_id
+            send_email(_to=_to, title=title, report_id=report_id)
+        else:
+            logger.log_warning('收件人邮箱为空，无法发送邮件！请在 EasyTeat接口测试平台 - 用户管理 模块中设置.')
+    logger.log_info('HttpRunner执行定时任务完成！{}--{}--'.format(args, kwargs))
 
 
 @app.task

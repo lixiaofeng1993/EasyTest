@@ -58,7 +58,7 @@
                             <th id="cen">接口通过数量</th>
                             <th id="cen">接口失败数量</th>
                             <th id="cen">接口错误数量</th>
-                            <th id="cen">所属计划</th>
+                            <th id="cen">所属计划/任务</th>
                             <th id="cen">创建时间</th>
                             <th id="cen">创建用户</th>
                             <th id="cen">操作</th>
@@ -77,8 +77,12 @@
                                 <td id="cen">{{ env.case_num }}</td>
                                 <td id="cen">{{ env.pass_num }}</td>
                                 <td id="cen">{{ env.fail_num }}</td>
-                                <td id="cen">{{ env.error_num }}</td>
-                                <td id="cen">{{ env.plan }}</td>
+                                <td id="cen">{{ env.error_num }}
+                                    {% if env.plan %}
+                                        <td id="cen" class="env-name">{{ env.plan }}</td>
+                                    {% else %}
+                                        <td id="cen" class="env-name">{{ env.task }}</td>
+                                    {% endif %}
                                 <td id="cen">{{ env.update_time }}</td>
                                 <td id="cen">{{ env.update_user }}</td>
                                 <td id="cen">
