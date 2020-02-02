@@ -161,6 +161,9 @@
                                         {% endfor %}
                                     </select>
                                 </div>
+                                <a class="related-widget-wrapper-link change-related" id="change_id_interval"
+                                   href="javascript:void(0)" onclick="change_interval()"><img
+                                        src="/static/admin/img/icon-changelink.svg" alt="修改"></a>
                                 <span style="color: red; font-size: 10px;display: none" id="interval_error"></span>
                             </div>
                         {% else %}
@@ -202,6 +205,9 @@
                                         {% endfor %}
                                     </select>
                                 </div>
+                                <a class="related-widget-wrapper-link change-related" id="change_id_interval"
+                                   href="javascript:void(0)" onclick="change_interval()"><img
+                                        src="/static/admin/img/icon-changelink.svg" alt="修改"></a>
                                 <span style="color: red; font-size: 10px;display: none" id="interval_error"></span>
                             </div>
                         {% endif %}
@@ -229,6 +235,32 @@
                                 </select>
                             </div>
                             <span style="color: red; font-size: 10px;display: none" id="every_error"></span>
+                        </div>
+
+                        <div class="form-group" style="display: none" id="set_time_interval">
+                            <label class="col-sm-3 control-label" style="font-size: 12px;font-weight: 100">Every</label>
+                            <div class="col-sm-2">
+                                <input type="number" name="every" class="form-control" required="" id="id_every_1">
+                            </div>
+                            <label class="col-sm-1 control-label"
+                                   style="font-size: 12px;font-weight: 100">Period</label>
+                            <div class="col-sm-3">
+                                <select name="period" required="required" id="id_period_1" class="form-control">
+                                    <option id="id_period_2" selected=""></option>
+
+                                    <option value="days">天</option>
+
+                                    <option value="hours">时</option>
+
+                                    <option value="minutes">分</option>
+
+                                    <option value="seconds">秒</option>
+
+                                    <option value="microseconds">微秒</option>
+
+                                </select>
+                            </div>
+                            <span style="color: red; font-size: 10px;display: none" id="every_error_1"></span>
                         </div>
                         {% if crontab %}
                             <div class="form-group" style="display: block;margin-top: 2%" id="crontab_div">
@@ -263,6 +295,9 @@
                                         {% endfor %}
                                     </select>
                                 </div>
+                                <a class="related-widget-wrapper-link change-related" id="change_id_interval"
+                                   href="javascript:void(0)" onclick="change_crontab()"><img
+                                        src="/static/admin/img/icon-changelink.svg" alt="修改"></a>
                                 <span style="color: red; font-size: 10px;display: none" id="crontab_time_error"></span>
                             </div>
                         {% else %}
@@ -295,6 +330,9 @@
                                         {% endfor %}
                                     </select>
                                 </div>
+                                <a class="related-widget-wrapper-link change-related" id="change_id_interval"
+                                   href="javascript:void(0)" onclick="change_crontab()"><img
+                                        src="/static/admin/img/icon-changelink.svg" alt="修改"></a>
                                 <span style="color: red; font-size: 10px;display: none" id="crontab_time_error"></span>
                             </div>
                         {% endif %}
@@ -329,6 +367,43 @@
                             <div class="col-sm-8">
                                 <input type="text" name="month_of_year" value="*" class="vTextField" maxlength="64"
                                        required="" id="id_month_of_year">
+                            </div>
+                        </div>
+                        <div class="form-group" style="display: none" id="set_crontab_minute">
+                            <label class="col-sm-3 control-label"
+                                   style="font-size: 12px;font-weight: 100">Minute:</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="minute" value="" class="vTextField"
+                                       maxlength="64" required=""
+                                       id="id_minute_1">
+                            </div>
+                            <label class="col-sm-3 control-label"
+                                   style="font-size: 12px;font-weight: 100">Hour:</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="hour" value="" class="vTextField"
+                                       maxlength="64" required=""
+                                       id="id_hour_1">
+                            </div>
+                            <label class="col-sm-3 control-label"
+                                   style="font-size: 12px;font-weight: 100">Day of week:</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="day_of_week" value=""
+                                       class="vTextField" maxlength="64"
+                                       required="" id="id_day_of_week_1">
+                            </div>
+                            <label class="col-sm-3 control-label"
+                                   style="font-size: 12px;font-weight: 100">Day of month:</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="day_of_month" value=""
+                                       class="vTextField" maxlength="64"
+                                       required="" id="id_day_of_month_1">
+                            </div>
+                            <label class="col-sm-3 control-label"
+                                   style="font-size: 12px;font-weight: 100">Month of year:</label>
+                            <div class="col-sm-8">
+                                <input type="text" name="month_of_year" value=""
+                                       class="vTextField" maxlength="64"
+                                       required="" id="id_month_of_year_1">
                             </div>
                         </div>
                         <div class="form-group">
@@ -382,6 +457,74 @@
             });
 
         }
+
+        function change_interval() {
+            var period;
+            $("#set_time_interval").show();
+            var interval_ = $("#interval_").val();
+            $.ajax({
+                type: "get",
+                url: "/base/findata/",
+                data: {
+                    "interval_id": interval_,
+                    "type": "get_interval_or_id"
+                },
+                success: function (data) {
+                    if (data == "no") {
+                        alert("获取crontab数据失败！");
+                    } else {
+                        for (index in data) {
+                            $("#id_every_1").val(data[index].every);
+                            var option = $("#id_period_2");
+                            option.attr("value", data[index].period);
+                            if (data[index].period == "days") {
+                                period = "天"
+                            } else if (data[index].period == "hours") {
+                                period = "时"
+                            } else if (data[index].period == "minutes") {
+                                period = "分"
+                            }
+                            else if (data[index].period == "seconds") {
+                                period = "秒"
+                            }
+                            else if (data[index].period == "microseconds") {
+                                period = "微秒"
+                            }
+                            option.html(period)
+
+                        }
+                    }
+
+                }
+            })
+        }
+
+        function change_crontab() {
+            $("#set_crontab_minute").show();
+            var crontab_ = $("#crontab_").val();
+            $.ajax({
+                type: "get",
+                url: "/base/findata/",
+                data: {
+                    "crontab_id": crontab_,
+                    "type": "get_crontab_or_id"
+                },
+                success: function (data) {
+                    if (data == "no") {
+                        alert("获取crontab数据失败！");
+                    } else {
+                        for (index in data) {
+                            $("#id_minute_1").val(data[index].minute);
+                            $("#id_hour_1").val(data[index].hour);
+                            $("#id_day_of_week_1").val(data[index].day_of_week);
+                            $("#id_day_of_month_1").val(data[index].day_of_month);
+                            $("#id_month_of_year_1").val(data[index].month_of_year);
+                        }
+                    }
+
+                }
+            })
+        }
         function execution() {
             var crontab_time = $("input[name='crontab_time']:checked").val();
             if (crontab_time == 1) {
@@ -391,6 +534,8 @@
                 $("#interval").hide();
                 $("#set_up_time").hide();
                 $("#crontab_minute").hide();
+                $("#set_crontab_minute").hide();
+                $("#set_time_interval").hide();
             } else if (crontab_time == 2) {
                 $("#interval_div").hide();
                 $("#crontab_div").show();
@@ -398,6 +543,8 @@
                 $("#interval").hide();
                 $("#set_up_time").hide();
                 $("#crontab_minute").hide();
+                $("#set_crontab_minute").hide();
+                $("#set_time_interval").hide();
             }
 
         }
@@ -409,11 +556,15 @@
                 $("#set_time").hide();
                 $("#interval").hide();
                 $("#set_up_time").hide();
+                $("#set_crontab_minute").hide();
+                $("#set_time_interval").hide();
             } else if (crontab_div_time == 2) {
                 $("#set_up_time").show();
                 $("#crontab_minute").hide();
                 $("#set_time").hide();
                 $("#interval").hide();
+                $("#set_crontab_minute").hide();
+                $("#set_time_interval").hide();
                 var crontab = $("#crontab_").val();
                 if (crontab == null) {
                     var error = $("#crontab_time_error");
@@ -432,10 +583,14 @@
                 $("#set_time").show();
                 $("#interval").hide();
                 $("#crontab_minute").hide();
+                $("#set_crontab_minute").hide();
+                $("#set_time_interval").hide();
             } else if (task_time == 4) {
                 $("#interval").show();
                 $("#set_time").hide();
                 $("#crontab_minute").hide();
+                $("#set_crontab_minute").hide();
+                $("#set_time_interval").hide();
                 var interval = $("#interval_").val();
                 if (interval == null) {
                     var error = $("#interval_error");
@@ -448,7 +603,9 @@
             else {
                 $("#set_time").hide();
                 $("#interval").hide();
-                $("#crontab_minute").hide()
+                $("#crontab_minute").hide();
+                $("#set_crontab_minute").hide();
+                $("#set_time_interval").hide();
             }
         }
         function get_case() {
@@ -502,6 +659,17 @@
                         }
 
                     } else if (task_time == 4) {
+                        id_every = $("#id_every_1").val();
+                        id_period = $("#id_period_1").val();
+                        if (id_every == "" || id_period == "") {
+                            var error_ = $("#every_error_1");
+                            error_.html("Every 或者 Period 不能为空！");
+                            error_.show();
+                            return false
+                        } else {
+                            $("#every_error_1").hide()
+
+                        }
                         interval = $("#interval_").val();
                     }
                 } else if (crontab_time == 2) {
@@ -526,6 +694,22 @@
                         }
                     } else if (crontab_div_time == 2) {
                         crontab_ = $("#crontab_").val();
+                        id_minute = $("#id_minute_1").val();
+                        id_hour = $("#id_hour_1").val();
+                        id_day_of_week = $("#id_day_of_week_1").val();
+                        id_day_of_month = $("#id_day_of_month_1").val();
+                        id_month_of_year = $("#id_month_of_year_1").val();
+                        if (id_minute.trim().length == 0 || id_hour.trim().length == 0 || id_day_of_week.trim().length == 0 || id_day_of_month.trim().length == 0 || id_month_of_year.trim().length == 0) {
+                            alert("crontab输入框不能为空！");
+                            return
+                        }
+                        crontab = {
+                            "id_minute": id_minute,
+                            "id_hour": id_hour,
+                            "id_day_of_week": id_day_of_week,
+                            "id_day_of_month": id_day_of_month,
+                            "id_month_of_year": id_month_of_year
+                        }
                     }
                 }
                 $.ajax({
