@@ -1469,10 +1469,14 @@ def task_add(request):
                 crontab_div_time = request.POST.get("crontab_div_time", "")
                 if crontab_div_time == "1":
                     crontab = eval(request.POST.get("crontab", ""))
-                    crontab = CrontabSchedule.objects.create(minute=crontab["id_minute"], hour=crontab["id_hour"],
-                                                             day_of_week=crontab["id_day_of_week"],
-                                                             day_of_month=crontab["id_day_of_month"],
-                                                             month_of_year=crontab["id_month_of_year"])
+                    crontab = CrontabSchedule.objects.filter(minute=crontab["id_minute"]).filter(
+                        hour=crontab["id_hour"]).filter(day_of_week=crontab["id_day_of_week"]).filter(
+                        day_of_month=crontab["id_day_of_month"]).filter(month_of_year=crontab["id_month_of_year"])
+                    if not crontab:
+                        crontab = CrontabSchedule.objects.create(minute=crontab["id_minute"], hour=crontab["id_hour"],
+                                                                 day_of_week=crontab["id_day_of_week"],
+                                                                 day_of_month=crontab["id_day_of_month"],
+                                                                 month_of_year=crontab["id_month_of_year"])
                     periodic = PeriodicTask(name=task_name, task=task, enabled=int(status), date_changed=datetime.now(),
                                             args=json.dumps(plan_id_list), crontab=crontab)
                     periodic.save()
@@ -1574,10 +1578,16 @@ def task_update(request):
                 crontab_div_time = request.POST.get("crontab_div_time", "")
                 if crontab_div_time == "1":
                     crontab = eval(request.POST.get("crontab", ""))
-                    crontab = CrontabSchedule.objects.create(minute=crontab["id_minute"], hour=crontab["id_hour"],
-                                                             day_of_week=crontab["id_day_of_week"],
-                                                             day_of_month=crontab["id_day_of_month"],
-                                                             month_of_year=crontab["id_month_of_year"])
+                    crontab = CrontabSchedule.objects.filter(minute=crontab["id_minute"]).filter(
+                        hour=crontab["id_hour"]).filter(day_of_week=crontab["id_day_of_week"]).filter(
+                        day_of_month=crontab["id_day_of_month"]).filter(month_of_year=crontab["id_month_of_year"])
+                    if not crontab:
+                        crontab = CrontabSchedule.objects.create(minute=crontab["id_minute"], hour=crontab["id_hour"],
+                                                                 day_of_week=crontab["id_day_of_week"],
+                                                                 day_of_month=crontab["id_day_of_month"],
+                                                                 month_of_year=crontab["id_month_of_year"])
+                    else:
+                        crontab = crontab[0]
                     PeriodicTask.objects.filter(id=task_id).update(name=task_name, enabled=int(status),
                                                                    date_changed=now_time,
                                                                    args=json.dumps(plan_id_list), crontab=crontab,
