@@ -60,6 +60,37 @@
                             <span style="color: red; font-size: 10px;display: none" id="plan_error"></span>
                         </div>
                         <div class="form-group" style="margin-top: 2%">
+                            <label class="col-sm-2 control-label">任务状态</label>
+                            <div class="col-sm-6">
+                                {% ifequal periodic.enabled True %}
+                                    <div class="col-sm-4 control-label">
+                                        <label class="fancy-radio">
+                                            <input name="status" value="1" type="radio" checked><span><i></i>有效</span>
+                                        </label>
+                                    </div>
+                                {% else %}
+                                    <div class="col-sm-4 control-label">
+                                        <label class="fancy-radio">
+                                            <input name="status" value="1" type="radio"><span><i></i>有效</span>
+                                        </label>
+                                    </div>
+                                {% endifequal %}
+                                {% ifequal periodic.enabled False %}
+                                    <div class="col-sm-4 control-label">
+                                        <label class="fancy-radio">
+                                            <input name="status" value="0" type="radio" checked><span><i></i>无效</span>
+                                        </label>
+                                    </div>
+                                {% else %}
+                                    <div class="col-sm-4 control-label">
+                                        <label class="fancy-radio">
+                                            <input name="status" value="0" type="radio"><span><i></i>无效</span>
+                                        </label>
+                                    </div>
+                                {% endifequal %}
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-top: 2%">
                             <label class="col-sm-2 control-label">执行时间</label>
                             <div class="col-sm-6">
                                 <div class="col-sm-4 control-label" onclick="execution()">
@@ -453,6 +484,7 @@
                 return false
             } else {
                 $("#plan_error").hide();
+                var status = $("input[name='status']:checked").val();
                 var crontab_time = $("input[name='crontab_time']:checked").val();
                 if (crontab_time == 1) {
                     var task_time = $("input[name='task_time']:checked").val();
@@ -510,6 +542,7 @@
                         "crontab_time": crontab_time,
                         "crontab_div_time": crontab_div_time,
                         "plan_id": plan_id,
+                        "status": status,
                         "task_id": task_id
                     },
                     success: function (data) {

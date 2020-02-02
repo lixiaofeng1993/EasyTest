@@ -10,7 +10,7 @@ from django.contrib.auth.models import User  # django自带user
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.db.models import Q  # 与或非 查询
 from lib.execute import Test_execute, get_user, is_superuser  # 执行接口
-from djcelery.models import PeriodicTask, CrontabSchedule, IntervalSchedule
+from djcelery.models import PeriodicTask, CrontabSchedule, IntervalSchedule, PeriodicTasks
 from datetime import timedelta, datetime
 from lib.swagger import AnalysisJson
 from django.shortcuts import render_to_response
@@ -1203,7 +1203,7 @@ def plan_add(request):
                 if is_locust == '1':
                     Plan.objects.filter(is_locust=1).update(is_locust=0)
                 plan = Plan(plan_name=plan_name, project=project, environment=environment, description=description,
-                            content=content, is_locust=is_locust, update_user=username)
+                            content=content, is_locust=is_locust, update_user=username, is_task=0)
                 plan.save()
                 log.info('add plan   {}  success. plan info: {} // {} // {} // {} //{} //'.
                          format(plan_name, project, environment, description, content, is_locust))
@@ -1419,6 +1419,7 @@ def task_add(request):
             task_time = request.POST.get("task_time", "")
             task_name = request.POST.get("task_name", "")
             plan_id = request.POST.get("plan_id", "")
+            status = request.POST.get("status", "")
             crontab_time = request.POST.get("crontab_time", "")
             task = "base.tasks.run_plan"
             plan_id_list = plan_id.split(",")
@@ -1432,7 +1433,7 @@ def task_add(request):
                         interval = IntervalSchedule.objects.create(every=1, period="days")
                     else:
                         interval = interval[0]
-                    periodic = PeriodicTask(name=task_name, task=task, enabled=1, date_changed=datetime.now(),
+                    periodic = PeriodicTask(name=task_name, task=task, enabled=int(status), date_changed=datetime.now(),
                                             interval=interval, args=json.dumps(plan_id_list))
                     periodic.save()
                 elif task_time == "2":
@@ -1441,7 +1442,7 @@ def task_add(request):
                         interval = IntervalSchedule.objects.create(every=1, period="week")
                     else:
                         interval = interval[0]
-                    periodic = PeriodicTask(name=task_name, task=task, enabled=1, date_changed=datetime.now(),
+                    periodic = PeriodicTask(name=task_name, task=task, enabled=int(status), date_changed=datetime.now(),
                                             interval=interval, args=json.dumps(plan_id_list))
                     periodic.save()
                 elif task_time == "3":
@@ -1452,7 +1453,7 @@ def task_add(request):
                         interval = IntervalSchedule.objects.create(every=int(id_every), period=id_period)
                     else:
                         interval = interval[0]
-                    periodic = PeriodicTask(name=task_name, task=task, enabled=1, date_changed=datetime.now(),
+                    periodic = PeriodicTask(name=task_name, task=task, enabled=int(status), date_changed=datetime.now(),
                                             interval=interval, args=json.dumps(plan_id_list))
                     periodic.save()
                 elif task_time == "4":
@@ -1461,7 +1462,7 @@ def task_add(request):
                         interval = IntervalSchedule.objects.get(id=int(interval))
                     except IntervalSchedule.DoesNotExist:
                         return JsonResponse("选择时间间隔不存在！", safe=False)
-                    periodic = PeriodicTask(name=task_name, task=task, enabled=1, date_changed=datetime.now(),
+                    periodic = PeriodicTask(name=task_name, task=task, enabled=int(status), date_changed=datetime.now(),
                                             interval=interval, args=json.dumps(plan_id_list))
                     periodic.save()
             elif crontab_time == "2":
@@ -1472,7 +1473,7 @@ def task_add(request):
                                                              day_of_week=crontab["id_day_of_week"],
                                                              day_of_month=crontab["id_day_of_month"],
                                                              month_of_year=crontab["id_month_of_year"])
-                    periodic = PeriodicTask(name=task_name, task=task, enabled=1, date_changed=datetime.now(),
+                    periodic = PeriodicTask(name=task_name, task=task, enabled=int(status), date_changed=datetime.now(),
                                             args=json.dumps(plan_id_list), crontab=crontab)
                     periodic.save()
                 elif crontab_div_time == "2":
@@ -1481,7 +1482,7 @@ def task_add(request):
                         crontab = CrontabSchedule.objects.get(id=int(crontab_))
                     except CrontabSchedule.DoesNotExist:
                         return JsonResponse("选择时间间隔不存在！", safe=False)
-                    periodic = PeriodicTask(name=task_name, task=task, enabled=1, date_changed=datetime.now(),
+                    periodic = PeriodicTask(name=task_name, task=task, enabled=int(status), date_changed=datetime.now(),
                                             args=json.dumps(plan_id_list), crontab=crontab)
                     periodic.save()
             return JsonResponse("ok", safe=False)
@@ -1519,8 +1520,10 @@ def task_update(request):
             task_name = request.POST.get("task_name", "")
             task_id = request.POST.get("task_id", "")
             plan_id = request.POST.get("plan_id", "")
+            status = request.POST.get("status", "")
             crontab_time = request.POST.get("crontab_time", "")
             plan_id_list = plan_id.split(",")
+            now_time = datetime.now()
             periodic = PeriodicTask.objects.filter(name=task_name).exclude(id=task_id)
             if periodic:
                 return JsonResponse("任务名称已存在！", safe=False)
@@ -1534,8 +1537,8 @@ def task_update(request):
                         interval = IntervalSchedule.objects.create(every=1, period="days")
                     else:
                         interval = interval[0]
-                    PeriodicTask.objects.filter(id=task_id).update(name=task_name, enabled=1,
-                                                                   date_changed=datetime.now(), crontab="",
+                    PeriodicTask.objects.filter(id=task_id).update(name=task_name, enabled=int(status),
+                                                                   date_changed=now_time, crontab="",
                                                                    interval=interval, args=json.dumps(plan_id_list),
                                                                    crontab_id="")
                 elif task_time == "2":
@@ -1544,8 +1547,8 @@ def task_update(request):
                         interval = IntervalSchedule.objects.create(every=1, period="week")
                     else:
                         interval = interval[0]
-                    PeriodicTask.objects.filter(id=task_id).update(name=task_name, enabled=1,
-                                                                   date_changed=datetime.now(), crontab="",
+                    PeriodicTask.objects.filter(id=task_id).update(name=task_name, enabled=int(status),
+                                                                   date_changed=now_time, crontab="",
                                                                    interval=interval, args=json.dumps(plan_id_list))
                 elif task_time == "3":
                     id_every = request.POST.get("id_every", "")
@@ -1555,8 +1558,8 @@ def task_update(request):
                         interval = IntervalSchedule.objects.create(every=int(id_every), period=id_period)
                     else:
                         interval = interval[0]
-                    PeriodicTask.objects.filter(id=task_id).update(name=task_name, enabled=1,
-                                                                   date_changed=datetime.now(), crontab="",
+                    PeriodicTask.objects.filter(id=task_id).update(name=task_name, enabled=int(status),
+                                                                   date_changed=now_time, crontab="",
                                                                    interval=interval, args=json.dumps(plan_id_list))
                 elif task_time == "4":
                     interval = request.POST.get("interval", "")
@@ -1564,8 +1567,8 @@ def task_update(request):
                         interval = IntervalSchedule.objects.get(id=int(interval))
                     except IntervalSchedule.DoesNotExist:
                         return JsonResponse("选择时间间隔不存在！", safe=False)
-                    PeriodicTask.objects.filter(id=task_id).update(name=task_name, enabled=1,
-                                                                   date_changed=datetime.now(), crontab="",
+                    PeriodicTask.objects.filter(id=task_id).update(name=task_name, enabled=int(status),
+                                                                   date_changed=now_time, crontab="",
                                                                    args=json.dumps(plan_id_list), interval=interval)
             elif crontab_time == "2":
                 crontab_div_time = request.POST.get("crontab_div_time", "")
@@ -1575,16 +1578,21 @@ def task_update(request):
                                                              day_of_week=crontab["id_day_of_week"],
                                                              day_of_month=crontab["id_day_of_month"],
                                                              month_of_year=crontab["id_month_of_year"])
-                    PeriodicTask.objects.filter(id=task_id).update(name=task_name, enabled=1, date_changed=datetime.now(),
-                                                args=json.dumps(plan_id_list), crontab=crontab, interval="")
+                    PeriodicTask.objects.filter(id=task_id).update(name=task_name, enabled=int(status),
+                                                                   date_changed=now_time,
+                                                                   args=json.dumps(plan_id_list), crontab=crontab,
+                                                                   interval="")
                 elif crontab_div_time == "2":
                     crontab_ = request.POST.get("crontab_", "")
                     try:
                         crontab = CrontabSchedule.objects.get(id=int(crontab_))
                     except CrontabSchedule.DoesNotExist:
                         return JsonResponse("选择时间间隔不存在！", safe=False)
-                    PeriodicTask.objects.filter(id=task_id).update(name=task_name, enabled=1, date_changed=datetime.now(),
-                                                args=json.dumps(plan_id_list), crontab=crontab, interval="")
+                    PeriodicTask.objects.filter(id=task_id).update(name=task_name, enabled=int(status),
+                                                                   date_changed=now_time,
+                                                                   args=json.dumps(plan_id_list), crontab=crontab,
+                                                                   interval="")
+            PeriodicTasks.objects.filter(ident=1).update(last_update=now_time)
             log.info("用户 {} 更新定时任务 {} 成功！".format(user_id, task_id))
             return JsonResponse("ok", safe=False)
 
