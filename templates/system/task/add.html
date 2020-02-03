@@ -525,15 +525,15 @@
                     } else if (task_time == 4) {
                         id_every = $("#id_every_1").val();
                         id_period = $("#id_period_1").val();
-                        if (id_every == "" || id_period == "") {
-                            var error_ = $("#every_error_1");
-                            error_.html("Every 或者 Period 不能为空！");
-                            error_.show();
-                            return false
-                        } else {
-                            $("#every_error_1").hide()
-
-                        }
+                        {#                        if (id_every == "" || id_period == "") {#}
+                        {#                            var error_ = $("#every_error_1");#}
+                        {#                            error_.html("Every 或者 Period 不能为空！");#}
+                        {#                            error_.show();#}
+                        {#                            return false#}
+                        {#                        } else {#}
+                        {#                            $("#every_error_1").hide()#}
+                        {##}
+                        {#                        }#}
                         interval = $("#interval_").val();
                     }
                 } else if (crontab_time == 2) {
@@ -563,10 +563,10 @@
                         id_day_of_week = $("#id_day_of_week_1").val();
                         id_day_of_month = $("#id_day_of_month_1").val();
                         id_month_of_year = $("#id_month_of_year_1").val();
-                        if (id_minute.trim().length == 0 || id_hour.trim().length == 0 || id_day_of_week.trim().length == 0 || id_day_of_month.trim().length == 0 || id_month_of_year.trim().length == 0) {
-                            alert("crontab输入框不能为空！");
-                            return
-                        }
+                        {#                        if (id_minute.trim().length == 0 || id_hour.trim().length == 0 || id_day_of_week.trim().length == 0 || id_day_of_month.trim().length == 0 || id_month_of_year.trim().length == 0) {#}
+                        {#                            alert("crontab输入框不能为空！");#}
+                        {#                            return#}
+                        {#                        }#}
                         crontab = {
                             "id_minute": id_minute,
                             "id_hour": id_hour,

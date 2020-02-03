@@ -1429,6 +1429,8 @@ def task_add(request):
             if crontab_time == "1":
                 task_time = request.POST.get("task_time", "")
                 interval = ""
+                id_every = request.POST.get("id_every", 0)
+                id_period = request.POST.get("id_period", "")
                 if task_time == "1":
                     interval = IntervalSchedule.objects.filter(every=1).filter(period="days")
                     if not interval:
@@ -1442,8 +1444,6 @@ def task_add(request):
                     else:
                         interval = interval[0]
                 elif task_time == "3":
-                    id_every = request.POST.get("id_every", 0)
-                    id_period = request.POST.get("id_period", "")
                     interval = IntervalSchedule.objects.filter(every=int(id_every)).filter(period=id_period)
                     if not interval:
                         interval = IntervalSchedule.objects.create(every=int(id_every), period=id_period)
@@ -1451,10 +1451,12 @@ def task_add(request):
                         interval = interval[0]
                 elif task_time == "4":
                     interval = request.POST.get("interval", 0)
-                    try:
-                        interval = IntervalSchedule.objects.get(id=int(interval))
-                    except IntervalSchedule.DoesNotExist:
+                    interval = IntervalSchedule.objects.filter(id=int(interval))
+                    if not interval:
                         return JsonResponse("选择时间间隔不存在！", safe=False)
+                    if id_every.strip() != "" and id_period.strip() != "":
+                        interval.update(every=int(id_every), period=id_period)
+                    interval = interval[0]
                 periodic = PeriodicTask.objects.create(name=task_name, task=task, enabled=int(status),
                                                        date_changed=datetime.now(),
                                                        interval=interval, args=json.dumps(plan_id_list))
@@ -1463,6 +1465,7 @@ def task_add(request):
             if crontab_time == "2":
                 crontab_div_time = request.POST.get("crontab_div_time", "")
                 crontab = ""
+                make = False
                 crontab_dict = eval(request.POST.get("crontab", ""))
                 if crontab_div_time == "1":
                     crontab = CrontabSchedule.objects.filter(minute=crontab_dict["id_minute"]).filter(
@@ -1480,10 +1483,14 @@ def task_add(request):
                     crontab = CrontabSchedule.objects.filter(id=int(crontab_))
                     if not crontab:
                         return JsonResponse("选择Crontab时间不存在！", safe=False)
-                    crontab.update(minute=crontab_dict["id_minute"], hour=crontab_dict["id_hour"],
-                                   day_of_week=crontab_dict["id_day_of_week"],
-                                   day_of_month=crontab_dict["id_day_of_month"],
-                                   month_of_year=crontab_dict["id_month_of_year"])
+                    for key, value in crontab_dict.items():
+                        if value.strip() == "":
+                            make = True
+                    if not make:
+                        crontab.update(minute=crontab_dict["id_minute"], hour=crontab_dict["id_hour"],
+                                       day_of_week=crontab_dict["id_day_of_week"],
+                                       day_of_month=crontab_dict["id_day_of_month"],
+                                       month_of_year=crontab_dict["id_month_of_year"])
                     crontab = crontab[0]
                 periodic = PeriodicTask.objects.create(name=task_name, task=task, enabled=int(status),
                                                        date_changed=datetime.now(), args=json.dumps(plan_id_list),
@@ -1563,7 +1570,8 @@ def task_update(request):
                     interval = IntervalSchedule.objects.filter(id=int(interval))
                     if not interval:
                         return JsonResponse("选择时间间隔不存在！", safe=False)
-                    interval.update(every=int(id_every), period=id_period)
+                    if id_every.strip() != "" and id_period.strip() != "":
+                        interval.update(every=int(id_every), period=id_period)
                     interval = interval[0]
                 PeriodicTask.objects.filter(id=task_id).update(name=task_name, enabled=int(status),
                                                                date_changed=now_time, crontab="",
@@ -1572,6 +1580,7 @@ def task_update(request):
             if crontab_time == "2":
                 crontab_div_time = request.POST.get("crontab_div_time", "")
                 crontab = ""
+                make = False
                 crontab_dict = eval(request.POST.get("crontab", ""))
                 if crontab_div_time == "1":
                     crontab = CrontabSchedule.objects.filter(minute=crontab_dict["id_minute"]).filter(
@@ -1591,10 +1600,14 @@ def task_update(request):
                     crontab = CrontabSchedule.objects.filter(id=int(crontab_))
                     if not crontab:
                         return JsonResponse("选择Crontab时间不存在！", safe=False)
-                    crontab.update(minute=crontab_dict["id_minute"], hour=crontab_dict["id_hour"],
-                                   day_of_week=crontab_dict["id_day_of_week"],
-                                   day_of_month=crontab_dict["id_day_of_month"],
-                                   month_of_year=crontab_dict["id_month_of_year"])
+                    for key, value in crontab_dict.items():
+                        if value.strip() == "":
+                            make = True
+                    if not make:
+                        crontab.update(minute=crontab_dict["id_minute"], hour=crontab_dict["id_hour"],
+                                       day_of_week=crontab_dict["id_day_of_week"],
+                                       day_of_month=crontab_dict["id_day_of_month"],
+                                       month_of_year=crontab_dict["id_month_of_year"])
                     crontab = crontab[0]
                 PeriodicTask.objects.filter(id=task_id).update(name=task_name, enabled=int(status),
                                                                date_changed=now_time,

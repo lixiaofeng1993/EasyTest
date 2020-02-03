@@ -7,15 +7,15 @@
         "json": {},
         "method": "get",
         "params": {
-            "eid": 9933
+            "eid": "$eid"
         },
         "url": "/get_event_list/"
     },
     "validate": [
         {
             "equals": [
-                "content.message",
-                "success"
+                "content.status",
+                200
             ]
         }
     ],

@@ -8,8 +8,20 @@
     "teststeps": [
         {
             "api": "api/添加发布会/添加发布会.json",
-            "extract": [],
+            "extract": [
+                {
+                    "eid": "content.eid"
+                }
+            ],
             "name": "添加发布会",
+            "output": [],
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/添加发布会/查询发布会.json",
+            "extract": [],
+            "name": "查询发布会",
             "output": [],
             "validate": [],
             "variables": {}
