@@ -43,6 +43,7 @@ def delete_testcase(file_path):
                         logger.log_error('权限错误，删除日志文件失败！{}'.format(d_path))
                 elif os.path.isfile(d_path):
                     try:
+                        print(d_path, 3333333333333)
                         os.remove(d_path)
                     except PermissionError as e:
                         logger.log_error('权限错误，删除日志文件失败！{}'.format(d_path))

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os, time, json, logging, threading, platform, re
+import os, time, json, logging, threading, platform, re, zipfile
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -1801,21 +1801,54 @@ def file_download(request):
     else:
         if request.method == 'GET':
             report_id = request.GET.get('report_id', '')
+            local_path = ""
+            name = ""
+            make = False
             if report_id:
                 report = Report.objects.get(report_id=report_id)
                 name = report.report_name[-19:]
                 report_path = report.report_path
                 if report_path:
-                    file_name = report_path
+                    if "[" in report_path:
+                        file_name = eval(report_path)
+                    else:
+                        file_name = report_path
                 else:
                     report_path = os.path.join(os.getcwd(), 'reports')  # 拼接删除目录完整路径
                     file_name = os.path.join(report_path, name + '.html')
             else:
                 file_name = request.GET.get("log_file", "")
+
+            def convert_zip(zip_path):
+                '''
+                # zip_path 要压缩文件的路径
+                # save_path 文件压缩后保存的路径
+                '''
+
+                nonlocal local_path
+                report_dir = settings.MEDIA_ROOT
+                local_path = os.path.join(report_dir, "{}.zip".format(name))
+                zip = zipfile.ZipFile(local_path, "w", zipfile.ZIP_DEFLATED)  # zipfile.ZIP_DEFLATED
+                for file in zip_path:
+                    zip.write(file)
+                zip.close()
+
+            if isinstance(file_name, list):
+                convert_zip(file_name)
+                file_name = local_path
+                make = True
             if not os.path.exists(file_name):
                 log.info('文件：{} 无法下载！'.format(file_name))
                 return render(request, "base/report_page/report_page.html",
                               {'error': '文件：{} 无法下载！'.format(file_name)})
+            if make:
+                if settings.DEBUG:
+                    url = "http://localhost:8000/media/{}.zip".format(name)
+                else:
+                    url = "http://www.easytest.xyz/media/{}.zip".format(name)
+                log.info('用户 {} 下载测试报告或日志文件：{} .'.format(user_id, url))
+                return render(request, "base/report_page/report_page.html",
+                              {'url': url})
 
             def file_iterator(file_name, chunk_size=512):
                 with open(file_name, encoding='utf-8') as f:

@@ -34,7 +34,7 @@
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li class="active">
-                    <a class="this-page">运行报告</a>
+                    <a class="this-page" href="{% url 'base:report_page' %}">运行报告</a>
                 </li>
             </ol>
 
@@ -69,7 +69,19 @@
                             <tr>
                                 <td id="cen" class="report_id">{{ env.report_id }}</td>
                                 {% ifequal env.make 1 %}
-                                    <td class="env-name" style="background-color: #FFE153">{{ env.report_name }}</td>
+                                    {% if env.error_num %}
+                                        <td class="env-name"
+                                            style="background-color: #FFECF5">{{ env.report_name }}</td>
+                                    {% else %}
+                                        {% if env.fail_num %}
+                                            <td class="env-name"
+                                                style="background-color: #FFFFDF">{{ env.report_name }}</td>
+                                        {% else %}
+                                            <td class="env-name"
+                                                style="background-color: #ECFFFF">{{ env.report_name }}</td>
+                                        {% endif %}
+                                    {% endif %}
+
                                 {% else %}
                                     <td class="env-name">{{ env.report_name }}</td>
                                 {% endifequal %}
@@ -107,6 +119,9 @@
                         {% endfor %}
                         </tbody>
                     </table>
+                    {% if url %}
+                        <p style="font-size: 20px;font-weight: 700;">点击链接下载报告：<a href="{{ url }}">{{ url }}</a></p>
+                    {% endif %}
                     <span style="color: red; font-size: 12px">{{ error }}</span>
                 </div>
                 {% if is_paginated %}

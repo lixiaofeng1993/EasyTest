@@ -5,13 +5,11 @@
         "variables": {}
     },
     "noReset": true,
-    "teststeps": [
+    "testcases": [
         {
-            "api": "api/查询发布会接口/查询发布会.json",
-            "extract": [],
-            "name": "查询发布会",
-            "output": [],
-            "validate": [],
+            "name": "添加发布会",
+            "parameters": [],
+            "testcase": "testcases/添加发布会.json",
             "variables": {}
         }
     ]

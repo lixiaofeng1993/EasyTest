@@ -41,6 +41,8 @@ class HttpRunerMain:
             delete_testcase(report_path)
             logs_path = os.path.join(BASE_DIR, "logs")
             delete_testcase(logs_path)
+            logs_path = os.path.join(BASE_DIR, "media")
+            delete_testcase(logs_path)
             testcase_dir_path = os.path.join(testcase_dir, get_time_stamp())
             testsuites_dir = check_path(os.path.join(testcase_dir_path, "testsuites"))
             testcases_dir = check_path(os.path.join(testcase_dir_path, "testcases"))
