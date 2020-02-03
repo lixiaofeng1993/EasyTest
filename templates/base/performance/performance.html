@@ -75,8 +75,15 @@
                     </button>
                     &nbsp;&nbsp;&nbsp;
                 </div>
-                <iframe src="http://www.easytest.xyz:8089/" frameborder="0"
-                        scrolling="0"></iframe>
+                {% if debug %}
+                    <iframe src="http://localhost:8089/" frameborder="0"
+                            scrolling="0"></iframe>
+                {% else %}
+                    <iframe src="http://www.easytest.xyz:8089/" frameborder="0"
+                            scrolling="0"></iframe>
+                {% endif %}
+
+
             </div>
         </div>
     </div>

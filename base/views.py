@@ -21,6 +21,7 @@ from lib.except_check import project_info_logic, sign_info_logic, env_info_logic
     case_info_logic, plan_info_logic, header_value_error  # 自定义异常逻辑
 from django.views.generic import ListView
 from django.conf import settings
+from lib.helper import delete_performance
 
 # import paramiko
 # from stat import S_ISDIR as isdir
@@ -1875,7 +1876,7 @@ def performance_index(request):
     if request.method == 'GET':
         user_id = request.session.get('user_id', '')
         if get_user(user_id):
-            return render(request, 'base/performance/performance.html')
+            return render(request, 'base/performance/performance.html', {"debug": settings.DEBUG})
         else:
             request.session['login_from'] = '/base/performance/'
             return render(request, 'user/login_action.html')
@@ -1925,6 +1926,7 @@ class StartLocust(threading.Thread):
             else:
                 p = os.system("/home/lixiaofeng/./stop_locust.sh")
                 log.info("--stop---success-{}=====!".format(p))
+            delete_performance(os.path.join(settings.BASE_DIR, "performance"))
 
 
 def start_locust(request):
