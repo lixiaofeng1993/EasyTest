@@ -922,7 +922,7 @@ def case_add(request):
     else:
         if request.method == 'POST':
             case_name = request.POST.get('case_name', '').strip()
-            weight = request.POST.get('weight', '').strip()
+            weight = request.POST.get('weight', 1)
             content = request.POST.get('content')
 
             msg = case_info_logic(case_name, content)
@@ -961,7 +961,7 @@ def case_update(request):
         if request.method == 'POST':
             case_id = request.POST['case_id']
             case_name = request.POST.get('case_name', '').strip()
-            weight = request.POST.get('weight', '').strip()
+            weight = request.POST.get('weight', 1)
             content = request.POST.get('content')
 
             msg = case_info_logic(case_name, content, case_id, user_id)
@@ -1568,7 +1568,7 @@ def task_update(request):
             periodic = PeriodicTask.objects.filter(name=task_name).exclude(id=task_id)
             if periodic:
                 return JsonResponse("任务名称已存在！", safe=False)
-            periodic = PeriodicTask.objects.get(name=task_name)
+            periodic = PeriodicTask.objects.get(id=task_id)
             if "run_plan" not in periodic.task:
                 return JsonResponse("非选择测试计划的定时任务，无法保存！", safe=False)
             if crontab_time == "1":
