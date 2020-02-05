@@ -49,7 +49,7 @@ def test_httprunner(env_id, case_id_list, plan="", username="root"):
     skip_num = stat.get('skipped', 0)
     end_time = time.clock()
     totalTime = str(end_time - begin_time)[:6] + ' s'
-    pic_name = DrawPie(pass_num, fail_num, error_num)
+    pic_name = DrawPie(pass_num, fail_num, error_num, skip_num)
     report_name = plan.plan_name + "-" + str(start_time).replace(':', '-')
     report = Report(plan_id=plan.plan_id, report_name=report_name, content=content, case_num=case_num,
                     pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name, skip_num=skip_num,
@@ -183,7 +183,7 @@ def run_plan(*args, **kwargs):
         skip_num += stat.get('skipped', 0)
     end_time = time.clock()
     totalTime = str(end_time - begin_time)[:6] + ' s'
-    pic_name = DrawPie(pass_num, fail_num, error_num)
+    pic_name = DrawPie(pass_num, fail_num, error_num, skip_num)
     report_name = task_name + "-" + str(start_time).replace(':', '-')
     report = Report(plan_id="", report_name=report_name, content=content, case_num=case_num, pass_num=pass_num,
                     fail_num=fail_num, error_num=error_num, pic_name=pic_name, totalTime=totalTime, skip_num=skip_num,
