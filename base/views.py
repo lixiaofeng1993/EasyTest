@@ -1657,7 +1657,7 @@ def task_delete(request):
             task_id = request.build_absolute_uri().split("/")[-1]
             PeriodicTask.objects.filter(id=task_id).delete()
             log.info("用户 {} 删除定时任务 {} 成功！".format(user_id, task_id))
-            return HttpResponseRedirect("/base/task_index/")
+            return HttpResponseRedirect("/base/task/")
 
 
 # 报告列表
