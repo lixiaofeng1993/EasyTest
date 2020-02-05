@@ -312,9 +312,9 @@ def env_not_exit(case_run):
     return case_run
 
 
-def case_is_delete(case_run, e):
-    log.error('用例 {} 已被删除！'.format(case_run['case_id']))
-    case_run['msg'] = '用例 {} 可能已被删除，请返回【用例管理】页面核实.    详细报错信息：{}'.format(case_run['case_id'], e)
+def case_is_delete(case_run, e, case_id):
+    log.error('用例 {} 已被删除！'.format(case_id))
+    case_run['msg'] = '用例 {} 可能已被删除，请返回【用例管理】页面核实.    详细报错信息：{}'.format(case_id, e)
     case_run['error'] = ErrorCode.case_not_exit_error
     return case_run
 

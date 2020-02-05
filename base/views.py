@@ -1342,7 +1342,31 @@ def plan_run(request):
                 return HttpResponse("测试计划执行中，稍后可在【运行报告】处查看！")
 
 
-def timing_task(request):
+# 测试计划列表
+@method_decorator(login_required, name='dispatch')
+class TaskIndex(ListView):
+    model = PeriodicTask
+    template_name = 'system/task/task_index.html'
+    context_object_name = 'object_list'
+    paginate_by = 10
+
+    def dispatch(self, *args, **kwargs):
+        return super(TaskIndex, self).dispatch(*args, **kwargs)
+
+    def get_queryset(self):
+        return PeriodicTask.objects.all().order_by('-id')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = context.get('paginator')
+        page = context.get('page_obj')
+        is_paginated = context.get('is_paginated')
+        data = pagination_data(paginator, page, is_paginated)
+        context.update(data)
+        return context
+
+
+def task_run(request):
     """
     定时任务
     :param request:
@@ -1350,18 +1374,10 @@ def timing_task(request):
     """
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
-        request.session['login_from'] = '/base/timing_task/'
+        request.session['login_from'] = '/base/task_index/'
         return render(request, 'user/login_action.html')
     else:
-        if request.method == 'GET':
-            task_list = PeriodicTask.objects.all()
-            task_count = PeriodicTask.objects.all().count()  # 统计数
-            periodic_list = IntervalSchedule.objects.all()  # 周期任务 （如：每隔1小时执行1次）
-            crontab_list = CrontabSchedule.objects.all()  # 定时任务 （如：某年月日的某时，每天的某时）
-            return render(request, "system/task/task_index.html",
-                          {"tasks": task_list, "taskcounts": task_count, "periodics": periodic_list,
-                           "crontabs": crontab_list})
-        elif request.method == 'POST':
+        if request.method == 'POST':
             task_id = request.POST.get('id', '')
             if task_id:
                 task = PeriodicTask.objects.get(id=task_id)
@@ -1634,14 +1650,14 @@ def task_update(request):
 def task_delete(request):
     user_id = request.session.get('user_id', '')
     if not get_user(user_id):
-        request.session['login_from'] = '/base/report_page/'
+        request.session['login_from'] = '/base/task_index/'
         return render(request, 'user/login_action.html')
     else:
         if request.method == 'GET':
             task_id = request.build_absolute_uri().split("/")[-1]
             PeriodicTask.objects.filter(id=task_id).delete()
             log.info("用户 {} 删除定时任务 {} 成功！".format(user_id, task_id))
-            return HttpResponseRedirect("/base/timing_task/")
+            return HttpResponseRedirect("/base/task_index/")
 
 
 # 报告列表

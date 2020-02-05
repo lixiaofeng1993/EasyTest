@@ -161,6 +161,9 @@ def run_plan(*args, **kwargs):
         begin_time = time.clock()
         execute = Test_execute(env_id, case_id_list, run_mode="1", plan=plan)
         case_result = execute.test_case
+        if "error" in case_result.keys():
+            logger.log_error(case_result["msg"])
+            return
         report_path.append(case_result['report_path'])
         for i in range(len(case_result['summary']['details'])):
             for records in case_result['summary']['details'][i]['records']:

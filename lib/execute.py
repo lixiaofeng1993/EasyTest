@@ -69,7 +69,7 @@ class Test_execute():
                     if self.plan:
                         case_run.update({"plan_name": self.plan.plan_name})
                 except Case.DoesNotExist as e:
-                    case_run = case_is_delete(case_run, e)
+                    case_run = case_is_delete(case_run, e, case_id)
                     return case_run
                 self.step_list = eval(case.content)
                 for step in self.step_list:
@@ -98,7 +98,7 @@ class Test_execute():
             try:
                 case = Case.objects.get(case_id=self.case_id)
             except Case.DoesNotExist as e:
-                case_run = case_is_delete(case_run, e)
+                case_run = case_is_delete(case_run, e, self.case_id)
                 return case_run
 
             self.step_list = eval(case.content)

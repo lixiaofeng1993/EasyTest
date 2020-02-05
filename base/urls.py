@@ -56,7 +56,8 @@ urlpatterns = [
     # 批量导入
     url(r'batch_index', view=views.batch_index, name='batch_index'),
     # 定时任务
-    url(r'timing_task/', view=views.timing_task, name='timing_task'),
+    url(r'task/', view=views.TaskIndex.as_view(), name='task_index'),
+    url(r'task_run/', view=views.task_run, name='task_run'),
     url(r'task_logs/', view=views.task_logs, name='task_logs'),
     url(r'task_add/', view=views.task_add, name='task_add'),
     url(r'task_update/', view=views.task_update, name='task_update'),
