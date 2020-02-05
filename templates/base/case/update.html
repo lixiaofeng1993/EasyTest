@@ -95,6 +95,13 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label" title="性能测试使用，默认为1；">权重</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="weight" name="weight" class="form-control"
+                                       value="{{ case.weight }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">所属项目</label>
                             <div class="col-sm-8">
                                 <select id="prj_id" class="form-control" onchange=get_if()>
@@ -298,7 +305,6 @@
         function search() {
             var search_name = $("#search").val();
             var prj_id = $("#prj_id").val();
-            console.log(prj_id, "--------------->", search_name);
             if (prj_id == "" || search_name == "") {
                 alert("请先选择项目并输入接口名称！");
             }
@@ -604,6 +610,7 @@
             $("#submit").click(function () {
                 var case_id = $("#case_id").val();
                 var case_name = $("#case_name").val();
+                var weight = $("#weight").val();
                 if (check(case_name) == false) {
                     $("#case_name").focus();
                     return false
@@ -690,13 +697,13 @@
                     content.push(step);
                 });
                 var content_json = JSON.stringify(content);
-                console.log(content_json, 111111)
                 $.ajax({
                     url: "/base/case_update/",
                     type: "post",
                     data: {
                         "case_id": case_id,
                         "case_name": case_name,
+                        "weight": weight,
                         "prj_id": prj_id,
                         "description": description,
                         "content": content_json

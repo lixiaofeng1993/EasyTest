@@ -536,6 +536,7 @@ def interface_copy(request):
             is_sign = interface_.is_sign
             is_header = interface_.is_header
             mock = interface_.set_mock
+            skip = interface_.skip
             description = interface_.description
             request_header_param = interface_.request_header_param
             request_body_param = interface_.request_body_param
@@ -547,7 +548,7 @@ def interface_copy(request):
                                   is_sign=is_sign, description=description, request_header_param=request_header_param,
                                   request_body_param=request_body_param, response_header_param=response_header_param,
                                   response_body_param=response_body_param, is_header=is_header, update_user=username,
-                                  set_mock=mock)
+                                  set_mock=mock, skip=skip)
             interface.save()
             log.info(
                 'add interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} // {} '
@@ -567,6 +568,7 @@ def interface_search(request):
         if get_user(user_id):
             search = request.POST.get('search', '').strip()
             if_list = []
+            interface_list = []
             if not search:
                 return HttpResponse('0')
             else:
@@ -624,6 +626,7 @@ def interface_add(request):
             prj_id = request.POST['prj_id']
             url = request.POST['url'].strip()
             method = request.POST.get('method', '')
+            skip = request.POST.get('skip', '').strip()
             data_type = request.POST['data_type']
             is_sign = request.POST.get('is_sign', '')
             is_headers = request.POST.get('is_headers', '')
@@ -646,7 +649,7 @@ def interface_add(request):
             interface = Interface(if_name=if_name, url=url, project=project, method=method, data_type=data_type,
                                   is_sign=is_sign, description=description, request_header_param=request_header_data,
                                   request_body_param=request_body_data, is_header=is_headers, update_user=username,
-                                  set_mock=mock)
+                                  set_mock=mock, skip=skip)
             interface.save()
             log.info(
                 'add interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} //  '
@@ -675,6 +678,7 @@ def interface_update(request):
             if_name = request.POST['if_name'].strip()
             prj_id = request.POST['prj_id']
             url = request.POST['url'].strip()
+            skip = request.POST['skip'].strip()
             method = request.POST.get('method', '')
             data_type = request.POST['data_type']
             is_sign = request.POST.get('is_sign', '')
@@ -703,11 +707,11 @@ def interface_update(request):
                 Interface.objects.filter(if_id=if_id).update(if_name=if_name, url=url, project=project, method=method,
                                                              data_type=data_type, is_header=is_headers,
                                                              is_sign=is_sign, description=description,
-                                                             request_header_param=request_header_data,
+                                                             request_header_param=request_header_data, skip=skip,
                                                              request_body_param=request_body_data, set_mock=mock,
                                                              update_time=datetime.now(), update_user=username)
                 log.info(
-                    'edit interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} //  '.format(
+                    'edit interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} '.format(
                         if_name, project, url, method, data_type, is_sign, description, request_header_data,
                         request_body_data, is_headers))
                 return HttpResponseRedirect("/base/interface/")
@@ -918,6 +922,7 @@ def case_add(request):
     else:
         if request.method == 'POST':
             case_name = request.POST.get('case_name', '').strip()
+            weight = request.POST.get('weight', '').strip()
             content = request.POST.get('content')
 
             msg = case_info_logic(case_name, content)
@@ -930,10 +935,11 @@ def case_add(request):
                 description = request.POST['description']
                 username = request.session.get('user', '')
                 case = Case(case_name=case_name, project=project, description=description,
-                            content=content, update_user=username)
+                            content=content, update_user=username, weight=weight)
                 case.save()
-                log.info('add case   {}  success. case info: {} // {} // {}'.format(case_name, project, description,
-                                                                                    content))
+                log.info(
+                    'add case   {}  success. case info: {} // {} // {} // {}'.format(case_name, project, description,
+                                                                                     content, weight))
                 return HttpResponseRedirect("/base/case/")
         elif request.method == 'GET':
             prj_list = is_superuser(user_id)
@@ -955,7 +961,9 @@ def case_update(request):
         if request.method == 'POST':
             case_id = request.POST['case_id']
             case_name = request.POST.get('case_name', '').strip()
+            weight = request.POST.get('weight', '').strip()
             content = request.POST.get('content')
+
             msg = case_info_logic(case_name, content, case_id, user_id)
             if msg != 'ok':
                 log.error('case update error：{}'.format(msg))
@@ -968,9 +976,9 @@ def case_update(request):
                 Case.objects.filter(case_id=case_id).update(case_name=case_name, project=project,
                                                             description=description,
                                                             content=content, update_time=datetime.now(),
-                                                            update_user=username)
-                log.info('edit case   {}  success. case info: {} // {} // {}'
-                         .format(case_name, project, description, content))
+                                                            update_user=username, weight=weight)
+                log.info('edit case   {}  success. case info: {} // {} // {} // {}'
+                         .format(case_name, project, description, content, weight))
                 return HttpResponseRedirect("/base/case/")
         elif request.method == 'GET':
             prj_list = is_superuser(user_id)
@@ -1010,13 +1018,14 @@ def case_copy(request):
             case_ = Case.objects.get(case_id=case_id)
             case_name = case_.case_name + 'copy'
             content = case_.content
+            weight = case_.weight
             project = case_.project
             description = case_.description
             username = request.session.get('user', '')
             case = Case(case_name=case_name, project=project, description=description, update_time=datetime.now(),
-                        content=content, update_user=username)
+                        content=content, update_user=username, weight=weight)
             case.save()
-            log.info('copy case   {}  success. case info: {} // {} '.format(case_name, project, content))
+            log.info('copy case   {}  success. case info: {} // {} // {} '.format(case_name, project, content, weight))
             return HttpResponseRedirect("base/case/")
 
 
@@ -1725,13 +1734,14 @@ def report_index(request):
             pass_num = report.pass_num
             fail_num = report.fail_num
             error_num = report.error_num
+            skip_num = report.skip_num
             report_content = eval(report.content.replace('Markup', ''))
             for case in report_content:
                 global class_name
                 class_name = case['class_name']
             info = {"report": report, 'plan_id': plan_id, 'case_num': case_num, "error_num": error_num,
                     'pass_num': pass_num, 'fail_num': fail_num, "report_content": report_content,
-                    'img_name': str(now_time) + 'pie.png', 'class_name': class_name}
+                    'img_name': str(now_time) + 'pie.png', 'class_name': class_name, "skip_num": skip_num}
             if make:
                 return render(request, "report_httprunner.html", info)
             else:
@@ -1756,7 +1766,7 @@ def report_search(request):
             except Report.DoesNotExist:
                 return render(request, "report.html")
             report_content = eval(report.content.replace('Markup', ''))
-            if result not in ['pass', 'fail', 'error']:
+            if result not in ['pass', 'fail', 'error', "skipped"]:
                 return HttpResponse(str(report_content))
             for case in report_content:
                 global class_name

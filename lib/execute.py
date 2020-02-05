@@ -64,7 +64,8 @@ class Test_execute():
                 try:
                     case = Case.objects.get(case_id=case_id)
                     case_run.update(
-                        {"case_name": case.case_name, "case_id": case.case_id, "project_id": case.project_id})
+                        {"case_name": case.case_name, "case_id": case.case_id, "project_id": case.project_id,
+                         "weight": case.weight})
                     if self.plan:
                         case_run.update({"plan_name": self.plan.plan_name})
                 except Case.DoesNotExist as e:
@@ -114,7 +115,7 @@ class Test_execute():
                     return case_run
 
             case_run['case_name'], case_run["step_list"] = case.case_name, case_step_list
-            # log.info('interface response data: {}'.format(case_run))
+            log.info('interface response data: {}'.format(case_run))
         return case_run
 
     def step(self, step_content):
@@ -142,7 +143,8 @@ class Test_execute():
                     step_content = json.loads(replace_var(step_content, var_name, var_value))
 
         if_dict = {"url": interface.url, "header": step_content["header"], "body": step_content["body"], "if_id": if_id,
-                   "if_name": step_content["if_name"], "method": interface.method, "data_type": interface.data_type}
+                   "if_name": step_content["if_name"], "method": interface.method, "data_type": interface.data_type,
+                   "skip": interface.skip}
 
         if_dict['body'] = format_body(if_dict['body'])  # body参数中存在list或者dict，或者dict本身就是list
         if if_dict['body'] == 'error':
@@ -220,6 +222,13 @@ class Test_execute():
             return if_dict
         else:
             # if not interface.set_mock:  # 请求接口或者模拟接口返回值
+            if if_dict["skip"]:
+                if_dict["skipped"] = "skipped"
+                if_dict["result"] = "skipped"
+                if_dict["msg"] = "skipped"
+                if_dict["res_content"] = if_dict["skip"]
+                if_dict['checkpoint'] = if_dict["skip"]
+                return if_dict
             try:
                 if interface.is_sign:
                     if self.sign_type == "AES算法":

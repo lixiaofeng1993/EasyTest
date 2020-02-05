@@ -133,6 +133,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label" title="为空执行，有内容不执行！">跳过</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="skip" name="skip" class="form-control" value="{{ interface.skip }}">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">是否签名</label>
                             <div class="col-sm-2 control-label">
                                 <label class="fancy-radio">
@@ -369,8 +375,7 @@
                         {#                        </div>#}
                         <div class="form-group">
                             <div class="col-sm-offset-4 col-sm-6">
-                                <button id="submit" class="btn btn-primary float-button" lay-submit=""
-                                        lay-filter="demo1"><i
+                                <button id="submit" class="btn btn-primary float-button" ><i
                                         class="fa fa-save"></i>&nbsp;保存
                                 </button>
                                 <button id="reset" type="reset" class="btn btn-primary float-button reset"><i
@@ -588,6 +593,7 @@
             var url = $("#url").val();
             var method = $("input[name='method']:checked").val();
             var data_type = $("#data_type").val();
+            var skip = $("#skip").val();
             var is_sign = $("input[name='is_sign']:checked").val();
             var is_headers = $("input[name='is_headers']:checked").val();
             var mock = $("input[name='mock']:checked").val();
@@ -693,6 +699,7 @@
                     "is_sign": is_sign,
                     "is_headers": is_headers,
                     "mock": mock,
+                    "skip": skip,
                     "description": description,
                     "request_header_data": request_header_data,
                     "request_body_data": request_body_data,

@@ -84,6 +84,12 @@
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label" title="性能测试使用，默认为1；">权重</label>
+                            <div class="col-sm-8">
+                                <input type="number" id="weight" name="weight" class="form-control" value="">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">所属项目</label>
                             <div class="col-sm-8">
                                 <select id="prj_id" class="form-control" onchange=get_if()>
@@ -430,6 +436,7 @@
 
             $("#submit").click(function () {
                 var case_name = $("#case_name").val();
+                var weight = $("#weight").val();
                 if (check(case_name) == false) {
                     $("#case_name").focus();
                     return false
@@ -529,6 +536,7 @@
                     data: {
                         "case_name": case_name,
                         "prj_id": prj_id,
+                        "weight": weight,
                         "description": description,
                         "content": content_json
                     },

@@ -651,7 +651,7 @@ from collections import OrderedDict
 # font = FontProperties(fname=r"C:\Windows\Fonts\simhei.ttf", size=14)
 
 
-def DrawPie(pass_num=0, fail=0, error=0):
+def DrawPie(pass_num=0, fail=0, error=0, skip=0):
     """
     绘制饼图用pie
     :return:
@@ -663,12 +663,12 @@ def DrawPie(pass_num=0, fail=0, error=0):
     # 调节图形大小，宽，高
     # plt.figure(figsize=(6, 9))
     # 定义饼状图的标签，标签是列表
-    labels = 'pass', 'fail', 'error'
+    labels = 'pass', 'fail', 'error', "skip"
     # 每个标签占多大，会自动去算百分比
-    my_labels = [pass_num, fail, error]
-    colors = ['green', 'orange', 'red']
+    my_labels = [pass_num, fail, error, skip]
+    colors = ['green', 'orange', 'red', "grey"]
     # 将某部分爆炸出来， 使用括号，将第一块分割出来，数值的大小是分割出来的与其他两块的间隙
-    explode = (0.05, 0, 0)
+    explode = (0.05, 0, 0, 0)
 
     patches, l_text, p_text = plt.pie(my_labels, explode=explode, labels=labels, colors=colors,
                                       labeldistance=1.1, autopct='%3.1f%%', shadow=False,

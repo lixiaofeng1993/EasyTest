@@ -86,6 +86,7 @@ class HttpRunerMain:
                     "api": "",
                     "extract": [],
                     "name": "",
+                    "skip": "",
                     "output": [],
                     "validate": [],
                     "variables": {}
@@ -95,13 +96,16 @@ class HttpRunerMain:
                 method = data.get('method', "")
                 plan_name = data.get("plan_name", "")
                 case_name = data.get("case_name", "")
+                weight = data.get("weight", 1)
                 if_name = data.get("if_name", "")
+                skip = data.get("skip", "")
                 testsuites_json["config"]["base_url"] = base_url
                 if plan_name:
                     testsuites_json["config"]["name"] = plan_name
                 else:
                     testsuites_json["config"]["name"] = case_name
                 self.testcases["name"] = case_name
+                self.testcases["weight"] = weight
                 self.testcases["testcase"] = "testcases/" + case_name + '.json'
                 body = data.get("body", {})
                 if body:
@@ -120,6 +124,7 @@ class HttpRunerMain:
                 testcases_json["config"]["name"] = case_name
 
                 self.teststeps["name"] = if_name
+                self.teststeps["skip"] = skip
                 self.teststeps["api"] = "api/" + case_name + "/" + if_name + ".json"
                 extract = data.get('extract', {})
                 if extract:

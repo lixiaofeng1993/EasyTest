@@ -7109,12 +7109,12 @@
                                         <span class="form-control text-error" id="testError">{{ error_num }}</span>
                                     </div>
                                 </div>
-                                {#                                <div class="form-group">#}
-                                {#                                    <label class="col-sm-2 control-label text-warning">接口跳过:</label>#}
-                                {#                                    <div class="col-sm-5">#}
-                                {#                                        <span class="form-control text-warning" id="testSkip">0</span>#}
-                                {#                                    </div>#}
-                                {#                                </div>#}
+                                <div class="form-group" style="color: #999">
+                                    <label class="col-sm-2 control-label text-skip">接口跳过:</label>
+                                    <div class="col-sm-5">
+                                        <span class="form-control text-skip" id="testSkip">{{ skip_num }}</span>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label text-navy">开始时间:</label>
                                     <div class="col-sm-5">
@@ -7182,8 +7182,8 @@
                                     id="filterFail">{{ fail_num }}</span><span> | </span>
                                 <span class="text-error">接口错误: </span><span class="text-error"
                                                                             id="filterError">{{ error_num }}</span><span> | </span>
-                                {#                                <span class="text-warning">接口跳过: </span><span class="text-warning"#}
-                                {#                                                                              id="filterSkip">0</span>#}
+                                <span class="text-skip" style="color: #999">接口跳过: </span><span class="text-skip"
+                                                                                               id="filterSkip">{{ skip_num }}</span>
                             </label>
                         </div>
                     </div>
@@ -7217,9 +7217,15 @@
                                                                        style="color: orange">{{ records.status }}</span>
                                                 </td>
                                             {% else %}
-                                                <td id="td-fail"><span class='text-navy'
-                                                                       id="fail">{{ records.status }}</span>
-                                                </td>
+                                                {% ifequal records.status "skipped" %}
+                                                    <td id="td-skipped"><span class='text-navy' style="color: #999"
+                                                                              id="skipped">{{ records.status }}</span>
+                                                    </td>
+                                                {% else %}
+                                                    <td id="td-fail"><span class='text-navy'
+                                                                           id="fail">{{ records.status }}</span>
+                                                    </td>
+                                                {% endifequal %}
                                             {% endifequal %}
                                         {% endifequal %}
                                         <td>
@@ -7298,16 +7304,27 @@
                                                         style='font-family: Consolas;font-size:12px;color: orange'>{{ records.attachment }}</span>
                                                 </p>
                                             {% else %}
-                                                {% ifnotequal  records.status "success" %}
+                                                {% ifequal  records.status "skipped" %}
                                                     <p style='font-family: Consolas;font-size:12px;'>
                                                         [------------------------------]测试结果：<span
-                                                            style='font-family: Consolas;font-size:12px;color: red'>{{ records.status }}</span>
+                                                            style='font-family: Consolas;font-size:12px;color: #999'>{{ records.status }}</span>
                                                     </p>
                                                     <p style='font-family: Consolas;font-size:12px;'>
                                                         [------------------------------]附件：<span
-                                                            style='font-family: Consolas;font-size:12px;color: red'>{{ records.attachment }}</span>
+                                                            style='font-family: Consolas;font-size:12px;color: #999'>{{ records.attachment }}</span>
                                                     </p>
-                                                {% endifnotequal %}
+                                                {% else %}
+                                                    {% ifnotequal  records.status "success" %}
+                                                        <p style='font-family: Consolas;font-size:12px;'>
+                                                            [------------------------------]测试结果：<span
+                                                                style='font-family: Consolas;font-size:12px;color: red'>{{ records.status }}</span>
+                                                        </p>
+                                                        <p style='font-family: Consolas;font-size:12px;'>
+                                                            [------------------------------]附件：<span
+                                                                style='font-family: Consolas;font-size:12px;color: red'>{{ records.attachment }}</span>
+                                                        </p>
+                                                    {% endifnotequal %}
+                                                {% endifequal %}
                                             {% endifequal %}
                                         </td>
                                     </tr>

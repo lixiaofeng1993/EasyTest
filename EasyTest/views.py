@@ -72,9 +72,8 @@ def index(request):
         case_num = Case.objects.filter(project_id__in=prj_list).aggregate(Count('case_id'))['case_id__count']
         plan_num = Plan.objects.filter(project_id__in=prj_list).aggregate(Count('plan_id'))['plan_id__count']
         sign_num = Sign.objects.aggregate(Count('sign_id'))['sign_id__count']
-        report_num = Report.objects.filter(plan_id__in=plan_list).aggregate(Count('report_id'))['report_id__count']
+        report_num = Report.objects.aggregate(Count('report_id'))['report_id__count']
         periodic_num = PeriodicTask.objects.aggregate(Count('id'))['id__count']
-        # crontabSchedule_num = CrontabSchedule.objects.aggregate(Count('id'))['id__count']
         user_num = User.objects.aggregate(Count('id'))['id__count']
 
         total = get_total_values(user_id)
@@ -127,14 +126,13 @@ def index_data(request):
         case_num = Case.objects.filter(project_id__in=prj_list).aggregate(Count('case_id'))['case_id__count']
         plan_num = Plan.objects.filter(project_id__in=prj_list).aggregate(Count('plan_id'))['plan_id__count']
         sign_num = Sign.objects.aggregate(Count('sign_id'))['sign_id__count']
-        report_num = Report.objects.filter(plan_id__in=plan_list).aggregate(Count('report_id'))['report_id__count']
+        report_num = Report.objects.aggregate(Count('report_id'))['report_id__count']
         periodic_num = PeriodicTask.objects.aggregate(Count('id'))['id__count']
-        crontabSchedule_num = CrontabSchedule.objects.aggregate(Count('id'))['id__count']
         user_num = User.objects.aggregate(Count('id'))['id__count']
 
         info = {'project_num': project_num, 'env_num': env_num, 'interface_num': interface_num, 'case_num': case_num,
                 'plan_num': plan_num, 'sign_num': sign_num, 'report_num': report_num,
-                'task_num': periodic_num + crontabSchedule_num, 'user_num': user_num}
+                'task_num': periodic_num, 'user_num': user_num}
 
         return JsonResponse(info)
 

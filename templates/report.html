@@ -7091,12 +7091,12 @@
                                         <span class="form-control text-error" id="testError">{{ error_num }}</span>
                                     </div>
                                 </div>
-                                {#                                <div class="form-group">#}
-                                {#                                    <label class="col-sm-2 control-label text-warning">接口跳过:</label>#}
-                                {#                                    <div class="col-sm-5">#}
-                                {#                                        <span class="form-control text-warning" id="testSkip">0</span>#}
-                                {#                                    </div>#}
-                                {#                                </div>#}
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label text-skip" style="color: grey;">接口跳过:</label>
+                                    <div class="col-sm-5">
+                                        <span class="form-control text-skip" id="testSkip">{{ skip_num }}</span>
+                                    </div>
+                                </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label text-navy">开始时间:</label>
                                     <div class="col-sm-5">
@@ -7152,6 +7152,7 @@
                             <option value="" hassubinfo='true'>pass</option>
                             <option value="" hassubinfo='true'>fail</option>
                             <option value="" hassubinfo='true'>error</option>
+                            <option value="" hassubinfo='true'>skipped</option>
                         </select>
                         <div style="float: right">
                             <label class="form-control">
@@ -7163,8 +7164,8 @@
                                                                                                    id="filterFail">{{ fail_num }}</span><span> | </span>
                                 <span class="text-error">接口错误: </span><span class="text-error"
                                                                             id="filterError">{{ error_num }}</span><span> | </span>
-                                {#                                <span class="text-warning">接口跳过: </span><span class="text-warning"#}
-                                {#                                                                              id="filterSkip">0</span>#}
+                                <span class="text-skip" style="color:grey; ">接口跳过: </span><span class="text-skip"
+                                                                                                id="filterSkip">{{ skip_num }}</span>
                             </label>
                         </div>
                     </div>
@@ -7197,8 +7198,15 @@
                                             <td id="td-fail"><span class='text-navy' id="fail"
                                                                    style="color: orange">{{ step.result }}</span></td>
                                         {% else %}
-                                            <td id="td-fail"><span class='text-navy' id="fail">{{ step.result }}</span>
-                                            </td>
+                                            {% ifequal step.result 'skipped' %}
+                                                <td id="td-fail"><span class='text-navy' id="fail"
+                                                                       style="color: #999">{{ step.result }}</span>
+                                                </td>
+                                            {% else %}
+                                                <td id="td-fail"><span class='text-navy'
+                                                                       id="fail">{{ step.result }}</span>
+                                                </td>
+                                            {% endifequal %}
                                         {% endifequal %}
                                     {% endifequal %}
                                     <td>
@@ -7237,8 +7245,13 @@
                                                 <p style='font-family: Consolas;font-size:12px;color: orange'>
                                                     [------------------------------]测试结果：{{ step.msg }}</p>
                                             {% else %}
-                                                <p style='font-family: Consolas;font-size:12px;color: red'>
-                                                    [------------------------------]测试结果：{{ step.msg }}</p>
+                                                {% ifequal step.result 'skipped' %}
+                                                    <p style='font-family: Consolas;font-size:12px;color: #999'>
+                                                        [------------------------------]测试结果：{{ step.msg }}</p>
+                                                {% else %}
+                                                    <p style='font-family: Consolas;font-size:12px;color: red'>
+                                                        [------------------------------]测试结果：{{ step.msg }}</p>
+                                                {% endifequal %}
                                             {% endifequal %}
                                         {% endifequal %}
                                     </td>

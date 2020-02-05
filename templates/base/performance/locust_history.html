@@ -70,10 +70,17 @@
         <div class="col-md-12">
             <div class="panel">
                 <div class="panel-heading">
+                    <a class="this" href="{% url 'base:performance' %}" style="margin-left: 5%">Locust页面</a>
+                    <a class="this" href="{% url 'base:performance_report' %}" style="margin-left: 3%">聚合报告</a>
+
+                    <a class="btn btn-primary" href="{% url 'base:performance_real' %}"
+                       style="margin-left: 50%;margin-right: 3%">实时数据</a>
+                    <a class="btn btn-primary">历史数据</a>
                     <a href="{% url 'base:performance_delete' %}" class="btn btn-danger">清除数据</a>
                 </div>
                 <div class="spinner"></div>
                 <div class="panel-body">
+                    <h4 class="col-sm-2 control-label">历史数据</h4>
                     <table class="table table-bordered">
                         <thead>
                         <tr>

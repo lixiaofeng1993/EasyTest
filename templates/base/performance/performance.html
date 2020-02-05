@@ -40,6 +40,10 @@
             width: 100%;
             height: 560px;
         }
+
+        .this:hover {
+            color: red;
+        }
     </style>
 {% endblock %}
 
@@ -49,9 +53,6 @@
             <ol class="breadcrumb">
                 <li class="active">
                     <a class="this-page">性能测试</a>
-                </li>
-                <li class="active">
-                    <a class="this" href="{% url 'base:performance_report' %}">聚合报告</a>
                 </li>
             </ol>
 
@@ -65,7 +66,10 @@
         <div class="col-md-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <button id="start-btn" class="start-master" onclick="master()"><i
+
+                    <a class="this" href="{% url 'base:performance' %}" style="margin-left: 5%">Locust页面</a>
+                    <a class="this" href="{% url 'base:performance_report' %}" style="margin-left: 3%">聚合报告</a>
+                    <button id="start-btn" class="start-master" onclick="master()" style="margin-left: 50%"><i
                             class="fa fa-try"></i>&nbsp;启动master
                     </button>
                     &nbsp;&nbsp;&nbsp;

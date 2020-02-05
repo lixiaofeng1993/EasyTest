@@ -65,6 +65,7 @@ class Interface(models.Model):
     is_sign = models.IntegerField()
     is_header = models.IntegerField(default=0)  # 标记设置header接口
     set_mock = models.TextField(default='')  # 设置mock
+    skip = models.TextField(default='')  # 跳过
     description = models.CharField(max_length=200)
     request_header_param = models.TextField()
     request_body_param = models.TextField()
@@ -84,6 +85,7 @@ class Interface(models.Model):
 class Case(models.Model):
     case_id = models.AutoField(primary_key=True, null=False)
     case_name = models.CharField(max_length=100)
+    weight = models.IntegerField(default=1)  # 权重
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     description = models.CharField(max_length=200)
     content = models.TextField()
@@ -131,6 +133,7 @@ class Report(models.Model):
     task = models.ForeignKey(PeriodicTask, on_delete=models.CASCADE, null=True)
     content = models.TextField()
     case_num = models.IntegerField(null=True)
+    skip_num = models.IntegerField(null=True)
     pass_num = models.IntegerField(null=True)
     fail_num = models.IntegerField(null=True)
     error_num = models.IntegerField(null=True)
