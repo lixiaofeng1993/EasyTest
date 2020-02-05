@@ -105,11 +105,14 @@
                                     <a href="{% url 'base:report_logs' %}?report_id={{ env.report_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs">
                                         <i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;</a>
-                                    <a href="{% url 'base:file_download' %}?report_id={{ env.report_id }}"
-                                       class="layui-btn layui-btn-danger layui-btn-xs"
-                                       onclick="return download_btn()"><i
-                                            class="fa fa-cloud-download"></i>&nbsp;
-                                    </a>
+                                    {% ifequal env.make 1 %}
+                                        <a href="{% url 'base:file_download' %}?report_id={{ env.report_id }}"
+                                           class="layui-btn layui-btn-danger layui-btn-xs"
+                                           onclick="return download_btn()"><i
+                                                class="fa fa-cloud-download"></i>&nbsp;
+                                        </a>
+                                    {% endifequal %}
+
                                     <a href="{% url 'base:report_delete' %}?report_id={{ env.report_id }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;
