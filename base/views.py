@@ -1532,7 +1532,10 @@ def task_update(request):
             plan_id_list = eval(periodic.args)
             plan_list = []
             for plan_id in plan_id_list:
-                plan = Plan.objects.get(plan_id=plan_id)
+                try:
+                    plan = Plan.objects.get(plan_id=plan_id)
+                except Plan.DoesNotExist:
+                    return render(request, "system/task/task_index.html", {"error": "任务中的计划 {} 已删除！".format(plan_id)})
                 plan_list.append(plan)
             info = {"interval_list": interval_list, "periodic": periodic, "plan_list": plan_list, "interval": interval,
                     "crontab_list": crontab_list, "crontab": crontab}
