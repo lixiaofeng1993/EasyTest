@@ -38,8 +38,8 @@ class Test_execute():
         self.run_mode = run_mode
         self.plan = plan
         self.step_json = []
-        self.user_auth = ''  # 用户认证
-        self.make = False  # 未设置默认header的情况
+        self.user_auth = ""  # 用户认证
+        self.headers = {}  # 未设置默认header的情况
         # self.sql = SqL(job=True)
 
     @property
@@ -159,16 +159,20 @@ class Test_execute():
                 if_dict = parametric_set_error(if_dict)
                 return if_dict
 
-        if self.run_mode == '0':  # 补全header
-            set_headers = Environment.objects.get(env_id=self.env_id).set_headers
-            if set_headers:  # 把设置的header赋值到if_dict中
-                headers = eval(set_headers)['header']
-                for k, v in headers.items():
-                    if '$' not in v:
-                        self.make = True
-                if self.make:
-                    if_dict['header'] = headers
-
+        # if self.run_mode == '0':  # 补全header
+        set_headers = Environment.objects.get(env_id=self.env_id).set_headers
+        if set_headers and not interface.is_header:  # 把设置的header赋值到if_dict中
+            headers = eval(set_headers)['header']
+            # for k, v in headers.items():
+            #     if '$' not in v:
+            #         self.make = True
+            # if self.make:
+            if self.headers:
+                self.headers.update(if_dict["header"])
+                if_dict['header'] = self.headers
+            else:
+                headers.update(if_dict['header'])
+                if_dict['header'] = headers
         # if interface.data_type == 'sql':
         #     for k, v in if_dict['body'].items():
         #         if 'select' in v:
@@ -258,32 +262,22 @@ class Test_execute():
                             if_dict = response_value_error(if_dict, make=True)
                             return if_dict
                 except SyntaxError as e:
-                    # if_dict = response_value_error(if_dict, e)  # 解析返回值异常
                     if_dict["res_content"] = {"res_status_code": res.status_code, "data": res.text}  # 返回值无法eval的情况
-                    # return if_dict
             except requests.RequestException as e:
                 if_dict = request_api_error(if_dict, e)  # 接口请求异常
                 return if_dict
-            # else:
-            #     if_dict["res_content"] = \
-            #         eval(interface.set_mock.replace('false', 'False').replace('null', 'None').replace('true', 'True'))[
-            #             'mock']  # 模拟接口返回值
-            #     if_dict["result"] = "fail"
-            #     if_dict['fail'] = ErrorCode.mock_fail
+
             if not isinstance(if_dict["res_content"], str):
-                if interface.is_header and self.make:  # 补充默认headers中的变量
+                if interface.is_header:  # 补充默认headers中的变量
                     set_headers = Environment.objects.get(env_id=self.env_id).set_headers
-                    headers = eval(set_headers)['header']
-                    if headers:
-                        for k, v in headers.items():
-                            if k == 'token':
-                                if 'error' in if_dict.keys():
-                                    headers[k] = ''
-                                else:
-                                    headers[k] = if_dict["res_content"]['data']
-                                now_time = datetime.datetime.now()
-                                Environment.objects.filter(env_id=self.env_id).update(set_headers={'header': headers},
-                                                                                      update_time=now_time)
+                    if set_headers:
+                        self.headers = eval(set_headers)['header']
+                        from lib.public import httprunner_extract
+                        if self.headers:
+                            for k, v in self.headers.items():
+                                v = extract_variables(v)
+                                if v:
+                                    self.headers[k] = httprunner_extract(if_dict["res_content"], v)
 
                 if step_content["extract"]:  # 提取接口中的变量
                     extract_dict = get_extract(step_content["extract"], if_dict["res_content"],

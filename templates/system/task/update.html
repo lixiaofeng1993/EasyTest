@@ -643,6 +643,10 @@
                 $("#plan_error").hide();
                 var status = $("input[name='status']:checked").val();
                 var crontab_time = $("input[name='crontab_time']:checked").val();
+                if (crontab_time == undefined) {
+                    alert("请选择执行时间！");
+                    return
+                }
                 if (crontab_time == 1) {
                     var task_time = $("input[name='task_time']:checked").val();
                     if (task_time == 3) {
@@ -674,6 +678,10 @@
                     }
                 } else if (crontab_time == 2) {
                     var crontab_div_time = $("input[name='crontab_div_time']:checked").val();
+                    if (crontab_div_time == undefined) {
+                        alert("请选择Crontab时间！");
+                        return
+                    }
                     if (crontab_div_time == 1) {
                         var id_minute, id_hour, id_day_of_week, id_day_of_month, id_month_of_year;
                         id_minute = $("#id_minute").val();

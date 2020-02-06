@@ -378,7 +378,7 @@
                                     for (y in request_data) {
                                         request = request_data[y].request;
                                         if (request.hasOwnProperty("body")) {
-                                            html += '<p style="font-family: Consolas;font-size:12px" id="interface_res">' + '请求方式：' + request.method + '，请求url：' + request.url + '</p><p style="font-family: Consolas;font-size:12px" id="interface_res">' + '请求参数：' + JSON.stringify(decodeUnicode(request.body)) + '</p>';
+                                            html += '<p style="font-family: Consolas;font-size:12px" id="interface_res">' + '请求方式：' + request.method + '，请求url：' + request.url + '</p><p style="font-family: Consolas;font-size:12px" id="interface_res">' + '请求headers：' + JSON.stringify(request.headers) + '</p><p style="font-family: Consolas;font-size:12px" id="interface_res">' + '请求参数：' + JSON.stringify(decodeUnicode(request.body)) + '</p>';
                                             num = num + 1;
                                         }
                                         response = request_data[y].response;
@@ -417,7 +417,8 @@
                             $('.spinner1').hide();
                             var data = res['step_list'];
                             for (i in data) {
-                                html = '<h5>' + (parseInt(i) + 1) + '. ' + data[i].if_name + '</h5><p style="font-family: Consolas;font-size:12px" id="interface_res">' + '请求方式：' + data[i].method + '，请求url：' + data[i].url + '</p><p style="font-family: Consolas;font-size:12px" id="interface_res">' + '请求参数：' + JSON.stringify(data[i].body) + '</p><p style="font-family: Consolas;font-size:12px" id="interface_res">' + '检查点：' + data[i].checkpoint + '</p><p style="font-family: Consolas;font-size:12px" id="interface_res">' + '接口返回信息：<xmp style="font-family: Consolas;font-size:12px" id="interface_res">' + JSON.stringify(data[i].res_content) + '</xmp></p>';
+                                console.log(data[i], 111111111111111)
+                                html = '<h5>' + (parseInt(i) + 1) + '. ' + data[i].if_name + '</h5><p style="font-family: Consolas;font-size:12px" id="interface_res">' + '请求方式：' + data[i].method + '，请求url：' + data[i].url + '</p><p style="font-family: Consolas;font-size:12px" id="interface_res">' + '请求headers：' + JSON.stringify(data[i].header) + '</p><p style="font-family: Consolas;font-size:12px" id="interface_res">' + '请求参数：' + JSON.stringify(data[i].body) + '</p><p style="font-family: Consolas;font-size:12px" id="interface_res">' + '检查点：' + data[i].checkpoint + '</p><p style="font-family: Consolas;font-size:12px" id="interface_res">' + '接口返回信息：<xmp style="font-family: Consolas;font-size:12px" id="interface_res">' + JSON.stringify(data[i].res_content) + '</xmp></p>';
                                 if (data[i].hasOwnProperty('error')) {
                                     _html = '<p style="font-family: Consolas;font-size:12px;">' + '测试结果：<xmp style="font-family: Consolas;font-size:12px" id="interface_res">' + data[i].error + '</xmp></p>'
                                 } else if (data[i].hasOwnProperty('skipped')) {

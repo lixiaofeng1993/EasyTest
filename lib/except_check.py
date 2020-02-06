@@ -286,16 +286,17 @@ def header_value_error(content):
     if content:
         content = eval(content)['header']
         att = re.compile('^[\s&\.,:?*\w;/=-]*$', re.A)
+        value_att = re.compile('^[\$\s&\.,:?*\w;/=-]*$', re.A)
         make = True
         for k, v in content.items():
             math = att.findall(k)
             if not math:
                 make = False
                 return '请求头中有参数不符合规则【^[\s&\.,:?*\w;/=-]*$】，请重新输入！'
-            math = att.findall(v)
+            math = value_att.findall(v)
             if not math:
                 make = False
-                return '请求头中有参数 值 不符合规则【^[\s&\.,:?*\w;/=-]*$】，请重新输入！'
+                return '请求头中有参数 值 不符合规则【^[\$\s&\.,:?*\w;/=-]*$】，请重新输入！'
         if make:
             return 'ok'
     else:
