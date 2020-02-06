@@ -5,7 +5,7 @@
     "request": {
         "headers": {
             "aaaa": "3202",
-            "eid": "3202"
+            "eid": "$eid"
         },
         "json": {},
         "method": "get",

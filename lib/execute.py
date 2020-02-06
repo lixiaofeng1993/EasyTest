@@ -125,6 +125,7 @@ class Test_execute():
         :return:
         """
         if_id = step_content["if_id"]
+        print(step_content, 111111111111111)
         try:
             interface = Interface.objects.get(if_id=if_id)
         except Interface.DoesNotExist as e:
@@ -143,8 +144,14 @@ class Test_execute():
                     step_content = json.loads(replace_var(step_content, var_name, var_value))
 
         if_dict = {"url": interface.url, "header": step_content["header"], "body": step_content["body"], "if_id": if_id,
-                   "if_name": step_content["if_name"], "method": interface.method, "data_type": interface.data_type,
-                   "skip": interface.skip}
+                   "if_name": step_content["if_name"], "method": interface.method, "data_type": interface.data_type}
+        # 跳过不执行
+        if interface.skip:
+            if_dict["skip"] = interface.skip
+        elif step_content["skip"]:
+            if_dict["skip"] = step_content["skip"]
+        else:
+            if_dict["skip"] = step_content["skip"]
 
         if_dict['body'] = format_body(if_dict['body'])  # body参数中存在list或者dict，或者dict本身就是list
         if if_dict['body'] == 'error':

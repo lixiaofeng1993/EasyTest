@@ -24,7 +24,7 @@
             "extract": [],
             "name": "查询发布会",
             "output": [],
-            "skip": "",
+            "skip": "【跳过】查询发布会",
             "validate": [],
             "variables": {}
         }

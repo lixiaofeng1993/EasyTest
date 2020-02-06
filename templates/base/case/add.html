@@ -402,7 +402,10 @@
                                         "<tbody>" +
                                         "</tbody>" +
                                         "</table>" +
-                                        "</div> </div></div>";
+                                        "</div> <div class='form-group'><label class='col-sm-1 control-label' title='为空执行，有内容不执行！'>跳过</label>" +
+                                        " <div class='col-sm-6'> <input type='text' id='skip' name='skip' class='form-control' " +
+                                        "value=''>" +
+                                        "</div></div></div></div></div>";
                                     $("#case-list").append(newtable);
 
                                 });
@@ -452,6 +455,7 @@
                     var if_id = $(this).find("div[class='panel-heading']").attr("id");
                     var if_name = $(this).find("h3[id='if_name']").text();
                     var url = $(this).find("div[id='url']").text();
+                    var skip = $(this).find("input[id='skip']").val();
                     var header_table = $(this).find("table[name='header']");
                     var header = {};
                     $(header_table).find("tr").each(function (i) {
@@ -520,6 +524,7 @@
                     step["extract"] = extract;
                     step["validators"] = validators;
                     step["url"] = url;
+                    step["skip"] = skip;
 
                     content.push(step);
                 });

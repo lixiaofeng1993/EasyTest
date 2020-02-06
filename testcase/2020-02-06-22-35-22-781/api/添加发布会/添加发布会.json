@@ -11,10 +11,7 @@
             "start_time": "2020-02-02 17:09:33",
             "status": 1
         },
-        "headers": {
-            "aaaa": "3202",
-            "eid": "3202"
-        },
+        "headers": {},
         "json": {},
         "method": "post",
         "url": "/add_event/"
