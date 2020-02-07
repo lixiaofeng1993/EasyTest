@@ -150,7 +150,7 @@ class Test_execute():
         elif step_content["skip"]:
             if_dict["skip"] = step_content["skip"]
         else:
-            if_dict["skip"] = step_content["skip"]
+            if_dict["skip"] = ""
 
         if_dict['body'] = format_body(if_dict['body'])  # body参数中存在list或者dict，或者dict本身就是list
         if if_dict['body'] == 'error':
