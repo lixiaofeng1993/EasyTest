@@ -1,0 +1,24 @@
+{
+    "config": {
+        "base_url": "http://localhost:8000/api",
+        "name": "12321312321321321",
+        "variables": {}
+    },
+    "noReset": true,
+    "testcases": [
+        {
+            "name": "dadasdadascopy",
+            "parameters": [],
+            "testcase": "testcases/dadasdadascopy.json",
+            "variables": {},
+            "weight": 1
+        },
+        {
+            "name": "大撒旦撒大所多",
+            "parameters": [],
+            "testcase": "testcases/大撒旦撒大所多.json",
+            "variables": {},
+            "weight": 1
+        }
+    ]
+}

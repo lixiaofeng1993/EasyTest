@@ -469,7 +469,7 @@
 
                                         var newtable = "<div class='row'> <div class='panel'><a class='move' href='javascript:void(0)' onclick=" + "move(this,'MoveUp')" + ">上移</a>  <a class='move' href='javascript:void(0)' onclick=" + "move(this,'MoveDown')" + ">下移</a><div class='col-sm-offset-1 col-sm-9'>" +
                                             "<div id= '" + eval(item.content)[content].if_id + "' class='panel-heading'>" +
-                                            "<h3 class='panel-title' id='if_name' style='float: left;margin-right: 5%;'>" + eval(item.content)[content].if_name + "</h3>" + "<input type='text' name='url' id='url' value='" + eval(item.content)[content].url + "'>" +
+                                            "<h3 class='panel-title' style='float: left;margin-right: 5%;'><input type='text' name='if_name' id='if_name' value='" + eval(item.content)[content].if_name + "'></h3>" + "<input type='text' name='url' id='url' value='" + eval(item.content)[content].url + "'>" +
                                             "<div class='right'><button type=\"button\" class='btn-toggle-collapse' onclick='hide_fun()'><i class='fa fa-chevron-up' id='icon-submenu'></i></button></div>" +
                                             "</div>" +
                                             "<div class='panel-body'>" +
@@ -538,7 +538,7 @@
 
                                         var newtable = "<div class='row'> <div class='panel'><a class='move' href='javascript:void(0)' onclick=" + "move(this,'MoveUp')" + ">上移</a>  <a class='move' href='javascript:void(0)' onclick=" + "move(this,'MoveDown')" + ">下移</a><div class='col-sm-offset-1 col-sm-9'>" +
                                             "<div id= '" + item.if_id + "' class='panel-heading'>" +
-                                            "<h3 class='panel-title' id='if_name' style='float: left;margin-right: 5%;'>" + item.if_name + "</h3>" + "</h3>" + "<input type='text' name='url' id='url' value='" + item.url + "'>" +
+                                            "<h3 class='panel-title' style='float: left;margin-right: 5%;'><input type='text' name='if_name' id='if_name' value='" + item.if_name + "'></h3>" + "</h3>" + "<input type='text' name='url' id='url' value='" + item.url + "'>" +
                                             "<div class='right'><button type=\"button\" class='btn-toggle-collapse' onclick='hide_fun()'><i class='fa fa-chevron-up' id='icon-submenu'></i></button></div>" +
                                             "</div>" +
                                             "<div class='panel-body'>" +
@@ -630,7 +630,7 @@
                     var step = {};
 
                     var if_id = $(this).find("div[class='panel-heading']").attr("id");
-                    var if_name = $(this).find("h3[id='if_name']").text();
+                    var if_name = $(this).find("input[id='if_name']").val();
                     var url = $(this).find("input[id='url']").val();
                     var skip = $(this).find("input[id='skip']").val();
 

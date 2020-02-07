@@ -1,0 +1,17 @@
+{
+    "config": {
+        "base_url": "http://localhost:8000/api",
+        "name": "dadasdadas",
+        "variables": {}
+    },
+    "noReset": true,
+    "testcases": [
+        {
+            "name": "dadasdadas",
+            "parameters": [],
+            "testcase": "testcases/dadasdadas.json",
+            "variables": {},
+            "weight": 1
+        }
+    ]
+}

@@ -125,7 +125,6 @@ class Test_execute():
         :return:
         """
         if_id = step_content["if_id"]
-        print(step_content, 111111111111111)
         try:
             interface = Interface.objects.get(if_id=if_id)
         except Interface.DoesNotExist as e:

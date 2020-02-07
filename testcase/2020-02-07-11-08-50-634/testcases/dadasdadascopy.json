@@ -1,0 +1,37 @@
+{
+    "config": {
+        "base_url": "http://localhost:8000/api",
+        "name": "dadasdadascopy",
+        "variables": {}
+    },
+    "noReset": true,
+    "teststeps": [
+        {
+            "api": "api/dadasdadascopy/查询发布会1.json",
+            "extract": [],
+            "name": "查询发布会1",
+            "output": [],
+            "skip": "123",
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/dadasdadascopy/查询发布会2.json",
+            "extract": [],
+            "name": "查询发布会2",
+            "output": [],
+            "skip": "123456",
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/dadasdadascopy/查询发布会3.json",
+            "extract": [],
+            "name": "查询发布会3",
+            "output": [],
+            "skip": "",
+            "validate": [],
+            "variables": {}
+        }
+    ]
+}

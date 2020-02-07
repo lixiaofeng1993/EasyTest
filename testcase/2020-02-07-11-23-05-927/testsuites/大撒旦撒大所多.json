@@ -1,0 +1,17 @@
+{
+    "config": {
+        "base_url": "http://localhost:8000/api",
+        "name": "大撒旦撒大所多",
+        "variables": {}
+    },
+    "noReset": true,
+    "testcases": [
+        {
+            "name": "大撒旦撒大所多",
+            "parameters": [],
+            "testcase": "testcases/大撒旦撒大所多.json",
+            "variables": {},
+            "weight": 1
+        }
+    ]
+}
