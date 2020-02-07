@@ -1,0 +1,17 @@
+{
+    "config": {
+        "base_url": "http://localhost:8000/api",
+        "name": "guest性能测试用例",
+        "variables": {}
+    },
+    "noReset": true,
+    "testcases": [
+        {
+            "name": "添加发布会",
+            "parameters": [],
+            "testcase": "testcases/添加发布会.json",
+            "variables": {},
+            "weight": 1
+        }
+    ]
+}

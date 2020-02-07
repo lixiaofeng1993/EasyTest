@@ -1955,7 +1955,7 @@ class StartLocust(threading.Thread):
             else:
                 p = os.system("/home/lixiaofeng/./stop_locust.sh")
                 log.info("--stop---success-{}=====!".format(p))
-            delete_performance(os.path.join(settings.BASE_DIR, "performance"))
+            # delete_performance(os.path.join(settings.BASE_DIR, "performance"))
 
 
 def start_locust(request):
@@ -2339,13 +2339,14 @@ def debugtalk(request):
 
     else:
         if request.method == 'GET':
-            id = request.get_full_path().split("/")[-2]
+            patt = re.compile("\/(\d+)\/")
+            id = patt.findall(request.get_full_path())[0]
             try:
                 debugtalk = DebugTalk.objects.values('id', 'debugtalk').get(belong_project_id=id)
                 return render_to_response('debugtalk.html', debugtalk)
             except DebugTalk.DoesNotExist:
                 return render(request, "debugtalk.html", {"id": id})
-        else:
+        elif request.method == "POST":
             id = request.POST.get('id')
             debugtalk = request.POST.get('debugtalk')
             code = debugtalk.replace('new_line', '\r\n')
