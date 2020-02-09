@@ -27,6 +27,9 @@ def test_httprunner(env_id, case_id_list, plan="", username="root"):
     j = 0
     execute = Test_execute(env_id, case_id_list, run_mode="1", plan=plan)
     case_result = execute.test_case
+    if "error" in case_result.keys():
+        logger.log_error(case_result["msg"])
+        return
     report_path = case_result['report_path']
     for i in range(len(case_result['summary']['details'])):
         for records in case_result['summary']['details'][i]['records']:
@@ -84,6 +87,9 @@ def test_plan(env_id, case_id_list, plan="", username="root"):
     for case_id in case_id_list:
         execute = Test_execute(env_id, case_id_list, case_id=case_id, run_mode="0")
         case_result = execute.test_case
+        if "error" in case_result.keys():
+            logger.log_error(case_result["msg"])
+            return
         content.append(case_result)
     end_time = time.clock()
     totalTime = str(end_time - begin_time)[:6] + ' s'

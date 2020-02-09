@@ -1,5 +1,5 @@
 {
-    "name": "查询发布会",
+    "name": "查询发布会2",
     "noReset": true,
     "output": [],
     "request": {
@@ -9,10 +9,17 @@
         "json": {},
         "method": "get",
         "params": {
-            "eid": ""
+            "eid": "$eid"
         },
         "url": "/get_event_list/"
     },
-    "validate": [],
+    "validate": [
+        {
+            "less_than_or_equals": [
+                "content.status",
+                200
+            ]
+        }
+    ],
     "variables": {}
 }

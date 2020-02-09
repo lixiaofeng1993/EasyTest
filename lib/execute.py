@@ -386,6 +386,7 @@ def get_total_values(user_id):
         'pass': [],
         'fail': [],
         'error': [],
+        'skip': [],
         'percent': []
     }
     today = datetime.date.today()
@@ -397,24 +398,29 @@ def get_total_values(user_id):
     for i in range(-11, 1):
         begin = today + datetime.timedelta(days=i)
         end = begin + datetime.timedelta(days=1)
-        total_pass = Report.objects.filter(plan_id__in=plan_list).filter(update_time__range=(begin, end)).aggregate(
+        total_pass = Report.objects.all().filter(update_time__range=(begin, end)).aggregate(
             pass_num=Sum('pass_num'))['pass_num']
-        total_fail = Report.objects.filter(plan_id__in=plan_list).filter(update_time__range=(begin, end)).aggregate(
+        total_fail = Report.objects.all().filter(update_time__range=(begin, end)).aggregate(
             fail_num=Sum('fail_num'))['fail_num']
-        total_error = Report.objects.filter(plan_id__in=plan_list).filter(update_time__range=(begin, end)).aggregate(
+        total_error = Report.objects.all().filter(update_time__range=(begin, end)).aggregate(
             error_num=Sum('error_num'))['error_num']
+        total_skip = Report.objects.all().filter(update_time__range=(begin, end)).aggregate(
+            skip_num=Sum('skip_num'))['skip_num']
         if not total_pass:
             total_pass = 0
         if not total_fail:
             total_fail = 0
         if not total_error:
             total_error = 0
+        if not total_skip:
+            total_skip = 0
 
-        total_percent = round(total_pass / (total_pass + total_fail + total_error) * 100, 2) if (
-                                                                                                    total_pass + total_fail + total_error) != 0 else 0.00
+        total_percent = round(total_pass / (total_pass + total_fail + total_error + total_skip) * 100, 2) if (
+                                                                                                                 total_pass + total_fail + total_error + total_skip) != 0 else 0.00
         total['pass'].append(total_pass)
         total['fail'].append(total_fail)
         total['error'].append(total_error)
+        total['skip'].append(total_skip)
         total['percent'].append(total_percent)
 
     return total

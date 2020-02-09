@@ -192,7 +192,7 @@
                 }
             },
             legend: {
-                data: ['失败用例', '成功用例', '通过率', '错误用例']
+                data: ['失败用例', '成功用例', '通过率', '错误用例', '跳过用例']
             },
             xAxis: [
                 {
@@ -246,6 +246,11 @@
                     name: '错误用例',
                     type: 'bar',
                     data: []
+                },
+                {
+                    name: '跳过用例',
+                    type: 'bar',
+                    data: []
                 }
             ]
         };
@@ -256,14 +261,16 @@
             option.series[1].data = {{ total.percent }};
             option.series[2].data = {{ total.pass }};
             option.series[3].data = {{ total.error }};
+            option.series[4].data = {{ total.skip }};
 
             var max_fail = Math.max.apply(null, option.series[0].data);
             var max_pass = Math.max.apply(null, option.series[2].data);
             var max_error = Math.max.apply(null, option.series[3].data);
+            var max_skip = Math.max.apply(null, option.series[4].data);
 
-            if (Math.max(max_fail, max_error, max_pass) > 100) {
-                option.yAxis[0].max = Math.max(max_fail, max_error, max_pass) + 10;
-                option.yAxis[0].interval = parseInt(Math.max(max_fail, max_error, max_pass) / 10);
+            if (Math.max(max_fail, max_error, max_pass, max_skip) > 100) {
+                option.yAxis[0].max = Math.max(max_fail, max_error, max_pass, max_skip) + 10;
+                option.yAxis[0].interval = parseInt(Math.max(max_fail, max_error, max_pass, max_skip) / 10);
             }
             myChart.setOption(option, true);
         }
