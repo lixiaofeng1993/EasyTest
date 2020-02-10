@@ -18,7 +18,7 @@
     },
     "validate": [
         {
-            "equals": [
+            "contains": [
                 "content.message",
                 "add event success"
             ]

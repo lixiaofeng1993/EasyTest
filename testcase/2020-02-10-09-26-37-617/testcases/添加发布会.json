@@ -20,11 +20,20 @@
             "variables": {}
         },
         {
-            "api": "api/添加发布会/查询发布会.json",
+            "api": "api/添加发布会/查询发布会1.json",
             "extract": [],
-            "name": "查询发布会",
+            "name": "查询发布会1",
             "output": [],
             "skip": "【跳过】查询发布会",
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/添加发布会/查询发布会2.json",
+            "extract": [],
+            "name": "查询发布会2",
+            "output": [],
+            "skip": "",
             "validate": [],
             "variables": {}
         }

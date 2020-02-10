@@ -15,7 +15,7 @@
     },
     "validate": [
         {
-            "equals": [
+            "less_than_or_equals": [
                 "content.status",
                 200
             ]

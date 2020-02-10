@@ -415,8 +415,8 @@ def get_total_values(user_id):
         if not total_skip:
             total_skip = 0
 
-        total_percent = round(total_pass / (total_pass + total_fail + total_error + total_skip) * 100, 2) if (
-                                                                                                                 total_pass + total_fail + total_error + total_skip) != 0 else 0.00
+        total_percent = round((total_pass + total_skip) / (total_pass + total_fail + total_error + total_skip) * 100,
+                              2) if (total_pass + total_fail + total_error + total_skip) != 0 else 0.00
         total['pass'].append(total_pass)
         total['fail'].append(total_fail)
         total['error'].append(total_error)
