@@ -53,3 +53,5 @@ class ErrorCode:
     sql_query_error = 'sql查询返回数据错误，请确保sql查询有返回值且是正确的！'
 
     extract_value_path_error = '提取参数值路径错误，请核实并写入正确的路径！'
+
+    parameters_error = '默认执行方式不支持parameters参数化！'

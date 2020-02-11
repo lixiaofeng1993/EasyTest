@@ -14,7 +14,8 @@ from lib.public import validators_result, get_extract, get_param, replace_var, \
     extract_variables, call_interface, format_url, format_body, http_random, str_number
 from lib.random_params import random_params
 from lib.except_check import env_not_exit, case_is_delete, interface_is_delete, parametric_set_error, AES_length_error, \
-    response_value_error, request_api_error, index_error, checkpoint_no_error, eval_set_error, sql_query_error
+    response_value_error, request_api_error, index_error, checkpoint_no_error, eval_set_error, sql_query_error, \
+    parameters_error
 from httprunner.api import HttpRunner
 from lib.httprunner_execute import HttpRunerMain
 
@@ -159,6 +160,9 @@ class Test_execute():
 
         if self.run_mode == '0':
             if_dict['body'] = http_random(if_dict['body'])  # 默认参数化和httpruner参数化保持基本一致
+            if if_dict['body'] == 'error':
+                if_dict = parameters_error(if_dict)
+                return if_dict
             if_dict['header'] = random_params(if_dict['header'])  # random参数化
             if_dict['body'] = random_params(if_dict['body'])
             if if_dict['header'] == 'error' or if_dict['body'] == 'error':  # 参数化异常

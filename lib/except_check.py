@@ -401,3 +401,12 @@ def sql_query_error(if_dict, v):
     if_dict["msg"] = ErrorCode.sql_query_error
     if_dict["error"] = ErrorCode.sql_query_error
     return if_dict
+
+
+def parameters_error(if_dict):
+    if_dict["result"] = 'error'
+    if_dict['checkpoint'] = ''
+    if_dict["res_content"] = ErrorCode.parameters_error
+    if_dict["msg"] = ErrorCode.parameters_error
+    if_dict["error"] = ErrorCode.parameters_error
+    return if_dict

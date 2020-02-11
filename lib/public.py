@@ -582,8 +582,11 @@ def http_random(body):
                 elif "list(" in value:
                     patt = re.compile("list\((.+)\)")
                     params = patt.findall(value)[0]
-                    params = params.split(',')[0]
-                    body[key] = params
+                    if "$" in params:
+                        return "error"
+                    else:
+                        params = params.split(',')[0]
+                        body[key] = params
         return body
 
 

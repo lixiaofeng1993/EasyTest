@@ -113,8 +113,11 @@ class HttpRunerMain:
                         if "list(" in str(value):
                             patt = re.compile("list\((.+)\)")
                             params = patt.findall(value)[0]
-                            params_list = params.split(',')
-                            self.testcases["parameters"].append({key: params_list})
+                            if "$" in params:
+                                self.testcases["parameters"].append({key: params})
+                            else:
+                                params_list = params.split(',')
+                                self.testcases["parameters"].append({key: params_list})
                             data["body"][key] = "$" + key
                 if case_name not in str(testsuites_json["testcases"]):
                     testsuites_json["testcases"].append(self.testcases)
