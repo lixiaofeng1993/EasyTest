@@ -33,390 +33,406 @@
                     <h3 class="panel-title">编辑任务</h3>
                 </div>
                 <div class="panel-body">
-                    <div class="form-horizontal">
-                        <input id="task_id" value={{ periodic.id }} hidden>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">任务名称</label>
-                            <div class="col-sm-6">
-                                <input type="text" name="task_name" lay-verify="title" autocomplete="off" id="task_name"
-                                       class="form-control" value={{ periodic.name }}>
+                    {% if permission_error %}
+                        <p style="color: red">{{ permission_error }}</p>
+                    {% else %}
+                        <div class="form-horizontal">
+                            <input id="task_id" value={{ periodic.id }} hidden>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">任务名称</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="task_name" lay-verify="title" autocomplete="off"
+                                           id="task_name"
+                                           class="form-control" value={{ periodic.name }}>
+                                </div>
+                                {% if error %}
+                                    <span style="color: red; font-size: 10px;" id="task_name_error"></span>
+                                {% endif %}
                             </div>
-                            {% if error %}
-                                <span style="color: red; font-size: 10px;" id="task_name_error"></span>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">计划列表</label>
+                                <a id="getcases" onclick="get_plan()" class="btn btn-primary"><i
+                                        class="fa fa-get-pocket"></i>&nbsp;获取计划</a>
+                                <div id="list" class="col-sm-10 col-sm-offset-2">
+                                    {% for plan in plan_list %}
+                                        <label class='checkbox-inline'><input type='checkbox' name='case_id'
+                                                                              id="case_id"
+                                                                              value="{{ plan.plan_id }}"
+                                                                              checked>{{ plan.plan_name }}</label>
+                                    {% endfor %}
+                                </div>
+                                <span style="color: red; font-size: 10px;display: none" id="plan_error"></span>
+                            </div>
+                            <div class="form-group" style="margin-top: 2%">
+                                <label class="col-sm-2 control-label">任务状态</label>
+                                <div class="col-sm-6">
+                                    {% ifequal periodic.enabled True %}
+                                        <div class="col-sm-4 control-label">
+                                            <label class="fancy-radio">
+                                                <input name="status" value="1" type="radio"
+                                                       checked><span><i></i>有效</span>
+                                            </label>
+                                        </div>
+                                    {% else %}
+                                        <div class="col-sm-4 control-label">
+                                            <label class="fancy-radio">
+                                                <input name="status" value="1" type="radio"><span><i></i>有效</span>
+                                            </label>
+                                        </div>
+                                    {% endifequal %}
+                                    {% ifequal periodic.enabled False %}
+                                        <div class="col-sm-4 control-label">
+                                            <label class="fancy-radio">
+                                                <input name="status" value="0" type="radio"
+                                                       checked><span><i></i>无效</span>
+                                            </label>
+                                        </div>
+                                    {% else %}
+                                        <div class="col-sm-4 control-label">
+                                            <label class="fancy-radio">
+                                                <input name="status" value="0" type="radio"><span><i></i>无效</span>
+                                            </label>
+                                        </div>
+                                    {% endifequal %}
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top: 2%">
+                                <label class="col-sm-2 control-label">执行时间</label>
+                                <div class="col-sm-6">
+                                    <div class="col-sm-4 control-label" onclick="execution()">
+                                        {% if interval %}
+                                            <label class="fancy-radio">
+                                                <input name="crontab_time" value="1" type="radio"
+                                                       checked><span><i></i>间隔</span>
+                                            </label>
+                                        {% else %}
+                                            <label class="fancy-radio">
+                                                <input name="crontab_time" value="1" type="radio"><span><i></i>间隔</span>
+                                            </label>
+                                        {% endif %}
+
+                                    </div>
+                                    <div class="col-sm-4 control-label" onclick="execution()">
+                                        {% if crontab %}
+                                            <label class="fancy-radio">
+                                                <input name="crontab_time" value="2"
+                                                       type="radio" checked><span><i></i>Crontab</span>
+                                            </label>
+                                        {% else %}
+                                            <label class="fancy-radio">
+                                                <input name="crontab_time" value="2"
+                                                       type="radio"><span><i></i>Crontab</span>
+                                            </label>
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+                            </div>
+                            {% if interval %}
+                                <div class="form-group" style="margin-top: 2%;display: block" id="interval_div">
+                                    <label class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-6">
+                                        <div class="col-sm-3 control-label" onclick="custom()">
+                                            <label class="fancy-radio">
+                                                <input name="task_time" value="1" type="radio"><span><i></i>每   天</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-3 control-label" onclick="custom()">
+                                            <label class="fancy-radio">
+                                                <input name="task_time" value="2" type="radio"><span><i></i>每   周</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-3 control-label" onclick="custom()">
+                                            <label class="fancy-radio">
+                                                <input name="task_time" value="3" type="radio"
+                                                       id="custom"><span><i></i>自 定 义</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-3 control-label" onclick="custom()">
+                                            <label class="fancy-radio">
+                                                <input name="task_time" value="4" type="radio"
+                                                       id="custom" checked><span><i></i>已设置时间</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display: block" id="interval">
+                                    <label class="col-sm-3 control-label"
+                                           style="font-size: 12px;font-weight: 100">间隔</label>
+                                    <div class="col-sm-6">
+                                        <select name="interval_" class="form-control" required="required"
+                                                id="interval_">
+                                            <option value={{ interval.id }}>{{ interval.every }} {{ interval.period }}/次</option>
+                                            {% for interval in interval_list %}
+                                                <option value={{ interval.id }}>{{ interval.every }} {{ interval.period }}/次</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <a class="related-widget-wrapper-link change-related" id="change_id_interval"
+                                       href="javascript:void(0)" onclick="change_interval()"><img
+                                            src="/static/admin/img/icon-changelink.svg" alt="修改"></a>
+                                    <span style="color: red; font-size: 10px;display: none" id="interval_error"></span>
+                                </div>
+                            {% else %}
+                                <div class="form-group" style="margin-top: 2%;display: none" id="interval_div">
+                                    <label class="col-sm-2 control-label">定时方式</label>
+                                    <div class="col-sm-6">
+                                        <div class="col-sm-3 control-label" onclick="custom()">
+                                            <label class="fancy-radio">
+                                                <input name="task_time" value="1" type="radio"
+                                                       checked><span><i></i>每   天</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-3 control-label" onclick="custom()">
+                                            <label class="fancy-radio">
+                                                <input name="task_time" value="2" type="radio"><span><i></i>每   周</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-3 control-label" onclick="custom()">
+                                            <label class="fancy-radio">
+                                                <input name="task_time" value="3" type="radio"
+                                                       id="custom"><span><i></i>自 定 义</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-3 control-label" onclick="custom()">
+                                            <label class="fancy-radio">
+                                                <input name="task_time" value="4" type="radio"
+                                                       id="custom"><span><i></i>已设置时间</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="display: none" id="interval">
+                                    <label class="col-sm-3 control-label"
+                                           style="font-size: 12px;font-weight: 100">间隔</label>
+                                    <div class="col-sm-6">
+                                        <select name="interval_" class="form-control" required="required"
+                                                id="interval_">
+                                            {% for interval in interval_list %}
+                                                <option value={{ interval.id }}>{{ interval.every }} {{ interval.period }}/次</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <a class="related-widget-wrapper-link change-related" id="change_id_interval"
+                                       href="javascript:void(0)" onclick="change_interval()"><img
+                                            src="/static/admin/img/icon-changelink.svg" alt="修改"></a>
+                                    <span style="color: red; font-size: 10px;display: none" id="interval_error"></span>
+                                </div>
                             {% endif %}
-                        </div>
-
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">计划列表</label>
-                            <a id="getcases" onclick="get_plan()" class="btn btn-primary"><i
-                                    class="fa fa-get-pocket"></i>&nbsp;获取计划</a>
-                            <div id="list" class="col-sm-10 col-sm-offset-2">
-                                {% for plan in plan_list %}
-                                    <label class='checkbox-inline'><input type='checkbox' name='case_id' id="case_id"
-                                                                          value="{{ plan.plan_id }}"
-                                                                          checked>{{ plan.plan_name }}</label>
-                                {% endfor %}
-                            </div>
-                            <span style="color: red; font-size: 10px;display: none" id="plan_error"></span>
-                        </div>
-                        <div class="form-group" style="margin-top: 2%">
-                            <label class="col-sm-2 control-label">任务状态</label>
-                            <div class="col-sm-6">
-                                {% ifequal periodic.enabled True %}
-                                    <div class="col-sm-4 control-label">
-                                        <label class="fancy-radio">
-                                            <input name="status" value="1" type="radio" checked><span><i></i>有效</span>
-                                        </label>
-                                    </div>
-                                {% else %}
-                                    <div class="col-sm-4 control-label">
-                                        <label class="fancy-radio">
-                                            <input name="status" value="1" type="radio"><span><i></i>有效</span>
-                                        </label>
-                                    </div>
-                                {% endifequal %}
-                                {% ifequal periodic.enabled False %}
-                                    <div class="col-sm-4 control-label">
-                                        <label class="fancy-radio">
-                                            <input name="status" value="0" type="radio" checked><span><i></i>无效</span>
-                                        </label>
-                                    </div>
-                                {% else %}
-                                    <div class="col-sm-4 control-label">
-                                        <label class="fancy-radio">
-                                            <input name="status" value="0" type="radio"><span><i></i>无效</span>
-                                        </label>
-                                    </div>
-                                {% endifequal %}
-                            </div>
-                        </div>
-                        <div class="form-group" style="margin-top: 2%">
-                            <label class="col-sm-2 control-label">执行时间</label>
-                            <div class="col-sm-6">
-                                <div class="col-sm-4 control-label" onclick="execution()">
-                                    {% if interval %}
-                                        <label class="fancy-radio">
-                                            <input name="crontab_time" value="1" type="radio"
-                                                   checked><span><i></i>间隔</span>
-                                        </label>
-                                    {% else %}
-                                        <label class="fancy-radio">
-                                            <input name="crontab_time" value="1" type="radio"><span><i></i>间隔</span>
-                                        </label>
-                                    {% endif %}
-
-                                </div>
-                                <div class="col-sm-4 control-label" onclick="execution()">
-                                    {% if crontab %}
-                                        <label class="fancy-radio">
-                                            <input name="crontab_time" value="2"
-                                                   type="radio" checked><span><i></i>Crontab</span>
-                                        </label>
-                                    {% else %}
-                                        <label class="fancy-radio">
-                                            <input name="crontab_time" value="2"
-                                                   type="radio"><span><i></i>Crontab</span>
-                                        </label>
-                                    {% endif %}
-
-                                </div>
-                            </div>
-                        </div>
-                        {% if interval %}
-                            <div class="form-group" style="margin-top: 2%;display: block" id="interval_div">
-                                <label class="col-sm-2 control-label"></label>
-                                <div class="col-sm-6">
-                                    <div class="col-sm-3 control-label" onclick="custom()">
-                                        <label class="fancy-radio">
-                                            <input name="task_time" value="1" type="radio"><span><i></i>每   天</span>
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-3 control-label" onclick="custom()">
-                                        <label class="fancy-radio">
-                                            <input name="task_time" value="2" type="radio"><span><i></i>每   周</span>
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-3 control-label" onclick="custom()">
-                                        <label class="fancy-radio">
-                                            <input name="task_time" value="3" type="radio"
-                                                   id="custom"><span><i></i>自 定 义</span>
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-3 control-label" onclick="custom()">
-                                        <label class="fancy-radio">
-                                            <input name="task_time" value="4" type="radio"
-                                                   id="custom" checked><span><i></i>已设置时间</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group" style="display: block" id="interval">
+                            <div class="form-group" style="display: none" id="set_time">
                                 <label class="col-sm-3 control-label"
-                                       style="font-size: 12px;font-weight: 100">间隔</label>
-                                <div class="col-sm-6">
-                                    <select name="interval_" class="form-control" required="required" id="interval_">
-                                        <option value={{ interval.id }}>{{ interval.every }} {{ interval.period }}/次</option>
-                                        {% for interval in interval_list %}
-                                            <option value={{ interval.id }}>{{ interval.every }} {{ interval.period }}/次</option>
-                                        {% endfor %}
+                                       style="font-size: 12px;font-weight: 100">Every</label>
+                                <div class="col-sm-2">
+                                    <input type="number" name="every" class="form-control" required="" id="id_every">
+                                </div>
+                                <label class="col-sm-1 control-label"
+                                       style="font-size: 12px;font-weight: 100">Period</label>
+                                <div class="col-sm-3">
+                                    <select name="period" required="required" id="id_period" class="form-control">
+                                        <option value="" selected="">---------</option>
+
+                                        <option value="days">天</option>
+
+                                        <option value="hours">时</option>
+
+                                        <option value="minutes">分</option>
+
+                                        <option value="seconds">秒</option>
+
+                                        <option value="microseconds">微秒</option>
+
                                     </select>
                                 </div>
-                                <a class="related-widget-wrapper-link change-related" id="change_id_interval"
-                                   href="javascript:void(0)" onclick="change_interval()"><img
-                                        src="/static/admin/img/icon-changelink.svg" alt="修改"></a>
-                                <span style="color: red; font-size: 10px;display: none" id="interval_error"></span>
+                                <span style="color: red; font-size: 10px;display: none" id="every_error"></span>
                             </div>
-                        {% else %}
-                            <div class="form-group" style="margin-top: 2%;display: none" id="interval_div">
-                                <label class="col-sm-2 control-label">定时方式</label>
-                                <div class="col-sm-6">
-                                    <div class="col-sm-3 control-label" onclick="custom()">
-                                        <label class="fancy-radio">
-                                            <input name="task_time" value="1" type="radio"
-                                                   checked><span><i></i>每   天</span>
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-3 control-label" onclick="custom()">
-                                        <label class="fancy-radio">
-                                            <input name="task_time" value="2" type="radio"><span><i></i>每   周</span>
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-3 control-label" onclick="custom()">
-                                        <label class="fancy-radio">
-                                            <input name="task_time" value="3" type="radio"
-                                                   id="custom"><span><i></i>自 定 义</span>
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-3 control-label" onclick="custom()">
-                                        <label class="fancy-radio">
-                                            <input name="task_time" value="4" type="radio"
-                                                   id="custom"><span><i></i>已设置时间</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group" style="display: none" id="interval">
+
+                            <div class="form-group" style="display: none" id="set_time_interval">
                                 <label class="col-sm-3 control-label"
-                                       style="font-size: 12px;font-weight: 100">间隔</label>
-                                <div class="col-sm-6">
-                                    <select name="interval_" class="form-control" required="required" id="interval_">
-                                        {% for interval in interval_list %}
-                                            <option value={{ interval.id }}>{{ interval.every }} {{ interval.period }}/次</option>
-                                        {% endfor %}
+                                       style="font-size: 12px;font-weight: 100">Every</label>
+                                <div class="col-sm-2">
+                                    <input type="number" name="every" class="form-control" required="" id="id_every_1">
+                                </div>
+                                <label class="col-sm-1 control-label"
+                                       style="font-size: 12px;font-weight: 100">Period</label>
+                                <div class="col-sm-3">
+                                    <select name="period" required="required" id="id_period_1" class="form-control">
+                                        <option id="id_period_2" selected=""></option>
+
+                                        <option value="days">天</option>
+
+                                        <option value="hours">时</option>
+
+                                        <option value="minutes">分</option>
+
+                                        <option value="seconds">秒</option>
+
+                                        <option value="microseconds">微秒</option>
+
                                     </select>
                                 </div>
-                                <a class="related-widget-wrapper-link change-related" id="change_id_interval"
-                                   href="javascript:void(0)" onclick="change_interval()"><img
-                                        src="/static/admin/img/icon-changelink.svg" alt="修改"></a>
-                                <span style="color: red; font-size: 10px;display: none" id="interval_error"></span>
+                                <span style="color: red; font-size: 10px;display: none" id="every_error_1"></span>
                             </div>
-                        {% endif %}
-                        <div class="form-group" style="display: none" id="set_time">
-                            <label class="col-sm-3 control-label" style="font-size: 12px;font-weight: 100">Every</label>
-                            <div class="col-sm-2">
-                                <input type="number" name="every" class="form-control" required="" id="id_every">
-                            </div>
-                            <label class="col-sm-1 control-label"
-                                   style="font-size: 12px;font-weight: 100">Period</label>
-                            <div class="col-sm-3">
-                                <select name="period" required="required" id="id_period" class="form-control">
-                                    <option value="" selected="">---------</option>
-
-                                    <option value="days">天</option>
-
-                                    <option value="hours">时</option>
-
-                                    <option value="minutes">分</option>
-
-                                    <option value="seconds">秒</option>
-
-                                    <option value="microseconds">微秒</option>
-
-                                </select>
-                            </div>
-                            <span style="color: red; font-size: 10px;display: none" id="every_error"></span>
-                        </div>
-
-                        <div class="form-group" style="display: none" id="set_time_interval">
-                            <label class="col-sm-3 control-label" style="font-size: 12px;font-weight: 100">Every</label>
-                            <div class="col-sm-2">
-                                <input type="number" name="every" class="form-control" required="" id="id_every_1">
-                            </div>
-                            <label class="col-sm-1 control-label"
-                                   style="font-size: 12px;font-weight: 100">Period</label>
-                            <div class="col-sm-3">
-                                <select name="period" required="required" id="id_period_1" class="form-control">
-                                    <option id="id_period_2" selected=""></option>
-
-                                    <option value="days">天</option>
-
-                                    <option value="hours">时</option>
-
-                                    <option value="minutes">分</option>
-
-                                    <option value="seconds">秒</option>
-
-                                    <option value="microseconds">微秒</option>
-
-                                </select>
-                            </div>
-                            <span style="color: red; font-size: 10px;display: none" id="every_error_1"></span>
-                        </div>
-                        {% if crontab %}
-                            <div class="form-group" style="display: block;margin-top: 2%" id="crontab_div">
-                                <label class="col-sm-2 control-label">定时方式</label>
-                                <div class="col-sm-6">
-                                    <div class="col-sm-3 control-label" onclick="crontab_div()">
-                                        <label class="fancy-radio">
-                                            <input name="crontab_div_time" value="1" type="radio"
-                                                   id="custom"><span><i></i>自 定 义</span>
-                                        </label>
-                                    </div>
-                                    <div class="col-sm-3 control-label" onclick="crontab_div()">
-                                        <label class="fancy-radio">
-                                            <input name="crontab_div_time" value="2" type="radio"
-                                                   id="custom" checked><span><i></i>已设置时间</span>
-                                        </label>
+                            {% if crontab %}
+                                <div class="form-group" style="display: block;margin-top: 2%" id="crontab_div">
+                                    <label class="col-sm-2 control-label">定时方式</label>
+                                    <div class="col-sm-6">
+                                        <div class="col-sm-3 control-label" onclick="crontab_div()">
+                                            <label class="fancy-radio">
+                                                <input name="crontab_div_time" value="1" type="radio"
+                                                       id="custom"><span><i></i>自 定 义</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-3 control-label" onclick="crontab_div()">
+                                            <label class="fancy-radio">
+                                                <input name="crontab_div_time" value="2" type="radio"
+                                                       id="custom" checked><span><i></i>已设置时间</span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group" style="display: block" id="set_up_time">
-                                <label class="col-sm-3 control-label"
-                                       style="font-size: 12px;font-weight: 100">Crontab：</label>
-                                <div class="col-sm-6">
-                                    <select name="crontab_" class="form-control" required="required" id="crontab_">
-                                        <option value={{ crontab.id }}>{{ crontab.minute }} {{ crontab.hour }} {{ crontab.day_of_week }} {{ crontab.day_of_month }} {{ crontab.month_of_year }}
-                                            (m/h/d/dM/MY)
-                                        </option>
-                                        {% for crontab in crontab_list %}
+                                <div class="form-group" style="display: block" id="set_up_time">
+                                    <label class="col-sm-3 control-label"
+                                           style="font-size: 12px;font-weight: 100">Crontab：</label>
+                                    <div class="col-sm-6">
+                                        <select name="crontab_" class="form-control" required="required" id="crontab_">
                                             <option value={{ crontab.id }}>{{ crontab.minute }} {{ crontab.hour }} {{ crontab.day_of_week }} {{ crontab.day_of_month }} {{ crontab.month_of_year }}
                                                 (m/h/d/dM/MY)
                                             </option>
-                                        {% endfor %}
-                                    </select>
-                                </div>
-                                <a class="related-widget-wrapper-link change-related" id="change_id_interval"
-                                   href="javascript:void(0)" onclick="change_crontab()"><img
-                                        src="/static/admin/img/icon-changelink.svg" alt="修改"></a>
-                                <span style="color: red; font-size: 10px;display: none" id="crontab_time_error"></span>
-                            </div>
-                        {% else %}
-                            <div class="form-group" style="display: none;margin-top: 2%" id="crontab_div">
-                                <label class="col-sm-2 control-label"></label>
-                                <div class="col-sm-6">
-                                    <div class="col-sm-3 control-label" onclick="crontab_div()">
-                                        <label class="fancy-radio">
-                                            <input name="crontab_div_time" value="1" type="radio"
-                                                   id="custom"><span><i></i>自 定 义</span>
-                                        </label>
+                                            {% for crontab in crontab_list %}
+                                                <option value={{ crontab.id }}>{{ crontab.minute }} {{ crontab.hour }} {{ crontab.day_of_week }} {{ crontab.day_of_month }} {{ crontab.month_of_year }}
+                                                    (m/h/d/dM/MY)
+                                                </option>
+                                            {% endfor %}
+                                        </select>
                                     </div>
-                                    <div class="col-sm-3 control-label" onclick="crontab_div()">
-                                        <label class="fancy-radio">
-                                            <input name="crontab_div_time" value="2" type="radio"
-                                                   id="custom"><span><i></i>已设置时间</span>
-                                        </label>
+                                    <a class="related-widget-wrapper-link change-related" id="change_id_interval"
+                                       href="javascript:void(0)" onclick="change_crontab()"><img
+                                            src="/static/admin/img/icon-changelink.svg" alt="修改"></a>
+                                    <span style="color: red; font-size: 10px;display: none"
+                                          id="crontab_time_error"></span>
+                                </div>
+                            {% else %}
+                                <div class="form-group" style="display: none;margin-top: 2%" id="crontab_div">
+                                    <label class="col-sm-2 control-label"></label>
+                                    <div class="col-sm-6">
+                                        <div class="col-sm-3 control-label" onclick="crontab_div()">
+                                            <label class="fancy-radio">
+                                                <input name="crontab_div_time" value="1" type="radio"
+                                                       id="custom"><span><i></i>自 定 义</span>
+                                            </label>
+                                        </div>
+                                        <div class="col-sm-3 control-label" onclick="crontab_div()">
+                                            <label class="fancy-radio">
+                                                <input name="crontab_div_time" value="2" type="radio"
+                                                       id="custom"><span><i></i>已设置时间</span>
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="form-group" style="display: none" id="set_up_time">
-                                <label class="col-sm-3 control-label"
-                                       style="font-size: 12px;font-weight: 100">Crontab：</label>
-                                <div class="col-sm-6">
-                                    <select name="crontab_" class="form-control" required="required" id="crontab_">
-                                        {% for crontab in crontab_list %}
-                                            <option value={{ crontab.id }}>{{ crontab.minute }} {{ crontab.hour }} {{ crontab.day_of_week }} {{ crontab.day_of_month }} {{ crontab.month_of_year }}
-                                                (m/h/d/dM/MY)
-                                            </option>
-                                        {% endfor %}
-                                    </select>
+                                <div class="form-group" style="display: none" id="set_up_time">
+                                    <label class="col-sm-3 control-label"
+                                           style="font-size: 12px;font-weight: 100">Crontab：</label>
+                                    <div class="col-sm-6">
+                                        <select name="crontab_" class="form-control" required="required" id="crontab_">
+                                            {% for crontab in crontab_list %}
+                                                <option value={{ crontab.id }}>{{ crontab.minute }} {{ crontab.hour }} {{ crontab.day_of_week }} {{ crontab.day_of_month }} {{ crontab.month_of_year }}
+                                                    (m/h/d/dM/MY)
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <a class="related-widget-wrapper-link change-related" id="change_id_interval"
+                                       href="javascript:void(0)" onclick="change_crontab()"><img
+                                            src="/static/admin/img/icon-changelink.svg" alt="修改"></a>
+                                    <span style="color: red; font-size: 10px;display: none"
+                                          id="crontab_time_error"></span>
                                 </div>
-                                <a class="related-widget-wrapper-link change-related" id="change_id_interval"
-                                   href="javascript:void(0)" onclick="change_crontab()"><img
-                                        src="/static/admin/img/icon-changelink.svg" alt="修改"></a>
-                                <span style="color: red; font-size: 10px;display: none" id="crontab_time_error"></span>
-                            </div>
-                        {% endif %}
+                            {% endif %}
 
-                        <div class="form-group" style="display: none" id="crontab_minute">
-                            <label class="col-sm-3 control-label"
-                                   style="font-size: 12px;font-weight: 100">Minute:</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="minute" value="*" class="vTextField" maxlength="64" required=""
-                                       id="id_minute">
+                            <div class="form-group" style="display: none" id="crontab_minute">
+                                <label class="col-sm-3 control-label"
+                                       style="font-size: 12px;font-weight: 100">Minute:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="minute" value="*" class="vTextField" maxlength="64"
+                                           required=""
+                                           id="id_minute">
+                                </div>
+                                <label class="col-sm-3 control-label"
+                                       style="font-size: 12px;font-weight: 100">Hour:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="hour" value="*" class="vTextField" maxlength="64"
+                                           required=""
+                                           id="id_hour">
+                                </div>
+                                <label class="col-sm-3 control-label"
+                                       style="font-size: 12px;font-weight: 100">Day of week:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="day_of_week" value="*" class="vTextField" maxlength="64"
+                                           required="" id="id_day_of_week">
+                                </div>
+                                <label class="col-sm-3 control-label"
+                                       style="font-size: 12px;font-weight: 100">Day of month:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="day_of_month" value="*" class="vTextField" maxlength="64"
+                                           required="" id="id_day_of_month">
+                                </div>
+                                <label class="col-sm-3 control-label"
+                                       style="font-size: 12px;font-weight: 100">Month of year:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="month_of_year" value="*" class="vTextField" maxlength="64"
+                                           required="" id="id_month_of_year">
+                                </div>
                             </div>
-                            <label class="col-sm-3 control-label"
-                                   style="font-size: 12px;font-weight: 100">Hour:</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="hour" value="*" class="vTextField" maxlength="64" required=""
-                                       id="id_hour">
+                            <div class="form-group" style="display: none" id="set_crontab_minute">
+                                <label class="col-sm-3 control-label"
+                                       style="font-size: 12px;font-weight: 100">Minute:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="minute" value="" class="vTextField"
+                                           maxlength="64" required=""
+                                           id="id_minute_1">
+                                </div>
+                                <label class="col-sm-3 control-label"
+                                       style="font-size: 12px;font-weight: 100">Hour:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="hour" value="" class="vTextField"
+                                           maxlength="64" required=""
+                                           id="id_hour_1">
+                                </div>
+                                <label class="col-sm-3 control-label"
+                                       style="font-size: 12px;font-weight: 100">Day of week:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="day_of_week" value=""
+                                           class="vTextField" maxlength="64"
+                                           required="" id="id_day_of_week_1">
+                                </div>
+                                <label class="col-sm-3 control-label"
+                                       style="font-size: 12px;font-weight: 100">Day of month:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="day_of_month" value=""
+                                           class="vTextField" maxlength="64"
+                                           required="" id="id_day_of_month_1">
+                                </div>
+                                <label class="col-sm-3 control-label"
+                                       style="font-size: 12px;font-weight: 100">Month of year:</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="month_of_year" value=""
+                                           class="vTextField" maxlength="64"
+                                           required="" id="id_month_of_year_1">
+                                </div>
                             </div>
-                            <label class="col-sm-3 control-label"
-                                   style="font-size: 12px;font-weight: 100">Day of week:</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="day_of_week" value="*" class="vTextField" maxlength="64"
-                                       required="" id="id_day_of_week">
-                            </div>
-                            <label class="col-sm-3 control-label"
-                                   style="font-size: 12px;font-weight: 100">Day of month:</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="day_of_month" value="*" class="vTextField" maxlength="64"
-                                       required="" id="id_day_of_month">
-                            </div>
-                            <label class="col-sm-3 control-label"
-                                   style="font-size: 12px;font-weight: 100">Month of year:</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="month_of_year" value="*" class="vTextField" maxlength="64"
-                                       required="" id="id_month_of_year">
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-6">
+                                    <button class="btn btn-primary" id="submit"><i
+                                            class="fa fa-save"></i>&nbsp;保存
+                                    </button>
+                                    <button id="reset" type="reset" class="btn btn-primary"><i
+                                            class="fa fa-repeat"></i>&nbsp;重置
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group" style="display: none" id="set_crontab_minute">
-                            <label class="col-sm-3 control-label"
-                                   style="font-size: 12px;font-weight: 100">Minute:</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="minute" value="" class="vTextField"
-                                       maxlength="64" required=""
-                                       id="id_minute_1">
-                            </div>
-                            <label class="col-sm-3 control-label"
-                                   style="font-size: 12px;font-weight: 100">Hour:</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="hour" value="" class="vTextField"
-                                       maxlength="64" required=""
-                                       id="id_hour_1">
-                            </div>
-                            <label class="col-sm-3 control-label"
-                                   style="font-size: 12px;font-weight: 100">Day of week:</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="day_of_week" value=""
-                                       class="vTextField" maxlength="64"
-                                       required="" id="id_day_of_week_1">
-                            </div>
-                            <label class="col-sm-3 control-label"
-                                   style="font-size: 12px;font-weight: 100">Day of month:</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="day_of_month" value=""
-                                       class="vTextField" maxlength="64"
-                                       required="" id="id_day_of_month_1">
-                            </div>
-                            <label class="col-sm-3 control-label"
-                                   style="font-size: 12px;font-weight: 100">Month of year:</label>
-                            <div class="col-sm-8">
-                                <input type="text" name="month_of_year" value=""
-                                       class="vTextField" maxlength="64"
-                                       required="" id="id_month_of_year_1">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-6">
-                                <button class="btn btn-primary" id="submit"><i
-                                        class="fa fa-save"></i>&nbsp;保存
-                                </button>
-                                <button id="reset" type="reset" class="btn btn-primary"><i
-                                        class="fa fa-repeat"></i>&nbsp;重置
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    {% endif %}
                 </div>
             </div>
         </div>

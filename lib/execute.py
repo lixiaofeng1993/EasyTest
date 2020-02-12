@@ -354,7 +354,7 @@ def get_user(user_id):
             return False
 
 
-def is_superuser(user_id, type='', off=''):
+def is_superuser(user_id, type='', off='', make=True):
     """
     权限  超级用户和普通用户
     :param user_id:
@@ -362,6 +362,11 @@ def is_superuser(user_id, type='', off=''):
     :return:
     """
     superuser = User.objects.get(id=user_id).is_superuser
+    if not make:
+        if superuser:
+            return True
+        else:
+            return False
     if superuser and off == '0':
         prj_list = Project.objects.filter(user_id=user_id)
     elif superuser or off == '1':

@@ -1437,10 +1437,14 @@ def task_add(request):
         return render(request, 'user/login_action.html')
     else:
         if request.method == "GET":
-            interval_list = IntervalSchedule.objects.all()
-            crontab_list = CrontabSchedule.objects.all()
-            info = {"interval_list": interval_list, "crontab_list": crontab_list}
-            return render(request, 'system/task/add.html', info)
+            superuser = is_superuser(user_id=user_id, make=False)
+            if superuser:
+                interval_list = IntervalSchedule.objects.all()
+                crontab_list = CrontabSchedule.objects.all()
+                info = {"interval_list": interval_list, "crontab_list": crontab_list}
+                return render(request, 'system/task/add.html', info)
+            else:
+                return render(request, 'system/task/add.html', {"permission_error": "没有权限，请联系管理员获取！"})
         elif request.method == "POST":
             task_name = request.POST.get("task_name", "")
             plan_id = request.POST.get("plan_id", "")
@@ -1533,6 +1537,9 @@ def task_update(request):
         return render(request, 'user/login_action.html')
     else:
         if request.method == "GET":
+            superuser = is_superuser(user_id=user_id, make=False)
+            if not superuser:
+                return render(request, 'system/task/add.html', {"permission_error": "没有权限，请联系管理员获取！"})
             task_id = request.build_absolute_uri().split("/")[-1]
             periodic = PeriodicTask.objects.get(id=task_id)
             interval_list = IntervalSchedule.objects.all()
@@ -1955,7 +1962,7 @@ class StartLocust(threading.Thread):
             else:
                 p = os.system("/home/lixiaofeng/./stop_locust.sh")
                 log.info("--stop---success-{}=====!".format(p))
-            # delete_performance(os.path.join(settings.BASE_DIR, "performance"))
+            delete_performance(os.path.join(settings.BASE_DIR, "performance"))
 
 
 def start_locust(request):
