@@ -107,18 +107,30 @@ class HttpRunerMain:
                 self.testcases["name"] = case_name
                 self.testcases["weight"] = weight
                 self.testcases["testcase"] = "testcases/" + case_name + '.json'
-                body = data.get("body", {})
-                if body:
-                    for key, value in body.items():
-                        if "list(" in str(value):
-                            patt = re.compile("list\((.+)\)")
-                            params = patt.findall(value)[0]
-                            if "$" in params:
-                                self.testcases["parameters"].append({key: params})
-                            else:
+                # body = data.get("body", {})
+                # if body:
+                #     for key, value in body.items():
+                #         if "list(" in str(value):
+                #             patt = re.compile("list\((.+)\)")
+                #             params = patt.findall(value)[0]  # TODO:parameters和官方文档存在差距，待修改
+                #             if "$" in params:
+                #                 self.testcases["parameters"].append({key: params})
+                #             else:
+                #                 params_list = params.split(',')
+                #                 self.testcases["parameters"].append({key: params_list})
+                #             data["body"][key] = "$" + key
+                parameters = data.get("parameters", [])
+                if parameters:
+                    for parameter in parameters:
+                        for key, value in parameter.items():
+                            if "list(" in str(value):
+                                patt = re.compile("list\((.+)\)")
+                                params = patt.findall(value)[0]
                                 params_list = params.split(',')
                                 self.testcases["parameters"].append({key: params_list})
-                            data["body"][key] = "$" + key
+                            else:
+                                self.testcases["parameters"].append({key: value})
+
                 if case_name not in str(testsuites_json["testcases"]):
                     testsuites_json["testcases"].append(self.testcases)
 

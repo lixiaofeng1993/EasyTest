@@ -308,8 +308,9 @@
             var prj_id = obj.parentNode.parentNode.children[2].getAttribute("prj_id");
 
             $("#debug_case_id").val(case_id);
-            $("#cancel_run").html("取消");
-            $("#cancel_run").attr("class", "btn btn-default");
+            var btn = $("#cancel_run");
+            btn.html("取消");
+            btn.attr("class", "btn btn-default");
             $('#case_name_').empty();
             $.ajax({
                 type: "get",
@@ -342,6 +343,7 @@
         function run_button() {
             $('#result').empty();
             $('.spinner1').show();
+            var btn = $("#cancel_run");
             $.ajax({
                     type: 'post',
                     url: "/base/case_run/",
@@ -387,11 +389,22 @@
                                         }
                                         num = num + 1;
                                     }
-
-                                    for (x in validators) {
-                                        html += '<p style="font-family: Consolas;font-size:12px" id="interface_res">' + '检查点：' + JSON.stringify(validators[x]) + '</p>';
-                                        html += '<p style="font-family: Consolas;font-size:12px;">' + '测试结果：<xmp style="font-family: Consolas;font-size:12px;color:green" id="interface_res">' + validators[x].check_result + '</xmp></p>'
+                                    if (validators.length != 0) {
+                                        for (x in validators) {
+                                            html += '<p style="font-family: Consolas;font-size:12px" id="interface_res">' + '检查点：' + JSON.stringify(validators[x]) + '</p>';
+                                            if (validators[x].check_result == "pass") {
+                                                html += '<p style="font-family: Consolas;font-size:12px;">' + '测试结果：<xmp style="font-family: Consolas;font-size:12px;color:green" id="interface_res">' + validators[x].check_result + '</xmp></p>'
+                                            } else if (validators[x].check_result == "fail") {
+                                                html += '<p style="font-family: Consolas;font-size:12px;">' + '测试结果：<xmp style="font-family: Consolas;font-size:12px;color:orange" id="interface_res">' + validators[x].check_result + '</xmp></p>'
+                                            } else {
+                                                html += '<p style="font-family: Consolas;font-size:12px;">' + '测试结果：<xmp style="font-family: Consolas;font-size:12px;color:red" id="interface_res">' + validators[x].check_result + '</xmp></p>'
+                                            }
+                                        }
+                                    } else if (status == "success") {
+                                        html += '<p style="font-family: Consolas;font-size:12px;color:red;" id="interface_res">' + '检查点：' + '未设置检查点！' + '</p>';
+                                        html += '<p style="font-family: Consolas;font-size:12px;">' + '测试结果：<xmp style="font-family: Consolas;font-size:12px;color:green" id="interface_res">' + status + '</xmp></p>';
                                     }
+
                                     if (status == "failure") {
                                         html += '<p style="font-family: Consolas;font-size:14px;font-weight: 999">Traceback：</p>';
                                         html += '<p style="font-family: Consolas;font-size:12px;">' + '测试结果：<xmp style="font-family: Consolas;font-size:12px;color:orange" id="interface_res">' + status + '</xmp></p>';
@@ -437,16 +450,16 @@
 
                                 $('#result').append(html + _html)
                             }
-                            $("#cancel_run").html("完成");
-                            $("#cancel_run").attr("class", "btn btn-primary");
                         }
+                        btn.html("完成");
+                        btn.attr("class", "btn btn-primary");
                     },
                     error: function () {
                         $('.spinner1').hide();
                         html = '<p style="font-family: Consolas;font-size:12px;color:red;margin:5% 10%">' + '调用接口失败!!!' + '</p>';
                         $("#result").append(html);
-                        $("#cancel_run").html("完成");
-                        $("#cancel_run").attr("class", "btn btn-danger");
+                        btn.html("完成");
+                        btn.attr("class", "btn btn-danger");
                     }
                 }
             )
@@ -479,7 +492,8 @@
                         location.reload()
                     }
                     else {
-                        $('#table-search').empty();
+                        var table = $('#table-search');
+                        table.empty();
                         var datas = eval(data);
                         for (i in datas) {
                             if (datas[i].is_sign == 0) {
@@ -499,7 +513,7 @@
                                     ' <a href="/base/case_delete?case_id=' + datas[i].case_id + '" class="layui-btn layui-btn-danger layui-btn-xs" onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp; </a> </td> </tr> </tbody>';
                             }
                             $('.pagination').empty();
-                            $('#table-search').append(html);
+                            table.append(html);
                         }
                     }
                 },

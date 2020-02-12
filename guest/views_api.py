@@ -5,6 +5,8 @@ from django.db.models import Q  # 与或非 查询
 import time, json
 import logging
 from base.models import Event, Guest
+from django.contrib.auth.models import User
+# from django.contrib.auth.hashers import check_password
 
 log = logging.getLogger('log')
 
@@ -277,3 +279,20 @@ def user_sign(request):
     else:
         Guest.objects.filter(event_id=eid, phone=phone).update(sign='1')
         return JsonResponse({'status': 200, 'message': 'sign success'})
+
+
+def login(request):
+    if request.method == "POST":
+        username = request.POST.get("username", "")
+        password = request.POST.get("password", "")
+        if username == "" or password == "":
+            return JsonResponse({"status": 200, "error_code": 10028, "message": "parameter error!"})
+        try:
+            user = User.objects.get(username=username)
+        except User.DoesNotExist:
+            return JsonResponse({"status": 200, "error_code": 10029, "message": "username does not exist!"})
+        password = user.check_password(password)
+        if password:
+            return JsonResponse({"status": 200, "message": "login successfully!"})
+        else:
+            return JsonResponse({"status": 200, "error_code": 10030, "message": "password error!"})

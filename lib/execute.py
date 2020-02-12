@@ -15,7 +15,7 @@ from lib.public import validators_result, get_extract, get_param, replace_var, \
 from lib.random_params import random_params
 from lib.except_check import env_not_exit, case_is_delete, interface_is_delete, parametric_set_error, AES_length_error, \
     response_value_error, request_api_error, index_error, checkpoint_no_error, eval_set_error, sql_query_error, \
-    parameters_error
+    parameters_error, skip_error
 from httprunner.api import HttpRunner
 from lib.httprunner_execute import HttpRunerMain
 
@@ -144,7 +144,8 @@ class Test_execute():
                     step_content = json.loads(replace_var(step_content, var_name, var_value))
 
         if_dict = {"url": interface.url, "header": step_content["header"], "body": step_content["body"], "if_id": if_id,
-                   "if_name": step_content["if_name"], "method": interface.method, "data_type": interface.data_type}
+                   "if_name": step_content["if_name"], "method": interface.method, "data_type": interface.data_type,
+                   "parameters": step_content["parameters"]}
         # 跳过不执行
         if interface.skip:
             if_dict["skip"] = interface.skip
@@ -160,7 +161,7 @@ class Test_execute():
 
         if self.run_mode == '0':
             if_dict['body'] = http_random(if_dict['body'])  # 默认参数化和httpruner参数化保持基本一致
-            if if_dict['body'] == 'error':
+            if if_dict['body'] == 'error' or if_dict["parameters"]:
                 if_dict = parameters_error(if_dict)
                 return if_dict
             if_dict['header'] = random_params(if_dict['header'])  # random参数化
@@ -237,11 +238,7 @@ class Test_execute():
         else:
             # if not interface.set_mock:  # 请求接口或者模拟接口返回值
             if if_dict["skip"]:
-                if_dict["skipped"] = "skipped"
-                if_dict["result"] = "skipped"
-                if_dict["msg"] = "skipped"
-                if_dict["res_content"] = if_dict["skip"]
-                if_dict['checkpoint'] = if_dict["skip"]
+                if_dict = skip_error(if_dict)
                 return if_dict
             try:
                 if interface.is_sign:

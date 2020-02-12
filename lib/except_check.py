@@ -410,3 +410,12 @@ def parameters_error(if_dict):
     if_dict["msg"] = ErrorCode.parameters_error
     if_dict["error"] = ErrorCode.parameters_error
     return if_dict
+
+
+def skip_error(if_dict):
+    if_dict["skipped"] = "skipped"
+    if_dict["result"] = "skipped"
+    if_dict["msg"] = "skipped"
+    if_dict["res_content"] = if_dict["skip"]
+    if_dict['checkpoint'] = if_dict["skip"]
+    return if_dict

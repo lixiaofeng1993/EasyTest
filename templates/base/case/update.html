@@ -254,6 +254,14 @@
             $(tbody).append(newRow);
         }
 
+        //添加parameters
+        function add_parameters_row(obj) {
+            var panel = $(obj).parent().parent();
+            var tbody = $(panel).find("table[name='parameters']").children('tbody');
+            {#            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";#}
+            var newRow = "<tr> <td>#</td><td name='var_name' contenteditable='true'></td><td name='var_value' contenteditable='true'></td> <td> <button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this)'><i class='fa fa-close'></i>&nbsp;删除行</button> </td> </tr>";
+            $(tbody).append(newRow);
+        }
 
         //添加检查点参数
         function add_validators_row(obj) {
@@ -371,6 +379,7 @@
                                             "<th>值</th>" +
                                             "<th></th> </tr> </thead><tbody>";
                                         var extract_table = "<table name='extract' class='table'> <thead> <tr> <th>#</th><th>变量名</th><th>提取参数值路径</th></tr></thead><tbody>";
+                                        var parameters_table = "<table name='parameters' class='table'> <thead> <tr> <th>#</th><th>变量名</th><th>值</th></tr></thead><tbody>";
                                         var validators_table = "<table name='validators' class='table'><thead><tr><th>#</th><th>参数名</th><th>期望值</th><th>断言方式</th></tr></thead><tbody>";
                                         // header <td name='var_remark'>" + value + "</td>
                                         var header_json = eval(item.content)[content].header;
@@ -426,6 +435,23 @@
                                             }
                                         }
 
+                                        //parameters
+                                        var parameters_json = eval(item.content)[content].parameters;
+                                        console.log('---parameters_json--->', parameters_json);
+                                        if (Object.keys(parameters_json).length === 0) {
+                                            console.log('parameters 为空');
+                                            var parameters = parameters_table + "</tbody></table>";
+                                        } else {
+                                            for (var ex in parameters_json) {
+                                                for (var key in parameters_json[ex]) {
+                                                    var tr_ex = "<tr><td>#</td><td contenteditable='true' name='var_name'>" + key + "</td><td contenteditable='true' name='var_value'>" + parameters_json[ex][key] + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
+                                                    parameters_table = parameters_table + tr_ex;
+                                                }
+
+                                                var parameters = parameters_table + "</tbody></table>";
+                                            }
+                                        }
+
                                         // validators
                                         var validators_list = eval(item.content)[content].validators;
                                         console.log('---validators_list--->', validators_list);
@@ -473,18 +499,21 @@
                                             "<div class='right'><button type=\"button\" class='btn-toggle-collapse' onclick='hide_fun()'><i class='fa fa-chevron-up' id='icon-submenu'></i></button></div>" +
                                             "</div>" +
                                             "<div class='panel-body'>" +
-                                            "<button onclick='add_header_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加header参数</button>" +
-                                            "<button onclick='add_body_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加body参数</button> " +
-                                            "<button onclick='add_extract_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加提取参数</button> " +
-                                            "<button onclick='add_validators_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加检查点</button> " +
-                                            "<button onclick='del_interface(this)' class='btn btn-primary'><i class='fa fa-close'></i>&nbsp;删除本接口</button> " +
-                                            "<p>header参数</p>" +
+                                            "<button onclick='add_header_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加headers</button>" +
+                                            "&nbsp;<button onclick='add_body_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加body</button> " +
+                                            "<button onclick='add_extract_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加extract</button> " +
+                                            "<button onclick='add_parameters_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加parameters</button> " +
+                                            "<button onclick='add_validators_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加validators</button> " +
+                                            "<button onclick='del_interface(this)' class='btn btn-danger' style='margin-top:5px;margin-bottom:5px;'><i class='fa fa-close'></i>&nbsp;删除本接口</button> " +
+                                            "<p>headers</p>" +
                                             header +
-                                            "<p>body参数</p>" +
+                                            "<p>body</p>" +
                                             body +
-                                            "<p>提取参数</p> " +
+                                            "<p>extract</p> " +
                                             extract +
-                                            "<p>检查点</p> " + validators +
+                                            "<p>parameters</p> " +
+                                            parameters +
+                                            "<p>validators</p> " + validators +
                                             "</div><div class='form-group'><label class='col-sm-1 control-label' title='为空执行，有内容不执行！'>跳过</label>" +
                                             " <div class='col-sm-6'> <input type='text' id='skip' name='skip' class='form-control' " +
                                             "value='" + eval(item.content)[content].skip + "'>" +
@@ -542,16 +571,17 @@
                                             "<div class='right'><button type=\"button\" class='btn-toggle-collapse' onclick='hide_fun()'><i class='fa fa-chevron-up' id='icon-submenu'></i></button></div>" +
                                             "</div>" +
                                             "<div class='panel-body'>" +
-                                            "<button onclick='add_header_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加header参数</button>" +
-                                            "<button onclick='add_body_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加body参数</button> " +
-                                            "<button onclick='add_extract_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加提取参数</button> " +
-                                            "<button onclick='add_validators_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加检查点</button> " +
-                                            "<button onclick='del_interface(this)' class='btn btn-primary'><i class='fa fa-close'></i>&nbsp;删除本接口</button>" +
-                                            "<p>header参数</p>" +
+                                            "<button onclick='add_header_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加headers</button>" +
+                                            "&nbsp;<button onclick='add_body_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加body</button> " +
+                                            "<button onclick='add_extract_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加extract</button> " +
+                                            "<button onclick='add_parameters_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加parameters</button> " +
+                                            "<button onclick='add_validators_row(this)' class='btn btn-primary'><i class='fa fa-plus-square-o'></i>&nbsp;添加validators</button> " +
+                                            "<button onclick='del_interface(this)' class='btn btn-danger' style='margin-top:5px;margin-bottom:5px;'><i class='fa fa-close'></i>&nbsp;删除本接口</button>" +
+                                            "<p>headers</p>" +
                                             header +
-                                            "<p>body参数</p>" +
+                                            "<p>body</p>" +
                                             body +
-                                            "<p>提取参数</p> " +
+                                            "<p>extract</p> " +
                                             "<table name='extract' class='table'>" +
                                             "<thead>" +
                                             "<tr> <th>#</th>" +
@@ -562,7 +592,18 @@
                                             "<tbody> " +
                                             "</tbody> " +
                                             "</table> " +
-                                            "<p>检查点</p> " +
+                                            "<p>parameters</p> " +
+                                            "<table name='parameters' class='table'>" +
+                                            "<thead>" +
+                                            "<tr> <th>#</th>" +
+                                            "<th>变量名</th>" +
+                                            "<th>值</th>" +
+                                            "</tr> " +
+                                            "</thead>" +
+                                            "<tbody> " +
+                                            "</tbody> " +
+                                            "</table> " +
+                                            "<p>validators</p> " +
                                             "<table name='validators' class='table'>" +
                                             "<thead>" +
                                             "<tr>" +
@@ -615,10 +656,11 @@
 
             $("#submit").click(function () {
                 var case_id = $("#case_id").val();
-                var case_name = $("#case_name").val();
+                var _case = $("#case_name");
+                var case_name = _case.val();
                 var weight = $("#weight").val();
                 if (check(case_name) == false) {
-                    $("#case_name").focus();
+                    _case.focus();
                     return false
                 }
                 var prj_id = $("#prj_id").val();
@@ -670,6 +712,17 @@
                         extract[name] = value;
                     });
 
+                    var parameters_table = $(this).find("table[name='parameters']");
+                    var parameters_list = [];
+                    $(parameters_table).find("tr").each(function (i) {
+                        var parameters = {};
+                        if (i == 0) return true;
+                        var name = $(this).find("td[name='var_name']").text();
+                        var value = $(this).find("td[name='var_value']").text();
+                        parameters[name] = value;
+                        parameters_list.push(parameters)
+                    });
+
                     var validators_table = $(this).find("table[name='validators']");
                     var validators = [];
                     $(validators_table).find("tr").each(function (i) {
@@ -698,6 +751,7 @@
                     step["header"] = header;
                     step["body"] = body;
                     step["extract"] = extract;
+                    step["parameters"] = parameters_list;
                     step["validators"] = validators;
                     step["url"] = url;
                     step["skip"] = skip;
