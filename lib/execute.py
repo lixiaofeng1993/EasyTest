@@ -145,7 +145,7 @@ class Test_execute():
 
         if_dict = {"url": interface.url, "header": step_content["header"], "body": step_content["body"], "if_id": if_id,
                    "if_name": step_content["if_name"], "method": interface.method, "data_type": interface.data_type,
-                   "parameters": step_content["parameters"]}
+                   "parameters": step_content.get("parameters", [])}
         # 跳过不执行
         if interface.skip:
             if_dict["skip"] = interface.skip

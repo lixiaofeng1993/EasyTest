@@ -1,0 +1,28 @@
+{
+    "name": "添加发布会",
+    "noReset": true,
+    "output": [],
+    "request": {
+        "data": {
+            "address": "${get_random_address()}",
+            "eid": "list(${list_p()})",
+            "limit": "list(${get_account(10)},user,password)",
+            "name": "${get_random_name()}",
+            "start_time": "2020-02-02 17:09:33",
+            "status": 1
+        },
+        "headers": {},
+        "json": {},
+        "method": "post",
+        "url": "/add_event/"
+    },
+    "validate": [
+        {
+            "contains": [
+                "content.message",
+                "add event success"
+            ]
+        }
+    ],
+    "variables": {}
+}

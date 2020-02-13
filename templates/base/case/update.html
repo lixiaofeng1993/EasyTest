@@ -438,17 +438,21 @@
                                         //parameters
                                         var parameters_json = eval(item.content)[content].parameters;
                                         console.log('---parameters_json--->', parameters_json);
-                                        if (Object.keys(parameters_json).length === 0) {
-                                            console.log('parameters 为空');
+                                        if (parameters_json == undefined) {
                                             var parameters = parameters_table + "</tbody></table>";
                                         } else {
-                                            for (var ex in parameters_json) {
-                                                for (var key in parameters_json[ex]) {
-                                                    var tr_ex = "<tr><td>#</td><td contenteditable='true' name='var_name'>" + key + "</td><td contenteditable='true' name='var_value'>" + parameters_json[ex][key] + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
-                                                    parameters_table = parameters_table + tr_ex;
-                                                }
-
+                                            if (Object.keys(parameters_json).length === 0) {
+                                                console.log('parameters 为空');
                                                 var parameters = parameters_table + "</tbody></table>";
+                                            } else {
+                                                for (var ex in parameters_json) {
+                                                    for (var key in parameters_json[ex]) {
+                                                        var tr_ex = "<tr><td>#</td><td contenteditable='true' name='var_name'>" + key + "</td><td contenteditable='true' name='var_value'>" + parameters_json[ex][key] + "</td><td><button class='btn btn-xs btn-outline btn-danger' type='button' onclick='del_step(this);'>&nbsp;<i class='fa fa-close'></i>&nbsp;删除行 </button> </td></tr>";
+                                                        parameters_table = parameters_table + tr_ex;
+                                                    }
+
+                                                    var parameters = parameters_table + "</tbody></table>";
+                                                }
                                             }
                                         }
 
