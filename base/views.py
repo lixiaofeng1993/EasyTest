@@ -1937,14 +1937,12 @@ class StartLocust(threading.Thread):
             datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ===={}==={}== {}"
             .format(self.getName(), self.make, self.slave, self.status))
         if self.make == 'master':
-
-            log.info("--slaveslaveslaveslave---{}-------{}------".format(self.slave, type(self.slave)))
             if self.status == "True":
-                log.info("-----{}-------------".format(self.slave))
                 copy_debugtalk()
                 os.chdir(settings.BASE_DIR)
-                p = os.popen('locust -f locustfile.py')
-                p = os.popen("{}".format(self.slave))
+                p = os.system("/home/lixiaofeng/./start_server.sh")
+                # p = os.popen('locust -f locustfile.py')
+                # p = os.popen("{}".format(self.slave))
             else:
                 pattern = '/' if platform.system() != 'Windows' else '\\'
                 path_list = self.path.split("performance" + pattern)
