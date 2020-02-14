@@ -1939,10 +1939,8 @@ class StartLocust(threading.Thread):
         if self.make == 'master':
             if self.status == "True":
                 copy_debugtalk()
-                os.chdir(settings.BASE_DIR)
-                p = os.system("/home/lixiaofeng/./start_server.sh")
-                # p = os.popen('locust -f locustfile.py')
-                # p = os.popen("{}".format(self.slave))
+                locust_path = os.path.join(settings.BASE_DIR, "locustfile.py")
+                p = os.popen('locust -f {}'.format(locust_path))
             else:
                 pattern = '/' if platform.system() != 'Windows' else '\\'
                 path_list = self.path.split("performance" + pattern)
