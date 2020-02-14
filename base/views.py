@@ -1939,7 +1939,10 @@ class StartLocust(threading.Thread):
         if self.make == 'master':
             if self.status == "True":
                 copy_debugtalk()
+                os.chdir(settings.BASE_DIR)
                 p = os.popen('locust -f locustfile.py')
+                p = os.popen("{}".format(self.slave))
+                log.info("-----{}-------------".format(self.slave))
             else:
                 pattern = '/' if platform.system() != 'Windows' else '\\'
                 path_list = self.path.split("performance" + pattern)
