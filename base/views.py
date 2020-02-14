@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-import os, time, json, logging, threading, platform, re, zipfile
+import os, time, json, logging, threading, platform, re, zipfile, requests
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -2009,7 +2009,6 @@ def performance_report(request):
         return render(request, 'user/login_action.html')
     else:
         if request.method == 'GET':
-            import requests
             try:
                 res = requests.get('http://localhost:8089/stats/requests')
                 res = res.json()
@@ -2035,7 +2034,6 @@ def performance_real(request):
         return render(request, 'user/login_action.html')
     else:
         if request.method == 'GET':
-            import requests
             try:
                 res = requests.get('http://localhost:8089/stats/requests')
             except requests.exceptions.ConnectionError:
@@ -2089,15 +2087,23 @@ def performance_delete(request):
 
 
 def performance_status(request):
-    if request.method == "POST":
-        status = request.POST.get("off", 0)
-        debug = DebugTalk.objects.filter(belong_project_id=None)
-        if debug:
-            debug.update(status=status)
-        else:
-            debug.create(create_time=datetime.now(), update_time=datetime.now(), debugtalk="",
-                         belong_project_id=None, status=1)
-        return HttpResponseRedirect("/base/performance/")
+    try:
+        requests.get('http://localhost:8089/stats/requests')
+        return HttpResponse("locust运行中，无法切换！")
+    except requests.exceptions.ConnectionError:
+        if request.method == "POST":
+            status = request.POST.get("off", 0)
+            debug = DebugTalk.objects.filter(belong_project_id=None)
+            if debug:
+                debug.update(status=status)
+            else:
+                debug.create(create_time=datetime.now(), update_time=datetime.now(), debugtalk="",
+                             belong_project_id=None, status=1)
+            if status == "1":
+                info = "切换到自定义脚本模式成功！"
+            elif status == "0":
+                info = "切换到HttpRunner模式成功！"
+            return HttpResponse(info)
 
 
 # 用户列表
