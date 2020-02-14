@@ -1938,9 +1938,8 @@ class StartLocust(threading.Thread):
             .format(self.getName(), self.make, self.slave, self.status))
         if self.make == 'master':
             if self.status == "True":
-                locust_path = copy_debugtalk()
-                log.info('================locust -f {}====================='.format(locust_path))
-                p = os.popen('locust -f {}'.format(locust_path))
+                copy_debugtalk()
+                p = os.popen('{}'.format(self.slave))
             else:
                 pattern = '/' if platform.system() != 'Windows' else '\\'
                 path_list = self.path.split("performance" + pattern)

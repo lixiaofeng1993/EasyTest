@@ -125,8 +125,6 @@ def copy_debugtalk(path="", project_id=None):
         else:
             with open(path, "w") as f:
                 f.write("")
-    else:
-        return debugtalk_path
 
 
 def delete_performance(path):
