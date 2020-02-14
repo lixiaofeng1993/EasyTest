@@ -1934,12 +1934,12 @@ class StartLocust(threading.Thread):
 
     def run(self):
         log.info(
-            datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ===={}===== {}"
-            .format(self.getName(), self.make, self.slave))
+            datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ===={}==={}== {}"
+            .format(self.getName(), self.make, self.slave, self.status))
         if self.make == 'master':
             if self.status == "True":
                 copy_debugtalk()
-                p = os.popen('{}'.format(self.slave))
+                p = os.popen('locust -f locustfile.py')
             else:
                 pattern = '/' if platform.system() != 'Windows' else '\\'
                 path_list = self.path.split("performance" + pattern)
@@ -1973,7 +1973,8 @@ class StartLocust(threading.Thread):
             else:
                 p = os.system("/home/lixiaofeng/./stop_locust.sh")
                 log.info("--stop---success-{}=====!".format(p))
-            delete_performance(os.path.join(settings.BASE_DIR, "performance"))
+            if self.status == "False":
+                delete_performance(os.path.join(settings.BASE_DIR, "performance"))
 
 
 def start_locust(request):
