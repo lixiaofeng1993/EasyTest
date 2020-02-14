@@ -263,7 +263,7 @@ BROKER_URL = 'redis://127.0.0.1:6379/0'
 CELERY_IMPORTS = ('base.tasks')
 CELERY_TIMEZONE = 'Asia/Shanghai'
 CELERYBEAT_SCHEDULER = 'djcelery.schedulers.DatabaseScheduler'
-# CELERY_ENABLE_UTC = False
+CELERY_ENABLE_UTC = False
 # DJANGO_CELERY_BEAT_TZ_AWARE = False
 CELERYBEAT_SCHEDULE = {  # 定时器策略
     # 定时任务一：　每隔30s运行一次
