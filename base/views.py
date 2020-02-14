@@ -1940,6 +1940,7 @@ class StartLocust(threading.Thread):
             if self.status == "True":
                 copy_debugtalk()
                 locust_path = os.path.join(settings.BASE_DIR, "locustfile.py")
+                log.info('locust -f {}'.format(locust_path))
                 p = os.popen('locust -f {}'.format(locust_path))
             else:
                 pattern = '/' if platform.system() != 'Windows' else '\\'
