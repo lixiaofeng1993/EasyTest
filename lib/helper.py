@@ -98,6 +98,8 @@ def write_data(res, json_path):
     elif isinstance(res, str):
         with open(json_path, "w", encoding='utf-8') as f:
             f.write(res)
+            logger.log_info(
+                'Write to str file successfully! {}\n'.format(json_path))
     else:
         logger.log_error('{} Params is not dict.\n'.format(write_data.__name__))
 
