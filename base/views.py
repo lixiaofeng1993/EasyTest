@@ -1934,8 +1934,8 @@ class StartLocust(threading.Thread):
 
     def run(self):
         log.info(
-            datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ========= {}"
-            .format(self.getName(), self.make))
+            datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ===={}===== {}"
+            .format(self.getName(), self.make, self.slave))
         if self.make == 'master':
             if self.status == "True":
                 copy_debugtalk()
