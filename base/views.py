@@ -21,7 +21,7 @@ from lib.except_check import project_info_logic, sign_info_logic, env_info_logic
     case_info_logic, plan_info_logic, header_value_error  # 自定义异常逻辑
 from django.views.generic import ListView
 from django.conf import settings
-from lib.helper import delete_performance
+from lib.helper import delete_performance, copy_debugtalk
 
 # import paramiko
 # from stat import S_ISDIR as isdir
@@ -1912,17 +1912,24 @@ def performance_index(request):
     if request.method == 'GET':
         user_id = request.session.get('user_id', '')
         if get_user(user_id):
-            return render(request, 'base/performance/performance.html', {"debug": settings.DEBUG})
+            try:
+                debug = DebugTalk.objects.get(belong_project_id=None)
+                status = debug.status
+            except DebugTalk.DoesNotExist:
+                status = 0
+            info = {"debug": settings.DEBUG, "status": status}
+            return render(request, 'base/performance/performance.html', info)
         else:
             request.session['login_from'] = '/base/performance/'
             return render(request, 'user/login_action.html')
 
 
 class StartLocust(threading.Thread):
-    def __init__(self, make, slave, path):
+    def __init__(self, make, slave, path, status):
         threading.Thread.__init__(self)
         self.make = make
         self.slave = slave
+        self.status = status
         self.path = path
 
     def run(self):
@@ -1930,16 +1937,20 @@ class StartLocust(threading.Thread):
             datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== StartLocust ========= {}"
             .format(self.getName(), self.make))
         if self.make == 'master':
-            pattern = '/' if platform.system() != 'Windows' else '\\'
-            path_list = self.path.split("performance" + pattern)
-            execute_path = os.path.join(path_list[0], "performance")
-            locust_path = path_list[1]
-            os.chdir(execute_path)
-            if str(self.slave).isdigit():
-                p = os.popen('locusts -f {} --processes {}'.format(locust_path, int(self.slave)))
+            if self.status == "True":
+                copy_debugtalk()
+                p = os.popen('{}'.format(self.slave))
             else:
-                p = os.popen('locusts -f {} --processes'.format(locust_path))
-            os.chdir(settings.BASE_DIR)
+                pattern = '/' if platform.system() != 'Windows' else '\\'
+                path_list = self.path.split("performance" + pattern)
+                execute_path = os.path.join(path_list[0], "performance")
+                locust_path = path_list[1]
+                os.chdir(execute_path)
+                if str(self.slave).isdigit():
+                    p = os.popen('locusts -f {} --processes {}'.format(locust_path, int(self.slave)))
+                else:
+                    p = os.popen('locusts -f {} --processes'.format(locust_path))
+                os.chdir(settings.BASE_DIR)
             log.info("---------p-----------{}".format(p))
         elif self.make == 'stop':
             if platform.system() == 'Windows':
@@ -1969,17 +1980,20 @@ def start_locust(request):
     if request.method == 'GET':
         user_id = request.session.get('user_id', '')
         if get_user(user_id):
-            try:
-                plan = Plan.objects.get(is_locust=1)
-            except Plan.DoesNotExist:
-                return HttpResponse("no")
-            env_id = plan.environment_id
-            case_id_list = eval(plan.content)
-            execute = Test_execute(env_id, case_id_list, run_mode="1", plan=plan, locust=True)
-            testsuites_json_path = execute.test_case
             make = request.GET.get('make')
             slave = request.GET.get('slave')
-            locust = StartLocust(make, slave, testsuites_json_path)
+            status = request.GET.get('status')
+            testsuites_json_path = ""
+            if status == "False":
+                try:
+                    plan = Plan.objects.get(is_locust=1)
+                except Plan.DoesNotExist:
+                    return HttpResponse("no")
+                env_id = plan.environment_id
+                case_id_list = eval(plan.content)
+                execute = Test_execute(env_id, case_id_list, run_mode="1", plan=plan, locust=True)
+                testsuites_json_path = execute.test_case
+            locust = StartLocust(make, slave, testsuites_json_path, status)
             locust.start()
             return HttpResponse('ok')
         else:
@@ -2071,6 +2085,18 @@ def performance_delete(request):
             LocustReport.objects.all().delete()
             log.info('用户 {} ，清空性能测试历史数据完成！'.format(user_id))
             return render(request, 'base/performance/locust_history.html')
+
+
+def performance_status(request):
+    if request.method == "POST":
+        status = request.POST.get("off", 0)
+        debug = DebugTalk.objects.filter(belong_project_id=None)
+        if debug:
+            debug.update(status=status)
+        else:
+            debug.create(create_time=datetime.now(), update_time=datetime.now(), debugtalk="",
+                         belong_project_id=None, status=1)
+        return HttpResponseRedirect("/base/performance/")
 
 
 # 用户列表
@@ -2349,19 +2375,33 @@ def debugtalk(request):
             patt = re.compile("\/(\d+)\/")
             id = patt.findall(request.get_full_path())[0]
             try:
-                debugtalk = DebugTalk.objects.values('id', 'debugtalk').get(belong_project_id=id)
+                if id == "0":
+                    debugtalk = DebugTalk.objects.values('id', 'debugtalk', "status").get(belong_project_id=None)
+                else:
+                    debugtalk = DebugTalk.objects.values('id', 'debugtalk', "status").get(belong_project_id=id)
                 return render_to_response('debugtalk.html', debugtalk)
             except DebugTalk.DoesNotExist:
                 return render(request, "debugtalk.html", {"id": id})
         elif request.method == "POST":
             id = request.POST.get('id')
             debugtalk = request.POST.get('debugtalk')
+            status = request.POST.get('status', "False")
             code = debugtalk.replace('new_line', '\r\n')
-            try:
-                obj = DebugTalk.objects.get(id=id)
-                obj.debugtalk = code
-            except DebugTalk.DoesNotExist:
-                obj = DebugTalk(create_time=datetime.now(), update_time=datetime.now(), debugtalk=code,
-                                belong_project_id=id)
-            obj.save()
-            return HttpResponseRedirect("/base/project/")
+            if status == "True":
+                try:
+                    obj = DebugTalk.objects.get(id=id)
+                    obj.debugtalk = code
+                except DebugTalk.DoesNotExist:
+                    obj = DebugTalk(create_time=datetime.now(), update_time=datetime.now(), debugtalk=code,
+                                    belong_project_id=None, status=1)
+                obj.save()
+                return HttpResponseRedirect("/base/performance/")
+            else:
+                try:
+                    obj = DebugTalk.objects.get(id=id)
+                    obj.debugtalk = code
+                except DebugTalk.DoesNotExist:
+                    obj = DebugTalk(create_time=datetime.now(), update_time=datetime.now(), debugtalk=code,
+                                    belong_project_id=id)
+                obj.save()
+                return HttpResponseRedirect("/base/project/")

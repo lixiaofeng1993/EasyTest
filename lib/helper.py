@@ -102,23 +102,27 @@ def write_data(res, json_path):
         logger.log_error('{} Params is not dict.\n'.format(write_data.__name__))
 
 
-def copy_debugtalk(path, project_id):
+def copy_debugtalk(path="", project_id=None):
     """复制写入debugtalk.py参数化函数"""
     from base.models import DebugTalk
-    debugtalk_path = os.path.join(BASE_DIR, "lib/" + "debugtalk.py")
+    if path:
+        debugtalk_path = os.path.join(BASE_DIR, "lib/" + "debugtalk.py")
+    else:
+        debugtalk_path = os.path.join(BASE_DIR, "locustfile.py")
     try:
         debugtalk = DebugTalk.objects.get(belong_project_id=project_id).debugtalk
     except DebugTalk.DoesNotExist:
         debugtalk = ''
     write_data(debugtalk, debugtalk_path)
-    if os.path.exists(debugtalk_path):
-        with open(debugtalk_path, "rb") as f:
-            info = f.read()
-            with open(path, "wb") as f:
-                f.write(info)
-    else:
-        with open(path, "w") as f:
-            f.write("")
+    if path:
+        if os.path.exists(debugtalk_path):
+            with open(debugtalk_path, "rb") as f:
+                info = f.read()
+                with open(path, "wb") as f:
+                    f.write(info)
+        else:
+            with open(path, "w") as f:
+                f.write("")
 
 
 def delete_performance(path):

@@ -74,6 +74,7 @@ urlpatterns = [
     url(r'performance_real/', view=views.performance_real, name='performance_real'),
     url(r'performance_history/', view=views.performance_history, name='performance_history'),
     url(r'performance_delete/', view=views.performance_delete, name='performance_delete'),
+    url(r'performance_status/', view=views.performance_status, name='performance_status'),
     # 下载
     url(r'file_download/', view=views.file_download, name='file_download'),
     # 添加用户

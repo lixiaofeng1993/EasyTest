@@ -58,7 +58,12 @@
 
 <div id="login_click" style="margin-top: 0px">
     <button id="push">提交</button>
-    <a href="{% url 'base:project' %}">返回</a>
+    {% if status %}
+        <a href="{% url 'base:performance' %}">返回</a>
+    {% else %}
+        <a href="{% url 'base:project' %}">返回</a>
+    {% endif %}
+
 </div>
 
 
@@ -94,7 +99,7 @@
         content.trim().split('\n').forEach(function (v, i) {
             str = str + v + 'new_line';
         });
-        post('/base/debugtalk/', {'debugtalk': str, "id":{{ id }}});
+        post('/base/debugtalk/', {'debugtalk': str, "id":{{ id }}, "status": "{{ status }}"});
     });
 
 </script>

@@ -209,8 +209,9 @@ class LocustReport(models.Model):
 class DebugTalk(models.Model):
     create_time = models.DateTimeField('创建时间', auto_now_add=True)
     update_time = models.DateTimeField('更新时间', auto_now=True)
-    belong_project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    belong_project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
     debugtalk = models.TextField(null=True, default='#debugtalk.py')
+    status = models.BooleanField(default=False)  # 状态
 
     class Meta:
         verbose_name = '驱动py文件'

@@ -307,14 +307,15 @@
         $('.index_data').click(function () {
             var index = $('.index_data').find('i');
             var i = index.attr("class");
+            var off;
             if (i.indexOf('off') == -1) {
                 index.removeClass();
                 index.addClass('fa fa-toggle-off fa-1x');
-                var off = 0;
+                off = 0;
             } else {
                 index.removeClass();
                 index.addClass('fa fa-toggle-on fa-1x');
-                var off = 1;
+                off = 1;
             }
             $.ajax({
                 type: 'get',
