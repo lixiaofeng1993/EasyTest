@@ -11,7 +11,7 @@ from base.models import Project, Sign, Environment, Interface, Case, Plan, Repor
 import logging, os
 from django.http import StreamingHttpResponse
 from lib.public import gr_code, getACodeImage
-from lib.execute import get_user, get_total_values, is_superuser
+from lib.execute import get_user, get_total_values, is_superuser, limits_of_authority,create_model
 from lib.send_email import send_email
 from lib.except_check import register_info_logic, change_info_logic
 import sys, json, requests, re, datetime
@@ -57,20 +57,12 @@ def index(request):
         else:
             return HttpResponse('0')
     elif request.method == 'GET':
-        plan_list = []
-        prj_list = is_superuser(user_id, type='list')
-        plan = Plan.objects.filter(project_id__in=prj_list)
-        for plan_ in plan:
-            plan_list.append(plan_.plan_id)
-        superuser = User.objects.get(id=user_id).is_superuser
-        if superuser:
-            project_num = Project.objects.aggregate(Count('prj_id'))['prj_id__count']
-        else:
-            project_num = Project.objects.filter(user_id=user_id).aggregate(Count('prj_id'))['prj_id__count']
-        env_num = Environment.objects.filter(project_id__in=prj_list).aggregate(Count('env_id'))['env_id__count']
-        interface_num = Interface.objects.filter(project_id__in=prj_list).aggregate(Count('if_id'))['if_id__count']
-        case_num = Case.objects.filter(project_id__in=prj_list).aggregate(Count('case_id'))['case_id__count']
-        plan_num = Plan.objects.filter(project_id__in=prj_list).aggregate(Count('plan_id'))['plan_id__count']
+        plan = Plan.objects.all()
+        project_num = Project.objects.aggregate(Count('prj_id'))['prj_id__count']
+        env_num = Environment.objects.aggregate(Count('env_id'))['env_id__count']
+        interface_num = Interface.objects.aggregate(Count('if_id'))['if_id__count']
+        case_num = Case.objects.aggregate(Count('case_id'))['case_id__count']
+        plan_num = Plan.objects.aggregate(Count('plan_id'))['plan_id__count']
         sign_num = Sign.objects.aggregate(Count('sign_id'))['sign_id__count']
         report_num = Report.objects.aggregate(Count('report_id'))['report_id__count']
         periodic_num = PeriodicTask.objects.aggregate(Count('id'))['id__count']
@@ -90,8 +82,8 @@ def index(request):
             online_ips.append(ip)
         cache.set("online_ips", online_ips)
         log.info('同时在线人员：{}'.format(cache.get("online_ips", [])))
-
-        info = {'project_num': project_num,
+        model_list = limits_of_authority(user_id)
+        info = {'project_num': project_num, "model_list": model_list,
                 'env_num': env_num, 'interface_num': interface_num, 'case_num': case_num,
                 'plan_num': plan_num, 'total': total,
                 'sign_num': sign_num, 'report_num': report_num, "online_ips": len(cache.get("online_ips", [])),
@@ -203,6 +195,7 @@ def login_action(request):
             response = redirect(request.session['login_from'])
             log.info('用户： {} 登录成功！'.format(username))
             request.session.set_expiry(None)  # 关闭浏览器后，session失效
+            create_model(user_.id)
             return response
         else:
             log.error('用户名或密码错误... {} {}'.format(username, password))
@@ -262,6 +255,7 @@ def register(request):
                 send_email('18701137212@163.com', '注册登录记录', report_id=username, register=True)
                 log.info('用户： {} 注册并登录成功！'.format(username))
                 request.session.set_expiry(None)  # 关闭浏览器后，session失效
+                create_model(user_.id)
                 return response
 
 

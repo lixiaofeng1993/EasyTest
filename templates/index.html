@@ -52,6 +52,16 @@
         }
     </style>
 {% endblock %}
+
+{% block nav %}
+    {% for object in model_list %}
+        <li><a href="{{ object.url }}"><i class="{{ object.icon }}"></i>{{ object.model_name }}</a>
+        </li>
+
+    {% endfor %}
+
+{% endblock %}
+
 {% block body %}
     <div class="row">
         <div class="col-md-12">
@@ -61,61 +71,27 @@
                     <a class="this-page">主页</a>
                 </li>
             </ol>
-            <p><span>首页数据控制</span>
-                <a href="javascript:void(0)" class="index_data sure-btn"><i
-                        class="fa fa-toggle-off fa-1x">&nbsp;&nbsp;</i></a>
-                <span style="color: #555; font-size: 12px;margin-left: 10%">同时在线人数：</span><span
-                        style="color: red">{{ online_ips }}</span> <span
-                        style="color: #555; font-size: 12px">  ，造作呀！快活呀！</span>
-                <span
-                        style="color: #555; font-size: 12px">【默认服务器宣】</span>
-            </p>
 
             <div class="panel" style="height: 100%">
+                <p><span></span>
+                    {#                <a href="javascript:void(0)" class="index_data sure-btn"><i#}
+                    {#                        class="fa fa-toggle-off fa-1x">&nbsp;&nbsp;</i></a>#}
+                    <span style="color: #555; font-size: 12px;margin-left: 10%">同时在线人数：</span><span
+                            style="color: red">{{ online_ips }}</span> <span
+                            style="color: #555; font-size: 12px">  ，造作呀！快活呀！</span>
+                    <span
+                            style="color: #555; font-size: 12px">【默认服务器宣】</span>
+                </p>
                 <div class="panel-body">
                     <div class="panel-tbody-index">
                         <br>
                         <h5>快捷入口</h5>
-                        <div class="panel-tbody">
-                            <p><i class="fa fa-product-hunt"></i>&nbsp;项目</p>
-                            <div style="text-align: center"><a href="{% url 'base:project' %}">{{ project_num }}</a>
+                        {% for foo in model_list %}
+                            <div class="panel-tbody">
+                                <a href="{{ foo.url }}"><p><i class=""></i>&nbsp;{{ foo.model_name }}</p>
+                                </a>
                             </div>
-                        </div>
-                        <div class="panel-tbody">
-                            <p><i class="fa fa-envira"></i>&nbsp;环境</p>
-                            <div style="text-align: center"><a href="{% url 'base:env' %}">{{ env_num }}</a></div>
-                        </div>
-                        <div class="panel-tbody">
-                            <p><i class="fa fa-pinterest-square"></i>&nbsp;接口</p>
-                            <div style="text-align: center"><a href="{% url 'base:interface' %}">{{ interface_num }}</a>
-                            </div>
-                        </div>
-                        <div class="panel-tbody">
-                            <p><i class="fa fa-suitcase"></i>&nbsp;用例</p>
-                            <div style="text-align: center"><a href="{% url 'base:case' %}">{{ case_num }}</a></div>
-                        </div>
-                        <div class="panel-tbody">
-                            <p><i class="fa fa-paper-plane"></i>&nbsp;计划</p>
-                            <div style="text-align: center"><a href="{% url 'base:plan' %}">{{ plan_num }}</a></div>
-                        </div>
-                        <div class="panel-tbody">
-                            <p><i class="fa fa-bar-chart"></i>&nbsp;报告</p>
-                            <div style="text-align: center"><a href="{% url 'base:report_page' %}">{{ report_num }}</a>
-                            </div>
-                        </div>
-                        <div class="panel-tbody">
-                            <p><i class="fa fa-tasks"></i>&nbsp;任务</p>
-                            <div style="text-align: center"><a href="{% url 'base:task_index' %}">{{ task_num }}</a>
-                            </div>
-                        </div>
-                        <div class="panel-tbody">
-                            <p><i class="fa fa-pencil"></i>&nbsp;签名</p>
-                            <div style="text-align: center"><a href="{% url 'base:sign' %}">{{ sign_num }}</a></div>
-                        </div>
-                        {#                        <div class="panel-tbody">#}
-                        {#                            <p><i class="fa fa-user-secret"></i>&nbsp;用户</p>#}
-                        {#                            <div style="text-align: center"><a href="{% url 'base:user' %}">{{ user_num }}</a></div>#}
-                        {#                        </div>#}
+                        {% endfor %}
                     </div>
 
                     <iframe class="whether" name="weather_inc" src="http://i.tianqi.com/index.php?c=code&id=112"

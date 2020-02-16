@@ -1,7 +1,7 @@
 {
     "config": {
         "base_url": "http://localhost:8000/api",
-        "name": "添加发布会",
+        "name": "guest性能测试用例",
         "variables": {}
     },
     "noReset": true,

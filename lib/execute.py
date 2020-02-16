@@ -4,7 +4,7 @@ import sys
 
 __author__ = 'wsy'
 
-from base.models import Project, Sign, Environment, Interface, Case, Plan, Report
+from base.models import Project, Sign, Environment, Interface, Case, Plan, Report, UserPower, ModularTable
 from django.contrib.auth.models import User  # django自带user
 import requests, re, os, datetime, json, logging, time
 from django.conf import settings
@@ -396,11 +396,11 @@ def get_total_values(user_id):
         'percent': []
     }
     today = datetime.date.today()
-    plan_list = []
-    prj_list = is_superuser(user_id, type='list', off='1')
-    plan = Plan.objects.filter(project_id__in=prj_list)
-    for plan_ in plan:
-        plan_list.append(plan_.plan_id)
+    # plan_list = []
+    # prj_list = is_superuser(user_id, type='list', off='1')
+    # plan = Plan.objects.all()
+    # for plan_ in plan:
+    #     plan_list.append(plan_.plan_id)
     for i in range(-11, 1):
         begin = today + datetime.timedelta(days=i)
         end = begin + datetime.timedelta(days=1)
@@ -430,3 +430,34 @@ def get_total_values(user_id):
         total['percent'].append(total_percent)
 
     return total
+
+
+def limits_of_authority(user_id):
+    power_list = UserPower.objects.get(user_id=user_id).power
+    model = ModularTable.objects.filter(id__in=json.loads(power_list))
+    model_list = []
+    for foo in model:
+        model_list.append({"id": foo.id, "model_name": foo.model_name, "url": foo.url, "icon": foo.Icon})
+    return model_list
+
+
+def create_model(user_id):
+    model = ModularTable.objects.all()
+    if not model:
+        model_dict = [{"id": 1, "url": "/base/project/", "Icon": "fa fa-product-hunt fa-fw", "model_name": "项目管理"},
+                      {"id": 2, "url": "/base/env/", "Icon": "fa fa-envira fa-fw", "model_name": "测试环境"},
+                      {"id": 3, "url": "/base/interface/", "Icon": "fa fa-pinterest-square fa-fw",
+                       "model_name": "接口管理"},
+                      {"id": 4, "url": "/base/case/", "Icon": "fa fa-suitcase fa-fw", "model_name": "用例管理"},
+                      {"id": 5, "url": "/base/plan/", "Icon": "fa fa-book fa-fw", "model_name": "测试计划"},
+                      {"id": 6, "url": "/base/task/", "Icon": "fa fa-tasks fa-fw", "model_name": "定时任务"},
+                      {"id": 7, "url": "/base/report_page/", "Icon": "fa fa-bar-chart fa-fw", "model_name": "运行报告"},
+                      {"id": 8, "url": "/base/performance/", "Icon": "fa fa-book fa-fw", "model_name": "性能测试"},
+                      {"id": 9, "url": "/base/sign/", "Icon": "fa fa-pencil fa-fw", "model_name": "签名方式"},
+                      {"id": 10, "url": "/base/user/", "Icon": "fa fa-user fa-fw", "model_name": "用户管理"},
+                      {"id": 11, "url": "/base/about/", "Icon": "fa fa-cog fa-cab fa-fw", "model_name": "关于我们"}, ]
+        for model_ in model_dict:
+            model.create(id=model_["id"], url=model_["url"], Icon=model_["Icon"], model_name=model_["model_name"])
+    user = UserPower.objects.filter(user_id=user_id)
+    if not user:
+        user.create(power=json.dumps(["10"]), user_id=user_id)

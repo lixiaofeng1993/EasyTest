@@ -1,5 +1,12 @@
 from django.contrib import admin
-from .models import Sign, Project, Environment, Interface, Case, Plan, Report, LocustReport
+from .models import Sign, Project, Environment, Interface, Case, Plan, Report, ModularTable, UserPower
+
+
+class ModelAdmin(admin.ModelAdmin):
+    list_display = ["id", "url", "Icon", "model_name"]
+    list_filter = ["model_name"]
+    search_fields = ["model_name"]
+
 
 class LocustAdmin(admin.ModelAdmin):
     list_display = ["id", "current_response_time_percentile_50", "current_response_time_percentile_95", "fail_ratio",
@@ -60,3 +67,5 @@ admin.site.register(Case, CaseAdmin)
 admin.site.register(Plan, PlanAdmin)
 admin.site.register(Report, ReportAdmin)
 admin.site.register(Sign, SignAdmin)
+admin.site.register(ModularTable, ModelAdmin)
+admin.site.register(UserPower)

@@ -66,12 +66,23 @@
     </style>
 
 {% endblock %}
+
+{% block nav %}
+    {% for object in model_list %}
+        <li><a href="{{ object.url }}"><i class="{{ object.icon }}"></i>{{ object.model_name }}</a>
+        </li>
+
+    {% endfor %}
+
+{% endblock %}
+
+
 {% block crumbs %}
     <div class="row">
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li class="active">
-                    <a class="this-page" href="{% url 'base:task_index' %}">定时任务</a>
+                    <a class="this-page" href="{% url 'base:task' %}">定时任务</a>
                 </li>
                 <li class="active">
                     <a class="this">运行日志</a>

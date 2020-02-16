@@ -66,6 +66,16 @@
     </style>
 
 {% endblock %}
+
+{% block nav %}
+    {% for object in model_list %}
+        <li><a href="{{ object.url }}"><i class="{{ object.icon }}"></i>{{ object.model_name }}</a>
+        </li>
+
+    {% endfor %}
+
+{% endblock %}
+
 {% block crumbs %}
     <div class="row">
         <div class="col-md-12">
@@ -136,14 +146,13 @@
                             {% endfor %}
                         </div>
                         <div class="spinner"></div>
-                        {% if is_superuser %}
-                            <button onclick="get_log()" class="btn btn-primary"><i
-                                    class="fa fa-caret-square-o-down"></i>&nbsp;获取全部日志
-                            </button>
-                            <button onclick="del_log()" class="btn btn-primary"><i class="fa fa-caret-square-o-up"></i>&nbsp;隐藏显示日志
-                            </button>
-                            <span id="make"><span>注：</span>这里只能查看最新的日志信息</span>
-                        {% endif %}
+                        <button onclick="get_log()" class="btn btn-primary"><i
+                                class="fa fa-caret-square-o-down"></i>&nbsp;获取全部日志
+                        </button>
+                        <button onclick="del_log()" class="btn btn-primary"><i class="fa fa-caret-square-o-up"></i>&nbsp;隐藏显示日志
+                        </button>
+                        <span id="make"><span>注：</span>这里只能查看最新的日志信息</span>
+
                         <div id="all_log" style="margin: 1% 1%">
                         </div>
                         </div>

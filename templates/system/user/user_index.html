@@ -21,6 +21,17 @@
     </style>
 {% endblock %}
 
+{% block nav %}
+    {% for object in object_list %}
+        {% for foo in object.model_list %}
+            <li><a href="{{ foo.url }}"><i class="{{ foo.icon }}"></i>{{ foo.model_name }}</a>
+            </li>
+        {% endfor %}
+
+    {% endfor %}
+
+{% endblock %}
+
 {% block crumbs %}
     <div class="row">
         <div class="col-md-12">
@@ -40,9 +51,9 @@
         <div class="col-md-12">
             <div class="panel">
                 <div class="panel-heading">
-                    <a class="btn btn-primary" id="add_id_PeriodicTask"
-                       href="/admin/auth/user/add/?_to_field=id&amp;_popup=1"><i class="fa fa-plus-circle"></i>&nbsp;添加用户
-                    </a>
+                    {#                    <a class="btn btn-primary" id="add_id_PeriodicTask"#}
+                    {#                       href="/admin/auth/user/add/?_to_field=id&amp;_popup=1"><i class="fa fa-plus-circle"></i>&nbsp;添加用户#}
+                    {#                    </a>#}
                 </div>
                 <div class="panel-body">
                     <table class="table table-bordered">
@@ -59,22 +70,26 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for sign in object_list %}
-                            <tr>
-                                <td id="cen">{{ sign.id }}</td>
-                                <td><a href="../admin/auth/user/{{ sign.id }}/change/?_to_field=id&_popup=1"
-                                       class="layui-btn layui-btn-xs">{{ sign.username }}</a></td>
-                                <td id="cen">{{ sign.email }}</td>
-                                <td id="cen">{{ sign.is_staff }}</td>
-                                <td id="cen">{{ sign.is_active }}</td>
-                                <td id="cen">{{ sign.is_superuser }}</td>
-                                <td id="cen">{{ sign.date_joined }}</td>
-                                <td id="cen">
-                                    <a href="../admin/auth/user/{{ sign.id }}/delete/?_to_field=id&_popup=1"
-                                       class="layui-btn layui-btn-danger layui-btn-xs"><img
-                                            src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
-                                </td>
-                            </tr>
+                        {% for object in object_list %}
+                            {% for sign in object.user_list %}
+                                <tr>
+                                    <td id="cen">{{ sign.id }}</td>
+                                    {#                                    <td><a href="../admin/auth/user/{{ sign.id }}/change/?_to_field=id&_popup=1"#}
+                                    {#                                           class="layui-btn layui-btn-xs">{{ sign.username }}</a></td>#}
+                                    <td id="cen">{{ sign.username }}</td>
+                                    <td id="cen">{{ sign.email }}</td>
+                                    <td id="cen">{{ sign.is_staff }}</td>
+                                    <td id="cen">{{ sign.is_active }}</td>
+                                    <td id="cen">{{ sign.is_superuser }}</td>
+                                    <td id="cen">{{ sign.date_joined }}</td>
+                                    <td id="cen">
+                                        <a href="{% url 'base:user_power' %}{{ sign.id }}/">permission</a>
+                                        {#                                        <a href="../admin/auth/user/{{ sign.id }}/delete/?_to_field=id&_popup=1"#}
+                                        {#                                           class="layui-btn layui-btn-danger layui-btn-xs"><img#}
+                                        {#                                                src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>#}
+                                    </td>
+                                </tr>
+                            {% endfor %}
                         {% endfor %}
                         </tbody>
                     </table>

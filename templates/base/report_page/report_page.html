@@ -29,6 +29,17 @@
     </style>
 {% endblock %}
 
+{% block nav %}
+    {% for object in object_list %}
+        {% for foo in object.model_list %}
+            <li><a href="{{ foo.url }}"><i class="{{ foo.icon }}"></i>{{ foo.model_name }}</a>
+            </li>
+        {% endfor %}
+
+    {% endfor %}
+
+{% endblock %}
+
 {% block crumbs %}
     <div class="row">
         <div class="col-md-12">
@@ -65,60 +76,63 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for env in object_list %}
-                            <tr>
-                                <td id="cen" class="report_id">{{ env.report_id }}</td>
-                                {% ifequal env.make 1 %}
-                                    {% if env.error_num %}
-                                        <td class="env-name"
-                                            style="background-color: #FFECF5">{{ env.report_name }}</td>
-                                    {% else %}
-                                        {% if env.fail_num %}
-                                            <td class="env-name"
-                                                style="background-color: #FFFFDF">{{ env.report_name }}</td>
-                                        {% else %}
-                                            <td class="env-name"
-                                                style="background-color: #ECFFFF">{{ env.report_name }}</td>
-                                        {% endif %}
-                                    {% endif %}
-
-                                {% else %}
-                                    <td class="env-name">{{ env.report_name }}</td>
-                                {% endifequal %}
-                                <td id="cen">{{ env.totalTime }}</td>
-                                <td id="cen">{{ env.case_num }}</td>
-                                <td id="cen">{{ env.pass_num }}</td>
-                                <td id="cen">{{ env.fail_num }}</td>
-                                <td id="cen">{{ env.error_num }}
-                                    {% if env.plan %}
-                                        <td id="cen" class="env-name">{{ env.plan }}</td>
-                                    {% else %}
-                                        <td id="cen" class="env-name">{{ env.task }}</td>
-                                    {% endif %}
-                                <td id="cen">{{ env.update_time }}</td>
-                                <td id="cen">{{ env.update_user }}</td>
-                                <td id="cen">
-                                    <a href="{% url 'base:report' %}?report_id={{ env.report_id }}"
-                                       class="layui-btn layui-btn-danger layui-btn-xs">
-                                        <i class="fa fa-bar-chart"></i>&nbsp;&nbsp;&nbsp;
-                                    </a>
-                                    <a href="{% url 'base:report_logs' %}?report_id={{ env.report_id }}"
-                                       class="layui-btn layui-btn-danger layui-btn-xs">
-                                        <i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;</a>
+                        {% for object in object_list %}
+                            {% for env in object.report_list %}
+                                <tr>
+                                    <td id="cen" class="report_id">{{ env.report_id }}</td>
                                     {% ifequal env.make 1 %}
-                                        <a href="{% url 'base:file_download' %}?report_id={{ env.report_id }}"
-                                           class="layui-btn layui-btn-danger layui-btn-xs"
-                                           onclick="return download_btn()"><i
-                                                class="fa fa-cloud-download"></i>&nbsp;
-                                        </a>
-                                    {% endifequal %}
+                                        {% if env.error_num %}
+                                            <td class="env-name"
+                                                style="background-color: #FFECF5">{{ env.report_name }}</td>
+                                        {% else %}
+                                            {% if env.fail_num %}
+                                                <td class="env-name"
+                                                    style="background-color: #FFFFDF">{{ env.report_name }}</td>
+                                            {% else %}
+                                                <td class="env-name"
+                                                    style="background-color: #ECFFFF">{{ env.report_name }}</td>
+                                            {% endif %}
+                                        {% endif %}
 
-                                    <a href="{% url 'base:report_delete' %}?report_id={{ env.report_id }}"
-                                       class="layui-btn layui-btn-danger layui-btn-xs"
-                                       onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;
-                                    </a>
-                                </td>
-                            </tr>
+                                    {% else %}
+                                        <td class="env-name">{{ env.report_name }}</td>
+                                    {% endifequal %}
+                                    <td id="cen">{{ env.totalTime }}</td>
+                                    <td id="cen">{{ env.case_num }}</td>
+                                    <td id="cen">{{ env.pass_num }}</td>
+                                    <td id="cen">{{ env.fail_num }}</td>
+                                    <td id="cen">{{ env.error_num }}
+                                        {% if env.plan %}
+                                            <td id="cen" class="env-name">{{ env.plan }}</td>
+                                        {% else %}
+                                            <td id="cen" class="env-name">{{ env.task }}</td>
+                                        {% endif %}
+                                    <td id="cen">{{ env.update_time }}</td>
+                                    <td id="cen">{{ env.update_user }}</td>
+                                    <td id="cen">
+                                        <a href="{% url 'base:report' %}?report_id={{ env.report_id }}"
+                                           class="layui-btn layui-btn-danger layui-btn-xs">
+                                            <i class="fa fa-bar-chart"></i>&nbsp;&nbsp;&nbsp;
+                                        </a>
+                                        <a href="{% url 'base:report_logs' %}?report_id={{ env.report_id }}"
+                                           class="layui-btn layui-btn-danger layui-btn-xs">
+                                            <i class="fa fa-file-text-o"></i>&nbsp;&nbsp;&nbsp;</a>
+                                        {% ifequal env.make 1 %}
+                                            <a href="{% url 'base:file_download' %}?report_id={{ env.report_id }}"
+                                               class="layui-btn layui-btn-danger layui-btn-xs"
+                                               onclick="return download_btn()"><i
+                                                    class="fa fa-cloud-download"></i>&nbsp;
+                                            </a>
+                                        {% endifequal %}
+
+                                        <a href="{% url 'base:report_delete' %}?report_id={{ env.report_id }}"
+                                           class="layui-btn layui-btn-danger layui-btn-xs"
+                                           onclick="return delete_btn()"><img
+                                                src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
                         {% endfor %}
                         </tbody>
                     </table>

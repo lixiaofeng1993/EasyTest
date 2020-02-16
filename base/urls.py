@@ -56,7 +56,7 @@ urlpatterns = [
     # 批量导入
     url(r'batch_index', view=views.batch_index, name='batch_index'),
     # 定时任务
-    url(r'task/', view=views.TaskIndex.as_view(), name='task_index'),
+    url(r'task/', view=views.TaskIndex.as_view(), name='task'),
     url(r'task_run/', view=views.task_run, name='task_run'),
     url(r'task_logs/', view=views.task_logs, name='task_logs'),
     url(r'task_add/', view=views.task_add, name='task_add'),
@@ -79,6 +79,7 @@ urlpatterns = [
     url(r'file_download/', view=views.file_download, name='file_download'),
     # 添加用户
     url(r'user/', view=views.UserIndex.as_view(), name='user'),
+    url(r'user_power/', view=views.user_power, name='user_power'),
     # 关于我们
     url(r'about/', view=views.about_index, name='about'),
     url(r'document/', view=views.document, name='document'),

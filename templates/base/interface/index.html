@@ -101,8 +101,19 @@
         }
     </style>
 
+{% endblock %}
+
+{% block nav %}
+    {% for object in object_list %}
+        {% for foo in object.model_list %}
+            <li><a href="{{ foo.url }}"><i class="{{ foo.icon }}"></i>{{ foo.model_name }}</a>
+            </li>
+        {% endfor %}
+
+    {% endfor %}
 
 {% endblock %}
+
 {% block crumbs %}
     <div class="row">
         <div class="col-md-12">
@@ -151,39 +162,41 @@
                         </tr>
                         </thead>
                         <tbody id="tbody-data">
-                        {% for if in object_list %}
-                            {#                            {% for if in if_ %}#}
-                            <tr>
-                                <td id="cen">{{ if.if_id }}</td>
-                                <td id="if_name"><a href="{% url 'base:interface_update' %}?if_id={{ if.if_id }}"
-                                                    class="layui-btn layui-btn-xs"
-                                                    lay-event="edit">{{ if.if_name }}</a></td>
-                                <td id="cen">{{ if.project }}</td>
-                                <td id="cen">{{ if.method }}</td>
-                                <td id="cen">{{ if.data_type }}</td>
-                                {% ifequal if.is_sign 0 %}
-                                    <td id="cen">不签名</td>
-                                {% else %}
-                                    <td id="cen">签名</td>
-                                {% endifequal %}
-                                <td>{{ if.description }}</td>
-                                <td>{{ if.response_header_param }}</td>
-                                <td id="cen">{{ if.update_time }}</td>
-                                <td id="cen">{{ if.update_user }}</td>
-                                <td id="cen">
-{#                                    <a href="/base/set_mock?if_id={{ if.if_id }}"#}
-{#                                       class="layui-btn layui-btn-danger layui-btn-xs"><i class="fa fa-etsy"></i>&nbsp;&nbsp;&nbsp;#}
-{#                                    </a>#}
-                                    <a href="{% url 'base:interface_copy' %}?if_id={{ if.if_id }}"
-                                       class="layui-btn layui-btn-danger layui-btn-xs"
-                                       onclick="return copy_btn()"><i class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;</a>
-                                    <a href="{% url 'base:interface_delete' %}?if_id={{ if.if_id }}"
-                                       class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"
-                                       onclick="return delete_btn()"><img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;
-                                    </a>
-                                </td>
-                            </tr>
-                            {#                            {% endfor %}#}
+                        {% for object in object_list %}
+                            {% for if in object.interface_list %}
+                                <tr>
+                                    <td id="cen">{{ if.if_id }}</td>
+                                    <td id="if_name"><a href="{% url 'base:interface_update' %}?if_id={{ if.if_id }}"
+                                                        class="layui-btn layui-btn-xs"
+                                                        lay-event="edit">{{ if.if_name }}</a></td>
+                                    <td id="cen">{{ if.project }}</td>
+                                    <td id="cen">{{ if.method }}</td>
+                                    <td id="cen">{{ if.data_type }}</td>
+                                    {% ifequal if.is_sign 0 %}
+                                        <td id="cen">不签名</td>
+                                    {% else %}
+                                        <td id="cen">签名</td>
+                                    {% endifequal %}
+                                    <td>{{ if.description }}</td>
+                                    <td>{{ if.response_header_param }}</td>
+                                    <td id="cen">{{ if.update_time }}</td>
+                                    <td id="cen">{{ if.update_user }}</td>
+                                    <td id="cen">
+                                        {#                                    <a href="/base/set_mock?if_id={{ if.if_id }}"#}
+                                        {#                                       class="layui-btn layui-btn-danger layui-btn-xs"><i class="fa fa-etsy"></i>&nbsp;&nbsp;&nbsp;#}
+                                        {#                                    </a>#}
+                                        <a href="{% url 'base:interface_copy' %}?if_id={{ if.if_id }}"
+                                           class="layui-btn layui-btn-danger layui-btn-xs"
+                                           onclick="return copy_btn()"><i class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;
+                                        </a>
+                                        <a href="{% url 'base:interface_delete' %}?if_id={{ if.if_id }}"
+                                           class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"
+                                           onclick="return delete_btn()"><img
+                                                src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
                         {% endfor %}
                         </tbody>
                     </table>

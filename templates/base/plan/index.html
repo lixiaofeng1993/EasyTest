@@ -46,6 +46,17 @@
     </style>
 {% endblock %}
 
+{% block nav %}
+    {% for object in object_list %}
+        {% for foo in object.model_list %}
+            <li><a href="{{ foo.url }}"><i class="{{ foo.icon }}"></i>{{ foo.model_name }}</a>
+            </li>
+        {% endfor %}
+
+    {% endfor %}
+
+{% endblock %}
+
 {% block crumbs %}
     <div class="row">
         <div class="col-md-12">
@@ -85,25 +96,27 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for plan in object_list %}
-                            {#                            {% for plan in plan_ %}#}
-                            <tr>
-                                <td id="cen">{{ plan.plan_id }}</td>
-                                <td id="plan-name"><a href="{% url 'base:plan_update' %}?plan_id={{ plan.plan_id }}"
-                                                      class="layui-btn layui-btn-xs"
-                                                      lay-event="edit">{{ plan.plan_name }}</a></td>
-                                <td id="cen" prj_id="{{ plan.project.prj_id }}">{{ plan.project }}</td>
-                                <td id="cen" env_id="{{ plan.environment.env_id }}">{{ plan.environment.env_name }}</td>
-                                <td id="plan-content">{{ plan.content }}</td>
-                                <td id="cen">{{ plan.is_locust }}</td>
-                                {#                                <td id="cen">{{ plan.is_task }}</td>#}
-                                <td>{{ plan.description }}</td>
-                                <td id="cen">{{ plan.update_time }}</td>
-                                <td id="cen">{{ plan.update_user }}</td>
-                                <td id="cen">
-                                    <a href="#" class="layui-btn layui-btn-danger layui-btn-xs"
-                                       onclick="debug_button(this);"
-                                       data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;</a>
+                        {% for object in object_list %}
+                            {% for plan in object.plan_list %}
+                                <tr>
+                                    <td id="cen">{{ plan.plan_id }}</td>
+                                    <td id="plan-name"><a href="{% url 'base:plan_update' %}?plan_id={{ plan.plan_id }}"
+                                                          class="layui-btn layui-btn-xs"
+                                                          lay-event="edit">{{ plan.plan_name }}</a></td>
+                                    <td id="cen" prj_id="{{ plan.project.prj_id }}">{{ plan.project }}</td>
+                                    <td id="cen"
+                                        env_id="{{ plan.environment.env_id }}">{{ plan.environment.env_name }}</td>
+                                    <td id="plan-content">{{ plan.content }}</td>
+                                    <td id="cen">{{ plan.is_locust }}</td>
+                                    {#                                <td id="cen">{{ plan.is_task }}</td>#}
+                                    <td>{{ plan.description }}</td>
+                                    <td id="cen">{{ plan.update_time }}</td>
+                                    <td id="cen">{{ plan.update_user }}</td>
+                                    <td id="cen">
+                                        <a href="#" class="layui-btn layui-btn-danger layui-btn-xs"
+                                           onclick="debug_button(this);"
+                                           data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;
+                                        </a>
                                         <a class="layui-btn layui-btn-danger layui-btn-xs"
                                            href="{% url 'base:report_page' %}?plan_id={{ plan.plan_id }}">
                                             <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;
@@ -112,8 +125,9 @@
                                            class="layui-btn layui-btn-danger layui-btn-xs"
                                            onclick="return delete_btn()">
                                             <img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
+                            {% endfor %}
                         {% endfor %}
                         </tbody>
                     </table>

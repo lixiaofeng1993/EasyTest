@@ -123,25 +123,30 @@
                     <li><a href="{% url 'index' %}" class=""><i class="fa fa-home"></i> <span
                             style="margin-left: 0">主页</span></a></li>
                     <li>
-                    <li><a href="{% url 'base:project' %}" class=""><i class="fa fa-product-hunt fa-fw"></i>项目管理</a>
-                    </li>
-                    <li><a href="{% url 'base:env' %}" class=""><i class="fa fa-envira fa-fw"></i>测试环境</a>
-                    </li>
-                    <li><a href="{% url 'base:interface' %}" class=""><i
-                            class="fa fa-pinterest-square fa-fw"></i>接口管理</a>
-                    </li>
-                    <li><a href="{% url 'base:case' %}" class=""><i class="fa fa-suitcase fa-fw"></i>用例管理</a>
-                    </li>
-                    <li><a href="{% url 'base:plan' %}" class=""><i class="fa fa-book fa-fw"></i>测试计划</a>
-                    </li>
-                    <li><a href="{% url 'base:task_index' %}" class=""><i class="fa fa-tasks fa-fw"></i>定时任务</a>
-                    </li>
-                    <li><a href="{% url 'base:report_page' %}" class=""><i class="fa fa-bar-chart fa-fw"></i>运行报告</a>
-                    </li>
-                    <li><a href="{% url 'base:performance' %}" class=""><i class="fa fa-book fa-fw"></i>性能测试</a>
-                    <li><a href="{% url 'base:sign' %}" class=""><i class="fa fa-pencil fa-fw"></i>签名方式</a>
-                    </li>
-                    <li><a href="{% url 'base:about' %}" class=""> <i class="fa fa-cog fa-cab"></i> 关于我们</a></li>
+                        {% block nav %}
+
+                        {% endblock %}
+                        {#                    <li><a href="{% url 'base:project' %}" class=""><i class="fa fa-product-hunt fa-fw"></i>项目管理</a>#}
+                        {#                    </li>#}
+                        {#                    <li><a href="{% url 'base:env' %}" class=""><i class="fa fa-envira fa-fw"></i>测试环境</a>#}
+                        {#                    </li>#}
+                        {#                    <li><a href="{% url 'base:interface' %}" class=""><i#}
+                        {#                            class="fa fa-pinterest-square fa-fw"></i>接口管理</a>#}
+                        {#                    </li>#}
+                        {#                    <li><a href="{% url 'base:case' %}" class=""><i class="fa fa-suitcase fa-fw"></i>用例管理</a>#}
+                        {#                    </li>#}
+                        {#                    <li><a href="{% url 'base:plan' %}" class=""><i class="fa fa-book fa-fw"></i>测试计划</a>#}
+                        {#                    </li>#}
+                        {#                    <li><a href="{% url 'base:task_index' %}" class=""><i class="fa fa-tasks fa-fw"></i>定时任务</a>#}
+                        {#                    </li>#}
+                        {#                    <li><a href="{% url 'base:report_page' %}" class=""><i class="fa fa-bar-chart fa-fw"></i>运行报告</a>#}
+                        {#                    </li>#}
+                        {#                    <li><a href="{% url 'base:performance' %}" class=""><i class="fa fa-book fa-fw"></i>性能测试</a>#}
+                        {#                    <li><a href="{% url 'base:sign' %}" class=""><i class="fa fa-pencil fa-fw"></i>签名方式</a>#}
+                        {#                    </li>#}
+                        {#                    <li><a href="{% url 'base:user' %}" class=""><i class="fa fa-user fa-fw"></i>用户管理</a>#}
+                        {#                    </li>#}
+                        {#                    <li><a href="{% url 'base:about' %}" class=""> <i class="fa fa-cog fa-cab"></i> 关于我们</a></li>#}
                 </ul>
             </nav>
         </div>

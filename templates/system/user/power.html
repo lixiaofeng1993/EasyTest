@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% block css %}
+    <style>
+        .power-div {
+            float: left;
+            margin-left: 5%;
+        }
+
+        #submit {
+            position: fixed;
+            bottom: 40%;
+            right: 10%;
+            z-index: 99;
+            border: none;
+            outline: none;
+            background-color: #1dc5a3;
+            cursor: pointer;
+            padding: 15px;
+            border-radius: 10px;
+        }
+
+        .btn-primary:hover {
+            color: red;
+        }
+    </style>
+{% endblock %}
+
+{% block nav %}
+    {% for object in model_nav %}
+        <li><a href="{{ object.url }}"><i class="{{ object.icon }}"></i>{{ object.model_name }}</a>
+        </li>
+    {% endfor %}
+
+{% endblock %}
+
+
+{% block crumbs %}
+    <div class="row">
+        <div class="col-md-12">
+            <ol class="breadcrumb">
+                <li class="active">
+                    <a class="this-page" href="{% url 'base:user' %}">用户管理</a>
+                </li>
+                <li class="active">
+                    <a class="this">权限设置</a>
+                </li>
+            </ol>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-heading">
+                    <h3 class="panel-title">权限设置</h3>
+                </div>
+                <div class="panel-body">
+                    <form class="form-horizontal" method="post" action="{% url 'base:user_power' %}"
+                          onsubmit="">
+                        <input name="user_id" value={{ id }} hidden>
+                        {% for foo in model %}
+                            <div class="power-div">
+
+                                {% if foo.make %}
+                                    <label class="fancy-radio">
+                                        <input name="power{{ foo.id }}" value="{{ foo.id }}" id="power"
+                                               onclick="checkboxOnclick(this)" type="radio" checked="checked">
+                                        <span><i></i>{{ foo.model_name }}</span>
+                                    </label>
+                                {% else %}
+                                    <label class="fancy-radio">
+                                        <input name="power{{ foo.id }}" value="{{ foo.id }}" id="power1"
+                                               type="radio" onclick="checkboxOnclick(this)">
+                                        <span><i></i>{{ foo.model_name }}</span>
+                                    </label>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="power-div">
+                            <label class="fancy-checkbox">
+                                <input name="qx" id="qx" type="checkbox">
+                                <span><i></i>全选</span>
+                            </label>
+                        </div>
+                        <div class="power-div">
+                            <label class="fancy-checkbox">
+                                <input name="qx" id="qf" type="checkbox">
+                                <span><i></i>取反</span>
+                            </label>
+                        </div>
+                        <div class="power-div">
+                            <label class="fancy-checkbox">
+                                <input name="qx" id="qbx" type="checkbox">
+                                <span><i></i>全不选</span>
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-offset-2 col-sm-6">
+                                <button type="submit" id="submit" class="btn btn-primary"><i
+                                        class="fa fa-save"></i>&nbsp;保存
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+{% endblock %}
+{% block javascript %}
+    <script type="text/javascript">
+        function checkboxOnclick(checkbox) {
+            var check = $("input[value='" + checkbox.value + "']");
+            if (checkbox.id == "power") {
+                check.prop('checked', false);
+                check.attr('id', "power1");
+            } else {
+                check.prop('checked', true);
+                check.attr('id', "power");
+            }
+        }
+        $("#qx").click(function () {
+            var check = $("input[type='radio']");
+            $("#qx").prop("checked", true);
+            $("#qf").prop("checked", false);
+            $("#qbx").prop("checked", false);
+            var num = check.length;
+            for (var i = 0; i < num; i++) {
+                // 取反自身的状态
+                {#                check[i].checked = !check[i].checked;#}
+                check[i].checked = true;
+            }
+
+        });
+        $("#qf").click(function () {
+            var check = $("input[type='radio']");
+            $("#qx").prop("checked", false);
+            $("#qf").prop("checked", true);
+            $("#qbx").prop("checked", false);
+            var num = check.length;
+            for (var i = 0; i < num; i++) {
+                // 取反自身的状态
+                check[i].checked = !check[i].checked;
+            }
+
+        });
+        $("#qbx").click(function () {
+            var check = $("input[type='radio']");
+            $("#qx").prop("checked", false);
+            $("#qf").prop("checked", false);
+            $("#qbx").prop("checked", true);
+            var num = check.length;
+            for (var i = 0; i < num; i++) {
+                // 取反自身的状态
+                check[i].checked = false;
+            }
+
+        })
+    </script>
+{% endblock %}

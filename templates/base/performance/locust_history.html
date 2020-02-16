@@ -46,12 +46,27 @@
     </style>
 {% endblock %}
 
+{% block nav %}
+    {% for object in model_list %}
+        <li><a href="{{ object.url }}"><i class="{{ object.icon }}"></i>{{ object.model_name }}</a>
+        </li>
+
+    {% endfor %}
+
+{% endblock %}
+
 {% block crumbs %}
     <div class="row">
         <div class="col-md-12">
             <ol class="breadcrumb">
                 <li class="active">
                     <a class="this-page" href="{% url 'base:performance_report' %}">性能测试</a>
+                </li>
+                <li class="active">
+                    <a class="this" href="{% url 'base:performance_report' %}">聚合报告</a>
+                </li>
+                <li class="active">
+                    <a class="this">实时数据</a>
                 </li>
             </ol>
 
@@ -65,7 +80,8 @@
             <div class="panel">
                 <div class="panel-heading">
                     <a class="this" href="{% url 'base:performance' %}" style="margin-left: 5%">Locust页面</a>
-                    <a class="this" href="{% url 'base:performance_report' %}" style="margin-left: 3%;border-bottom: 2px solid #409EFF;">聚合报告</a>
+                    <a class="this" href="{% url 'base:performance_report' %}"
+                       style="margin-left: 3%;border-bottom: 2px solid #409EFF;">聚合报告</a>
                     <a class="btn btn-primary" href="{% url 'base:performance_real' %}"
                        style="margin-left: 50%;margin-right: 3%">实时数据</a>
                     <a class="btn btn-primary">历史数据</a>

@@ -8,6 +8,15 @@
     </style>
 {% endblock %}
 
+{% block nav %}
+    {% for object in model_list %}
+        <li><a href="{{ object.url }}"><i class="{{ object.icon }}"></i>{{ object.model_name }}</a>
+        </li>
+
+    {% endfor %}
+
+{% endblock %}
+
 {% block crumbs %}
     <div class="row">
         <div class="col-md-12">

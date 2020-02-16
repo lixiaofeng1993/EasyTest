@@ -5,11 +5,12 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from .tasks import delete_logs, run_plan, stop_locust, test_httprunner, test_plan
 from django.http import StreamingHttpResponse
-from base.models import Project, Sign, Environment, Interface, Case, Plan, Report, LocustReport, DebugTalk
+from base.models import Project, Sign, Environment, Interface, Case, Plan, Report, LocustReport, DebugTalk, \
+    ModularTable, UserPower
 from django.contrib.auth.models import User  # django自带user
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from django.db.models import Q  # 与或非 查询
-from lib.execute import Test_execute, get_user, is_superuser  # 执行接口
+from lib.execute import Test_execute, get_user, is_superuser, limits_of_authority  # 执行接口
 from djcelery.models import PeriodicTask, CrontabSchedule, IntervalSchedule, PeriodicTasks
 from datetime import timedelta, datetime
 from lib.swagger import AnalysisJson
@@ -49,11 +50,15 @@ class ProjectIndex(ListView):
 
     def get_queryset(self):
         user_id = self.request.session.get('user_id', '')
-        superuser = User.objects.get(id=user_id).is_superuser
-        if superuser:
-            return Project.objects.all().order_by('-prj_id')
-        else:
-            return Project.objects.filter(user_id=user_id).order_by('-prj_id')
+        model_list = limits_of_authority(user_id)
+        project_list = Project.objects.all().order_by('-prj_id')
+        info = [{"model_list": model_list, "project_list": project_list}]
+        return info
+        # superuser = User.objects.get(id=user_id).is_superuser
+        # if superuser:
+        #     return Project.objects.all().order_by('-prj_id')
+        # else:
+        #     return Project.objects.filter(user_id=user_id).order_by('-prj_id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -105,7 +110,8 @@ def project_add(request):
                              update_time=datetime.now(), update_user="root"))
                 Sign.objects.bulk_create(querysetlist)
                 sign_list = Sign.objects.all()
-            info = {"sign_list": sign_list}
+            model_list = limits_of_authority(user_id)
+            info = {"sign_list": sign_list, "model_list": model_list}
             return render(request, "base/project/add.html", info)
 
 
@@ -143,12 +149,14 @@ def project_update(request):
         elif request.method == 'GET':
             prj_id = request.GET['prj_id']
             user_id_belong = Project.objects.get(prj_id=prj_id).user_id
+            model_list = limits_of_authority(user_id)
             if user_id == user_id_belong:
                 prj = Project.objects.get(prj_id=prj_id)
-                info = {"prj": prj, "sign_list": sign_list}
+                info = {"prj": prj, "sign_list": sign_list, "model_list": model_list}
                 return render(request, "base/project/update.html", info)
             else:
-                return render(request, "base/project/update.html", {'error': '非本人创建项目，不可以修改！'})
+                info = {'error': '非本人创建项目，不可以修改！', "model_list": model_list}
+                return render(request, "base/project/update.html", info)
 
 
 def project_delete(request):
@@ -180,6 +188,13 @@ class SignIndex(ListView):
 
     def dispatch(self, *args, **kwargs):
         return super(SignIndex, self).dispatch(*args, **kwargs)
+
+    def get_queryset(self):
+        user_id = self.request.session.get('user_id', '')
+        model_list = limits_of_authority(user_id)
+        sign_list = Sign.objects.all().order_by("-sign_id")
+        info = [{"model_list": model_list, "sign_list": sign_list}]
+        return info
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -218,7 +233,8 @@ def sign_add(request):
                 log.info('add sign   {}  success.  sign info： {} '.format(sign_name, description))
                 return HttpResponseRedirect("/base/sign/")
         elif request.method == 'GET':
-            return render(request, "system/sign/sign_add.html")
+            model_list = limits_of_authority(user_id)
+            return render(request, "system/sign/sign_add.html", {"model_list": model_list})
 
 
 def sign_update(request):
@@ -253,7 +269,8 @@ def sign_update(request):
         elif request.method == 'GET':
             sign_id = request.GET['sign_id']
             sign = Sign.objects.get(sign_id=sign_id)
-            info = {"sign": sign}
+            model_list = limits_of_authority(user_id)
+            info = {"sign": sign, "model_list": model_list}
             return render(request, "system/sign/sign_update.html", info)
 
 
@@ -289,8 +306,10 @@ class EnvIndex(ListView):
 
     def get_queryset(self):
         user_id = self.request.session.get('user_id', '')
-        prj_list = is_superuser(user_id, type='list')
-        return Environment.objects.filter(project_id__in=prj_list).order_by('-env_id')
+        model_list = limits_of_authority(user_id)
+        env_list = Environment.objects.all().order_by('-env_id')
+        info = [{"model_list": model_list, "env_list": env_list}]
+        return info
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -319,6 +338,7 @@ def set_headers(request):
             env = Environment.objects.get(env_id=env_id)
             env_name = env.env_name
             set_header = env.set_headers
+            model_list = limits_of_authority(user_id)
             if make:
                 if set_header:
                     set_header = eval(set_header)['header']
@@ -326,7 +346,7 @@ def set_headers(request):
                 else:
                     return JsonResponse('0', safe=False)
             else:
-                info = {'env_id': env_id, 'env_name': env_name, 'env': set_header}
+                info = {'env_id': env_id, 'env_name': env_name, 'env': set_header, "model_list": model_list}
                 return render(request, "base/env/set_headers.html", info)
         elif request.method == 'POST':
             content = request.POST.get('content', '')
@@ -362,6 +382,7 @@ def set_mock(request):
             interface = Interface.objects.get(if_id=if_id)
             if_name = interface.if_name
             set_mock = interface.set_mock
+            model_list = limits_of_authority(user_id)
             if make:
                 if set_mock:
                     set_mock = eval(set_mock)['mock']
@@ -369,7 +390,7 @@ def set_mock(request):
                 else:
                     return JsonResponse('0', safe=False)
             else:
-                info = {'if_id': if_id, 'if_name': if_name, 'env': set_mock}
+                info = {'if_id': if_id, 'if_name': if_name, 'env': set_mock, "model_list": model_list}
                 return render(request, "base/interface/set_mock.html", info)
         elif request.method == 'POST':
             content = request.POST.get('content', '')
@@ -392,8 +413,8 @@ def env_add(request):
         request.session['login_from'] = '/base/env/'
         return render(request, 'user/login_action.html')
     else:
+        prj_list = Project.objects.all()
         if request.method == 'POST':
-            prj_list = is_superuser(user_id)
             env_name = request.POST['env_name'].strip()
             url = request.POST['url'].strip()
 
@@ -418,8 +439,8 @@ def env_add(request):
                          .format(env_name, project, url, private_key, description, is_swagger))
                 return HttpResponseRedirect("/base/env/")
         elif request.method == 'GET':
-            prj_list = is_superuser(user_id)
-            info = {"prj_list": prj_list}
+            model_list = limits_of_authority(user_id)
+            info = {"prj_list": prj_list, "model_list": model_list}
             return render(request, "base/env/add.html", info)
 
 
@@ -434,8 +455,8 @@ def env_update(request):
         request.session['login_from'] = '/base/env/'
         return render(request, 'user/login_action.html')
     else:
+        prj_list = Project.objects.all()
         if request.method == 'POST':
-            prj_list = is_superuser(user_id)
             env_id = request.POST['env_id']
             env_name = request.POST['env_name'].strip()
             url = request.POST['url'].strip()
@@ -464,10 +485,10 @@ def env_update(request):
                          .format(env_name, project, url, private_key, description, is_swagger))
                 return HttpResponseRedirect("/base/env/")
         elif request.method == 'GET':
-            prj_list = is_superuser(user_id)
             env_id = request.GET['env_id']
             env = Environment.objects.get(env_id=env_id)
-            info = {"env": env, "prj_list": prj_list}
+            model_list = limits_of_authority(user_id)
+            info = {"env": env, "prj_list": prj_list, "model_list": model_list}
             return render(request, "base/env/update.html", info)
 
 
@@ -502,8 +523,10 @@ class InterfaceIndex(ListView):
 
     def get_queryset(self):
         user_id = self.request.session.get('user_id', '')
-        prj_list = is_superuser(user_id, type='list')
-        return Interface.objects.filter(project_id__in=prj_list).order_by('-if_id')
+        model_list = limits_of_authority(user_id)
+        interface_list = Interface.objects.all().order_by('-if_id')
+        info = [{"model_list": model_list, "interface_list": interface_list}]
+        return info
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -572,27 +595,23 @@ def interface_search(request):
             if not search:
                 return HttpResponse('0')
             else:
-                prj_list = is_superuser(user_id, type='list')
                 if search in ['get', 'post', 'delete', 'put']:  # 请求方式查询
-                    interface_list = Interface.objects.filter(method__contains=search).filter(project_id__in=prj_list)
+                    interface_list = Interface.objects.filter(method__contains=search)
                 elif search in ['data', 'json']:  # 数据传输类型查询
-                    interface_list = Interface.objects.filter(data_type__contains=search).filter(
-                        project_id__in=prj_list)
+                    interface_list = Interface.objects.filter(data_type__contains=search)
                 else:
                     try:
                         if isinstance(int(search), int):
                             if search in ['0', '1']:  # 设置header、签名查询
                                 interface_list = Interface.objects.filter(
                                     Q(is_header=search) | Q(is_sign=search) | Q(if_id__exact=search) | Q(
-                                        if_name__contains=search)).filter(project_id__in=prj_list)
+                                        if_name__contains=search))
                             else:  # ID查询
                                 interface_list = Interface.objects.filter(
-                                    Q(if_id__exact=search) | Q(if_name__contains=search)).filter(
-                                    project_id__in=prj_list)
+                                    Q(if_id__exact=search) | Q(if_name__contains=search))
                     except ValueError:
                         interface_list = Interface.objects.filter(
-                            Q(if_name__contains=search) | Q(project__prj_name__contains=search)).filter(
-                            project_id__in=prj_list)  # 接口名称、项目名称查询
+                            Q(if_name__contains=search) | Q(project__prj_name__contains=search))  # 接口名称、项目名称查询
                 if not interface_list:  # 查询为空
                     return HttpResponse('1')
                 else:
@@ -657,8 +676,9 @@ def interface_add(request):
                             request_body_data, is_headers))
             return HttpResponseRedirect("/base/interface/")
         elif request.method == 'GET':
-            prj_list = is_superuser(user_id)
-            info = {"prj_list": prj_list}
+            prj_list = Project.objects.all()
+            model_list = limits_of_authority(user_id)
+            info = {"prj_list": prj_list, "model_list": model_list}
             return render(request, "base/interface/add.html", info)
 
 
@@ -716,7 +736,7 @@ def interface_update(request):
                         request_body_data, is_headers))
                 return HttpResponseRedirect("/base/interface/")
         elif request.method == 'GET':
-            prj_list = is_superuser(user_id)
+            prj_list = Project.objects.all()
             if_id = request.GET['if_id']
             interface = Interface.objects.get(if_id=if_id)
             request_header_param_list = interface_get_params(interface.request_header_param)
@@ -724,9 +744,10 @@ def interface_update(request):
             # response_header_param_list = interface_get_params(interface.response_header_param)
             # response_body_param_list = interface_get_params(interface.response_body_param)
             method, is_sign, is_headers, mock = format_params(interface)
+            model_list = limits_of_authority(user_id)
             info = {"interface": interface, 'request_header_param_list': request_header_param_list,
                     'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                    'is_headers': is_headers, 'mock': mock, "prj_list": prj_list}
+                    'is_headers': is_headers, 'mock': mock, "prj_list": prj_list, "model_list": model_list}
             return render(request, "base/interface/update.html", info)
 
 
@@ -788,7 +809,6 @@ class BatchInterface(threading.Thread):
             log.info(datetime.now().strftime('%Y-%m-%d %H:%M:%S') + " {} ==== BatchInterface ".format(self.getName(), ))
             if_name = value.get('name', '').strip()
             method = value.get('method', '')
-            prj_list = is_superuser(self.user_id, type='list')
             tags = value.get('tags', '')
             url = value.get('url', '')
             data_type = value.get('type', '')
@@ -820,8 +840,7 @@ class BatchInterface(threading.Thread):
                     request_body_data.append(body_data)
             project = Project.objects.get(prj_id=int(project_id))
             username = self.request.session.get('user', '')
-            interface_list = Interface.objects.filter(if_name=if_name).filter(url=url).filter(method=method).filter(
-                project_id__in=prj_list)
+            interface_list = Interface.objects.filter(if_name=if_name).filter(url=url).filter(method=method)
             if interface_list:
                 for name in interface_list:
                     Interface.objects.filter(if_id=name.if_id).update(if_name=if_name, url=url, project=project,
@@ -867,8 +886,7 @@ def batch_index(request):
             # Plan.objects.all().delete()  # 清空计划表
             # Report.objects.all().delete()  # 清空报告表
             try:
-                prj_list = is_superuser(user_id, type='list')
-                env = Environment.objects.filter(project_id__in=prj_list).get(is_swagger=1)
+                env = Environment.objects.get(is_swagger=1)
                 env_url = env.url
                 prj_id = env.project_id
                 interface = AnalysisJson(prj_id, env_url).retrieve_data()
@@ -896,8 +914,10 @@ class CaseIndex(ListView):
 
     def get_queryset(self):
         user_id = self.request.session.get('user_id', '')
-        prj_list = is_superuser(user_id, type='list')
-        return Case.objects.filter(project_id__in=prj_list).order_by('-case_id')
+        case_list = Case.objects.all().order_by('-case_id')
+        model_list = limits_of_authority(user_id)
+        info = [{"model_list": model_list, "case_list": case_list}]
+        return info
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -942,8 +962,9 @@ def case_add(request):
                                                                                      content, weight))
                 return HttpResponseRedirect("/base/case/")
         elif request.method == 'GET':
-            prj_list = is_superuser(user_id)
-            info = {"prj_list": prj_list}
+            prj_list = Project.objects.all()
+            model_list = limits_of_authority(user_id)
+            info = {"prj_list": prj_list, "model_list": model_list}
             return render(request, "base/case/add.html", info)
 
 
@@ -981,10 +1002,10 @@ def case_update(request):
                          .format(case_name, project, description, content, weight))
                 return HttpResponseRedirect("/base/case/")
         elif request.method == 'GET':
-            prj_list = is_superuser(user_id)
+            prj_list = Project.objects.all()
             case_id = request.GET['case_id']
             case = Case.objects.get(case_id=case_id)
-            interface = Interface.objects.filter(project_id=case.project_id).all().values()
+            interface = Interface.objects.all().values()
             if_list = ''
             for i in eval(case.content):
                 if_list += i['if_id'] + ','
@@ -997,8 +1018,9 @@ def case_update(request):
             interface_list = []  # 返回所有接口
             for i in interface:
                 interface_list.append(i)
+            model_list = limits_of_authority(user_id)
             info = {"prj_list": prj_list, 'case': case, 'interface': interface, 'case_id': case_id,
-                    'if_id': if_id, 'if_list': str(if_list), 'if_name': if_name}
+                    'if_id': if_id, 'if_list': str(if_list), 'if_name': if_name, "model_list": model_list}
             return render_to_response('base/case/update.html', info)
 
 
@@ -1070,44 +1092,40 @@ def case_logs(request):
         request.session['login_from'] = '/base/case/'
         return render(request, 'user/login_action.html')
     else:
-        superuser = User.objects.get(id=user_id).is_superuser
-        if superuser:
-            log_file_list = os.listdir(logs_path)
-            data_list = []
-            file_list = []
-            now = time.strftime('%Y-%m-%d')
+        log_file_list = os.listdir(logs_path)
+        data_list = []
+        file_list = []
+        now = time.strftime('%Y-%m-%d')
+        for file in log_file_list:
+            if 'all' in file and now in file:
+                file_list.append(file)
+        if not file_list:
+            yesterday = datetime.today() + timedelta(-1)
+            yesterday_format = yesterday.strftime('%Y-%m-%d')
             for file in log_file_list:
-                if 'all' in file and now in file:
+                if 'all' in file and yesterday_format in file:
                     file_list.append(file)
-            if not file_list:
-                yesterday = datetime.today() + timedelta(-1)
-                yesterday_format = yesterday.strftime('%Y-%m-%d')
-                for file in log_file_list:
-                    if 'all' in file and yesterday_format in file:
-                        file_list.append(file)
-            try:
-                file_list.sort()
-                log_file = os.path.join(logs_path, file_list[0])
-            except IndexError:
-                for file in log_file_list:
-                    if 'all' in file:
-                        file_list.append(file)
-                file_list.sort()
-                log_file = os.path.join(logs_path, file_list[-1])
-            with open(log_file, 'rb') as f:
-                off = -1024 * 1024
-                if f.tell() < -off:
-                    data = f.readlines()
-                else:
-                    f.seek(off, 2)
-                    data = f.readlines()
-                for line in data:
-                    data_list.append(line.decode())
-                info = {'data': data_list, 'make': True, 'log_file': log_file}
-                log.info('case_logs 查询日志文件名称 ===========================>>> {}'.format(log_file))
-                return render(request, 'base/case/log.html', info)
-        else:
-            info = {'data': '0', 'make': True, 'log_file': ''}
+        try:
+            file_list.sort()
+            log_file = os.path.join(logs_path, file_list[0])
+        except IndexError:
+            for file in log_file_list:
+                if 'all' in file:
+                    file_list.append(file)
+            file_list.sort()
+            log_file = os.path.join(logs_path, file_list[-1])
+        with open(log_file, 'rb') as f:
+            off = -1024 * 1024
+            if f.tell() < -off:
+                data = f.readlines()
+            else:
+                f.seek(off, 2)
+                data = f.readlines()
+            for line in data:
+                data_list.append(line.decode())
+            model_list = limits_of_authority(user_id)
+            info = {'data': data_list, 'make': True, 'log_file': log_file, "model_list": model_list}
+            log.info('case_logs 查询日志文件名称 ===========================>>> {}'.format(log_file))
             return render(request, 'base/case/log.html', info)
 
 
@@ -1169,8 +1187,10 @@ class PlanIndex(ListView):
 
     def get_queryset(self):
         user_id = self.request.session.get('user_id', '')
-        prj_list = is_superuser(user_id, type='list')
-        return Plan.objects.filter(project_id__in=prj_list).order_by('-plan_id')
+        model_list = limits_of_authority(user_id)
+        plan_list = Plan.objects.all().order_by('-plan_id')
+        info = [{"model_list": model_list, "plan_list": plan_list}]
+        return info
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1193,8 +1213,8 @@ def plan_add(request):
         request.session['login_from'] = '/base/plan/'
         return render(request, 'user/login_action.html')
     else:
+        prj_list = Project.objects.all()
         if request.method == 'POST':
-            prj_list = is_superuser(user_id)
             plan_name = request.POST['plan_name'].strip()
             content = request.POST.getlist("case_id")
 
@@ -1219,8 +1239,8 @@ def plan_add(request):
                          format(plan_name, project, environment, description, content, is_locust))
                 return HttpResponseRedirect("/base/plan/")
         elif request.method == 'GET':
-            prj_list = is_superuser(user_id)
-            info = {"prj_list": prj_list}
+            model_list = limits_of_authority(user_id)
+            info = {"prj_list": prj_list, "model_list": model_list}
             return render(request, "base/plan/add.html", info)
 
 
@@ -1235,8 +1255,8 @@ def plan_update(request):
         request.session['login_from'] = '/base/plan/'
         return render(request, 'user/login_action.html')
     else:
+        prj_list = Project.objects.all()
         if request.method == 'POST':
-            prj_list = is_superuser(user_id)
             plan_id = request.POST['plan_id']
             plan_name = request.POST['plan_name'].strip()
             content = request.POST.getlist("case_id")
@@ -1275,7 +1295,6 @@ def plan_update(request):
                                                                                       description, content))
                 return HttpResponseRedirect("/base/plan/")
         elif request.method == 'GET':
-            prj_list = is_superuser(user_id)
             plan_id = request.GET['plan_id']
             plan = Plan.objects.get(plan_id=plan_id)
             environments = Environment.objects.filter(project_id=plan.project_id).all().values()
@@ -1292,7 +1311,9 @@ def plan_update(request):
                     return render(request, "base/plan/index.html",
                                   {"contacts": contacts,
                                    'error': '计划 {} 中的 用例 {} 已被删除！！！'.format(plan.plan_name, case_id)})
-            info = {"prj_list": prj_list, 'plan': plan, 'case_list': case_list, 'environments': environments}
+            model_list = limits_of_authority(user_id)
+            info = {"prj_list": prj_list, 'plan': plan, 'case_list': case_list, 'environments': environments,
+                    "model_list": model_list}
             return render(request, "base/plan/update.html", info)
 
 
@@ -1354,7 +1375,11 @@ class TaskIndex(ListView):
         return super(TaskIndex, self).dispatch(*args, **kwargs)
 
     def get_queryset(self):
-        return PeriodicTask.objects.all().order_by('-id')
+        user_id = self.request.session.get('user_id', '')
+        model_list = limits_of_authority(user_id)
+        task_list = PeriodicTask.objects.all().order_by('-id')
+        info = [{"model_list": model_list, "task_list": task_list}]
+        return info
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1407,26 +1432,23 @@ def task_logs(request):
         request.session['login_from'] = '/base/case/'
         return render(request, 'user/login_action.html')
     else:
-        superuser = User.objects.get(id=user_id).is_superuser
-        if superuser:
-            if platform.system() != 'Windows':
-                task_log_path = '/www/wwwlogs/celery_worker.log'
-            else:
-                return render(request, 'system/task/log.html', {'data': '0', 'make': True, 'log_file': ''})
-            data_list = []
-            with open(task_log_path, 'rb') as f:
-                off = -1024 * 1024
-                if f.tell() < -off:
-                    data = f.readlines()
-                else:
-                    f.seek(off, 2)
-                    data = f.readlines()
-                for line in data:
-                    data_list.append(line.decode())
-                return render(request, 'system/task/log.html',
-                              {'data': data_list, 'make': True, 'log_file': task_log_path})
+        model_list = limits_of_authority(user_id)
+        if platform.system() != 'Windows':
+            task_log_path = '/www/wwwlogs/celery_worker.log'
         else:
-            return render(request, 'system/task/log.html', {'data': '0', 'make': True, 'log_file': ''})
+            return render(request, 'system/task/log.html', {'unicode': True, "model_list": model_list})
+        data_list = []
+        with open(task_log_path, 'rb') as f:
+            off = -1024 * 1024
+            if f.tell() < -off:
+                data = f.readlines()
+            else:
+                f.seek(off, 2)
+                data = f.readlines()
+            for line in data:
+                data_list.append(line.decode())
+            info = {'data': data_list, 'make': True, 'log_file': task_log_path, "model_list": model_list}
+            return render(request, 'system/task/log.html', info)
 
 
 # 增加定时任务
@@ -1437,14 +1459,11 @@ def task_add(request):
         return render(request, 'user/login_action.html')
     else:
         if request.method == "GET":
-            superuser = is_superuser(user_id=user_id, make=False)
-            if superuser:
-                interval_list = IntervalSchedule.objects.all()
-                crontab_list = CrontabSchedule.objects.all()
-                info = {"interval_list": interval_list, "crontab_list": crontab_list}
-                return render(request, 'system/task/add.html', info)
-            else:
-                return render(request, 'system/task/add.html', {"permission_error": "没有权限，请联系管理员获取！"})
+            interval_list = IntervalSchedule.objects.all()
+            crontab_list = CrontabSchedule.objects.all()
+            model_list = limits_of_authority(user_id)
+            info = {"interval_list": interval_list, "crontab_list": crontab_list, "model_list": model_list}
+            return render(request, 'system/task/add.html', info)
         elif request.method == "POST":
             task_name = request.POST.get("task_name", "")
             plan_id = request.POST.get("plan_id", "")
@@ -1537,9 +1556,6 @@ def task_update(request):
         return render(request, 'user/login_action.html')
     else:
         if request.method == "GET":
-            superuser = is_superuser(user_id=user_id, make=False)
-            if not superuser:
-                return render(request, 'system/task/add.html', {"permission_error": "没有权限，请联系管理员获取！"})
             task_id = request.build_absolute_uri().split("/")[-1]
             periodic = PeriodicTask.objects.get(id=task_id)
             interval_list = IntervalSchedule.objects.all()
@@ -1560,8 +1576,9 @@ def task_update(request):
                 except Plan.DoesNotExist:
                     return render(request, "system/task/task_index.html", {"error": "任务中的计划 {} 已删除！".format(plan_id)})
                 plan_list.append(plan)
+            model_list = limits_of_authority(user_id)
             info = {"interval_list": interval_list, "periodic": periodic, "plan_list": plan_list, "interval": interval,
-                    "crontab_list": crontab_list, "crontab": crontab}
+                    "crontab_list": crontab_list, "crontab": crontab, "model_list": model_list}
             return render(request, 'system/task/update.html', info)
         elif request.method == "POST":
             task_name = request.POST.get("task_name", "")
@@ -1681,16 +1698,15 @@ class ReportPage(ListView):
     def get_queryset(self):
         self.plan_id = self.request.GET.dict().get('plan_id', '')
         user_id = self.request.session.get('user_id', '')
+        model_list = limits_of_authority(user_id)
         if self.plan_id:
-            return Report.objects.filter(plan_id=self.plan_id).order_by('-report_id')
+            report_list = Report.objects.filter(plan_id=self.plan_id).order_by('-report_id')
+            info = [{"model_list": model_list, "report_list": report_list}]
+            return info
         else:
-            plan_list = []
-            prj_list = is_superuser(user_id, type='list')
-            plan = Plan.objects.filter(project_id__in=prj_list)
-            for plan_ in plan:
-                plan_list.append(plan_.plan_id)
-            # return Report.objects.filter(plan_id__in=plan_list).order_by('-report_id')
-            return Report.objects.all().order_by('-report_id')
+            report_list = Report.objects.all().order_by('-report_id')
+            info = [{"model_list": model_list, "report_list": report_list}]
+            return info
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1715,24 +1731,19 @@ def report_logs(request):
         return render(request, 'user/login_action.html')
     else:
         report_id = request.GET.get('report_id')
+        model_list = limits_of_authority(user_id)
         try:
             report = Report.objects.get(report_id=report_id)
         except Report.DoesNotExist:
-            return render(request, "base/report_page/log.html")
+            return render(request, "base/report_page/log.html", {"model_list": model_list})
         else:
             report_content = eval(report.content.replace('Markup', ''))
             for case in report_content:
                 global class_name
                 class_name = case['class_name']
-            superuser = User.objects.get(id=user_id).is_superuser
-            if superuser:
-                info = {"report": report, 'plan_id': report.plan_id, "report_content": report_content,
-                        'class_name': class_name, 'is_superuser': superuser}
-                return render(request, "base/report_page/log.html", info)
-            else:
-                info = {"report": report, 'plan_id': report.plan_id, "report_content": report_content,
-                        'class_name': class_name, 'is_superuser': ''}
-                return render(request, "base/report_page/log.html", info)
+            info = {"report": report, 'plan_id': report.plan_id, "report_content": report_content,
+                    'class_name': class_name, "model_list": model_list}
+            return render(request, "base/report_page/log.html", info)
 
 
 def report_index(request):
@@ -1917,7 +1928,8 @@ def performance_index(request):
                 status = debug.status
             except DebugTalk.DoesNotExist:
                 status = 0
-            info = {"debug": settings.DEBUG, "status": status}
+            model_list = limits_of_authority(user_id)
+            info = {"debug": settings.DEBUG, "status": status, "model_list": model_list}
             return render(request, 'base/performance/performance.html', info)
         else:
             request.session['login_from'] = '/base/performance/'
@@ -2008,11 +2020,13 @@ def performance_report(request):
         request.session['login_from'] = '/base/performance_report/'
         return render(request, 'user/login_action.html')
     else:
+        model_list = limits_of_authority(user_id)
         if request.method == 'GET':
             try:
                 res = requests.get('http://localhost:8089/stats/requests')
                 res = res.json()
-                return render(request, 'base/performance/locust_report.html', {'info': res})
+                info = {'info': res, "model_list": model_list}
+                return render(request, 'base/performance/locust_report.html', info)
             except requests.exceptions.ConnectionError:
                 locust_report = LocustReport.objects.all().order_by('-id')[:1]
                 if locust_report:
@@ -2021,10 +2035,12 @@ def performance_report(request):
                         slave_list = eval(report.slaves)
                         return render(request, 'base/performance/locust_report.html',
                                       {'locust_report': locust_report, 'stats_list': stats_list,
-                                       'slave_list': slave_list})
+                                       'slave_list': slave_list, "model_list": model_list})
                 else:
-                    return render(request, 'base/performance/locust_report.html', {'error': '请先执行locust性能测试！'})
-        return render(request, 'base/performance/locust_report.html', {'error': '额，数据丢失了呢！'})
+                    info = {'error': '请先执行locust性能测试！', "model_list": model_list}
+                    return render(request, 'base/performance/locust_report.html', info)
+        info = {'error': '额，数据丢失了呢！', "model_list": model_list}
+        return render(request, 'base/performance/locust_report.html', info)
 
 
 def performance_real(request):
@@ -2034,10 +2050,12 @@ def performance_real(request):
         return render(request, 'user/login_action.html')
     else:
         if request.method == 'GET':
+            model_list = limits_of_authority(user_id)
             try:
                 res = requests.get('http://localhost:8089/stats/requests')
             except requests.exceptions.ConnectionError:
-                return render(request, 'base/performance/locust_real.html', {'error': '未运行locust，无法获取实时数据！'})
+                info = {'error': '未运行locust，无法获取实时数据！', "model_list": model_list}
+                return render(request, 'base/performance/locust_real.html', info)
             res = res.json()
             current_response_time_percentile_50 = res.get('current_response_time_percentile_50', '0.0')
             current_response_time_percentile_95 = res.get('current_response_time_percentile_95', '0.0')
@@ -2054,8 +2072,9 @@ def performance_real(request):
                                          errors=errors, fail_ratio=fail_ratio, slaves=slaves, state=state, stats=stats,
                                          total_rps=total_rps, user_count=user_count, update_user=username)
             locust_report.save()
+            info = {'info': res, "model_list": model_list}
             log.info('用户 {} ，查看性能测试实时数据 并 写入到数据库中.'.format(user_id))
-            return render(request, 'base/performance/locust_real.html', {'info': res})
+            return render(request, 'base/performance/locust_real.html', info)
 
 
 def performance_history(request):
@@ -2070,8 +2089,10 @@ def performance_history(request):
             for report in locust_report:
                 stats = report.stats
                 stats_list.append(eval(stats))
+            model_list = limits_of_authority(user_id)
+            info = {'info': stats_list, "model_list": model_list}
             log.info('用户 {} ，正在查看性能测试历史数据.'.format(user_id))
-            return render(request, 'base/performance/locust_history.html', {'info': stats_list})
+            return render(request, 'base/performance/locust_history.html', info)
 
 
 def performance_delete(request):
@@ -2118,7 +2139,11 @@ class UserIndex(ListView):
         return super(UserIndex, self).dispatch(*args, **kwargs)
 
     def get_queryset(self):
-        return User.objects.all().order_by('-id')
+        user_id = self.request.session.get('user_id', '')
+        model_list = limits_of_authority(user_id)
+        user_list = User.objects.all().order_by('-id')
+        info = [{"model_list": model_list, "user_list": user_list}]
+        return info
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -2130,6 +2155,49 @@ class UserIndex(ListView):
         return context
 
 
+def user_power(request):
+    user_id = request.session.get('user_id', '')
+    if not get_user(user_id):
+        request.session['login_from'] = '/base/user/'
+        return render(request, 'user/login_action.html')
+    else:
+        if request.method == "GET":
+            patt = re.compile("\/(\d+)\/")
+            id = patt.findall(request.get_full_path())[0]
+            model_nav = limits_of_authority(user_id)
+            model_list = []
+            try:
+                power_list = UserPower.objects.get(user_id=id).power
+                model = ModularTable.objects.filter(id__in=json.loads(power_list))
+                exclude = ModularTable.objects.all().exclude(id__in=json.loads(power_list))
+                for foo in model:
+                    model_list.append(
+                        {"id": foo.id, "model_name": foo.model_name, "url": foo.url, "icon": foo.Icon, "make": True})
+                for foo in exclude:
+                    model_list.append(
+                        {"id": foo.id, "model_name": foo.model_name, "url": foo.url, "icon": foo.Icon, "make": False})
+            except UserPower.DoesNotExist:
+                model = ModularTable.objects.all()
+                for foo in model:
+                    model_list.append(
+                        {"id": foo.id, "model_name": foo.model_name, "url": foo.url, "icon": foo.Icon, "make": False})
+            info = {"model": model_list, "id": id, "model_nav": model_nav}
+            return render(request, 'system/user/power.html', info)
+        if request.method == "POST":
+            body = request.body.decode("utf-8")
+            patt = re.compile("power\d+=(\d+)")
+            user_patt = re.compile("user_id=(\d+)")
+            power = patt.findall(body)
+            id = user_patt.findall(body)[0]
+            try:
+                user = UserPower.objects.get(user_id=id)
+                user.power = json.dumps(power)
+                user.save()
+            except UserPower.DoesNotExist:
+                UserPower.objects.create(user_id=id, power=json.dumps(power))
+            return HttpResponseRedirect("/base/user/")
+
+
 def about_index(request):
     """
     关于我们
@@ -2138,7 +2206,8 @@ def about_index(request):
     """
     user_id = request.session.get('user_id', '')
     if get_user(user_id):
-        return render(request, 'system/about/about_us.html')
+        model_list = limits_of_authority(user_id)
+        return render(request, 'system/about/about_us.html', {"model_list": model_list})
 
     else:
         request.session['login_from'] = '/base/about/'
@@ -2157,7 +2226,6 @@ def document(request):
         return render(request, 'user/login_action.html')
     else:
         document_dir = '/var/lib/jenkins/workspace/EasyTest/media/'
-        # document_dir = r'C:\Users\liyongfeng\Desktop\密钥'
         document_list = os.listdir(document_dir)
         file_list = []
         num = 0

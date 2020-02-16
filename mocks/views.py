@@ -35,7 +35,7 @@ def mock_api(request):
             msg = json.dumps(msg)
             return HttpResponse(msg)
         else:
-            prj_list = is_superuser(user_id)
+            prj_list = Project.objects.all()
             api_name = request.GET.get('api_name', '')
             if api_name:
                 api_info = Api.objects.filter(name__contains=api_name)
