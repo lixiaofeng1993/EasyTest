@@ -1433,22 +1433,25 @@ def task_logs(request):
         return render(request, 'user/login_action.html')
     else:
         model_list = limits_of_authority(user_id)
+        data_list = []
         if platform.system() != 'Windows':
             task_log_path = '/www/wwwlogs/celery_worker.log'
+            if os.path.exists(task_log_path):
+                with open(task_log_path, 'rb') as f:
+                    off = -1024 * 1024
+                    if f.tell() < -off:
+                        data = f.readlines()
+                    else:
+                        f.seek(off, 2)
+                        data = f.readlines()
+                    for line in data:
+                        data_list.append(line.decode())
+                    info = {'data': data_list, 'make': True, 'log_file': task_log_path, "model_list": model_list}
+                    return render(request, 'system/task/log.html', info)
+            else:
+                return render(request, 'system/task/log.html', {'unicode': True, "model_list": model_list})
         else:
             return render(request, 'system/task/log.html', {'unicode': True, "model_list": model_list})
-        data_list = []
-        with open(task_log_path, 'rb') as f:
-            off = -1024 * 1024
-            if f.tell() < -off:
-                data = f.readlines()
-            else:
-                f.seek(off, 2)
-                data = f.readlines()
-            for line in data:
-                data_list.append(line.decode())
-            info = {'data': data_list, 'make': True, 'log_file': task_log_path, "model_list": model_list}
-            return render(request, 'system/task/log.html', info)
 
 
 # 增加定时任务
@@ -2358,19 +2361,21 @@ def findata(request):
             data_list = []
             if platform.system() != 'Windows':
                 task_log_path = '/www/wwwlogs/celery_worker.log'
+                if os.path.exists(task_log_path):
+                    with open(task_log_path, 'r', encoding='utf-8') as f:
+                        off = -1024 * 1024
+                        if f.tell() < -off:
+                            data = f.readlines()
+                        else:
+                            f.seek(off, 2)
+                            data = f.readlines()
+                    for i in data:
+                        data_list.append(i.replace('True', 'true').replace('False', 'false').replace('None', 'null'))
+                    return JsonResponse(data_list, safe=False)
+                else:
+                    return JsonResponse(data_list, safe=False)
             else:
                 return JsonResponse(data_list, safe=False)
-
-            with open(task_log_path, 'r', encoding='utf-8') as f:
-                off = -1024 * 1024
-                if f.tell() < -off:
-                    data = f.readlines()
-                else:
-                    f.seek(off, 2)
-                    data = f.readlines()
-            for i in data:
-                data_list.append(i.replace('True', 'true').replace('False', 'false').replace('None', 'null'))
-            return JsonResponse(data_list, safe=False)
     elif request.method == 'POST':
         get_type = request.POST.get("type", '')
         if get_type == 'analysis_request_header_json':
