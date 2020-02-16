@@ -116,8 +116,13 @@
                         {% endif %}
 
                         <div id="log" style="margin: 1% 1%">
-                            <p><span
-                                    id="plan_name">{{ report.plan }}</span> 运行日志：</p><br>
+                            {% if report.plan %}
+                                <p><span
+                                        id="plan_name">{{ report.plan }}</span> 运行日志：</p><br>
+                            {% else %}
+                                <p><span
+                                        id="plan_name">{{ report.task }}</span> 运行日志：</p><br>
+                            {% endif %}
                             {% for case in report_content %}
                                 <p>&nbsp;&nbsp;正在运行用例：<span
                                         id="case_name">{{ case.case_name }}</span></p>
