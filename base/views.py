@@ -2355,8 +2355,12 @@ def findata(request):
             log.info('get_log 查询日志文件名称 ===========================>>> {}'.format(log_file))
             return JsonResponse(data_list, safe=False)
         if get_type == 'get_task_log':
-            task_log_path = '/var/celery_logs/celery_worker_err.log'
             data_list = []
+            if platform.system() != 'Windows':
+                task_log_path = '/www/wwwlogs/celery_worker.log'
+            else:
+                return JsonResponse(data_list, safe=False)
+
             with open(task_log_path, 'r', encoding='utf-8') as f:
                 off = -1024 * 1024
                 if f.tell() < -off:
