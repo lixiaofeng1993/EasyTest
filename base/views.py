@@ -2185,6 +2185,11 @@ def user_power(request):
                     model_list.append(
                         {"id": foo.id, "model_name": foo.model_name, "url": foo.url, "icon": foo.Icon, "make": False})
             info = {"model": model_list, "id": id, "model_nav": model_nav}
+            superuser = is_superuser(user_id, make=False)
+            if not superuser:
+                if user_id != int(id):
+                    info.update({"error": "非超级管理员只能修改自己的权限！"})
+                    return render(request, 'system/user/power.html', info)
             return render(request, 'system/user/power.html', info)
         if request.method == "POST":
             body = request.body.decode("utf-8")

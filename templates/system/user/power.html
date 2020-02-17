@@ -99,13 +99,22 @@
                                 <span><i></i>全不选</span>
                             </label>
                         </div>
-                        <div class="form-group">
-                            <div class="col-sm-offset-2 col-sm-6">
-                                <button type="submit" id="submit" class="btn btn-primary"><i
-                                        class="fa fa-save"></i>&nbsp;保存
-                                </button>
+                        {% if error %}
+                            <div class="power-div">
+                                <label class="fancy-checkbox">
+                                    <span style="color: red;font-size: 12px;">{{ error }}</span>
+                                </label>
                             </div>
-                        </div>
+                        {% else %}
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-6">
+                                    <button type="submit" id="submit" class="btn btn-primary"><i
+                                            class="fa fa-save"></i>&nbsp;保存
+                                    </button>
+                                </div>
+                            </div>
+                        {% endif %}
+
                     </form>
                 </div>
 
