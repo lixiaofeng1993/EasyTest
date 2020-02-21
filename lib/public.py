@@ -7,6 +7,7 @@ from datetime import datetime
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger  # 分页
 from .error_code import ErrorCode
+from lib.debugtalk import *
 
 log = logging.getLogger('log')  # 初始化log
 
@@ -563,30 +564,42 @@ def http_random(body):
         for key, value in body.items():
             # if not str(value).isdigit():
             if not isinstance(value, (int, float)):
-                if "_random_in" in value:
-                    body[key] = "__random_int()"
-                elif "_name" in value:
-                    body[key] = "__name"
-                elif "_address" in value:
-                    body[key] = "__address"
-                elif "_phone" in value:
-                    body[key] = "__phone"
-                elif "_text" in value:
-                    body[key] = "__text()"
-                elif "_random_time" in value:
-                    body[key] = "__random_time"
-                elif "_now" in value:
-                    body[key] = "__now"
-                elif "_email" in value:
-                    body[key] = "__email"
-                elif "list(" in value:
-                    patt = re.compile("list\((.+)\)")
-                    params = patt.findall(value)[0]
-                    if "$" in params:
-                        return "error"
-                    else:
-                        params = params.split(',')[0]
-                        body[key] = params
+                patt = re.compile("(.+)?\$\{(.+)\}(.+)?")
+                func = patt.findall(value)
+                if func:
+                    func = func[0]
+                    try:
+                        data = eval(func[1])
+                        body[key] = func[0] + str(data) + func[2]
+                    except NameError as e:
+                        body[key] = func[1] + "  函数名称错误！"
+                    except TypeError as e:
+                        log.info("func ===http_random==={}".format(e))
+
+                        # if "_random_in" in value:
+                        #     body[key] = "__random_int()"
+                        # elif "_name" in value:
+                        #     body[key] = "__name"
+                        # elif "_address" in value:
+                        #     body[key] = "__address"
+                        # elif "_phone" in value:
+                        #     body[key] = "__phone"
+                        # elif "_text" in value:
+                        #     body[key] = "__text()"
+                        # elif "_random_time" in value:
+                        #     body[key] = "__random_time"
+                        # elif "_now" in value:
+                        #     body[key] = "__now"
+                        # elif "_email" in value:
+                        #     body[key] = "__email"
+                        # elif "list(" in value:
+                        #     patt = re.compile("list\((.+)\)")
+                        #     params = patt.findall(value)[0]
+                        #     if "$" in params:
+                        #         return "error"
+                        #     else:
+                        #         params = params.split(',')[0]
+                        #         body[key] = params
         return body
 
 
