@@ -18,7 +18,7 @@ def get_file_sorted(file_path):
     """最后修改时间顺序升序排列 os.path.getmtime()->获取文件最后修改时间"""
     dir_list = os.listdir(file_path)
     if not dir_list:
-        return False
+        return []
     else:
         dir_list = sorted(dir_list, key=lambda x: os.path.getmtime(os.path.join(file_path, x)))
         return dir_list
