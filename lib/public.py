@@ -567,7 +567,7 @@ def http_random(body):
                 func = patt.findall(value)
                 if func:
                     from lib import debugtalk
-                    import importlib
+                    import importlib  # TODO:动态加载模块，不起作用；
                     func = func[0]
                     patt_func = re.compile("(.+)\((.+)?\)")
                     func_list = patt_func.findall(func[1])
