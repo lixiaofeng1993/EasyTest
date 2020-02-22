@@ -66,7 +66,7 @@ def test_httprunner(env_id, case_id_list, plan="", username="root"):
         if _to:
             title = plan.plan_name
             report_id = Report.objects.get(report_name=report_name).report_id
-            send_email(_to=_to, title=title, report_id=report_id)
+            # send_email(_to=_to, title=title, report_id=report_id)
         else:
             logger.log_warning('收件人邮箱为空，无法发送邮件！请在 EasyTeat接口测试平台 - 用户管理 模块中设置.')
     logger.log_info('HttpRunner执行测试计划完成！')
@@ -126,7 +126,7 @@ def test_plan(env_id, case_id_list, plan="", username="root"):
         if _to:
             title = plan.plan_name
             report_id = Report.objects.get(report_name=report_name).report_id
-            send_email(_to=_to, title=title, report_id=report_id)
+            # send_email(_to=_to, title=title, report_id=report_id)
         else:
             logger.log_warning('收件人邮箱为空，无法发送邮件！请在 EasyTeat接口测试平台 - 用户管理 模块中设置.')
     logger.log_info('默认方式测试计划执行完成！')
@@ -206,7 +206,7 @@ def run_plan(*args, **kwargs):
         if _to:
             title = task_name
             report_id = Report.objects.get(report_name=report_name).report_id
-            send_email(_to=_to, title=title, report_id=report_id)
+            # send_email(_to=_to, title=title, report_id=report_id)
         else:
             logger.log_warning('收件人邮箱为空，无法发送邮件！请在 EasyTeat接口测试平台 - 用户管理 模块中设置.')
     logger.log_info('HttpRunner执行定时任务完成！{}--{}--'.format(args, kwargs))

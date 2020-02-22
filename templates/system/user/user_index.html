@@ -22,14 +22,10 @@
 {% endblock %}
 
 {% block nav %}
-    {% for object in object_list %}
-        {% for foo in object.model_list %}
-            <li><a href="{{ foo.url }}"><i class="{{ foo.icon }}"></i>{{ foo.model_name }}</a>
-            </li>
-        {% endfor %}
-
+    {% for foo in model_list %}
+        <li><a href="{{ foo.url }}"><i class="{{ foo.icon }}"></i>{{ foo.model_name }}</a>
+        </li>
     {% endfor %}
-
 {% endblock %}
 
 {% block crumbs %}
@@ -70,26 +66,24 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for object in object_list %}
-                            {% for sign in object.user_list %}
-                                <tr>
-                                    <td id="cen">{{ sign.id }}</td>
-                                    {#                                    <td><a href="../admin/auth/user/{{ sign.id }}/change/?_to_field=id&_popup=1"#}
-                                    {#                                           class="layui-btn layui-btn-xs">{{ sign.username }}</a></td>#}
-                                    <td id="cen">{{ sign.username }}</td>
-                                    <td id="cen">{{ sign.email }}</td>
-                                    <td id="cen">{{ sign.is_staff }}</td>
-                                    <td id="cen">{{ sign.is_active }}</td>
-                                    <td id="cen">{{ sign.is_superuser }}</td>
-                                    <td id="cen">{{ sign.date_joined }}</td>
-                                    <td id="cen">
-                                        <a href="{% url 'base:user_power' %}{{ sign.id }}/">permission</a>
-                                        {#                                        <a href="../admin/auth/user/{{ sign.id }}/delete/?_to_field=id&_popup=1"#}
-                                        {#                                           class="layui-btn layui-btn-danger layui-btn-xs"><img#}
-                                        {#                                                src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>#}
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                        {% for sign in object_list %}
+                            <tr>
+                                <td id="cen">{{ sign.id }}</td>
+                                {#                                    <td><a href="../admin/auth/user/{{ sign.id }}/change/?_to_field=id&_popup=1"#}
+                                {#                                           class="layui-btn layui-btn-xs">{{ sign.username }}</a></td>#}
+                                <td id="cen">{{ sign.username }}</td>
+                                <td id="cen">{{ sign.email }}</td>
+                                <td id="cen">{{ sign.is_staff }}</td>
+                                <td id="cen">{{ sign.is_active }}</td>
+                                <td id="cen">{{ sign.is_superuser }}</td>
+                                <td id="cen">{{ sign.date_joined }}</td>
+                                <td id="cen">
+                                    <a href="{% url 'base:user_power' %}{{ sign.id }}/">permission</a>
+                                    {#                                        <a href="../admin/auth/user/{{ sign.id }}/delete/?_to_field=id&_popup=1"#}
+                                    {#                                           class="layui-btn layui-btn-danger layui-btn-xs"><img#}
+                                    {#                                                src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>#}
+                                </td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>

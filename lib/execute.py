@@ -17,7 +17,7 @@ from lib.except_check import env_not_exit, case_is_delete, interface_is_delete, 
     response_value_error, request_api_error, index_error, checkpoint_no_error, eval_set_error, sql_query_error, \
     parameters_error, skip_error
 from httprunner.api import HttpRunner
-from lib.httprunner_execute import HttpRunerMain
+from lib.httprunner_execute import HttpRunerMain, copy_debugtalk
 
 # from lib.processingJson import write_data
 
@@ -101,7 +101,7 @@ class Test_execute():
             except Case.DoesNotExist as e:
                 case_run = case_is_delete(case_run, e, self.case_id)
                 return case_run
-
+            copy_debugtalk(project_id=case.project_id)
             self.step_list = eval(case.content)
             for step in self.step_list:
                 step_info = self.step(step)

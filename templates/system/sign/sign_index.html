@@ -21,12 +21,9 @@
 {% endblock %}
 
 {% block nav %}
-    {% for object in object_list %}
-        {% for foo in object.model_list %}
-            <li><a href="{{ foo.url }}"><i class="{{ foo.icon }}"></i>{{ foo.model_name }}</a>
-            </li>
-        {% endfor %}
-
+    {% for foo in model_list %}
+        <li><a href="{{ foo.url }}"><i class="{{ foo.icon }}"></i>{{ foo.model_name }}</a>
+        </li>
     {% endfor %}
 
 {% endblock %}
@@ -67,24 +64,22 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for object in object_list %}
-                            {% for sign in object.sign_list %}
-                                <tr>
-                                    <td id="cen">{{ sign.sign_id }}</td>
-                                    <td><a href="{% url 'base:sign_update' %}?sign_id={{ sign.sign_id }}"
-                                           class="layui-btn layui-btn-xs" lay-event="edit">{{ sign.sign_name }}</a></td>
-                                    <td id="cen">{{ sign.sign_type }}</td>
-                                    <td>{{ sign.description }}</td>
-                                    <td id="cen">{{ sign.update_time }}</td>
-                                    <td id="cen">{{ sign.update_user }}</td>
-                                    <td id="cen">
-                                        <a href="{% url 'base:sign_delete' %}?sign_id={{ sign.sign_id }}"
-                                           class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"
-                                           onclick="return delete_btn()"><img
-                                                src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
-                                    </td>
-                                </tr>
-                            {% endfor %}
+                        {% for sign in object_list %}
+                            <tr>
+                                <td id="cen">{{ sign.sign_id }}</td>
+                                <td><a href="{% url 'base:sign_update' %}?sign_id={{ sign.sign_id }}"
+                                       class="layui-btn layui-btn-xs" lay-event="edit">{{ sign.sign_name }}</a></td>
+                                <td id="cen">{{ sign.sign_type }}</td>
+                                <td>{{ sign.description }}</td>
+                                <td id="cen">{{ sign.update_time }}</td>
+                                <td id="cen">{{ sign.update_user }}</td>
+                                <td id="cen">
+                                    <a href="{% url 'base:sign_delete' %}?sign_id={{ sign.sign_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"
+                                       onclick="return delete_btn()"><img
+                                            src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
+                                </td>
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>

@@ -119,12 +119,9 @@
 {% endblock %}
 
 {% block nav %}
-    {% for object in object_list %}
-        {% for foo in object.model_list %}
-            <li><a href="{{ foo.url }}"><i class="{{ foo.icon }}"></i>{{ foo.model_name }}</a>
-            </li>
-        {% endfor %}
-
+    {% for foo in model_list %}
+        <li><a href="{{ foo.url }}"><i class="{{ foo.icon }}"></i>{{ foo.model_name }}</a>
+        </li>
     {% endfor %}
 
 {% endblock %}
@@ -170,34 +167,32 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for object in object_list %}
-                            {% for case in object.case_list %}
-                                <tr>
-                                    <td id="cen">{{ case.case_id }}</td>
-                                    <td id="case_name"><a href="{% url 'base:case_update' %}?case_id={{ case.case_id }}"
-                                                          class="">{{ case.case_name }}</a></td>
-                                    <td id="cen" prj_id="{{ case.project.prj_id }}">{{ case.project }}</td>
-                                    <td>{{ case.description }}</td>
-                                    <td id="cen">{{ case.update_time }}</td>
-                                    <td id="cen">{{ case.update_user }}</td>
-                                    <td id="cen">
-                                        <a href="" class="layui-btn layui-btn-danger layui-btn-xs"
-                                           onclick="debug_button(this);"
-                                           data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;
-                                        </a>
-                                        <a href="{% url 'base:case_copy' %}?case_id={{ case.case_id }}"
-                                           class="layui-btn layui-btn-danger layui-btn-xs"
-                                           onclick="return copy_btn()"><i class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;
-                                        </a>
-                                        <a href="{% url 'base:case_delete' %}?case_id={{ case.case_id }}"
-                                           class="layui-btn layui-btn-danger layui-btn-xs"
-                                           onclick="return delete_btn()"><img
-                                                src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;
-                                        </a>
-                                    </td>
+                        {% for case in object_list %}
+                            <tr>
+                                <td id="cen">{{ case.case_id }}</td>
+                                <td id="case_name"><a href="{% url 'base:case_update' %}?case_id={{ case.case_id }}"
+                                                      class="">{{ case.case_name }}</a></td>
+                                <td id="cen" prj_id="{{ case.project.prj_id }}">{{ case.project }}</td>
+                                <td>{{ case.description }}</td>
+                                <td id="cen">{{ case.update_time }}</td>
+                                <td id="cen">{{ case.update_user }}</td>
+                                <td id="cen">
+                                    <a href="" class="layui-btn layui-btn-danger layui-btn-xs"
+                                       onclick="debug_button(this);"
+                                       data-toggle="modal" data-target="#runCaseForm"><i class="fa fa-recycle"></i>&nbsp;&nbsp;&nbsp;
+                                    </a>
+                                    <a href="{% url 'base:case_copy' %}?case_id={{ case.case_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs"
+                                       onclick="return copy_btn()"><i class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;
+                                    </a>
+                                    <a href="{% url 'base:case_delete' %}?case_id={{ case.case_id }}"
+                                       class="layui-btn layui-btn-danger layui-btn-xs"
+                                       onclick="return delete_btn()"><img
+                                            src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;
+                                    </a>
+                                </td>
 
-                                </tr>
-                            {% endfor %}
+                            </tr>
                         {% endfor %}
                         </tbody>
                     </table>

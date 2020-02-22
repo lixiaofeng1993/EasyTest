@@ -49,11 +49,8 @@ class ProjectIndex(ListView):
         return super(ProjectIndex, self).dispatch(*args, **kwargs)
 
     def get_queryset(self):
-        user_id = self.request.session.get('user_id', '')
-        model_list = limits_of_authority(user_id)
         project_list = Project.objects.all().order_by('-prj_id')
-        info = [{"model_list": model_list, "project_list": project_list}]
-        return info
+        return project_list
         # superuser = User.objects.get(id=user_id).is_superuser
         # if superuser:
         #     return Project.objects.all().order_by('-prj_id')
@@ -67,6 +64,9 @@ class ProjectIndex(ListView):
         is_paginated = context.get('is_paginated')
         data = pagination_data(paginator, page, is_paginated)
         context.update(data)
+        user_id = self.request.session.get('user_id', '')
+        model_list = limits_of_authority(user_id)
+        context.update({"model_list": model_list})
         return context
 
 
@@ -190,11 +190,8 @@ class SignIndex(ListView):
         return super(SignIndex, self).dispatch(*args, **kwargs)
 
     def get_queryset(self):
-        user_id = self.request.session.get('user_id', '')
-        model_list = limits_of_authority(user_id)
         sign_list = Sign.objects.all().order_by("-sign_id")
-        info = [{"model_list": model_list, "sign_list": sign_list}]
-        return info
+        return sign_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -203,6 +200,9 @@ class SignIndex(ListView):
         is_paginated = context.get('is_paginated')
         data = pagination_data(paginator, page, is_paginated)
         context.update(data)
+        user_id = self.request.session.get('user_id', '')
+        model_list = limits_of_authority(user_id)
+        context.update({"model_list": model_list})
         return context
 
 
@@ -305,11 +305,8 @@ class EnvIndex(ListView):
         return super(EnvIndex, self).dispatch(*args, **kwargs)
 
     def get_queryset(self):
-        user_id = self.request.session.get('user_id', '')
-        model_list = limits_of_authority(user_id)
         env_list = Environment.objects.all().order_by('-env_id')
-        info = [{"model_list": model_list, "env_list": env_list}]
-        return info
+        return env_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -318,6 +315,9 @@ class EnvIndex(ListView):
         is_paginated = context.get('is_paginated')
         data = pagination_data(paginator, page, is_paginated)
         context.update(data)
+        user_id = self.request.session.get('user_id', '')
+        model_list = limits_of_authority(user_id)
+        context.update({"model_list": model_list})
         return context
 
 
@@ -522,11 +522,8 @@ class InterfaceIndex(ListView):
         return super(InterfaceIndex, self).dispatch(*args, **kwargs)
 
     def get_queryset(self):
-        user_id = self.request.session.get('user_id', '')
-        model_list = limits_of_authority(user_id)
         interface_list = Interface.objects.all().order_by('-if_id')
-        info = [{"model_list": model_list, "interface_list": interface_list}]
-        return info
+        return interface_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -535,6 +532,9 @@ class InterfaceIndex(ListView):
         is_paginated = context.get('is_paginated')
         data = pagination_data(paginator, page, is_paginated)
         context.update(data)
+        user_id = self.request.session.get('user_id', '')
+        model_list = limits_of_authority(user_id)
+        context.update({"model_list": model_list})
         return context
 
 
@@ -913,11 +913,8 @@ class CaseIndex(ListView):
         return super(CaseIndex, self).dispatch(*args, **kwargs)
 
     def get_queryset(self):
-        user_id = self.request.session.get('user_id', '')
         case_list = Case.objects.all().order_by('-case_id')
-        model_list = limits_of_authority(user_id)
-        info = [{"model_list": model_list, "case_list": case_list}]
-        return info
+        return case_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -926,6 +923,9 @@ class CaseIndex(ListView):
         is_paginated = context.get('is_paginated')
         data = pagination_data(paginator, page, is_paginated)
         context.update(data)
+        user_id = self.request.session.get('user_id', '')
+        model_list = limits_of_authority(user_id)
+        context.update({"model_list": model_list})
         return context
 
 
@@ -1186,11 +1186,8 @@ class PlanIndex(ListView):
         return super(PlanIndex, self).dispatch(*args, **kwargs)
 
     def get_queryset(self):
-        user_id = self.request.session.get('user_id', '')
-        model_list = limits_of_authority(user_id)
         plan_list = Plan.objects.all().order_by('-plan_id')
-        info = [{"model_list": model_list, "plan_list": plan_list}]
-        return info
+        return plan_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1199,6 +1196,9 @@ class PlanIndex(ListView):
         is_paginated = context.get('is_paginated')
         data = pagination_data(paginator, page, is_paginated)
         context.update(data)
+        user_id = self.request.session.get('user_id', '')
+        model_list = limits_of_authority(user_id)
+        context.update({"model_list": model_list})
         return context
 
 
@@ -1375,11 +1375,8 @@ class TaskIndex(ListView):
         return super(TaskIndex, self).dispatch(*args, **kwargs)
 
     def get_queryset(self):
-        user_id = self.request.session.get('user_id', '')
-        model_list = limits_of_authority(user_id)
         task_list = PeriodicTask.objects.all().order_by('-id')
-        info = [{"model_list": model_list, "task_list": task_list}]
-        return info
+        return task_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1387,6 +1384,9 @@ class TaskIndex(ListView):
         page = context.get('page_obj')
         is_paginated = context.get('is_paginated')
         data = pagination_data(paginator, page, is_paginated)
+        user_id = self.request.session.get('user_id', '')
+        model_list = limits_of_authority(user_id)
+        context.update({"model_list": model_list})
         context.update(data)
         return context
 
@@ -1700,16 +1700,12 @@ class ReportPage(ListView):
 
     def get_queryset(self):
         self.plan_id = self.request.GET.dict().get('plan_id', '')
-        user_id = self.request.session.get('user_id', '')
-        model_list = limits_of_authority(user_id)
         if self.plan_id:
             report_list = Report.objects.filter(plan_id=self.plan_id).order_by('-report_id')
-            info = [{"model_list": model_list, "report_list": report_list}]
-            return info
+            return report_list
         else:
             report_list = Report.objects.all().order_by('-report_id')
-            info = [{"model_list": model_list, "report_list": report_list}]
-            return info
+            return report_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -1719,6 +1715,9 @@ class ReportPage(ListView):
         is_paginated = context.get('is_paginated')
         data = pagination_data(paginator, page, is_paginated)
         context.update(data)
+        user_id = self.request.session.get('user_id', '')
+        model_list = limits_of_authority(user_id)
+        context.update({"model_list": model_list})
         return context
 
 
@@ -2142,11 +2141,8 @@ class UserIndex(ListView):
         return super(UserIndex, self).dispatch(*args, **kwargs)
 
     def get_queryset(self):
-        user_id = self.request.session.get('user_id', '')
-        model_list = limits_of_authority(user_id)
         user_list = User.objects.all().order_by('-id')
-        info = [{"model_list": model_list, "user_list": user_list}]
-        return info
+        return user_list
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -2155,6 +2151,9 @@ class UserIndex(ListView):
         is_paginated = context.get('is_paginated')
         data = pagination_data(paginator, page, is_paginated)
         context.update(data)
+        user_id = self.request.session.get('user_id', '')
+        model_list = limits_of_authority(user_id)
+        context.update({"model_list": model_list})
         return context
 
 
