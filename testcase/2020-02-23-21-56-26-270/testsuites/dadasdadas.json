@@ -1,15 +1,15 @@
 {
     "config": {
         "base_url": "http://localhost:8000/api",
-        "name": "添加发布会",
+        "name": "dadasdadas",
         "variables": {}
     },
     "noReset": true,
     "testcases": [
         {
-            "name": "添加发布会",
+            "name": "dadasdadas",
             "parameters": [],
-            "testcase": "testcases/添加发布会.json",
+            "testcase": "testcases/dadasdadas.json",
             "variables": {},
             "weight": 1
         }

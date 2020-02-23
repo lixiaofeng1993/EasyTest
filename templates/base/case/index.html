@@ -170,7 +170,7 @@
                         {% for case in object_list %}
                             <tr>
                                 <td id="cen">{{ case.case_id }}</td>
-                                <td id="case_name"><a href="{% url 'base:case_update' %}?case_id={{ case.case_id }}"
+                                <td id="case_name"><a href="{% url 'base:case_update' %}?case_id={{ case.case_id }}&&page={{ page }}"
                                                       class="">{{ case.case_name }}</a></td>
                                 <td id="cen" prj_id="{{ case.project.prj_id }}">{{ case.project }}</td>
                                 <td>{{ case.description }}</td>
@@ -185,7 +185,7 @@
                                        class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="return copy_btn()"><i class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;
                                     </a>
-                                    <a href="{% url 'base:case_delete' %}?case_id={{ case.case_id }}"
+                                    <a href="{% url 'base:case_delete' %}?case_id={{ case.case_id }}&&page={{ page }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="return delete_btn()"><img
                                             src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;

@@ -1,10 +1,11 @@
 {
-    "name": "查询发布会2",
+    "name": "查询发布会1",
     "noReset": true,
     "output": [],
     "request": {
         "headers": {
-            "aaaa": "3202"
+            "aaaa": "3202",
+            "bbb": "111"
         },
         "json": {},
         "method": "get",
@@ -15,7 +16,7 @@
     },
     "validate": [
         {
-            "less_than_or_equals": [
+            "equals": [
                 "content.status",
                 200
             ]

@@ -60,7 +60,7 @@
                         <thead>
                         <tr>
                             <th id="cen">ID</th>
-                            <th id="cen">报告名称</th>
+                            <th id="cen">测试报告名称</th>
                             <th id="cen">运行时长</th>
                             <th id="cen">用例数量</th>
                             <th id="cen">接口通过数量</th>
@@ -106,7 +106,7 @@
                                 <td id="cen">{{ env.update_time }}</td>
                                 <td id="cen">{{ env.update_user }}</td>
                                 <td id="cen">
-                                    <a href="{% url 'base:report' %}?report_id={{ env.report_id }}"
+                                    <a href="{% url 'base:report' %}?report_id={{ env.report_id }}&&page={{ page }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs">
                                         <i class="fa fa-bar-chart"></i>&nbsp;&nbsp;&nbsp;
                                     </a>
@@ -121,7 +121,7 @@
                                         </a>
                                     {% endifequal %}
 
-                                    <a href="{% url 'base:report_delete' %}?report_id={{ env.report_id }}"
+                                    <a href="{% url 'base:report_delete' %}?report_id={{ env.report_id }}&&page={{ page }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="return delete_btn()"><img
                                             src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;

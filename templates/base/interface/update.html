@@ -716,12 +716,12 @@
                     {#                    "response_body_data": response_body_data#}
                 },
                 success: function (data) {
-                    if (data.indexOf('<') == -1) {
+                    if (data != "ok") {
                         alert(data);
                         window.location.reload()
                     } else {
                         alert("保存成功");
-                        window.location.replace("/base/interface/");
+                        window.location.replace("/base/interface/?page={{ page }}");
                     }
                 },
                 error: function () {

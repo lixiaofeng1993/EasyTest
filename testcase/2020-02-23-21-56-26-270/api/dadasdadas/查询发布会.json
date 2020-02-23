@@ -1,25 +1,19 @@
 {
-    "name": "查询发布会1",
+    "name": "查询发布会",
     "noReset": true,
     "output": [],
     "request": {
         "headers": {
-            "aaaa": "3202"
+            "aaaa": "3202",
+            "bbb": "111"
         },
         "json": {},
         "method": "get",
         "params": {
-            "eid": "$eid"
+            "eid": ""
         },
         "url": "/get_event_list/"
     },
-    "validate": [
-        {
-            "equals": [
-                "content.status",
-                200
-            ]
-        }
-    ],
+    "validate": [],
     "variables": {}
 }

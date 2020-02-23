@@ -58,6 +58,7 @@ class ProjectIndex(ListView):
         #     return Project.objects.filter(user_id=user_id).order_by('-prj_id')
 
     def get_context_data(self, **kwargs):
+        self.page = self.request.GET.dict().get('page', '1')
         context = super().get_context_data(**kwargs)
         paginator = context.get('paginator')
         page = context.get('page_obj')
@@ -66,7 +67,7 @@ class ProjectIndex(ListView):
         context.update(data)
         user_id = self.request.session.get('user_id', '')
         model_list = limits_of_authority(user_id)
-        context.update({"model_list": model_list})
+        context.update({"model_list": model_list, "page": self.page})
         return context
 
 
@@ -82,13 +83,14 @@ def project_add(request):
         return render(request, 'user/login_action.html')
     else:
         sign_list = Sign.objects.all()  # 所有签名
+        model_list = limits_of_authority(user_id)
         if request.method == 'POST':
             prj_name = request.POST['prj_name'].strip()
 
             msg = project_info_logic(prj_name)
             if msg != 'ok':  # 判断输入框
                 log.error('project add error：{}'.format(msg))
-                info = {'error': msg, "sign_list": sign_list}
+                info = {'error': msg, "sign_list": sign_list, "model_list": model_list, "page": "1"}
                 return render(request, 'base/project/add.html', info)
             else:
                 description = request.POST['description']
@@ -110,7 +112,6 @@ def project_add(request):
                              update_time=datetime.now(), update_user="root"))
                 Sign.objects.bulk_create(querysetlist)
                 sign_list = Sign.objects.all()
-            model_list = limits_of_authority(user_id)
             info = {"sign_list": sign_list, "model_list": model_list}
             return render(request, "base/project/add.html", info)
 
@@ -127,15 +128,17 @@ def project_update(request):
         return render(request, 'user/login_action.html')
     else:
         sign_list = Sign.objects.all()
+        model_list = limits_of_authority(user_id)
         if request.method == 'POST':
             prj_id = request.POST['prj_id']
+            page = request.POST['page']
             prj_name = request.POST['prj_name'].strip()
 
             msg = project_info_logic(prj_name, prj_id)
             if msg != 'ok':
                 log.error('project update error：{}'.format(msg))
                 prj = Project.objects.get(prj_id=prj_id)
-                info = {'error': msg, "prj": prj, "sign_list": sign_list}
+                info = {'error': msg, "prj": prj, "sign_list": sign_list, "model_list": model_list, "page": page}
                 return render(request, 'base/project/update.html', info)
             else:
                 description = request.POST['description']
@@ -145,14 +148,14 @@ def project_update(request):
                 Project.objects.filter(prj_id=prj_id).update(prj_name=prj_name, description=description, sign=sign,
                                                              user=user, update_time=datetime.now())
                 log.info('edit project   {}  success. project info: {} // {} '.format(prj_name, description, sign))
-                return HttpResponseRedirect("/base/project/")
+                return HttpResponseRedirect("/base/project/?page={}".format(page))
         elif request.method == 'GET':
             prj_id = request.GET['prj_id']
+            page = request.GET.get("page", "1")
             user_id_belong = Project.objects.get(prj_id=prj_id).user_id
-            model_list = limits_of_authority(user_id)
             if user_id == user_id_belong:
                 prj = Project.objects.get(prj_id=prj_id)
-                info = {"prj": prj, "sign_list": sign_list, "model_list": model_list}
+                info = {"prj": prj, "sign_list": sign_list, "model_list": model_list, "page": page}
                 return render(request, "base/project/update.html", info)
             else:
                 info = {'error': '非本人创建项目，不可以修改！', "model_list": model_list}
@@ -172,9 +175,10 @@ def project_delete(request):
     else:
         if request.method == 'GET':
             prj_id = request.GET['prj_id']
+            page = request.GET.get("page", "1")
             Project.objects.filter(prj_id=prj_id).delete()
             log.info('用户 {} 删除项目 {} 成功.'.format(user_id, prj_id))
-            return HttpResponseRedirect("base/project/")
+            return HttpResponseRedirect("base/project/?page={}".format(page))
 
 
 # 签名列表
@@ -194,6 +198,7 @@ class SignIndex(ListView):
         return sign_list
 
     def get_context_data(self, **kwargs):
+        self.page = self.request.GET.dict().get('page', '1')
         context = super().get_context_data(**kwargs)
         paginator = context.get('paginator')
         page = context.get('page_obj')
@@ -202,7 +207,7 @@ class SignIndex(ListView):
         context.update(data)
         user_id = self.request.session.get('user_id', '')
         model_list = limits_of_authority(user_id)
-        context.update({"model_list": model_list})
+        context.update({"model_list": model_list, "page": self.page})
         return context
 
 
@@ -217,13 +222,15 @@ def sign_add(request):
         request.session['login_from'] = '/base/sign/'
         return render(request, 'user/login_action.html')
     else:
+        model_list = limits_of_authority(user_id)
         if request.method == 'POST':
             sign_name = request.POST['sign_name'].strip()
             sign_type = request.POST['sign_type'].strip()
+
             msg = sign_info_logic(sign_name)
             if msg != 'ok':
                 log.error('sign add error：{}'.format(msg))
-                info = {'error': msg}
+                info = {'error': msg, "model_list": model_list, "page": "1"}
                 return render(request, 'system/sign/sign_add.html', info)
             else:
                 description = request.POST['description']
@@ -233,7 +240,6 @@ def sign_add(request):
                 log.info('add sign   {}  success.  sign info： {} '.format(sign_name, description))
                 return HttpResponseRedirect("/base/sign/")
         elif request.method == 'GET':
-            model_list = limits_of_authority(user_id)
             return render(request, "system/sign/sign_add.html", {"model_list": model_list})
 
 
@@ -248,15 +254,18 @@ def sign_update(request):
         request.session['login_from'] = '/base/sign/'
         return render(request, 'user/login_action.html')
     else:
+        model_list = limits_of_authority(user_id)
         if request.method == 'POST':
             sign_id = request.POST['sign_id']
+            page = request.POST.get("page", "1")
             sign_name = request.POST['sign_name'].strip()
             sign_type = request.POST['sign_type'].strip()
+
             msg = sign_info_logic(sign_name, sign_id)
             if msg != 'ok':
                 log.error('sign update error：{}'.format(msg))
                 sign = Sign.objects.get(sign_id=sign_id)
-                info = {'error': msg, "sign": sign}
+                info = {'error': msg, "sign": sign, "page": page, "model_list": model_list}
                 return render(request, 'system/sign/sign_update.html', info)
             else:
                 description = request.POST['description']
@@ -265,12 +274,12 @@ def sign_update(request):
                     sign_name=sign_name, description=description, update_time=datetime.now(), update_user=username,
                     sign_type=sign_type)
                 log.info('edit sign   {}  success.  sign info： {} '.format(sign_name, description))
-                return HttpResponseRedirect("/base/sign/")
+                return HttpResponseRedirect("/base/sign/?page={}".format(page))
         elif request.method == 'GET':
             sign_id = request.GET['sign_id']
+            page = request.GET.get("page", "1")
             sign = Sign.objects.get(sign_id=sign_id)
-            model_list = limits_of_authority(user_id)
-            info = {"sign": sign, "model_list": model_list}
+            info = {"sign": sign, "model_list": model_list, "page": page}
             return render(request, "system/sign/sign_update.html", info)
 
 
@@ -287,9 +296,10 @@ def sign_delete(request):
     else:
         if request.method == 'GET':
             sign_id = request.GET['sign_id']
+            page = request.GET.get("page", "1")
             Sign.objects.filter(sign_id=sign_id).delete()
             log.info('用户 {} 删除签名 {} 成功.'.format(user_id, sign_id))
-            return HttpResponseRedirect("base/sign/")
+            return HttpResponseRedirect("base/sign/?page={}".format(page))
 
 
 # 测试环境列表
@@ -309,6 +319,7 @@ class EnvIndex(ListView):
         return env_list
 
     def get_context_data(self, **kwargs):
+        self.page = self.request.GET.dict().get('page', '1')
         context = super().get_context_data(**kwargs)
         paginator = context.get('paginator')
         page = context.get('page_obj')
@@ -317,7 +328,7 @@ class EnvIndex(ListView):
         context.update(data)
         user_id = self.request.session.get('user_id', '')
         model_list = limits_of_authority(user_id)
-        context.update({"model_list": model_list})
+        context.update({"model_list": model_list, "page": self.page})
         return context
 
 
@@ -334,6 +345,7 @@ def set_headers(request):
     else:
         if request.method == 'GET':
             env_id = request.GET.get('env_id', '')
+            page = request.GET.get('page', '')
             make = request.GET.get('make', '')
             env = Environment.objects.get(env_id=env_id)
             env_name = env.env_name
@@ -346,7 +358,8 @@ def set_headers(request):
                 else:
                     return JsonResponse('0', safe=False)
             else:
-                info = {'env_id': env_id, 'env_name': env_name, 'env': set_header, "model_list": model_list}
+                info = {'env_id': env_id, 'env_name': env_name, 'env': set_header, "model_list": model_list,
+                        "page": page}
                 return render(request, "base/env/set_headers.html", info)
         elif request.method == 'POST':
             content = request.POST.get('content', '')
@@ -362,7 +375,7 @@ def set_headers(request):
                 Environment.objects.filter(env_id=env_id).update(set_headers=content, update_time=now_time,
                                                                  update_user=username)
                 log.info('env {} set headers success. headers info: {} '.format(env_id, content))
-                return HttpResponseRedirect("/base/env/")
+                return HttpResponse("ok")
 
 
 def set_mock(request):
@@ -414,6 +427,7 @@ def env_add(request):
         return render(request, 'user/login_action.html')
     else:
         prj_list = Project.objects.all()
+        model_list = limits_of_authority(user_id)
         if request.method == 'POST':
             env_name = request.POST['env_name'].strip()
             url = request.POST['url'].strip()
@@ -421,7 +435,7 @@ def env_add(request):
             msg = env_info_logic(env_name, url)
             if msg != 'ok':
                 log.error('env add error：{}'.format(msg))
-                info = {'error': msg, "prj_list": prj_list}
+                info = {'error': msg, "prj_list": prj_list, "model_list": model_list, "page": "1"}
                 return render(request, 'base/env/add.html', info)
             else:
                 prj_id = request.POST['prj_id']
@@ -439,7 +453,6 @@ def env_add(request):
                          .format(env_name, project, url, private_key, description, is_swagger))
                 return HttpResponseRedirect("/base/env/")
         elif request.method == 'GET':
-            model_list = limits_of_authority(user_id)
             info = {"prj_list": prj_list, "model_list": model_list}
             return render(request, "base/env/add.html", info)
 
@@ -456,8 +469,10 @@ def env_update(request):
         return render(request, 'user/login_action.html')
     else:
         prj_list = Project.objects.all()
+        model_list = limits_of_authority(user_id)
         if request.method == 'POST':
             env_id = request.POST['env_id']
+            page = request.POST.get("page", "1")
             env_name = request.POST['env_name'].strip()
             url = request.POST['url'].strip()
 
@@ -465,7 +480,7 @@ def env_update(request):
             if msg != 'ok':
                 log.error('env update error：{}'.format(msg))
                 env = Environment.objects.get(env_id=env_id)
-                info = {'error': msg, "env": env, "prj_list": prj_list}
+                info = {'error': msg, "env": env, "prj_list": prj_list, "model_list": model_list, "page": page}
                 return render(request, 'base/env/update.html', info)
             else:
                 prj_id = request.POST['prj_id']
@@ -483,12 +498,12 @@ def env_update(request):
                                                                  update_user=username)
                 log.info('edit env   {}  success.  env info： {} // {} // {} // {} // {}'
                          .format(env_name, project, url, private_key, description, is_swagger))
-                return HttpResponseRedirect("/base/env/")
+                return HttpResponseRedirect("/base/env/?page={}".format(page))
         elif request.method == 'GET':
             env_id = request.GET['env_id']
+            page = request.GET.get("page", "1")
             env = Environment.objects.get(env_id=env_id)
-            model_list = limits_of_authority(user_id)
-            info = {"env": env, "prj_list": prj_list, "model_list": model_list}
+            info = {"env": env, "prj_list": prj_list, "model_list": model_list, "page": page}
             return render(request, "base/env/update.html", info)
 
 
@@ -505,9 +520,10 @@ def env_delete(request):
     else:
         if request.method == 'GET':
             env_id = request.GET['env_id']
+            page = request.GET.get("page", "1")
             Environment.objects.filter(env_id=env_id).delete()
             log.info('用户 {} 删除环境 {} 成功.'.format(user_id, env_id))
-            return HttpResponseRedirect("base/env/")
+            return HttpResponseRedirect("base/env/?page={}".format(page))
 
 
 # 接口列表
@@ -526,6 +542,7 @@ class InterfaceIndex(ListView):
         return interface_list
 
     def get_context_data(self, **kwargs):
+        self.page = self.request.GET.dict().get('page', '1')
         context = super().get_context_data(**kwargs)
         paginator = context.get('paginator')
         page = context.get('page_obj')
@@ -534,7 +551,7 @@ class InterfaceIndex(ListView):
         context.update(data)
         user_id = self.request.session.get('user_id', '')
         model_list = limits_of_authority(user_id)
-        context.update({"model_list": model_list})
+        context.update({"model_list": model_list, "page": self.page})
         return context
 
 
@@ -657,6 +674,7 @@ def interface_add(request):
 
             msg = interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, request_header_data,
                                        request_body_data)
+
             if msg != 'ok':
                 log.error('interface add error：{}'.format(msg))
                 return HttpResponse(msg)
@@ -700,6 +718,7 @@ def interface_update(request):
             url = request.POST['url'].strip()
             skip = request.POST['skip'].strip()
             method = request.POST.get('method', '')
+            page = request.POST.get('page', '1')
             data_type = request.POST['data_type']
             is_sign = request.POST.get('is_sign', '')
             is_headers = request.POST.get('is_headers', '')
@@ -734,10 +753,11 @@ def interface_update(request):
                     'edit interface  {}  success.  interface info： {} // {} // {} // {} // {} // {} // {} // {} // {} '.format(
                         if_name, project, url, method, data_type, is_sign, description, request_header_data,
                         request_body_data, is_headers))
-                return HttpResponseRedirect("/base/interface/")
+                return HttpResponse("ok")
         elif request.method == 'GET':
             prj_list = Project.objects.all()
             if_id = request.GET['if_id']
+            page = request.GET['page']
             interface = Interface.objects.get(if_id=if_id)
             request_header_param_list = interface_get_params(interface.request_header_param)
             request_body_param_list = interface_get_params(interface.request_body_param)
@@ -747,7 +767,8 @@ def interface_update(request):
             model_list = limits_of_authority(user_id)
             info = {"interface": interface, 'request_header_param_list': request_header_param_list,
                     'request_body_param_list': request_body_param_list, 'method': method, 'is_sign': is_sign,
-                    'is_headers': is_headers, 'mock': mock, "prj_list": prj_list, "model_list": model_list}
+                    'is_headers': is_headers, 'mock': mock, "prj_list": prj_list, "model_list": model_list,
+                    "page": page}
             return render(request, "base/interface/update.html", info)
 
 
@@ -797,9 +818,10 @@ def interface_delete(request):
     else:
         if request.method == 'GET':
             if_id = request.GET['if_id']
+            page = request.GET.get("page", "1")
             Interface.objects.filter(if_id=if_id).delete()
             log.info('用户 {} 删除接口 {} 成功.'.format(user_id, if_id))
-            return HttpResponseRedirect("base/interface/")
+            return HttpResponseRedirect("base/interface/?page={}".format(page))
 
 
 # 执行导入的异步线程
@@ -917,6 +939,7 @@ class CaseIndex(ListView):
         return case_list
 
     def get_context_data(self, **kwargs):
+        self.page = self.request.GET.dict().get('page', '1')
         context = super().get_context_data(**kwargs)
         paginator = context.get('paginator')
         page = context.get('page_obj')
@@ -925,7 +948,7 @@ class CaseIndex(ListView):
         context.update(data)
         user_id = self.request.session.get('user_id', '')
         model_list = limits_of_authority(user_id)
-        context.update({"model_list": model_list})
+        context.update({"model_list": model_list, "page": self.page})
         return context
 
 
@@ -960,7 +983,7 @@ def case_add(request):
                 log.info(
                     'add case   {}  success. case info: {} // {} // {} // {}'.format(case_name, project, description,
                                                                                      content, weight))
-                return HttpResponseRedirect("/base/case/")
+                return HttpResponse("ok")
         elif request.method == 'GET':
             prj_list = Project.objects.all()
             model_list = limits_of_authority(user_id)
@@ -1000,10 +1023,11 @@ def case_update(request):
                                                             update_user=username, weight=weight)
                 log.info('edit case   {}  success. case info: {} // {} // {} // {}'
                          .format(case_name, project, description, content, weight))
-                return HttpResponseRedirect("/base/case/")
+                return HttpResponse("ok")
         elif request.method == 'GET':
             prj_list = Project.objects.all()
             case_id = request.GET['case_id']
+            page = request.GET.get("page", "1")
             case = Case.objects.get(case_id=case_id)
             interface = Interface.objects.all().values()
             if_list = ''
@@ -1020,7 +1044,7 @@ def case_update(request):
                 interface_list.append(i)
             model_list = limits_of_authority(user_id)
             info = {"prj_list": prj_list, 'case': case, 'interface': interface, 'case_id': case_id,
-                    'if_id': if_id, 'if_list': str(if_list), 'if_name': if_name, "model_list": model_list}
+                    'if_id': if_id, 'if_list': str(if_list), 'if_name': if_name, "model_list": model_list, "page": page}
             return render_to_response('base/case/update.html', info)
 
 
@@ -1142,9 +1166,10 @@ def case_delete(request):
     else:
         if request.method == 'GET':
             case_id = request.GET['case_id']
+            page = request.GET.get("page", "1")
             Case.objects.filter(case_id=case_id).delete()
             log.info('用户 {} 删除用例 {} 成功.'.format(user_id, case_id))
-            return HttpResponseRedirect("base/case/")
+            return HttpResponseRedirect("base/case/?page={}".format(page))
 
 
 def case_run(request):
@@ -1180,7 +1205,7 @@ class PlanIndex(ListView):
     model = Plan
     template_name = 'base/plan/index.html'
     context_object_name = 'object_list'
-    paginate_by = 10
+    paginate_by = 2
 
     def dispatch(self, *args, **kwargs):
         return super(PlanIndex, self).dispatch(*args, **kwargs)
@@ -1190,6 +1215,7 @@ class PlanIndex(ListView):
         return plan_list
 
     def get_context_data(self, **kwargs):
+        self.page = self.request.GET.dict().get('page', '1')
         context = super().get_context_data(**kwargs)
         paginator = context.get('paginator')
         page = context.get('page_obj')
@@ -1198,7 +1224,7 @@ class PlanIndex(ListView):
         context.update(data)
         user_id = self.request.session.get('user_id', '')
         model_list = limits_of_authority(user_id)
-        context.update({"model_list": model_list})
+        context.update({"model_list": model_list, "page": self.page})
         return context
 
 
@@ -1214,6 +1240,7 @@ def plan_add(request):
         return render(request, 'user/login_action.html')
     else:
         prj_list = Project.objects.all()
+        model_list = limits_of_authority(user_id)
         if request.method == 'POST':
             plan_name = request.POST['plan_name'].strip()
             content = request.POST.getlist("case_id")
@@ -1221,7 +1248,8 @@ def plan_add(request):
             msg = plan_info_logic(plan_name, content)
             if msg != 'ok':
                 log.error('plan add error：{}'.format(msg))
-                return render(request, 'base/plan/add.html', {'error': msg, "prj_list": prj_list})
+                info = {'error': msg, "prj_list": prj_list, "model_list": model_list}
+                return render(request, 'base/plan/add.html', info)
             else:
                 prj_id = request.POST['prj_id']
                 project = Project.objects.get(prj_id=prj_id)
@@ -1239,7 +1267,6 @@ def plan_add(request):
                          format(plan_name, project, environment, description, content, is_locust))
                 return HttpResponseRedirect("/base/plan/")
         elif request.method == 'GET':
-            model_list = limits_of_authority(user_id)
             info = {"prj_list": prj_list, "model_list": model_list}
             return render(request, "base/plan/add.html", info)
 
@@ -1256,8 +1283,10 @@ def plan_update(request):
         return render(request, 'user/login_action.html')
     else:
         prj_list = Project.objects.all()
+        model_list = limits_of_authority(user_id)
         if request.method == 'POST':
             plan_id = request.POST['plan_id']
+            page = request.POST.get('page', '1')
             plan_name = request.POST['plan_name'].strip()
             content = request.POST.getlist("case_id")
             plan = Plan.objects.get(plan_id=plan_id)
@@ -1270,9 +1299,9 @@ def plan_update(request):
             msg = plan_info_logic(plan_name, content, plan_id)
             if msg != 'ok':
                 log.error('plan update error：{}'.format(msg))
-                return render(request, 'base/plan/update.html',
-                              {'error': msg, "prj_list": prj_list, 'plan': plan, 'case_list': case_list,
-                               'environments': environments})
+                info = {'error': msg, "prj_list": prj_list, 'plan': plan, 'case_list': case_list,
+                        'environments': environments, "page": page, "model_list": model_list}
+                return render(request, 'base/plan/update.html', info)
             else:
                 prj_id = request.POST['prj_id']
                 project = Project.objects.get(prj_id=prj_id)
@@ -1293,9 +1322,10 @@ def plan_update(request):
                 log.info(
                     'edit plan   {}  success. plan info: {} // {} // {} // {}'.format(plan_name, project, environment,
                                                                                       description, content))
-                return HttpResponseRedirect("/base/plan/")
+                return HttpResponseRedirect("/base/plan/?page={}".format(page))
         elif request.method == 'GET':
             plan_id = request.GET['plan_id']
+            page = request.GET.get("page", "1")
             plan = Plan.objects.get(plan_id=plan_id)
             environments = Environment.objects.filter(project_id=plan.project_id).all().values()
             case_list = []
@@ -1308,12 +1338,11 @@ def plan_update(request):
                     plans = Plan.objects.all().order_by('-plan_id')
                     page = request.GET.get('page')
                     contacts = paginator(plans, page)
-                    return render(request, "base/plan/index.html",
-                                  {"contacts": contacts,
-                                   'error': '计划 {} 中的 用例 {} 已被删除！！！'.format(plan.plan_name, case_id)})
-            model_list = limits_of_authority(user_id)
+                    info = {"contacts": contacts, "model_list": model_list,
+                            'error': '计划 {} 中的 用例 {} 已被删除！！！'.format(plan.plan_name, case_id)}
+                    return render(request, "base/plan/index.html", info)
             info = {"prj_list": prj_list, 'plan': plan, 'case_list': case_list, 'environments': environments,
-                    "model_list": model_list}
+                    "model_list": model_list, "page": page}
             return render(request, "base/plan/update.html", info)
 
 
@@ -1330,9 +1359,10 @@ def plan_delete(request):
     else:
         if request.method == 'GET':
             plan_id = request.GET['plan_id']
+            page = request.GET.get("page", "1")
             Plan.objects.filter(plan_id=plan_id).delete()
             log.info('用户 {} 删除计划 {} 成功.'.format(user_id, plan_id))
-            return HttpResponseRedirect("base/plan/")
+            return HttpResponseRedirect("base/plan/?page={}".format(page))
 
 
 def plan_run(request):
@@ -1379,6 +1409,7 @@ class TaskIndex(ListView):
         return task_list
 
     def get_context_data(self, **kwargs):
+        self.page = self.request.GET.dict().get('page', '1')
         context = super().get_context_data(**kwargs)
         paginator = context.get('paginator')
         page = context.get('page_obj')
@@ -1386,7 +1417,7 @@ class TaskIndex(ListView):
         data = pagination_data(paginator, page, is_paginated)
         user_id = self.request.session.get('user_id', '')
         model_list = limits_of_authority(user_id)
-        context.update({"model_list": model_list})
+        context.update({"model_list": model_list, "page": self.page})
         context.update(data)
         return context
 
@@ -1559,9 +1590,11 @@ def task_update(request):
         return render(request, 'user/login_action.html')
     else:
         if request.method == "GET":
-            task_id = request.build_absolute_uri().split("/")[-1]
+            task_id = request.GET.get("task_id", "1")
+            page = request.GET.get("page", "1")
             periodic = PeriodicTask.objects.get(id=task_id)
             interval_list = IntervalSchedule.objects.all()
+            model_list = limits_of_authority(user_id)
             if periodic.interval_id:
                 interval = IntervalSchedule.objects.get(id=periodic.interval_id)
             else:
@@ -1577,11 +1610,11 @@ def task_update(request):
                 try:
                     plan = Plan.objects.get(plan_id=plan_id)
                 except Plan.DoesNotExist:
-                    return render(request, "system/task/task_index.html", {"error": "任务中的计划 {} 已删除！".format(plan_id)})
+                    info = {"error": "任务中的计划 {} 已删除！".format(plan_id), "model_list": model_list, "page": page}
+                    return render(request, "system/task/task_index.html", info)
                 plan_list.append(plan)
-            model_list = limits_of_authority(user_id)
             info = {"interval_list": interval_list, "periodic": periodic, "plan_list": plan_list, "interval": interval,
-                    "crontab_list": crontab_list, "crontab": crontab, "model_list": model_list}
+                    "crontab_list": crontab_list, "crontab": crontab, "model_list": model_list, "page": page}
             return render(request, 'system/task/update.html', info)
         elif request.method == "POST":
             task_name = request.POST.get("task_name", "")
@@ -1593,6 +1626,8 @@ def task_update(request):
             plan_id_list = plan_id.split(",")
             now_time = datetime.now()
             periodic = PeriodicTask.objects.filter(name=task_name).exclude(id=task_id)
+            if not task_name:
+                return JsonResponse("任务名称不能为空！", safe=False)
             if periodic:
                 return JsonResponse("任务名称已存在！", safe=False)
             periodic = PeriodicTask.objects.get(id=task_id)
@@ -1681,10 +1716,12 @@ def task_delete(request):
         return render(request, 'user/login_action.html')
     else:
         if request.method == 'GET':
-            task_id = request.build_absolute_uri().split("/")[-1]
+            # task_id = request.build_absolute_uri().split("/")[-1]
+            task_id = request.GET.get("task_id", "")
+            page = request.GET.get("page", "1")
             PeriodicTask.objects.filter(id=task_id).delete()
             log.info("用户 {} 删除定时任务 {} 成功！".format(user_id, task_id))
-            return HttpResponseRedirect("/base/task/")
+            return HttpResponseRedirect("/base/task/?page={}".format(page))
 
 
 # 报告列表
@@ -1708,6 +1745,7 @@ class ReportPage(ListView):
             return report_list
 
     def get_context_data(self, **kwargs):
+        self.page = self.request.GET.dict().get('page', '1')
         context = super().get_context_data(**kwargs)
         context.update({'plan_id': self.plan_id})
         paginator = context.get('paginator')
@@ -1717,7 +1755,7 @@ class ReportPage(ListView):
         context.update(data)
         user_id = self.request.session.get('user_id', '')
         model_list = limits_of_authority(user_id)
-        context.update({"model_list": model_list})
+        context.update({"model_list": model_list, "page": self.page})
         return context
 
 
@@ -1761,6 +1799,7 @@ def report_index(request):
     else:
         if request.method == 'GET':
             report_id = request.GET.get('report_id', '')
+            page = request.GET.get('page', '')
             if not report_id:
                 return render(request, "report.html")
             try:
@@ -1780,7 +1819,7 @@ def report_index(request):
                 class_name = case['class_name']
             info = {"report": report, 'plan_id': plan_id, 'case_num': case_num, "error_num": error_num,
                     'pass_num': pass_num, 'fail_num': fail_num, "report_content": report_content,
-                    'img_name': str(now_time) + 'pie.png', 'class_name': class_name, "skip_num": skip_num}
+                    'img_name': str(now_time) + 'pie.png', 'class_name': class_name, "skip_num": skip_num, "page": page}
             if make:
                 return render(request, "report_httprunner.html", info)
             else:
@@ -1833,9 +1872,10 @@ def report_delete(request):
     else:
         if request.method == 'GET':
             report_id = request.GET['report_id']
+            page = request.GET.get("page", "1")
             Report.objects.filter(report_id=report_id).delete()
             log.info('用户 {} 删除报告 {} 成功.'.format(user_id, report_id))
-            return HttpResponseRedirect("base/report_page/")
+            return HttpResponseRedirect("base/report_page/?page={}".format(page))
 
 
 def file_download(request):
@@ -1851,6 +1891,7 @@ def file_download(request):
     else:
         if request.method == 'GET':
             report_id = request.GET.get('report_id', '')
+            model_list = limits_of_authority(user_id)
             local_path = ""
             name = ""
             make = False
@@ -1884,13 +1925,18 @@ def file_download(request):
                 zip.close()
 
             if isinstance(file_name, list):
-                convert_zip(file_name)
+                try:
+                    convert_zip(file_name)
+                except FileNotFoundError:
+                    log.info('文件：{} 中有文件不存在！'.format(file_name))
+                    return render(request, "base/report_page/report_page.html",
+                                  {'error': '文件：{} 中有文件不存在！'.format(file_name), "model_list": model_list})
                 file_name = local_path
                 make = True
             if not os.path.exists(file_name):
                 log.info('文件：{} 无法下载！'.format(file_name))
                 return render(request, "base/report_page/report_page.html",
-                              {'error': '文件：{} 无法下载！'.format(file_name)})
+                              {'error': '文件：{} 无法下载！'.format(file_name), "model_list": model_list})
             if make:
                 if settings.DEBUG:
                     url = "http://localhost:8000/media/{}.zip".format(name)
@@ -1898,7 +1944,7 @@ def file_download(request):
                     url = "http://www.easytest.xyz/media/{}.zip".format(name)
                 log.info('用户 {} 下载测试报告或日志文件：{} .'.format(user_id, url))
                 return render(request, "base/report_page/report_page.html",
-                              {'url': url})
+                              {'url': url, "model_list": model_list})
 
             def file_iterator(file_name, chunk_size=512):
                 with open(file_name, encoding='utf-8') as f:

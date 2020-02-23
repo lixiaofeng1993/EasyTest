@@ -67,14 +67,14 @@
                         {% for sign in object_list %}
                             <tr>
                                 <td id="cen">{{ sign.sign_id }}</td>
-                                <td><a href="{% url 'base:sign_update' %}?sign_id={{ sign.sign_id }}"
+                                <td><a href="{% url 'base:sign_update' %}?sign_id={{ sign.sign_id }}&&page={{ page }}"
                                        class="layui-btn layui-btn-xs" lay-event="edit">{{ sign.sign_name }}</a></td>
                                 <td id="cen">{{ sign.sign_type }}</td>
                                 <td>{{ sign.description }}</td>
                                 <td id="cen">{{ sign.update_time }}</td>
                                 <td id="cen">{{ sign.update_user }}</td>
                                 <td id="cen">
-                                    <a href="{% url 'base:sign_delete' %}?sign_id={{ sign.sign_id }}"
+                                    <a href="{% url 'base:sign_delete' %}?sign_id={{ sign.sign_id }}&&page={{ page }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"
                                        onclick="return delete_btn()"><img
                                             src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>

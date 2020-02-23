@@ -175,11 +175,11 @@
                 type: "post",
                 data: {"content": content_json, "env_id": env_id},
                 success: function (data) {
-                    if (data.indexOf('<') == -1) {
+                    if (data != "ok") {
                         alert(data);
                     } else {
                         alert('保存成功！');
-                        window.location.replace("/base/env/");
+                        window.location.replace("/base/env/?page={{ page }}");
 
                     }
                 },

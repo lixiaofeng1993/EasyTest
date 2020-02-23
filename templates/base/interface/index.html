@@ -161,9 +161,10 @@
                         {% for if in object_list %}
                             <tr>
                                 <td id="cen">{{ if.if_id }}</td>
-                                <td id="if_name"><a href="{% url 'base:interface_update' %}?if_id={{ if.if_id }}"
-                                                    class="layui-btn layui-btn-xs"
-                                                    lay-event="edit">{{ if.if_name }}</a></td>
+                                <td id="if_name"><a
+                                        href="{% url 'base:interface_update' %}?if_id={{ if.if_id }}&&page={{ page }}"
+                                        class="layui-btn layui-btn-xs"
+                                        lay-event="edit">{{ if.if_name }}</a></td>
                                 <td id="cen">{{ if.project }}</td>
                                 <td id="cen">{{ if.method }}</td>
                                 <td id="cen">{{ if.data_type }}</td>
@@ -184,7 +185,7 @@
                                        class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="return copy_btn()"><i class="fa fa-files-o"></i>&nbsp;&nbsp;&nbsp;
                                     </a>
-                                    <a href="{% url 'base:interface_delete' %}?if_id={{ if.if_id }}"
+                                    <a href="{% url 'base:interface_delete' %}?if_id={{ if.if_id }}&&page={{ page }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"
                                        onclick="return delete_btn()"><img
                                             src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;

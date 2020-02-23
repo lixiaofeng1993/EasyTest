@@ -45,6 +45,7 @@
                     <form class="form-horizontal" action="{% url 'base:project_update' %}" method="post"
                           onsubmit="return check()">
                         <input name="prj_id" value={{ prj.prj_id }} hidden>
+                        <input name="page" value={{ page }} hidden>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">项目名称</label>
                             <div class="col-sm-6">

@@ -593,7 +593,7 @@
                     // dataType: "json",
                     success: function (data) {
                         console.log(data);
-                        if (data.indexOf('<') == -1) {
+                        if (data != "ok") {
                             alert(data);
                         } else {
                             alert('保存成功！');

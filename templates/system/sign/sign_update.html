@@ -46,6 +46,7 @@
                 <div class="panel-body">
                     <form class="form-horizontal" method="post" action="{% url 'base:sign_update' %}">
                         <input name="sign_id" value={{ sign.sign_id }} hidden>
+                        <input name="page" value={{ page }} hidden>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">签名方式名称</label>
                             <div class="col-sm-6">

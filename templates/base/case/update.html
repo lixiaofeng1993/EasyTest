@@ -785,11 +785,11 @@
                     },
                     // dataType: "json",
                     success: function (data) {
-                        if (data.indexOf('<') == -1) {
+                        if (data != "ok") {
                             alert(data);
                         } else {
                             alert("编辑成功");
-                            window.location.replace("/base/case/");
+                            window.location.replace("/base/case/?page={{ page }}");
                         }
 
                     },

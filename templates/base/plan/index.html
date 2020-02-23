@@ -96,9 +96,10 @@
                         {% for plan in object_list %}
                             <tr>
                                 <td id="cen">{{ plan.plan_id }}</td>
-                                <td id="plan-name"><a href="{% url 'base:plan_update' %}?plan_id={{ plan.plan_id }}"
-                                                      class="layui-btn layui-btn-xs"
-                                                      lay-event="edit">{{ plan.plan_name }}</a></td>
+                                <td id="plan-name"><a
+                                        href="{% url 'base:plan_update' %}?plan_id={{ plan.plan_id }}&&page={{ page }}"
+                                        class="layui-btn layui-btn-xs"
+                                        lay-event="edit">{{ plan.plan_name }}</a></td>
                                 <td id="cen" prj_id="{{ plan.project.prj_id }}">{{ plan.project }}</td>
                                 <td id="cen"
                                     env_id="{{ plan.environment.env_id }}">{{ plan.environment.env_name }}</td>
@@ -117,7 +118,7 @@
                                        href="{% url 'base:report_page' %}?plan_id={{ plan.plan_id }}">
                                         <i class="fa fa-edit"></i>&nbsp;&nbsp;&nbsp;
                                     </a>
-                                    <a href="{% url 'base:plan_delete' %}?plan_id={{ plan.plan_id }}"
+                                    <a href="{% url 'base:plan_delete' %}?plan_id={{ plan.plan_id }}&&page={{ page }}"
                                        class="layui-btn layui-btn-danger layui-btn-xs"
                                        onclick="return delete_btn()">
                                         <img src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>
