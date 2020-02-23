@@ -6,6 +6,7 @@ import time, json
 import logging
 from base.models import Event, Guest
 from django.contrib.auth.models import User
+
 # from django.contrib.auth.hashers import check_password
 
 log = logging.getLogger('log')
@@ -86,7 +87,7 @@ def get_event_list(request):
     eid = request.GET.get('eid', '')  # 发布会id
     name = request.GET.get('name', '')  # 发布会名称
 
-    if eid == '' and name == '':
+    if not eid and not name:
         log.info('默认服务==>  get_event_list，参数错误，不能为空.')
         return JsonResponse({'status': 200, 'message': 'parameter error', 'error_code': 10021})
     if eid != '':

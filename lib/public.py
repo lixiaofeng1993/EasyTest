@@ -577,7 +577,14 @@ def http_random(body):
                         try:
                             clazz = getattr(package, func_[0])
                             if func_[1]:
-                                c = clazz(func_[1])
+                                args = func_[1].split(",")
+                                c = clazz(*args)
+                                # if params_num == 1:
+                                #     c = clazz(func_params[0])
+                                # elif params_num == 2:
+                                #     c = clazz(func_params[0], func_params[1])
+                                # elif params_num == 3:
+                                #     c = clazz(func_params[0], func_params[1], func_params[2])
                             else:
                                 c = clazz()
                             # data = eval(func[1])
