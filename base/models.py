@@ -212,6 +212,7 @@ class DebugTalk(models.Model):
     belong_project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
     debugtalk = models.TextField(null=True, default='#debugtalk.py')
     status = models.BooleanField(default=False)  # 状态
+    page = models.IntegerField(default=1, null=True)
 
     class Meta:
         verbose_name = '驱动py文件'

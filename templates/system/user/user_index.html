@@ -78,7 +78,7 @@
                                 <td id="cen">{{ sign.is_superuser }}</td>
                                 <td id="cen">{{ sign.date_joined }}</td>
                                 <td id="cen">
-                                    <a href="{% url 'base:user_power' %}{{ sign.id }}/">permission</a>
+                                    <a href="{% url 'base:user_power' %}?user_id={{ sign.id }}&&page={{ page }}">permission</a>
                                     {#                                        <a href="../admin/auth/user/{{ sign.id }}/delete/?_to_field=id&_popup=1"#}
                                     {#                                           class="layui-btn layui-btn-danger layui-btn-xs"><img#}
                                     {#                                                src="/static/admin/img/icon-deletelink.svg"/>&nbsp;&nbsp;&nbsp;</a>#}

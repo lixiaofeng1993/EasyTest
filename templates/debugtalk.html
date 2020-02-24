@@ -100,7 +100,7 @@
         content.trim().split('\n').forEach(function (v, i) {
             str = str + v + 'new_line';
         });
-        post('/base/debugtalk/', {'debugtalk': str, "id":{{ id }}, "status": "{{ status }}"});
+        post('/base/debugtalk/', {'debugtalk': str, "id":{{ id }}, "status": "{{ status }}", "page": "{{ page }}"});
     });
 
 </script>

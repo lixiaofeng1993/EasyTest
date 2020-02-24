@@ -37,7 +37,7 @@ class_name = ''  # 执行测试类
 
 
 # 项目列表
-# @page_cache(5) TODO:返回当前分页页面
+# @page_cache(5)
 @method_decorator(login_required, name='dispatch')
 class ProjectIndex(ListView):
     model = Project
@@ -2191,6 +2191,7 @@ class UserIndex(ListView):
         return user_list
 
     def get_context_data(self, **kwargs):
+        self.page = self.request.GET.dict().get('page', '1')
         context = super().get_context_data(**kwargs)
         paginator = context.get('paginator')
         page = context.get('page_obj')
@@ -2199,7 +2200,7 @@ class UserIndex(ListView):
         context.update(data)
         user_id = self.request.session.get('user_id', '')
         model_list = limits_of_authority(user_id)
-        context.update({"model_list": model_list})
+        context.update({"model_list": model_list, "page": self.page})
         return context
 
 
@@ -2210,8 +2211,10 @@ def user_power(request):
         return render(request, 'user/login_action.html')
     else:
         if request.method == "GET":
-            patt = re.compile("\/(\d+)\/")
-            id = patt.findall(request.get_full_path())[0]
+            # patt = re.compile("\/(\d+)\/")
+            # id = patt.findall(request.get_full_path())[0]
+            id = request.GET.get("user_id")
+            page = request.GET.get("page", "1")
             model_nav = limits_of_authority(user_id)
             model_list = []
             try:
@@ -2229,7 +2232,7 @@ def user_power(request):
                 for foo in model:
                     model_list.append(
                         {"id": foo.id, "model_name": foo.model_name, "url": foo.url, "icon": foo.Icon, "make": False})
-            info = {"model": model_list, "id": id, "model_nav": model_nav}
+            info = {"model": model_list, "id": id, "model_nav": model_nav, "page": page}
             superuser = is_superuser(user_id, make=False)
             if not superuser:
                 if user_id != int(id):
@@ -2240,15 +2243,17 @@ def user_power(request):
             body = request.body.decode("utf-8")
             patt = re.compile("power\d+=(\d+)")
             user_patt = re.compile("user_id=(\d+)")
+            page_patt = re.compile("page=(\d+)")
             power = patt.findall(body)
             id = user_patt.findall(body)[0]
+            page = page_patt.findall(body)[0]
             try:
                 user = UserPower.objects.get(user_id=id)
                 user.power = json.dumps(power)
                 user.save()
             except UserPower.DoesNotExist:
                 UserPower.objects.create(user_id=id, power=json.dumps(power))
-            return HttpResponseRedirect("/base/user/")
+            return HttpResponseRedirect("/base/user/?page={}".format(page))
 
 
 def about_index(request):
@@ -2506,18 +2511,23 @@ def debugtalk(request):
 
     else:
         if request.method == 'GET':
-            patt = re.compile("\/(\d+)\/")
-            id = patt.findall(request.get_full_path())[0]
+            # patt = re.compile("\/(\d+)\/")
+            # id = patt.findall(request.get_full_path())[0]
+            id = request.GET.get("prj_id")
+            page = request.GET.get("page")
             try:
-                if id == "0":
-                    debugtalk = DebugTalk.objects.values('id', 'debugtalk', "status").get(belong_project_id=None)
+                if not id:
+                    debugtalk = DebugTalk.objects.values('id', 'debugtalk', "status", "page").get(
+                        belong_project_id=None)
                 else:
-                    debugtalk = DebugTalk.objects.values('id', 'debugtalk', "status").get(belong_project_id=id)
+                    DebugTalk.objects.filter(belong_project_id=id).update(page=page)
+                    debugtalk = DebugTalk.objects.values('id', 'debugtalk', "status", "page").get(belong_project_id=id)
                 return render_to_response('debugtalk.html', debugtalk)
             except DebugTalk.DoesNotExist:
-                return render(request, "debugtalk.html", {"id": id})
+                return render(request, "debugtalk.html", {"id": id, "page": page})
         elif request.method == "POST":
             id = request.POST.get('id')
+            page = request.POST.get('page', "1")
             debugtalk = request.POST.get('debugtalk')
             status = request.POST.get('status', "False")
             code = debugtalk.replace('new_line', '\r\n')
@@ -2534,8 +2544,9 @@ def debugtalk(request):
                 try:
                     obj = DebugTalk.objects.get(id=id)
                     obj.debugtalk = code
+                    obj.page = page
                 except DebugTalk.DoesNotExist:
                     obj = DebugTalk(create_time=datetime.now(), update_time=datetime.now(), debugtalk=code,
-                                    belong_project_id=id)
+                                    belong_project_id=id, page=page)
                 obj.save()
-                return HttpResponseRedirect("/base/project/")
+                return HttpResponseRedirect("/base/project/?page={}".format(page))

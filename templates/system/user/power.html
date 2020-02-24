@@ -63,6 +63,7 @@
                     <form class="form-horizontal" method="post" action="{% url 'base:user_power' %}"
                           onsubmit="">
                         <input name="user_id" value={{ id }} hidden>
+                        <input name="page" value={{ page }} hidden>
                         {% for foo in model %}
                             <div class="power-div">
 
