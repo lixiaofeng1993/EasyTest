@@ -432,8 +432,9 @@ def env_add(request):
             env_name = request.POST['env_name'].strip()
             url = request.POST['url'].strip()
             import_url = request.POST.get('import_url', "").strip()
+            is_swagger = request.POST['is_swagger']
 
-            msg = env_info_logic(env_name, url)
+            msg = env_info_logic(env_name, url, import_url=import_url, is_swagger=is_swagger)
             if msg != 'ok':
                 log.error('env add error：{}'.format(msg))
                 info = {'error': msg, "prj_list": prj_list, "model_list": model_list, "page": "1"}
@@ -443,7 +444,6 @@ def env_add(request):
                 project = Project.objects.get(prj_id=prj_id)
                 private_key = request.POST['private_key']
                 description = request.POST['description']
-                is_swagger = request.POST['is_swagger']
                 username = request.session.get('user', '')
                 if is_swagger == '1':
                     Environment.objects.filter(is_swagger=1).update(is_swagger=0)
@@ -478,8 +478,9 @@ def env_update(request):
             env_name = request.POST['env_name'].strip()
             url = request.POST['url'].strip()
             import_url = request.POST.get('import_url', "").strip()
+            is_swagger = request.POST['is_swagger']
 
-            msg = env_info_logic(env_name, url, env_id)
+            msg = env_info_logic(env_name, url, env_id, import_url=import_url, is_swagger=is_swagger)
             if msg != 'ok':
                 log.error('env update error：{}'.format(msg))
                 env = Environment.objects.get(env_id=env_id)
@@ -488,10 +489,8 @@ def env_update(request):
             else:
                 prj_id = request.POST['prj_id']
                 project = Project.objects.get(prj_id=prj_id)
-
                 private_key = request.POST['private_key']
                 description = request.POST['description']
-                is_swagger = request.POST['is_swagger']
                 username = request.session.get('user', '')
                 if is_swagger == '1':
                     Environment.objects.filter(is_swagger=1).update(is_swagger=0)

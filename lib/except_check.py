@@ -97,7 +97,7 @@ def sign_info_logic(sign_name, sign_id=''):
         return 'ok'
 
 
-def env_info_logic(env_name, url, env_id=''):
+def env_info_logic(env_name, url, env_id='', import_url="", is_swagger="0"):
     """
     环境新增、编辑逻辑
     :param env_name:
@@ -105,11 +105,17 @@ def env_info_logic(env_name, url, env_id=''):
     :param env_id:
     :return:
     """
+    att = re.compile('^[\w]{3,5}:\/\/.+')
     if env_name == '':
         return '环境名称不能为空！'
+    if is_swagger == "1":
+        if import_url == "":
+            return "导入url不能为空！"
+        math_url = att.findall(import_url)
+        if not math_url:
+            return '导入url不符合规则【^[\w]{3,5}:\/\/.+】，请重新输入！'
     if url == '':
         return 'url不能为空！'
-    att = re.compile('^[\w]{3,5}:\/\/.+')
     math = att.findall(url)
     if not math:
         return 'url不符合规则【^[\w]{3,5}:\/\/.+】，请重新输入！'
