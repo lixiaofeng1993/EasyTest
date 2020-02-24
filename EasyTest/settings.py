@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
-import os
+import os, platform
 from celery.schedules import crontab
 from celery.schedules import timedelta
 
@@ -24,8 +24,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '0y=3effs=f2e3wqz^sbqt(@d@&+*6*r^86(!p1f8n$ygumkk!i'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-# DEBUG = True
+if platform.system() == "Windows":
+    DEBUG = True
+else:
+    DEBUG = False
 
 ALLOWED_HOSTS = ['*', '39.105.136.231', '127.0.0.1']  # TODO:局域网其他电脑访问
 
@@ -86,18 +88,30 @@ DATABASES = {
     }
 }
 """
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': "127.0.0.1",
-        'NAME': "easytest",
-        'USER': "easytest",
-        # 'USER': "root",
-        'PASSWORD': "123456",
-        'PORT': "3306",
+if platform.system() == "Windows":
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': "127.0.0.1",
+            'NAME': "easytest",
+            # 'USER': "easytest",
+            'USER': "root",
+            'PASSWORD': "123456",
+            'PORT': "3306",
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': "127.0.0.1",
+            'NAME': "easytest",
+            'USER': "easytest",
+            # 'USER': "root",
+            'PASSWORD': "123456",
+            'PORT': "3306",
+        }
+    }
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators

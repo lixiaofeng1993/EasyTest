@@ -41,6 +41,7 @@ class Environment(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     description = models.CharField(max_length=200)
     url = models.CharField(max_length=100)
+    import_url = models.CharField(max_length=100,default="")
     is_swagger = models.IntegerField(default=0)  # 导入swagger
     set_headers = models.TextField(default='')  # 设置默认headers
     private_key = models.CharField(max_length=100)

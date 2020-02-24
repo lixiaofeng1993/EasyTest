@@ -26,7 +26,7 @@ class AnalysisJson:
         :return:
         """
         try:
-            r = requests.get(self.url + '/v2/api-docs?group=sign-api').json()
+            r = requests.get(self.url).json()
             # write_data(r, 'data.json')
             # r = get_json('D:\EasyTest\data.json')
         except Exception as e:

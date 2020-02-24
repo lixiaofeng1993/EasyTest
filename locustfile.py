@@ -1,12 +1,3 @@
-#!/user/bin/env python
-# coding=utf-8
-'''
-# 创 建 人: 李先生
-# 文 件 名: locustfile.py
-# 说   明: 这是一个测试版本
-# 创建时间: 2020/2/13 19:36
-'''
-
 from locust import TaskSet, task, HttpLocust
 
 

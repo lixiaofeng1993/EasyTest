@@ -11,6 +11,7 @@ import logging
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.header import Header
+from base.models import User
 from lib import readConfig
 
 # from lib import readConfig
@@ -18,10 +19,9 @@ from lib import readConfig
 log = logging.getLogger('log')
 
 
-def send_email(_to, title, report_id='', register=False):
+def send_email(title, report_id='', register=False):
     """
     发送邮件
-    :param _to:
     :param title:
     :param report_id:
     :param register:
@@ -30,6 +30,14 @@ def send_email(_to, title, report_id='', register=False):
     smtp_service = 'smtp.qq.com'
     user = readConfig.email_user
     pwd = readConfig.email_pwd
+
+    _to = []
+    user_ = User.objects.filter(is_superuser=1).filter(is_staff=1).filter(is_active=1).values()
+    for u in user_:
+        _to.append(u['email'])
+    if not _to:
+        log.error('收件人邮箱为空，无法发送邮件！请在 EasyTeat接口测试平台 - 用户管理 模块中设置.')
+        return
 
     msg = MIMEMultipart()
     msg['Subject'] = title + ' 执行报告'

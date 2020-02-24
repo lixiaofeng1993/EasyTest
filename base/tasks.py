@@ -59,16 +59,9 @@ def test_httprunner(env_id, case_id_list, plan="", username="root"):
                     totalTime=totalTime, startTime=start_time, update_user=username, make=1, report_path=report_path)
     report.save()
     if fail_num or error_num:
-        _to = []
-        user = User.objects.filter(is_superuser=1).filter(is_staff=1).filter(is_active=1).values()
-        for u in user:
-            _to.append(u['email'])
-        if _to:
-            title = plan.plan_name
-            report_id = Report.objects.get(report_name=report_name).report_id
-            # send_email(_to=_to, title=title, report_id=report_id)
-        else:
-            logger.log_warning('收件人邮箱为空，无法发送邮件！请在 EasyTeat接口测试平台 - 用户管理 模块中设置.')
+        title = plan.plan_name
+        report_id = Report.objects.get(report_name=report_name).report_id
+        send_email(title=title, report_id=report_id)
     logger.log_info('HttpRunner执行测试计划完成！')
 
 
@@ -119,16 +112,9 @@ def test_plan(env_id, case_id_list, plan="", username="root"):
     report.save()
     Plan.objects.filter(plan_id=plan.plan_id).update(update_user=username, update_time=datetime.now())
     if fail_num or error_num:
-        _to = []
-        user = User.objects.filter(is_superuser=1).filter(is_staff=1).filter(is_active=1).values()
-        for u in user:
-            _to.append(u['email'])
-        if _to:
-            title = plan.plan_name
-            report_id = Report.objects.get(report_name=report_name).report_id
-            # send_email(_to=_to, title=title, report_id=report_id)
-        else:
-            logger.log_warning('收件人邮箱为空，无法发送邮件！请在 EasyTeat接口测试平台 - 用户管理 模块中设置.')
+        title = plan.plan_name
+        report_id = Report.objects.get(report_name=report_name).report_id
+        send_email(title=title, report_id=report_id)
     logger.log_info('默认方式测试计划执行完成！')
 
 
@@ -199,16 +185,9 @@ def run_plan(*args, **kwargs):
                     startTime=start_time, update_user="root", make=1, report_path=report_path, task_id=task_id)
     report.save()
     if fail_num or error_num:
-        _to = []
-        user = User.objects.filter(is_superuser=1).filter(is_staff=1).filter(is_active=1).values()
-        for u in user:
-            _to.append(u['email'])
-        if _to:
-            title = task_name
-            report_id = Report.objects.get(report_name=report_name).report_id
-            # send_email(_to=_to, title=title, report_id=report_id)
-        else:
-            logger.log_warning('收件人邮箱为空，无法发送邮件！请在 EasyTeat接口测试平台 - 用户管理 模块中设置.')
+        title = task_name
+        report_id = Report.objects.get(report_name=report_name).report_id
+        send_email(title=title, report_id=report_id)
     logger.log_info('HttpRunner执行定时任务完成！{}--{}--'.format(args, kwargs))
 
 

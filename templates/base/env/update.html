@@ -67,34 +67,51 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-2 control-label">是否swagger导入</label>
-                            {% if env.is_swagger %}
-                                <div class="col-sm-2 control-label">
+                        {% if env.is_swagger %}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否swagger导入</label>
+                                <div class="col-sm-2 control-label" onclick="is_swagger()">
                                     <label class="fancy-radio">
                                         <input name="is_swagger" value="1" type="radio"
                                                checked><span><i></i>导入</span>
                                     </label>
                                 </div>
-                                <div class="col-sm-2 control-label">
+                                <div class="col-sm-2 control-label" onclick="is_swagger()">
                                     <label class="fancy-radio">
                                         <input name="is_swagger" value="0" type="radio"><span><i></i>不导入</span>
                                     </label>
                                 </div>
-                            {% else %}
-                                <div class="col-sm-2 control-label">
+                            </div>
+                            <div class="form-group" id="import_url">
+                                <label class="col-sm-2 control-label">导入url</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="import_url" class="form-control"
+                                           value="{{ env.import_url }}">
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">是否swagger导入</label>
+                                <div class="col-sm-2 control-label" onclick="is_swagger()">
                                     <label class="fancy-radio">
                                         <input name="is_swagger" value="1" type="radio"><span><i></i>导入</span>
                                     </label>
                                 </div>
-                                <div class="col-sm-2 control-label">
+                                <div class="col-sm-2 control-label" onclick="is_swagger()">
                                     <label class="fancy-radio">
                                         <input name="is_swagger" value="0" type="radio"
                                                checked><span><i></i>不导入</span>
                                     </label>
                                 </div>
-                            {% endif %}
-                        </div>
+                            </div>
+                            <div class="form-group" style="display: none" id="import_url">
+                                <label class="col-sm-2 control-label">导入url</label>
+                                <div class="col-sm-6">
+                                    <input type="text" name="import_url" class="form-control"
+                                           value="{{ env.import_url }}">
+                                </div>
+                            </div>
+                        {% endif %}
                         <div class="form-group">
                             <label class="col-sm-2 control-label">URL</label>
                             <div class="col-sm-6">
@@ -141,5 +158,14 @@
         $('#reset').click(function () {
             location.reload();
         });
+        function is_swagger() {
+            var swagger = $("input[name='is_swagger']:checked").val();
+            if (swagger == "1") {
+                $("#import_url").show();
+            } else {
+                $("#import_url").hide();
+            }
+
+        }
     </script>
 {% endblock %}

@@ -39,5 +39,5 @@ class WebPageUser(HttpLocust):
     max_wait = 30
 
     # file_path is generated on locusts startup
-    file_path = "testsuites\guest性能测试用例.json"
+    file_path = "testsuites\发布会测试计划.json"
     tests = prepare_locust_tests(file_path)

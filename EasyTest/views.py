@@ -252,7 +252,7 @@ def register(request):
                 user_ = User.objects.get(username=username)
                 request.session['user_id'] = user_.id  # 将session信息记录到浏览器
                 response = redirect('/index/')
-                send_email('18701137212@163.com', '注册登录记录', report_id=username, register=True)
+                send_email('注册登录记录', report_id=username, register=True)
                 log.info('用户： {} 注册并登录成功！'.format(username))
                 request.session.set_expiry(None)  # 关闭浏览器后，session失效
                 create_model(user_.id)

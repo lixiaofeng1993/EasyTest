@@ -91,8 +91,8 @@ class HttpRunerMain:
                     "validate": [],
                     "variables": {}
                 }
-                base_url = data.get("base_url", "")
-                api = data.get("url", "")
+                base_url = data.get("url", "")
+                # api = data.get("url", "")
                 method = data.get('method', "")
                 plan_name = data.get("plan_name", "")
                 case_name = data.get("case_name", "")
@@ -166,7 +166,7 @@ class HttpRunerMain:
                         "variables": {}
                     }
                     api_json["name"] = if_name
-                    api_json["request"]["url"] = api
+                    api_json["request"]["url"] = base_url
                     api_json["request"]["method"] = method
                     api_json["request"]["headers"] = data.get("header", {})
                     if method in ['post', 'put']:

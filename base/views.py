@@ -431,6 +431,7 @@ def env_add(request):
         if request.method == 'POST':
             env_name = request.POST['env_name'].strip()
             url = request.POST['url'].strip()
+            import_url = request.POST.get('import_url', "").strip()
 
             msg = env_info_logic(env_name, url)
             if msg != 'ok':
@@ -447,7 +448,8 @@ def env_add(request):
                 if is_swagger == '1':
                     Environment.objects.filter(is_swagger=1).update(is_swagger=0)
                 env = Environment(env_name=env_name, url=url, project=project, private_key=private_key,
-                                  description=description, is_swagger=is_swagger, update_user=username)
+                                  import_url=import_url, description=description, is_swagger=is_swagger,
+                                  update_user=username)
                 env.save()
                 log.info('add env   {}  success.  env info： {} // {} // {} // {} // {} '
                          .format(env_name, project, url, private_key, description, is_swagger))
@@ -475,6 +477,7 @@ def env_update(request):
             page = request.POST.get("page", "1")
             env_name = request.POST['env_name'].strip()
             url = request.POST['url'].strip()
+            import_url = request.POST.get('import_url', "").strip()
 
             msg = env_info_logic(env_name, url, env_id)
             if msg != 'ok':
@@ -492,12 +495,14 @@ def env_update(request):
                 username = request.session.get('user', '')
                 if is_swagger == '1':
                     Environment.objects.filter(is_swagger=1).update(is_swagger=0)
+                else:
+                    import_url = ""
                 Environment.objects.filter(env_id=env_id).update(env_name=env_name, url=url, project=project,
                                                                  private_key=private_key, description=description,
                                                                  update_time=datetime.now(), is_swagger=is_swagger,
-                                                                 update_user=username)
-                log.info('edit env   {}  success.  env info： {} // {} // {} // {} // {}'
-                         .format(env_name, project, url, private_key, description, is_swagger))
+                                                                 update_user=username, import_url=import_url)
+                log.info('edit env   {}  success.  env info： {} // {} // {} // {} // {} //{}'
+                         .format(env_name, project, url, private_key, description, is_swagger, import_url))
                 return HttpResponseRedirect("/base/env/?page={}".format(page))
         elif request.method == 'GET':
             env_id = request.GET['env_id']
@@ -909,9 +914,10 @@ def batch_index(request):
             # Report.objects.all().delete()  # 清空报告表
             try:
                 env = Environment.objects.get(is_swagger=1)
-                env_url = env.url
+                # env_url = env.url
                 prj_id = env.project_id
-                interface = AnalysisJson(prj_id, env_url).retrieve_data()
+                import_url = env.import_url
+                interface = AnalysisJson(prj_id, import_url).retrieve_data()
                 if interface == 'error':
                     return HttpResponse('请求swagger url 发生错误，请联系管理员！')
                 elif isinstance(interface, dict):

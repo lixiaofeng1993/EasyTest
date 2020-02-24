@@ -178,12 +178,13 @@ class Test_execute():
             #     if '$' not in v:
             #         self.make = True
             # if self.make:
-            if self.headers:
-                self.headers.update(if_dict["header"])
-                if_dict['header'] = self.headers
-            else:
-                headers.update(if_dict['header'])
-                if_dict['header'] = headers
+            if "$" not in headers.values():
+                if self.headers:
+                    self.headers.update(if_dict["header"])
+                    if_dict['header'] = self.headers
+                else:
+                    headers.update(if_dict['header'])
+                    if_dict['header'] = headers
         # if interface.data_type == 'sql':
         #     for k, v in if_dict['body'].items():
         #         if 'select' in v:
@@ -216,18 +217,13 @@ class Test_execute():
             if_dict["body"] = {
                 "file": ("login-bg.jpg", open("/var/static/static/img/login-bg.jpg", "rb"), "image/jpeg", {})}
 
-        if self.run_mode == '0':
-            if interface.set_mock == '1':  # 使用mock接口
+        if interface.set_mock == '1':  # 使用mock接口
+            if settings.DEBUG:
+                if_dict['url'] = 'http://localhost:8000/mocks' + interface.url
+            else:
                 if_dict['url'] = 'http://www.easytest.xyz/mocks' + interface.url
-                if_dict['base_url'] = 'http://www.easytest.xyz/mocks'
-            else:
-                if_dict["url"] = self.env_url + interface.url
-        elif self.run_mode == '1':
-            if interface.set_mock == '1':
-                if_dict['base_url'] = 'http://www.easytest.xyz/mocks'
-            else:
-                if_dict['base_url'] = self.env_url
-            if_dict['path'] = interface.url
+        else:
+            if_dict["url"] = self.env_url + interface.url
 
         if_dict["url"], if_dict["body"] = format_url(if_dict["url"], if_dict["body"])
 

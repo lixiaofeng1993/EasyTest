@@ -75,12 +75,11 @@ def get_random_name():
 
 
 def get_random_text(num=""):
-
     fake = Faker("zh_CN")
 
     if str(num).isdigit():
 
-        return fake.text(num)
+        return fake.text(int(num))
 
     else:
 
@@ -101,13 +100,14 @@ def get_random_address():
 
 
 def get_random_int(x=0, y=0):
-
-    if y == 0:
-
-        return random.randint(1, 10000)
-
+    if str(x).isdigit():
+        x = int(x)
+        y = int(y)
     else:
-
+        return random.randint(1, 10000)
+    if y == 0:
+        return random.randint(1, 10000)
+    else:
         return random.randint(x, y)
 
 
