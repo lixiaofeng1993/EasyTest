@@ -1,0 +1,24 @@
+{
+    "name": "mock接口",
+    "noReset": true,
+    "output": [],
+    "request": {
+        "headers": {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "token": "$token"
+        },
+        "json": {},
+        "method": "get",
+        "params": {},
+        "url": "http://localhost:8000/mocks/get_event_list_mock/"
+    },
+    "validate": [
+        {
+            "equals": [
+                "content.valid",
+                "验证成功后返回"
+            ]
+        }
+    ],
+    "variables": {}
+}

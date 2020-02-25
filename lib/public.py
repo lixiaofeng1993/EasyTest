@@ -871,3 +871,25 @@ def remove_logs(path):
         else:
             log.info('文件夹跳过：{}'.format(file_path))
     return num
+
+
+def token_sign(username):
+    import hashlib
+    md5 = hashlib.md5()
+    sign_str = username
+    sign_bytes_utf8 = sign_str.encode(encoding='utf-8')
+    md5.update(sign_bytes_utf8)
+    token = md5.hexdigest()
+    return token
+
+
+def check_token(request):
+    token = request.META.get("HTTP_TOKEN")
+    username = request.session.get("username", "")
+    if not username:
+        return {'status': 200, 'message': '未获取username，无法验证token。', 'error_code': 10041}
+    _token = token_sign(username)
+    if token != _token:
+        return {'status': 200, 'message': 'token验证失败！请检查登录用户。', 'error_code': 10040}
+    else:
+        return "ok"

@@ -1,0 +1,54 @@
+{
+    "config": {
+        "base_url": "http://localhost:8000/mocks/get_event_list_mock/",
+        "name": "发布会测试用例",
+        "variables": {}
+    },
+    "noReset": true,
+    "teststeps": [
+        {
+            "api": "api/发布会测试用例/登录接口.json",
+            "extract": [
+                {
+                    "token": "content.token"
+                }
+            ],
+            "name": "登录接口",
+            "output": [],
+            "skip": "",
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/发布会测试用例/添加发布会接口.json",
+            "extract": [
+                {
+                    "eid": "content.eid"
+                }
+            ],
+            "name": "添加发布会接口",
+            "output": [],
+            "skip": "",
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/发布会测试用例/查询发布会接口.json",
+            "extract": [],
+            "name": "查询发布会接口",
+            "output": [],
+            "skip": "",
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/发布会测试用例/mock接口.json",
+            "extract": [],
+            "name": "mock接口",
+            "output": [],
+            "skip": "",
+            "validate": [],
+            "variables": {}
+        }
+    ]
+}

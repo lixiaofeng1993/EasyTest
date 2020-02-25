@@ -1034,7 +1034,7 @@ def case_update(request):
             case_id = request.GET['case_id']
             page = request.GET.get("page", "1")
             case = Case.objects.get(case_id=case_id)
-            interface = Interface.objects.all().values()
+            interface = Interface.objects.filter(project_id=case.project_id).values()
             if_list = ''
             for i in eval(case.content):
                 if_list += i['if_id'] + ','

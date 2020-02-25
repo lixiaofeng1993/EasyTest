@@ -1,0 +1,31 @@
+{
+    "name": "添加发布会接口",
+    "noReset": true,
+    "output": [],
+    "request": {
+        "data": {
+            "address": "${get_random_address()}",
+            "eid": "${get_random_int()}",
+            "limit": "$limit",
+            "name": "${get_random_name()}发布会",
+            "start_time": "2020-02-24 15:54:52",
+            "status": 1
+        },
+        "headers": {
+            "Content-Type": "application/x-www-form-urlencoded",
+            "token": "$token"
+        },
+        "json": {},
+        "method": "post",
+        "url": "http://localhost:8000/api/add_event/"
+    },
+    "validate": [
+        {
+            "equals": [
+                "content.message",
+                "add event success"
+            ]
+        }
+    ],
+    "variables": {}
+}
