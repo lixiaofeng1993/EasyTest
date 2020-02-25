@@ -1,0 +1,24 @@
+{
+    "config": {
+        "base_url": "http://localhost:8000/mocks/get_event_list_mock/",
+        "name": "添加发布会接口",
+        "variables": {}
+    },
+    "noReset": true,
+    "testcases": [
+        {
+            "name": "添加发布会接口",
+            "parameters": [
+                {
+                    "limit": [
+                        "1000",
+                        "2000"
+                    ]
+                }
+            ],
+            "testcase": "testcases/添加发布会接口.json",
+            "variables": {},
+            "weight": 1
+        }
+    ]
+}

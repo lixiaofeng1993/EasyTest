@@ -18,6 +18,7 @@ class HttpRunerMain:
         self.locust = locust
         self.project_id = 0
 
+    @property
     def splicing_api(self):
         for data in self.data_list:
             case_name = data.get("case_name", "")
@@ -147,7 +148,11 @@ class HttpRunerMain:
                         extract_dict = {}
                         extract_dict[k] = 'content.' + v
                         self.teststeps["extract"].append(extract_dict)
-                if if_name not in str(testcases_json["teststeps"]) and _case_name == case_name:
+
+                if_name_list = []
+                for step in testcases_json["teststeps"]:
+                    if_name_list.append(step["name"])
+                if if_name not in if_name_list and _case_name == case_name:
                     testcases_json["teststeps"].append(self.teststeps)
 
                 # api

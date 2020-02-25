@@ -81,7 +81,7 @@ class Test_execute():
                     else:
                         case_run = interface_is_delete(case_run, case.case_name, step["if_name"], step_info)
                         return case_run
-            testsuites_json_path = HttpRunerMain(case_step_list, locust=self.locust).splicing_api()
+            testsuites_json_path = HttpRunerMain(case_step_list, locust=self.locust).splicing_api
             if not self.locust:
                 from lib.helper import pattern
 
