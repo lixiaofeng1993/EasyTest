@@ -1751,16 +1751,20 @@ class ReportPage(ListView):
 
     def get_context_data(self, **kwargs):
         self.page = self.request.GET.dict().get('page', '1')
+        print(self.object_list, 333333333333333333333)
         context = super().get_context_data(**kwargs)
+        print(context, 444444444444444444)
         context.update({'plan_id': self.plan_id})
         paginator = context.get('paginator')
         page = context.get('page_obj')
+        print(page.number, 2222222222222)
         is_paginated = context.get('is_paginated')
         data = pagination_data(paginator, page, is_paginated)
         context.update(data)
         user_id = self.request.session.get('user_id', '')
         model_list = limits_of_authority(user_id)
         context.update({"model_list": model_list, "page": self.page})
+        print(context, 1111111111111111111)
         return context
 
 
