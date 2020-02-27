@@ -247,6 +247,7 @@
             var plan_id = $("#debug_case_id").val();
             var run_mode = $("#run_mode").val();
             var env_id = $("#debug_env_id").val();
+            var btn = $("#debug");
             $('.spinner').show();
             $.ajax({
                 type: "post",
@@ -264,9 +265,9 @@
                         html = '<p style="font-family: Consolas;font-size:12px;color:green;margin:5% 10%">' + data + '</p>';
                         $("#result").append(html);
                         $('.spinner').hide();
-                        $("#debug").html("立即查看测试报告");
-                        $("#debug").removeAttr("onclick");
-                        $("#debug").on("click", function () {
+                        btn.html("立即查看测试报告");
+                        btn.removeAttr("onclick");
+                        btn.on("click", function () {
                             location = "/base/report_page/?plan_id=" + plan_id
                         })
                     }
@@ -280,6 +281,9 @@
 
         }
 
+        $("#cancel_run").click(function () {
+            location.reload()
+        });
 
         function debug_button(obj) {
             $('#result').empty();
@@ -288,10 +292,11 @@
             var prj_id = obj.parentNode.parentNode.children[2].getAttribute("prj_id");
             var env_name = obj.parentNode.parentNode.children[3].innerText;
             var env_id = obj.parentNode.parentNode.children[3].getAttribute("env_id");
+            var run = $("#cancel_run");
 
             $("#debug_case_id").val(case_id);
-            $("#cancel_run").html("取消");
-            $("#cancel_run").attr("class", "btn btn-default");
+            run.html("取消");
+            run.attr("class", "btn btn-default");
             $('#case_name_').empty();
             $("#debug_env_id").empty();
             $.ajax({

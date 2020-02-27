@@ -1,0 +1,17 @@
+{
+    "config": {
+        "base_url": "http://localhost:8000/api/get_event_list/",
+        "name": "登录接口测试用例",
+        "variables": {}
+    },
+    "noReset": true,
+    "testcases": [
+        {
+            "name": "登录接口测试用例",
+            "parameters": [],
+            "testcase": "testcases/登录接口测试用例.json",
+            "variables": {},
+            "weight": 1
+        }
+    ]
+}

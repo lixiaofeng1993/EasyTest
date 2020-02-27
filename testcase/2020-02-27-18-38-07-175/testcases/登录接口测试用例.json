@@ -1,0 +1,32 @@
+{
+    "config": {
+        "base_url": "http://localhost:8000/api/get_event_list/",
+        "name": "登录接口测试用例",
+        "variables": {}
+    },
+    "noReset": true,
+    "teststeps": [
+        {
+            "api": "api/登录接口测试用例/登录接口.json",
+            "extract": [
+                {
+                    "token": "content.token"
+                }
+            ],
+            "name": "登录接口",
+            "output": [],
+            "skip": "",
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/登录接口测试用例/查询发布会接口.json",
+            "extract": [],
+            "name": "查询发布会接口",
+            "output": [],
+            "skip": "",
+            "validate": [],
+            "variables": {}
+        }
+    ]
+}

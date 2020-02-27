@@ -176,7 +176,11 @@ def project_delete(request):
         if request.method == 'GET':
             prj_id = request.GET['prj_id']
             page = request.GET.get("page", "1")
-            Project.objects.filter(prj_id=prj_id).delete()
+            project = Project.objects.filter(prj_id=prj_id)
+            project.delete()
+            is_page = project.count() % 10
+            if not is_page:
+                page = int(page) - 1
             log.info('用户 {} 删除项目 {} 成功.'.format(user_id, prj_id))
             return HttpResponseRedirect("base/project/?page={}".format(page))
 
@@ -297,7 +301,11 @@ def sign_delete(request):
         if request.method == 'GET':
             sign_id = request.GET['sign_id']
             page = request.GET.get("page", "1")
-            Sign.objects.filter(sign_id=sign_id).delete()
+            sign = Sign.objects.filter(sign_id=sign_id)
+            sign.delete()
+            is_page = sign.count() % 10
+            if not is_page:
+                page = int(page) - 1
             log.info('用户 {} 删除签名 {} 成功.'.format(user_id, sign_id))
             return HttpResponseRedirect("base/sign/?page={}".format(page))
 
@@ -525,7 +533,11 @@ def env_delete(request):
         if request.method == 'GET':
             env_id = request.GET['env_id']
             page = request.GET.get("page", "1")
-            Environment.objects.filter(env_id=env_id).delete()
+            env = Environment.objects.filter(env_id=env_id)
+            env.delete()
+            is_page = env.count() % 10
+            if not is_page:
+                page = int(page) - 1
             log.info('用户 {} 删除环境 {} 成功.'.format(user_id, env_id))
             return HttpResponseRedirect("base/env/?page={}".format(page))
 
@@ -823,7 +835,11 @@ def interface_delete(request):
         if request.method == 'GET':
             if_id = request.GET['if_id']
             page = request.GET.get("page", "1")
-            Interface.objects.filter(if_id=if_id).delete()
+            interface = Interface.objects.filter(if_id=if_id)
+            interface.delete()
+            is_page = interface.count() % 10
+            if not is_page:
+                page = int(page) - 1
             log.info('用户 {} 删除接口 {} 成功.'.format(user_id, if_id))
             return HttpResponseRedirect("base/interface/?page={}".format(page))
 
@@ -1172,7 +1188,11 @@ def case_delete(request):
         if request.method == 'GET':
             case_id = request.GET['case_id']
             page = request.GET.get("page", "1")
-            Case.objects.filter(case_id=case_id).delete()
+            case = Case.objects.filter(case_id=case_id)
+            case.delete()
+            is_page = case.count() % 10
+            if not is_page:
+                page = int(page) - 1
             log.info('用户 {} 删除用例 {} 成功.'.format(user_id, case_id))
             return HttpResponseRedirect("base/case/?page={}".format(page))
 
@@ -1210,7 +1230,7 @@ class PlanIndex(ListView):
     model = Plan
     template_name = 'base/plan/index.html'
     context_object_name = 'object_list'
-    paginate_by = 10
+    paginate_by = 2
 
     def dispatch(self, *args, **kwargs):
         return super(PlanIndex, self).dispatch(*args, **kwargs)
@@ -1365,7 +1385,11 @@ def plan_delete(request):
         if request.method == 'GET':
             plan_id = request.GET['plan_id']
             page = request.GET.get("page", "1")
-            Plan.objects.filter(plan_id=plan_id).delete()
+            plan = Plan.objects.filter(plan_id=plan_id)
+            plan.delete()
+            is_page = plan.count() % 10
+            if not is_page:
+                page = int(page) - 1
             log.info('用户 {} 删除计划 {} 成功.'.format(user_id, plan_id))
             return HttpResponseRedirect("base/plan/?page={}".format(page))
 
@@ -1724,7 +1748,11 @@ def task_delete(request):
             # task_id = request.build_absolute_uri().split("/")[-1]
             task_id = request.GET.get("task_id", "")
             page = request.GET.get("page", "1")
-            PeriodicTask.objects.filter(id=task_id).delete()
+            task = PeriodicTask.objects.filter(id=task_id)
+            task.delete()
+            is_page = task.count() % 10
+            if not is_page:
+                page = int(page) - 1
             log.info("用户 {} 删除定时任务 {} 成功！".format(user_id, task_id))
             return HttpResponseRedirect("/base/task/?page={}".format(page))
 
@@ -1751,20 +1779,16 @@ class ReportPage(ListView):
 
     def get_context_data(self, **kwargs):
         self.page = self.request.GET.dict().get('page', '1')
-        print(self.object_list, 333333333333333333333)
         context = super().get_context_data(**kwargs)
-        print(context, 444444444444444444)
         context.update({'plan_id': self.plan_id})
         paginator = context.get('paginator')
         page = context.get('page_obj')
-        print(page.number, 2222222222222)
         is_paginated = context.get('is_paginated')
         data = pagination_data(paginator, page, is_paginated)
         context.update(data)
         user_id = self.request.session.get('user_id', '')
         model_list = limits_of_authority(user_id)
         context.update({"model_list": model_list, "page": self.page})
-        print(context, 1111111111111111111)
         return context
 
 
@@ -1882,7 +1906,11 @@ def report_delete(request):
         if request.method == 'GET':
             report_id = request.GET['report_id']
             page = request.GET.get("page", "1")
-            Report.objects.filter(report_id=report_id).delete()
+            report = Report.objects.filter(report_id=report_id)
+            report.delete()
+            is_page = report.count() % 10
+            if not is_page:
+                page = int(page) - 1
             log.info('用户 {} 删除报告 {} 成功.'.format(user_id, report_id))
             return HttpResponseRedirect("base/report_page/?page={}".format(page))
 
