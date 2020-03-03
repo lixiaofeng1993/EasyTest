@@ -73,19 +73,15 @@
             </ol>
 
             <div class="panel" style="height: 100%">
-                <p><span></span>
-                    {#                <a href="javascript:void(0)" class="index_data sure-btn"><i#}
-                    {#                        class="fa fa-toggle-off fa-1x">&nbsp;&nbsp;</i></a>#}
-                    <span style="color: red; font-size: 20px;font-weight: 900;margin-left: 10%">  北京、太原、郑州，有招聘【自动化测试工程师】的请联系我~~~</span>
-                <h5 style="margin-left: 10%"><span>点击复制：</span><span onclick="copy()" id="copyText"><i
-                        class="fa fa-qq"></i>&nbsp;&nbsp;954274592</span>&nbsp;&nbsp;<span
-                        onclick="copy_weixin()" id="copyWeixin"><i
-                        class="fa fa-weixin"></i>&nbsp;&nbsp;fengzi802300</span>
-                    <span style="color: #555; font-size: 12px">【默认服务器宣】</span></h5>
+                {#                <p><span></span>#}
+                {#                <a href="javascript:void(0)" class="index_data sure-btn"><i#}
+                {#                        class="fa fa-toggle-off fa-1x">&nbsp;&nbsp;</i></a>#}
+                {#                    <span style="color: red; font-size: 20px;font-weight: 900;margin-left: 10%">  北京、太原、郑州，有招聘【自动化测试工程师】的请联系我~~~</span>#}
 
-                {#                    <span style="color: #555; font-size: 12px;margin-left: 10%">同时在线人数：</span><span#}
-                {#                            style="color: red">{{ online_ips }}</span>#}
-                </p>
+
+                <span style="color: #555; font-size: 12px;margin-left: 10%">同时在线人数：</span><span
+                    style="color: red">{{ online_ips }} </span>【默认服务器宣】
+                {#                </p>#}
                 <div class="panel-body">
                     <div class="panel-tbody-index">
                         <br>
@@ -364,29 +360,6 @@
                 $("#submit").trigger("click");
             }
         });
-        function copy() {
-            var text = document.getElementById("copyText").innerText;
-            var input = document.createElement('input');
-            input.setAttribute('id', 'copyInput');
-            input.setAttribute('value', text);
-            document.getElementsByTagName('body')[0].appendChild(input);
-            document.getElementById('copyInput').select();
-            if (document.execCommand('copy')) {
-                alert('复制QQ号成功，请随时联系我~~~');
-            }
-            document.getElementById('copyInput').remove();
-        }
-        function copy_weixin() {
-            var text = document.getElementById("copyWeixin").innerText;
-            var input = document.createElement('input');
-            input.setAttribute('id', 'copyInput');
-            input.setAttribute('value', text);
-            document.getElementsByTagName('body')[0].appendChild(input);
-            document.getElementById('copyInput').select();
-            if (document.execCommand('copy')) {
-                alert('复制微信号成功，请随时联系我~~~');
-            }
-            document.getElementById('copyInput').remove();
-        }
+
     </script>
 {% endblock %}

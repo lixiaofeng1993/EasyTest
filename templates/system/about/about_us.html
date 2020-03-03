@@ -40,6 +40,21 @@
             float: left;
         }
 
+        #copyText {
+            color: blue;
+        }
+
+        #copyWeixin {
+            color: green;
+        }
+
+        #copyText:hover {
+            color: red;
+        }
+
+        #copyWeixin:hover {
+            color: red;
+        }
     </style>
 {% endblock %}
 
@@ -144,7 +159,11 @@
                     </p>
                     <br>
                     <br>
-                    {#                    <h5><span>联系我们：</span><span><i class="fa fa-qq"></i>&nbsp;&nbsp;954274592</span></h5>#}
+                    <h5 style="margin-left: 30%"><span>联系我们：</span><span onclick="copy()" id="copyText"><i
+                            class="fa fa-qq"></i>&nbsp;&nbsp;954274592</span>&nbsp;&nbsp;<span
+                            onclick="copy_weixin()" id="copyWeixin"><i
+                            class="fa fa-weixin"></i>&nbsp;&nbsp;fengzi802300</span>
+                        <span style="color: #555; font-size: 12px"></span></h5>
                 </div>
             </div>
         </div>
@@ -195,8 +214,31 @@
                 $('#second_show').html('<s></s>' + second + '秒');
                 intDiff--;
             }, 1000);
+        };
+
+        function copy() {
+            var text = document.getElementById("copyText").innerText;
+            var input = document.createElement('input');
+            input.setAttribute('id', 'copyInput');
+            input.setAttribute('value', text);
+            document.getElementsByTagName('body')[0].appendChild(input);
+            document.getElementById('copyInput').select();
+            if (document.execCommand('copy')) {
+                alert('复制QQ号成功，请随时联系我~~~');
+            }
+            document.getElementById('copyInput').remove();
         }
-
-
+        function copy_weixin() {
+            var text = document.getElementById("copyWeixin").innerText;
+            var input = document.createElement('input');
+            input.setAttribute('id', 'copyInput');
+            input.setAttribute('value', text);
+            document.getElementsByTagName('body')[0].appendChild(input);
+            document.getElementById('copyInput').select();
+            if (document.execCommand('copy')) {
+                alert('复制微信号成功，请随时联系我~~~');
+            }
+            document.getElementById('copyInput').remove();
+        }
     </script>
 {% endblock %}
