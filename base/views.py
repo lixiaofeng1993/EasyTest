@@ -1230,7 +1230,7 @@ class PlanIndex(ListView):
     model = Plan
     template_name = 'base/plan/index.html'
     context_object_name = 'object_list'
-    paginate_by = 2
+    paginate_by = 10
 
     def dispatch(self, *args, **kwargs):
         return super(PlanIndex, self).dispatch(*args, **kwargs)
