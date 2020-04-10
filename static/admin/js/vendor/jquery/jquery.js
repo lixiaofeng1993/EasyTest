@@ -2838,7 +2838,7 @@ var rootjQuery,
 		}
 
 		// Method init() accepts an alternate rootjQuery
-		// so migrate can support jQuery.sub (gh-2101)
+		// so migrations can support jQuery.sub (gh-2101)
 		root = root || rootjQuery;
 
 		// Handle HTML strings

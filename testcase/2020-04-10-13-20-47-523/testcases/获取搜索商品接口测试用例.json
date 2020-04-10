@@ -1,0 +1,19 @@
+{
+    "config": {
+        "base_url": "https://nb.qqwdev.com/api/commodities/app/store-commodities/new-searches",
+        "name": "获取搜索商品接口测试用例",
+        "variables": {}
+    },
+    "noReset": true,
+    "teststeps": [
+        {
+            "api": "api/获取搜索商品接口测试用例/获取搜索商品接口.json",
+            "extract": [],
+            "name": "获取搜索商品接口",
+            "output": [],
+            "skip": "",
+            "validate": [],
+            "variables": {}
+        }
+    ]
+}
