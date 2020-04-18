@@ -179,7 +179,7 @@ def project_delete(request):
             project = Project.objects.filter(prj_id=prj_id)
             project.delete()
             is_page = project.count() % 10
-            if not is_page:
+            if not is_page and int(page) > 1:
                 page = int(page) - 1
             log.info('用户 {} 删除项目 {} 成功.'.format(user_id, prj_id))
             return HttpResponseRedirect("base/project/?page={}".format(page))
@@ -304,7 +304,7 @@ def sign_delete(request):
             sign = Sign.objects.filter(sign_id=sign_id)
             sign.delete()
             is_page = sign.count() % 10
-            if not is_page:
+            if not is_page and int(page) > 1:
                 page = int(page) - 1
             log.info('用户 {} 删除签名 {} 成功.'.format(user_id, sign_id))
             return HttpResponseRedirect("base/sign/?page={}".format(page))
@@ -536,7 +536,7 @@ def env_delete(request):
             env = Environment.objects.filter(env_id=env_id)
             env.delete()
             is_page = env.count() % 10
-            if not is_page:
+            if not is_page and int(page) > 1:
                 page = int(page) - 1
             log.info('用户 {} 删除环境 {} 成功.'.format(user_id, env_id))
             return HttpResponseRedirect("base/env/?page={}".format(page))
@@ -838,7 +838,7 @@ def interface_delete(request):
             interface = Interface.objects.filter(if_id=if_id)
             interface.delete()
             is_page = interface.count() % 10
-            if not is_page:
+            if not is_page and int(page) > 1:
                 page = int(page) - 1
             log.info('用户 {} 删除接口 {} 成功.'.format(user_id, if_id))
             return HttpResponseRedirect("base/interface/?page={}".format(page))
@@ -1191,7 +1191,7 @@ def case_delete(request):
             case = Case.objects.filter(case_id=case_id)
             case.delete()
             is_page = case.count() % 10
-            if not is_page:
+            if not is_page and int(page) > 1:
                 page = int(page) - 1
             log.info('用户 {} 删除用例 {} 成功.'.format(user_id, case_id))
             return HttpResponseRedirect("base/case/?page={}".format(page))
@@ -1388,7 +1388,7 @@ def plan_delete(request):
             plan = Plan.objects.filter(plan_id=plan_id)
             plan.delete()
             is_page = plan.count() % 10
-            if not is_page:
+            if not is_page and int(page) > 1:
                 page = int(page) - 1
             log.info('用户 {} 删除计划 {} 成功.'.format(user_id, plan_id))
             return HttpResponseRedirect("base/plan/?page={}".format(page))
@@ -1751,7 +1751,7 @@ def task_delete(request):
             task = PeriodicTask.objects.filter(id=task_id)
             task.delete()
             is_page = task.count() % 10
-            if not is_page:
+            if not is_page and int(page) > 1:
                 page = int(page) - 1
             log.info("用户 {} 删除定时任务 {} 成功！".format(user_id, task_id))
             return HttpResponseRedirect("/base/task/?page={}".format(page))
@@ -1909,7 +1909,7 @@ def report_delete(request):
             report = Report.objects.filter(report_id=report_id)
             report.delete()
             is_page = report.count() % 10
-            if not is_page:
+            if not is_page and int(page) > 1:
                 page = int(page) - 1
             log.info('用户 {} 删除报告 {} 成功.'.format(user_id, report_id))
             return HttpResponseRedirect("base/report_page/?page={}".format(page))
