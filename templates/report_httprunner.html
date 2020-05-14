@@ -7023,8 +7023,7 @@
         }
 
         #testName {
-            max-width: 280px;
-            word-wrap: break-word;
+        {#            max-width: 280px;#} word-wrap: break-word;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
@@ -7150,8 +7149,8 @@
                         </div>
                         <div class="col-sm-6">
                             <div style="height:350px" id="echarts-map-chart">
-                                <img src="/media/{{ report.pic_name }}" height="400" width="550"
-                                     style="margin-left: 10%; margin-bottom: 3%;">
+                                {#                                <img src="/media/{{ report.pic_name }}" height="400" width="550"#}
+                                {#                                     style="margin-left: 10%; margin-bottom: 3%;">#}
                             </div>
                         </div>
                     </div>
@@ -7358,7 +7357,7 @@
 {#<script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>#}
 <script src={% static 'js/bootstrap.min.js' %}></script>
 {#<script src="js/content.min.js?v=1.0.0"></script>#}
-{#<script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.min.js"></script>#}
+<script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.min.js"></script>
 <script src={% static 'js/easypiechart.min.js' %}></script>
 {#<script src="https://cdn.bootcss.com/chosen/1.8.2/chosen.jquery.js"></script>#}
 <script type="text/javascript">
@@ -7479,7 +7478,48 @@
             ? $(this).html('收起').attr("data-state", "close").css('background-color', '#ff7575')
             : $(this).html('展开').attr("data-state", "open").css('background-color', '#1ab394')
     });
-
+    function pie() {
+        var option = {
+            title: {
+                text: '测试用例运行结果',
+                subtext: '',
+                x: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['失败', '错误', '跳过', '成功']
+            },
+            series: [
+                {
+                    name: '运行结果',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: [
+                        {value: {{ fail_num }}, name: '失败'},
+                        {value: {{ error_num }}, name: '错误'},
+                        {value: {{ skip_num }}, name: '跳过'},
+                        {value: {{ pass_num }}, name: '成功'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        var chart = echarts.init(document.getElementById("echarts-map-chart"));
+        chart.setOption(option);
+    }
+    pie();
 </script>
 </body>
 </html>

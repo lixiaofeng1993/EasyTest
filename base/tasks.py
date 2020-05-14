@@ -52,10 +52,10 @@ def test_httprunner(env_id, case_id_list, plan="", username="root"):
     skip_num = stat.get('skipped', 0)
     end_time = time.clock()
     totalTime = str(end_time - begin_time)[:6] + ' s'
-    pic_name = DrawPie(pass_num, fail_num, error_num, skip_num)
+    # pic_name = DrawPie(pass_num, fail_num, error_num, skip_num)
     report_name = plan.plan_name + "-" + str(start_time).replace(':', '-')
     report = Report(plan_id=plan.plan_id, report_name=report_name, content=content, case_num=case_num,
-                    pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name, skip_num=skip_num,
+                    pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name="", skip_num=skip_num,
                     totalTime=totalTime, startTime=start_time, update_user=username, make=1, report_path=report_path)
     report.save()
     if fail_num or error_num:
@@ -104,11 +104,11 @@ def test_plan(env_id, case_id_list, plan="", username="root"):
                 skip_num += 1
                 i += 1
                 s['id'] = i
-    pic_name = DrawPie(pass_num, fail_num, error_num, skip_num)
+    # pic_name = DrawPie(pass_num, fail_num, error_num, skip_num)
     report_name = plan.plan_name + "-" + str(start_time)
     report = Report(plan_id=plan.plan_id, report_name=report_name, content=content, case_num=case_num,
-                    pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name=pic_name,
-                    totalTime=totalTime, startTime=start_time, update_user='root', make=0, skip_num=skip_num)
+                    pass_num=pass_num, fail_num=fail_num, error_num=error_num, pic_name="",
+                    totalTime=totalTime, startTime=start_time, update_user=username, make=0, skip_num=skip_num)
     report.save()
     Plan.objects.filter(plan_id=plan.plan_id).update(update_user=username, update_time=datetime.now())
     if fail_num or error_num:
@@ -178,10 +178,10 @@ def run_plan(*args, **kwargs):
         skip_num += stat.get('skipped', 0)
     end_time = time.clock()
     totalTime = str(end_time - begin_time)[:6] + ' s'
-    pic_name = DrawPie(pass_num, fail_num, error_num, skip_num)
+    # pic_name = DrawPie(pass_num, fail_num, error_num, skip_num)
     report_name = task_name + "-" + str(start_time).replace(':', '-')
     report = Report(plan_id="", report_name=report_name, content=content, case_num=case_num, pass_num=pass_num,
-                    fail_num=fail_num, error_num=error_num, pic_name=pic_name, totalTime=totalTime, skip_num=skip_num,
+                    fail_num=fail_num, error_num=error_num, pic_name="", totalTime=totalTime, skip_num=skip_num,
                     startTime=start_time, update_user="root", make=1, report_path=report_path, task_id=task_id)
     report.save()
     if fail_num or error_num:

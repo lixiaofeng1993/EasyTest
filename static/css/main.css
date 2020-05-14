@@ -65,7 +65,7 @@ footer {
     width: 200px;
     height: 100%;
     float: left;
-    background-color: #ffffff;
+    background-color: #001528 !important;
     position: fixed;
     left: 0;
     opacity: 0.7;
@@ -492,12 +492,12 @@ ul.notifications > li > .more:hover, ul.notifications > li > .more:focus {
 
 .sidebar .nav > li > a {
     padding: 15px 30px;
-    color: black;
+    color: #bfcbd9;
     border-left: 5px solid transparent;
 }
 
 .sidebar .nav > li > a:hover, .sidebar .nav > li > a:focus, .sidebar .nav > li > a.active {
-    color: black;
+    color: #409eff !important;
     background-color: transparent;
 }
 
@@ -506,7 +506,7 @@ ul.notifications > li > .more:hover, ul.notifications > li > .more:focus {
 }
 
 .sidebar .nav > li > a:focus, .sidebar .nav > li > a.active {
-    background-color: #CCFFFF !important;
+    background-color: #000 !important;
     border-left-color: #777;
 }
 

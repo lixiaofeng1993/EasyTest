@@ -1,7 +1,7 @@
 {
     "config": {
         "base_url": "https://nb.qqwdev.com/api/commodities/app/store-commodities/new-searches",
-        "name": "获取搜索商品接口测试用例",
+        "name": "获取搜索商品接口测试计划",
         "variables": {}
     },
     "noReset": true,
