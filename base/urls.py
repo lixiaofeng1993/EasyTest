@@ -84,4 +84,5 @@ urlpatterns = [
     url(r'about/', view=views.about_index, name='about'),
     url(r'document/', view=views.document, name='document'),
     url(r'debugtalk/', view=views.debugtalk, name='debugtalk'),
+    url(r'love/', view=views.love, name='love'),
 ]

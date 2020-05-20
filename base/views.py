@@ -2587,3 +2587,7 @@ def debugtalk(request):
                                     belong_project_id=id, page=page)
                 obj.save()
                 return HttpResponseRedirect("/base/project/?page={}".format(page))
+
+
+def love(request):
+    return render(request, "love.html")
