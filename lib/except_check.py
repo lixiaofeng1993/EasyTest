@@ -148,7 +148,7 @@ def interface_info_logic(if_name, url, method, is_sign, data_type, is_headers, r
         return '接口名称不能为空！'
     if url == '':
         return '接口路径不能为空！'
-    att = re.compile('^[\w\{\}\/-]+$', re.A)
+    att = re.compile('^[\.\w\{\}\/-]+$', re.A)
     math = att.findall(url)
     if not math:
         return '接口路径不符合规则【^[\w\{\}\/-]+$】，请重新输入！'

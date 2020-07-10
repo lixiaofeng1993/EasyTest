@@ -1,7 +1,8 @@
 import hashlib
 import time
-from Crypto.Cipher import AES
-import base64
+# from Crypto.Cipher import AES
+import base64, random, hmac
+from hashlib import sha256
 
 
 def user_sign_api(data, private_key):
@@ -56,3 +57,21 @@ def auth_user():
     """
     user_auth = ('lixiaofeng', 'fengzi802300')
     return user_auth
+
+
+def ranstr(num):
+    # 猜猜变量名为啥叫 H
+    H = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+    salt = ''
+    for i in range(num):
+        salt += random.choice(H)
+
+    return salt
+
+
+def hmac_sign(data):
+    appsecret = "bdoplLBGC+JP/oIf".encode('utf-8')  # 秘钥
+    data = data.encode('utf-8')  # 加密数据
+    signature = base64.b64encode(hmac.new(appsecret, data, digestmod=sha256).digest())
+    return bytes.decode(signature, encoding='utf8')

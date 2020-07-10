@@ -9,7 +9,7 @@ from django.contrib.auth.models import User  # django自带user
 import requests, re, os, datetime, json, logging, time
 from django.conf import settings
 from django.db.models import Sum
-from lib.signtype import user_sign_api, encryptAES, auth_user
+from lib.signtype import user_sign_api, encryptAES, auth_user, ranstr, hmac_sign
 from lib.public import validators_result, get_extract, get_param, replace_var, \
     extract_variables, call_interface, format_url, format_body, http_random, str_number
 from lib.random_params import random_params
@@ -185,6 +185,12 @@ class Test_execute():
                 else:
                     headers.update(if_dict['header'])
                     if_dict['header'] = headers
+            # hmac加密
+            random_str = ranstr(10)
+            hmac = hmac_sign(random_str)
+            if_dict['header']['x-qqw-request-nonce'] = random_str
+            if_dict['header']['x-qqw-request-sign'] = hmac
+            if_dict['header']['x-qqw-token-customer'] = '721037'
         # if interface.data_type == 'sql':
         #     for k, v in if_dict['body'].items():
         #         if 'select' in v:

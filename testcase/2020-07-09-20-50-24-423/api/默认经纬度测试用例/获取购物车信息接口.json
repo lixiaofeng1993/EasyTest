@@ -1,0 +1,22 @@
+{
+    "name": "获取购物车信息接口",
+    "noReset": true,
+    "output": [],
+    "request": {
+        "headers": {
+            "channelNo": "KJLJC2J7I9",
+            "x-qqw-channel-no": "KJLJC2J7I9",
+            "x-qqw-client-version": "WxMiniApp-KJLJC2J7I9-1.0.65",
+            "x-qqw-request-nonce": "lLG0GVAbEu",
+            "x-qqw-request-sign": "UX1fyeIDMlG5rMxxWNS9gDb+ziYBMK9jxlaSEeu9qcQ=",
+            "x-qqw-token-customer": "721037"
+        },
+        "json": {
+            "cartType": 1
+        },
+        "method": "get",
+        "url": "https://pre-nb.quanqiuwa.com//api/shop-carts/app/shop-carts/stores/86"
+    },
+    "validate": [],
+    "variables": {}
+}

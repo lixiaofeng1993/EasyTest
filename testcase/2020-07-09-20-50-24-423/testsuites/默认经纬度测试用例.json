@@ -1,0 +1,17 @@
+{
+    "config": {
+        "base_url": "https://pre-nb.quanqiuwa.com//api/shop-carts/app/shop-carts/stores/86",
+        "name": "默认经纬度测试用例",
+        "variables": {}
+    },
+    "noReset": true,
+    "testcases": [
+        {
+            "name": "默认经纬度测试用例",
+            "parameters": [],
+            "testcase": "testcases/默认经纬度测试用例.json",
+            "variables": {},
+            "weight": 1
+        }
+    ]
+}

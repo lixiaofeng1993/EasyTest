@@ -1,0 +1,28 @@
+{
+    "config": {
+        "base_url": "https://pre-nb.quanqiuwa.com//api/shop-carts/app/shop-carts/stores/86",
+        "name": "默认经纬度测试用例",
+        "variables": {}
+    },
+    "noReset": true,
+    "teststeps": [
+        {
+            "api": "api/默认经纬度测试用例/默认经纬度.json",
+            "extract": [],
+            "name": "默认经纬度",
+            "output": [],
+            "skip": "",
+            "validate": [],
+            "variables": {}
+        },
+        {
+            "api": "api/默认经纬度测试用例/获取购物车信息接口.json",
+            "extract": [],
+            "name": "获取购物车信息接口",
+            "output": [],
+            "skip": "",
+            "validate": [],
+            "variables": {}
+        }
+    ]
+}

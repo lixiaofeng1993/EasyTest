@@ -2,7 +2,7 @@ import json
 from django.contrib import auth as django_auth
 import base64
 import hashlib
-from Crypto.Cipher import AES  # AES加密
+# from Crypto.Cipher import AES  # AES加密
 from django.http import JsonResponse, HttpResponse
 from base.models import Event, Guest
 from django.core.exceptions import ValidationError, ObjectDoesNotExist  # 验证错误
