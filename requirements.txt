@@ -26,7 +26,7 @@ coreapi==2.3.3
 coreschema==0.0.4
 coverage==4.5.4
 crypto==1.4.1
-cryptography==2.8
+cryptography==3.2
 cycler==0.10.0
 ddt==1.1.2
 decorator==4.4.0
