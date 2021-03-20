@@ -84,7 +84,7 @@ itypes==1.1.0
 jdcal==1.4.1
 jedi==0.15.2
 jieba==0.39
-Jinja2==2.10.3
+Jinja2==2.11.3
 jsonpath==0.82
 jsonpath-rw==1.4.0
 jsonpickle==1.2
