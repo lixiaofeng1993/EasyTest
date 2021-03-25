@@ -150,7 +150,7 @@ python-logstash==0.4.6
 python-memcached==1.59
 python-slugify==4.0.0
 pytz==2019.1
-PyYAML==5.1.2
+PyYAML==5.4
 pyzmq==18.0.1
 qrcode==6.1
 query-string==2019.4.13
