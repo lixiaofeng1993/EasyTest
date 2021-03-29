@@ -130,7 +130,7 @@ pyasn1==0.4.5
 pycparser==2.19
 pycryptodome==3.8.1
 pyelftools==0.26
-Pygments==2.4.2
+Pygments==2.7.4
 PyHamcrest==1.9.0
 pylint==2.4.3
 pymssql==2.1.4
