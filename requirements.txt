@@ -55,7 +55,7 @@ dwebsocket==0.4.2
 elasticsearch==7.0.0
 elasticsearch-dsl==7.0.0
 et-xmlfile==1.0.1
-eventlet==0.22.1
+eventlet==0.31.0
 facebook-wda==0.4.1
 Faker==1.0.5
 filetype==1.0.5
