@@ -118,7 +118,7 @@ pdfminer==20191020
 pdfminer3k==1.3.1
 pickleshare==0.7.5
 Pillow==6.2.1
-pipenv==2018.11.26
+pipenv==2022.1.8
 pluggy==0.13.0
 ply==3.11
 post==2019.4.13
