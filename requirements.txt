@@ -75,7 +75,7 @@ humanize==0.5.1
 idna==2.8
 importlib-metadata==0.23
 ipaddress==1.0.22
-ipython==7.11.1
+ipython==7.16.3
 ipython-genutils==0.2.0
 isort==4.3.21
 itchat==1.3.10
