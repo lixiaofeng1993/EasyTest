@@ -13,7 +13,7 @@ Babel==2.7.0
 backcall==0.1.0
 bcrypt==3.1.7
 billiard==3.3.0.23
-bottle==0.12.17
+bottle==0.12.20
 celery==3.1.26.post2
 certifi==2019.6.16
 cffi==1.13.1
